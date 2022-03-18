@@ -7,22 +7,22 @@ namespace BaseProject.GameStates
     {
         public void HandleInput(InputHelper inputHelper)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public void Update(GameTime gameTime)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public void Reset()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }
