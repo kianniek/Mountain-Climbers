@@ -5,7 +5,7 @@ namespace BaseProject.GameStates
 {
     public class PlayingState : IGameLoopObject
     {
-        int hallo;
+        //int hallo;
         public void HandleInput(InputHelper inputHelper)
         {
             

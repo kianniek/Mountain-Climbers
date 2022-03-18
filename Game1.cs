@@ -12,10 +12,12 @@ namespace BaseProject
             base.LoadContent();
 
             screen = new Point(800, 600);
+            
             ApplyResolutionSettings();
 
             // TODO: use this.Content to load your game content here 
             GameStateManager.AddGameState("PlayingState", new PlayingState());
+            GameStateManager.SwitchTo("PlayingState");
         }
 
     }
