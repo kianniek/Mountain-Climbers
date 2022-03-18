@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseProject.GameStates;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -14,7 +15,7 @@ namespace BaseProject
             ApplyResolutionSettings();
 
             // TODO: use this.Content to load your game content here
-
+            GameStateManager.AddGameState("PlayingState", new PlayingState());
         }
 
     }
