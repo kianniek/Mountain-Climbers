@@ -14,7 +14,7 @@ namespace BaseProject
             screen = new Point(800, 600);
             ApplyResolutionSettings();
 
-            // TODO: use this.Content to load your game content here
+            // TODO: use this.Content to load your game content here 
             GameStateManager.AddGameState("PlayingState", new PlayingState());
         }
 
