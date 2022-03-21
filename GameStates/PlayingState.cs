@@ -3,27 +3,26 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseProject.GameStates
 {
-    public class PlayingState : IGameLoopObject
+    public class PlayingState : GameObject//IGameLoopObject
     {
-        //int hallo;
-        public void HandleInput(InputHelper inputHelper)
+        public PlayingState()
         {
-            
+
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            
+            base.Update(gameTime);
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Reset()
         {
-            
+            base.Reset();
         }
 
-        public void Reset()
+        public override void HandleInput(InputHelper inputHelper)
         {
-            
+            base.HandleInput(inputHelper);
         }
     }
 }
