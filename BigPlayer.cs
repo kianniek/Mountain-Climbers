@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -52,10 +53,12 @@ namespace BaseProject
             if (inputHelper.IsKeyDown(Keys.A))
             {
                 left = true;
+                effective = SpriteEffects.FlipHorizontally;
             }
             if (inputHelper.IsKeyDown(Keys.D))
             {
                 right = true;
+                effective = SpriteEffects.None;
             }
 
             if (stand)
@@ -74,9 +77,14 @@ namespace BaseProject
         {
             if (position.Y >= standPosition)
             {
-                velocity.Y = 0;
+                gravity = 0;
+                //velocity.Y = 0;
                 stand = true;
                 position.Y = standPosition;
+            }
+            else
+            {
+                gravity = 10f;
             }
         }
 

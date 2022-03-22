@@ -19,12 +19,13 @@ using Microsoft.Xna.Framework.Input;
     public override void Update(GameTime gameTime)
     {
         velocity.X = 0;
+        //gravity = 10f;
 
         if (jump)
         {
             jump = false;
             stand = false;
-            velocity.Y = -470;
+            velocity.Y = -460;
         }
 
         if (left)
@@ -51,10 +52,12 @@ using Microsoft.Xna.Framework.Input;
 		if (inputHelper.IsKeyDown(Keys.Left))
         {
             left = true;
+            effective = SpriteEffects.FlipHorizontally;
         }
         if (inputHelper.IsKeyDown(Keys.Right))
         {
             right = true;
+            effective = SpriteEffects.None;
         }
 
         if (stand)
@@ -73,9 +76,14 @@ using Microsoft.Xna.Framework.Input;
     {
         if (position.Y >= standPosition)
         {
-            velocity.Y = 0;
+            gravity = 0;
+            //velocity.Y = 0;
             stand = true;
             position.Y = standPosition;
+        }
+        else
+        {
+            gravity = 10f;
         }
     }
 

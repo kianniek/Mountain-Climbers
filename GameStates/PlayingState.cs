@@ -25,6 +25,9 @@ namespace BaseProject.GameStates
             bigPlayer.OnGround(300 - bigPlayer.Sprite.Height/2 + 10);
             bigPlayer.hitWallLeft(0);
             bigPlayer.hitWallRight(700);
+
+            //if (bigPlayer)
+
             base.Update(gameTime);
         }
 

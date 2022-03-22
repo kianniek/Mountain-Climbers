@@ -7,6 +7,7 @@ public class SpriteGameObject : GameObject
     protected SpriteSheet sprite;
     protected Vector2 origin;
     protected float scale = 1f;
+    protected SpriteEffects effective = SpriteEffects.None;
     public bool PerPixelCollisionDetection = true;
 
     public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0)
@@ -28,7 +29,7 @@ public class SpriteGameObject : GameObject
         {
             return;
         }
-        spriteBatch.Draw(sprite.Sprite, GlobalPosition, null, shade, 0, Origin, scale, SpriteEffects.None, 0);
+        spriteBatch.Draw(sprite.Sprite, GlobalPosition, null, shade, 0, Origin, scale, effective, 0);//SpriteEffects.None, 0);
     }
 
     public SpriteSheet Sprite
