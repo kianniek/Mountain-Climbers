@@ -3,15 +3,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseProject.GameStates
 {
-    public class PlayingState : GameObject//IGameLoopObject
+    public class PlayingState : GameObjectList
     {
+        Player player;
         public PlayingState()
         {
+            player = new Player();
 
+            this.Add(player);
         }
 
         public override void Update(GameTime gameTime)
         {
+            player.OnGround(300);
+            player.hitWallLeft(0);
+            player.hitWallRight(700);
             base.Update(gameTime);
         }
 
