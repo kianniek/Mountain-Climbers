@@ -5,19 +5,26 @@ namespace BaseProject.GameStates
 {
     public class PlayingState : GameObjectList
     {
-        Player player;
+        SmallPlayer smallPlayer;
+        BigPlayer bigPlayer;
         public PlayingState()
         {
-            player = new Player();
+            smallPlayer = new SmallPlayer();
+            bigPlayer = new BigPlayer();
 
-            this.Add(player);
+            this.Add(bigPlayer);
+            this.Add(smallPlayer);
         }
 
         public override void Update(GameTime gameTime)
         {
-            player.OnGround(300);
-            player.hitWallLeft(0);
-            player.hitWallRight(700);
+            smallPlayer.OnGround(300);
+            smallPlayer.hitWallLeft(0);
+            smallPlayer.hitWallRight(700);
+
+            bigPlayer.OnGround(300 - bigPlayer.Sprite.Height/2 + 10);
+            bigPlayer.hitWallLeft(0);
+            bigPlayer.hitWallRight(700);
             base.Update(gameTime);
         }
 
