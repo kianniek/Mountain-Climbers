@@ -4,11 +4,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 //Dion
-	public class Player : SpriteGameObject
+	public class SmallPlayer : SpriteGameObject
 	{
 	float gravity;
     bool left, right, jump, stand;
-		public Player() : base("Player")
+		public SmallPlayer() : base("Player")
 		{
 		position.Y = 300;
 		velocity.Y = 20;
@@ -24,7 +24,7 @@ using Microsoft.Xna.Framework.Input;
         {
             jump = false;
             stand = false;
-            velocity.Y = -400;
+            velocity.Y = -470;
         }
 
         if (left)
