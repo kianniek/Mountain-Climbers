@@ -11,7 +11,7 @@ namespace BaseProject
     class BigPlayer : SpriteGameObject
     {
         float gravity;
-        bool left, right, jump, stand;
+        public bool left, right, jump, stand;
         public BigPlayer() : base("player2")
         {
             position.Y = 300;
@@ -71,7 +71,7 @@ namespace BaseProject
             }
         }
 
-        //Player is touches the ground
+        //Player is touching the ground
         //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
         public void OnGround(float standPosition)
         {

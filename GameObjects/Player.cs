@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 	public class SmallPlayer : SpriteGameObject
 	{
 	float gravity;
-    bool left, right, jump, stand;
+    public bool left, right, jump, stand;
 		public SmallPlayer() : base("Player")
 		{
 		position.Y = 300;
@@ -70,7 +70,7 @@ using Microsoft.Xna.Framework.Input;
         } 
     }
     
-    //Player is touches the ground
+    //Player is touching the ground
     //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
     public void OnGround(float standPosition)
     {
