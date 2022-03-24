@@ -5,9 +5,13 @@ namespace BaseProject.GameStates
 {
     public class PlayingState : GameObjectList
     {
+        Spikes spike;
+
         Player player;
         public PlayingState()
         {
+            spike = new Spikes();
+            this.Add(spike);
             player = new Player();
 
             this.Add(player);
