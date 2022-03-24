@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseProject.GameStates
 {
+
     public class PlayingState : GameObjectList
     {
         GameObjectList livesSmall;
@@ -46,19 +47,19 @@ namespace BaseProject.GameStates
                 }
                 Add(levelObject);
             }
-        }
 
             //Green health
             for (int i = 0; i < livesBigPlayer; i++)
             {
                 Lives liveGreen = new Lives("Hartje_groen", new Vector2(GameEnvironment.Screen.X - 50 - (40 * i), 0));
                 noLives.Add(new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - 50 - (40 * i), 0)));
-                livesBig.Add(liveGreen); 
+                livesBig.Add(liveGreen);
             }
 
             this.Add(livesSmall);
             this.Add(livesBig);
         }
+
 
         public override void Update(GameTime gameTime)
         {
@@ -66,21 +67,21 @@ namespace BaseProject.GameStates
             smallPlayer.hitWallLeft(0);
             smallPlayer.hitWallRight(1700);
 
-            bigPlayer.OnGround(300 - bigPlayer.Sprite.Height/2 + 10);
+            bigPlayer.OnGround(300 - bigPlayer.Sprite.Height / 2 + 10);
             bigPlayer.hitWallLeft(0);
             bigPlayer.hitWallRight(1700);
 
             //Test for losing a live. You can comment these if-statements if it's annoying for you.
             if (smallPlayer.jump)
             {
-              livesSmallPlayer--;
-              livesSmall.Children[livesSmallPlayer].Velocity = new Vector2(0, -20);
+                livesSmallPlayer--;
+                livesSmall.Children[livesSmallPlayer].Velocity = new Vector2(0, -20);
             }
 
             if (bigPlayer.jump)
             {
-              livesBigPlayer--;
-              livesBig.Children[livesBigPlayer].Velocity = new Vector2(0, -20);
+                livesBigPlayer--;
+                livesBig.Children[livesBigPlayer].Velocity = new Vector2(0, -20);
             }
 
             base.Update(gameTime);
