@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 	public class SmallPlayer : SpriteGameObject
 	{
 	float gravity;
-    bool left, right, jump, stand;
+    public bool left, right, jump, stand;
 		public SmallPlayer() : base("Player")
 		{
 		position.Y = 300;
@@ -19,12 +19,13 @@ using Microsoft.Xna.Framework.Input;
     public override void Update(GameTime gameTime)
     {
         velocity.X = 0;
+        //gravity = 10f;
 
         if (jump)
         {
             jump = false;
             stand = false;
-            velocity.Y = -470;
+            velocity.Y = -460;
         }
 
         if (left)
@@ -51,10 +52,12 @@ using Microsoft.Xna.Framework.Input;
 		if (inputHelper.IsKeyDown(Keys.Left))
         {
             left = true;
+            effective = SpriteEffects.FlipHorizontally;
         }
         if (inputHelper.IsKeyDown(Keys.Right))
         {
             right = true;
+            effective = SpriteEffects.None;
         }
 
         if (stand)
@@ -67,15 +70,20 @@ using Microsoft.Xna.Framework.Input;
         } 
     }
     
-    //Player is touches the ground
+    //Player is touching the ground
     //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
     public void OnGround(float standPosition)
     {
         if (position.Y >= standPosition)
         {
-            velocity.Y = 0;
+            gravity = 0;
+            //velocity.Y = 0;
             stand = true;
             position.Y = standPosition;
+        }
+        else
+        {
+            gravity = 10f;
         }
     }
 

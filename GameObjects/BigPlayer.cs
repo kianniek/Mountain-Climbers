@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace BaseProject
     class BigPlayer : SpriteGameObject
     {
         float gravity;
-        bool left, right, jump, stand;
+        public bool left, right, jump, stand;
         public BigPlayer() : base("player2")
         {
             position.Y = 300;
@@ -52,10 +53,12 @@ namespace BaseProject
             if (inputHelper.IsKeyDown(Keys.A))
             {
                 left = true;
+                effective = SpriteEffects.FlipHorizontally;
             }
             if (inputHelper.IsKeyDown(Keys.D))
             {
                 right = true;
+                effective = SpriteEffects.None;
             }
 
             if (stand)
@@ -68,15 +71,20 @@ namespace BaseProject
             }
         }
 
-        //Player is touches the ground
+        //Player is touching the ground
         //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
         public void OnGround(float standPosition)
         {
             if (position.Y >= standPosition)
             {
-                velocity.Y = 0;
+                gravity = 0;
+                //velocity.Y = 0;
                 stand = true;
                 position.Y = standPosition;
+            }
+            else
+            {
+                gravity = 10f;
             }
         }
 
