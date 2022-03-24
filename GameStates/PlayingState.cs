@@ -11,9 +11,21 @@ namespace BaseProject.GameStates
         {
             smallPlayer = new SmallPlayer();
             bigPlayer = new BigPlayer();
+            LevelGenerator levelGen = new LevelGenerator();
 
             this.Add(bigPlayer);
             this.Add(smallPlayer);
+
+            this.Add(levelGen);
+            foreach (GameObject tile in levelGen.tiles)
+            {
+                GameObject levelObject = tile;
+                if (levelObject == null)
+                {
+                    continue;
+                }
+                Add(levelObject);
+            }
         }
 
         public override void Update(GameTime gameTime)

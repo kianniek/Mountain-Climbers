@@ -6,11 +6,10 @@ public class SpriteGameObject : GameObject
     protected Color shade = Color.White;
     protected SpriteSheet sprite;
     protected Vector2 origin;
-    protected float scale = 1f;
+    public float scale = 1f;
     public bool PerPixelCollisionDetection = true;
 
-    public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0)
-        : base(layer, id)
+    public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0, float scale = 1) : base(layer, id)
     {
         if (assetName != "")
         {
@@ -20,7 +19,8 @@ public class SpriteGameObject : GameObject
         {
             sprite = null;
         }
-    }    
+        this.scale = scale;
+    }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
@@ -60,15 +60,17 @@ public class SpriteGameObject : GameObject
     /// <summary>
     /// Returns / sets the scale of the sprite.
     /// </summary>
-    public float Scale {
+    public float Scale
+    {
         get { return scale; }
-        set { scale = value;  }
+        set { scale = value; }
     }
 
     /// <summary>
     /// Set the shade the sprite will be drawn in.
     /// </summary>
-    public Color Shade {
+    public Color Shade
+    {
         get { return shade; }
         set { shade = value; }
     }
