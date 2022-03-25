@@ -9,7 +9,7 @@ public class SpriteGameObject : GameObject
     protected float scale = 1f;
     public bool PerPixelCollisionDetection = true;
 
-    public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0)
+    public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0, float scale = 1f)
         : base(layer, id)
     {
         if (assetName != "")
@@ -20,6 +20,7 @@ public class SpriteGameObject : GameObject
         {
             sprite = null;
         }
+        Scale = scale;
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
