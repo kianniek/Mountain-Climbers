@@ -49,7 +49,7 @@ namespace BaseProject.GameStates
             for (int i = 0; i < livesBigPlayer; i++)
             {
                 Lives liveGreen = new Lives("Hartje_groen", new Vector2(GameEnvironment.Screen.X - 50 - (40 * i), 0));
-                noLives.Add(new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - 50 - (40 * i), 0)));
+                //noLives.Add(new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - 50 - (40 * i), 0)));
                 livesBig.Add(liveGreen);
             }
 
