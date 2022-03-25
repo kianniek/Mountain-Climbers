@@ -52,12 +52,14 @@ using Microsoft.Xna.Framework.Input;
 		if (inputHelper.IsKeyDown(Keys.Left))
         {
             left = true;
-            effective = SpriteEffects.FlipHorizontally;
+            //effective = SpriteEffects.FlipHorizontally;
+            Mirror = true;
         }
         if (inputHelper.IsKeyDown(Keys.Right))
         {
             right = true;
-            effective = SpriteEffects.None;
+            // effective = SpriteEffects.None;
+            Mirror = false;
         }
 
         if (stand)

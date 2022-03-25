@@ -53,12 +53,14 @@ namespace BaseProject
             if (inputHelper.IsKeyDown(Keys.A))
             {
                 left = true;
-                effective = SpriteEffects.FlipHorizontally;
+                //effective = SpriteEffects.FlipHorizontally;
+                Mirror = true;
             }
             if (inputHelper.IsKeyDown(Keys.D))
             {
                 right = true;
-                effective = SpriteEffects.None;
+                //effective = SpriteEffects.None;
+                Mirror = false;
             }
 
             if (stand)

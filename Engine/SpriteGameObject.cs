@@ -6,11 +6,11 @@ public class SpriteGameObject : GameObject
     protected Color shade = Color.White;
     protected SpriteSheet sprite;
     protected Vector2 origin;
-    public float scale = 1f;
-    protected SpriteEffects effective = SpriteEffects.None;
+    protected float scale = 1f;
     public bool PerPixelCollisionDetection = true;
 
-    public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0, float scale = 1) : base(layer, id)
+    public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0)
+        : base(layer, id)
     {
         if (assetName != "")
         {
@@ -20,7 +20,6 @@ public class SpriteGameObject : GameObject
         {
             sprite = null;
         }
-        this.scale = scale;
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -29,7 +28,9 @@ public class SpriteGameObject : GameObject
         {
             return;
         }
-        spriteBatch.Draw(sprite.Sprite, GlobalPosition, null, shade, 0, Origin, scale, effective, 0);//SpriteEffects.None, 0);
+
+        //spriteBatch.Draw(sprite.Sprite, GlobalPosition, null, shade, 0, Origin, scale, SpriteEffects.None, 0);
+        sprite.Draw(spriteBatch, GlobalPosition, Origin, scale, shade);
     }
 
     public SpriteSheet Sprite
@@ -130,4 +131,6 @@ public class SpriteGameObject : GameObject
         return false;
     }
 }
+
+
 

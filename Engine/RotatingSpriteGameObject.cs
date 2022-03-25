@@ -70,7 +70,9 @@ class RotatingSpriteGameObject : SpriteGameObject
         if (!visible || sprite == null)
             return;
 
-        spriteBatch.Draw(sprite.Sprite, GlobalPosition, null, Color.White, radians - MathHelper.ToRadians(offsetDegrees), Origin, scale, SpriteEffects.None, 0);
+        //spriteBatch.Draw(sprite.Sprite, GlobalPosition, null, Color.White, radians - MathHelper.ToRadians(offsetDegrees), Origin, scale, SpriteEffects.None, 0);
+        sprite.Radians = radians - MathHelper.ToRadians(offsetDegrees);
+        sprite.Draw(spriteBatch, GlobalPosition, Origin, scale, shade);
     }
 
     /// <summary>
@@ -109,3 +111,4 @@ class RotatingSpriteGameObject : SpriteGameObject
     }
 
 }
+
