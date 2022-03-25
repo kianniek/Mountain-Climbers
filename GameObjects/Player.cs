@@ -39,7 +39,7 @@ using Microsoft.Xna.Framework.Input;
             right = false;
         }
 
-        Console.WriteLine(position.Y);
+        Console.WriteLine(stand);
         
         base.Update(gameTime);
         velocity.Y += gravity;
@@ -52,13 +52,11 @@ using Microsoft.Xna.Framework.Input;
 		if (inputHelper.IsKeyDown(Keys.Left))
         {
             left = true;
-            //effective = SpriteEffects.FlipHorizontally;
             Mirror = true;
         }
         if (inputHelper.IsKeyDown(Keys.Right))
         {
             right = true;
-            // effective = SpriteEffects.None;
             Mirror = false;
         }
 
