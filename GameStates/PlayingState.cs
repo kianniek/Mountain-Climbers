@@ -8,6 +8,7 @@ namespace BaseProject.GameStates
     {
         GameObjectList livesSmall;
         GameObjectList livesBig;
+        GameObjectList noLives;
         SmallPlayer smallPlayer;
         BigPlayer bigPlayer;
 
@@ -17,6 +18,7 @@ namespace BaseProject.GameStates
         {
             livesSmall = new GameObjectList();
             livesBig = new GameObjectList();
+            noLives = new GameObjectList();
             smallPlayer = new SmallPlayer();
             bigPlayer = new BigPlayer();
             LevelGenerator levelGen = new LevelGenerator();
@@ -31,6 +33,7 @@ namespace BaseProject.GameStates
             for (int i = 0; i < livesSmallPlayer; i++)
             {
                 Lives liveOrange = new Lives("Hartje_oranje", new Vector2(40 * i, 0));
+                noLives.Add(new Lives("Hartje_leeg", new Vector2(40 * i, 0)));
                 livesSmall.Add(liveOrange);
             }
 
@@ -49,10 +52,11 @@ namespace BaseProject.GameStates
             for (int i = 0; i < livesBigPlayer; i++)
             {
                 Lives liveGreen = new Lives("Hartje_groen", new Vector2(GameEnvironment.Screen.X - 50 - (40 * i), 0));
-                //noLives.Add(new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - 50 - (40 * i), 0)));
+                noLives.Add(new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - 50 - (40 * i), 0)));
                 livesBig.Add(liveGreen);
             }
 
+            this.Add(noLives);
             this.Add(livesSmall);
             this.Add(livesBig);
         }
