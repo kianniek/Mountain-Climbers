@@ -4,22 +4,21 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 //Dion
-	public class SmallPlayer : SpriteGameObject
-	{
-	float gravity;
+public class SmallPlayer : SpriteGameObject
+{
+    float gravity;
     public bool left, right, jump, stand;
-		public SmallPlayer() : base("Player")
-		{
-		position.Y = 300;
-		velocity.Y = 20;
-		velocity.X = 0;
+    public SmallPlayer() : base("Player")
+    {
+        position.Y = 300;
         gravity = 10f;
-		}
+        origin = new Vector2(Center.X, Center.Y + sprite.Height/2);
+    }
 
     public override void Update(GameTime gameTime)
     {
         velocity.X = 0;
-        //gravity = 10f;
+        gravity = 10f;
 
         if (jump)
         {
@@ -39,8 +38,7 @@ using Microsoft.Xna.Framework.Input;
             right = false;
         }
 
-        Console.WriteLine(stand);
-        
+
         base.Update(gameTime);
         velocity.Y += gravity;
     }
@@ -49,7 +47,7 @@ using Microsoft.Xna.Framework.Input;
     {
         base.HandleInput(inputHelper);
 
-		if (inputHelper.IsKeyDown(Keys.Left))
+        if (inputHelper.IsKeyDown(Keys.Left))
         {
             left = true;
             Mirror = true;
@@ -67,23 +65,18 @@ using Microsoft.Xna.Framework.Input;
                 stand = false;
                 jump = true;
             }
-        } 
+        }
     }
-    
+
     //Player is touching the ground
     //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
     public void OnGround(float standPosition)
     {
-        if (position.Y >= standPosition)
+        if (position.Y > standPosition)
         {
-            gravity = 0;
-            //velocity.Y = 0;
             stand = true;
             position.Y = standPosition;
-        }
-        else
-        {
-            gravity = 10f;
+            velocity.Y -= gravity;
         }
     }
 
