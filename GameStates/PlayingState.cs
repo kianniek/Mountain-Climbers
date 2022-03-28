@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace BaseProject.GameStates
 {
@@ -10,22 +12,24 @@ namespace BaseProject.GameStates
         GameObjectList livesBig;
         SmallPlayer smallPlayer;
         BigPlayer bigPlayer;
+        LevelGenerator levelGen;
 
         int livesSmallPlayer;
         int livesBigPlayer;
+        private float groundLevel = Game1.Screen.Y;
+
         public PlayingState()
         {
             livesSmall = new GameObjectList();
             livesBig = new GameObjectList();
             smallPlayer = new SmallPlayer();
             bigPlayer = new BigPlayer();
-            LevelGenerator levelGen = new LevelGenerator();
+            levelGen = new LevelGenerator();
 
             livesSmallPlayer = 2;
             livesBigPlayer = 2;
 
-            this.Add(bigPlayer);
-            this.Add(smallPlayer);
+
 
             //Orange health
             for (int i = 0; i < livesSmallPlayer; i++)
@@ -53,6 +57,9 @@ namespace BaseProject.GameStates
                 livesBig.Add(liveGreen);
             }
 
+            this.Add(bigPlayer);
+            this.Add(smallPlayer);
+
             this.Add(livesSmall);
             this.Add(livesBig);
         }
@@ -60,7 +67,20 @@ namespace BaseProject.GameStates
 
         public override void Update(GameTime gameTime)
         {
-            smallPlayer.OnGround(300);
+            foreach (SpriteGameObject tile in levelGen.tiles)
+            {
+                if (tile != null)
+                {
+                    if (tile.CollidesWith(smallPlayer))
+                    {
+                        Console.WriteLine(tile);
+                        groundLevel = tile.Position.Y;
+                        smallPlayer.OnGround(groundLevel);
+                    }
+                }
+            }
+            
+            //smallPlayer.OnGround(500);
             smallPlayer.hitWallLeft(0);
             smallPlayer.hitWallRight(1700);
 
@@ -75,12 +95,11 @@ namespace BaseProject.GameStates
                 livesSmall.Children[livesSmallPlayer].Velocity = new Vector2(0, -20);
             }
 
-                if (bigPlayer.jump)
+            if (bigPlayer.jump)
             {
                 livesBigPlayer--;
                 livesBig.Children[livesBigPlayer].Velocity = new Vector2(0, -20);
             }
-
             base.Update(gameTime);
         }
 
