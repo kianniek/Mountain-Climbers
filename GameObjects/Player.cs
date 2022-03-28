@@ -4,27 +4,27 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 //Dion
-	public class Player : SpriteGameObject
-	{
-	float gravity;
-    bool left, right, jump, stand;
-		public Player() : base("Player")
-		{
-		position.Y = 300;
-		velocity.Y = 20;
-		velocity.X = 0;
+public class SmallPlayer : SpriteGameObject
+{
+    float gravity;
+    public bool left, right, jump, stand;
+    public SmallPlayer() : base("Player")
+    {
+        position.Y = 300;
         gravity = 10f;
-		}
+        origin = new Vector2(Center.X, Center.Y + sprite.Height/2);
+    }
 
     public override void Update(GameTime gameTime)
     {
         velocity.X = 0;
+        gravity = 10f;
 
         if (jump)
         {
             jump = false;
             stand = false;
-            velocity.Y = -400;
+            velocity.Y = -460;
         }
 
         if (left)
@@ -38,8 +38,7 @@ using Microsoft.Xna.Framework.Input;
             right = false;
         }
 
-        Console.WriteLine(position.Y);
-        
+
         base.Update(gameTime);
         velocity.Y += gravity;
     }
@@ -48,13 +47,15 @@ using Microsoft.Xna.Framework.Input;
     {
         base.HandleInput(inputHelper);
 
-		if (inputHelper.IsKeyDown(Keys.Left))
+        if (inputHelper.IsKeyDown(Keys.Left))
         {
             left = true;
+            Mirror = true;
         }
         if (inputHelper.IsKeyDown(Keys.Right))
         {
             right = true;
+            Mirror = false;
         }
 
         if (stand)
@@ -64,18 +65,18 @@ using Microsoft.Xna.Framework.Input;
                 stand = false;
                 jump = true;
             }
-        } 
+        }
     }
-    
-    //Player is touches the ground
+
+    //Player is touching the ground
     //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
     public void OnGround(float standPosition)
     {
-        if (position.Y >= standPosition)
+        if (position.Y > standPosition)
         {
-            velocity.Y = 0;
             stand = true;
             position.Y = standPosition;
+            velocity.Y -= gravity;
         }
     }
 

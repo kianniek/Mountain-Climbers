@@ -10,12 +10,16 @@ public class SpriteSheet
     protected int sheetColumns;
     protected int sheetRows;
     protected bool mirror;
+    protected float radians;
+
 
     public SpriteSheet(string assetname, int sheetIndex = 0)
     {
         // retrieve the sprite
         sprite = GameEnvironment.AssetManager.GetSprite(assetname);
-        
+
+        radians = 0.0f;
+
         // construct the collision mask
         Color[] colorData = new Color[sprite.Width * sprite.Height];
         collisionMask = new bool[sprite.Width * sprite.Height];
@@ -24,8 +28,7 @@ public class SpriteSheet
         {
             collisionMask[i] = colorData[i].A != 0;
         }
-
-        this.sheetIndex = sheetIndex;
+        
         sheetColumns = 1;
         sheetRows = 1;
 
@@ -33,6 +36,7 @@ public class SpriteSheet
         string[] assetSplit = assetname.Split('@');
         if (assetSplit.Length <= 1)
         {
+            this.sheetIndex = sheetIndex;
             return;
         }
 
@@ -43,9 +47,11 @@ public class SpriteSheet
         {
             sheetRows = int.Parse(colRow[1]);
         }
+
+        this.sheetIndex = sheetIndex;
     }
 
-    public void Draw(SpriteBatch spriteBatch, Vector2 position, Vector2 origin, float scale)
+    public void Draw(SpriteBatch spriteBatch, Vector2 position, Vector2 origin, float scale, Color color)
     {
         int columnIndex = sheetIndex % sheetColumns;
         int rowIndex = sheetIndex / sheetColumns % sheetRows;
@@ -55,8 +61,8 @@ public class SpriteSheet
         {
             spriteEffects = SpriteEffects.FlipHorizontally;
         }
-        spriteBatch.Draw(sprite, position, spritePart, Color.White,
-            0.0f, origin, scale, spriteEffects, 0.0f);
+        spriteBatch.Draw(sprite, position, spritePart, color,
+            radians, origin, scale, spriteEffects, 0.0f);
     }
 
     public bool IsTranslucent(int x, int y)
@@ -93,6 +99,12 @@ public class SpriteSheet
     {
         get { return mirror; }
         set { mirror = value; }
+    }
+
+    public float Radians
+    {
+        get { return radians; }
+        set { radians = value; }
     }
 
     public int SheetIndex
