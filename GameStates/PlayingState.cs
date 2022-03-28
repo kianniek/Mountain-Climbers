@@ -73,7 +73,7 @@ namespace BaseProject.GameStates
             bigPlayer.hitWallRight(1700);
 
             //Test for losing a live. You can comment these if-statements if it's annoying for you.
-            if (smallPlayer.jump)
+            /*if (smallPlayer.jump)
             {
                 livesSmallPlayer--;
                 livesSmall.Children[livesSmallPlayer].Velocity = new Vector2(0, -20);
@@ -83,7 +83,7 @@ namespace BaseProject.GameStates
             {
                 livesBigPlayer--;
                 livesBig.Children[livesBigPlayer].Velocity = new Vector2(0, -20);
-            }
+            }*/
 
             base.Update(gameTime);
         }
