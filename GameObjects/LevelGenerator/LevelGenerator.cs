@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class LevelGenerator : GameObject
 {
     public SpriteGameObject[,] tiles;
+    public SpriteGameObject ground;
     public Texture2D map;
     public Color[,] colors;
     public float offsetX = 2.1f;
@@ -70,61 +71,62 @@ public class LevelGenerator : GameObject
 
         if (!arrayOutOfBound)
         {
-            SpriteGameObject ground;
             ground = new Ground(assetName: horizontalBlock)
             {
                 Position = new Vector2(x * (Game1.Screen.X / map.Width * offsetX), y * (Game1.Screen.Y / map.Height) * offsetY)
             };
+            if (x != 0)
+            {
 
-            if (colors[x - 1, y] == Color.Transparent)
-            {
-                ground = new Ground(assetName: LeftverticalBlock)
+                if (colors[x - 1, y] == Color.Transparent)
                 {
-                    Position = new Vector2(x * (Game1.Screen.X / map.Width * offsetX), y * (Game1.Screen.Y / map.Height) * offsetY)
-                };
-            }
-            if (colors[x + 1, y] == Color.Transparent)
-            {
-                ground = new Ground(assetName: RightverticalBlock)
-                {
-                    Position = new Vector2(x * (Game1.Screen.X / map.Width * offsetX), y * (Game1.Screen.Y / map.Height) * offsetY)
-                };
-            }
-            if (colors[x - 1, y] == Color.Transparent && colors[x, y - 1] == Color.Transparent)
-            {
-                if (colors[x - 1, y - 1] == Color.Transparent)
-                {
-                    ground = new Ground(assetName: cornerLeft)
+                    ground = new Ground(assetName: LeftverticalBlock)
                     {
                         Position = new Vector2(x * (Game1.Screen.X / map.Width * offsetX), y * (Game1.Screen.Y / map.Height) * offsetY)
                     };
                 }
-                else
+                if (colors[x + 1, y] == Color.Transparent)
                 {
-                    ground = new Ground(assetName: horizontalBlock)
+                    ground = new Ground(assetName: RightverticalBlock)
                     {
                         Position = new Vector2(x * (Game1.Screen.X / map.Width * offsetX), y * (Game1.Screen.Y / map.Height) * offsetY)
                     };
+                }
+                if (colors[x - 1, y] == Color.Transparent && colors[x, y - 1] == Color.Transparent)
+                {
+                    if (colors[x - 1, y - 1] == Color.Transparent)
+                    {
+                        ground = new Ground(assetName: cornerLeft)
+                        {
+                            Position = new Vector2(x * (Game1.Screen.X / map.Width * offsetX), y * (Game1.Screen.Y / map.Height) * offsetY)
+                        };
+                    }
+                    else
+                    {
+                        ground = new Ground(assetName: horizontalBlock)
+                        {
+                            Position = new Vector2(x * (Game1.Screen.X / map.Width * offsetX), y * (Game1.Screen.Y / map.Height) * offsetY)
+                        };
+                    }
+                }
+                if (colors[x + 1, y] == Color.Transparent && colors[x, y - 1] == Color.Transparent)
+                {
+                    if (colors[x + 1, y - 1] == Color.Transparent)
+                    {
+                        ground = new Ground(assetName: cornerRight)
+                        {
+                            Position = new Vector2(x * (Game1.Screen.X / map.Width * offsetX), y * (Game1.Screen.Y / map.Height) * offsetY)
+                        };
+                    }
+                    else
+                    {
+                        ground = new Ground(assetName: horizontalBlock)
+                        {
+                            Position = new Vector2(x * (Game1.Screen.X / map.Width * offsetX), y * (Game1.Screen.Y / map.Height) * offsetY)
+                        };
+                    }
                 }
             }
-            if (colors[x + 1, y] == Color.Transparent && colors[x, y - 1] == Color.Transparent)
-            {
-                if (colors[x + 1, y - 1] == Color.Transparent)
-                {
-                    ground = new Ground(assetName: cornerRight)
-                    {
-                        Position = new Vector2(x * (Game1.Screen.X / map.Width * offsetX), y * (Game1.Screen.Y / map.Height) * offsetY)
-                    };
-                }
-                else
-                {
-                    ground = new Ground(assetName: horizontalBlock)
-                    {
-                        Position = new Vector2(x * (Game1.Screen.X / map.Width * offsetX), y * (Game1.Screen.Y / map.Height) * offsetY)
-                    };
-                }
-            }
-
             tiles[x, y] = ground;
         }
 

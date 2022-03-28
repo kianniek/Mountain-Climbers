@@ -8,7 +8,7 @@ namespace BaseProject.GameObjects
 {
     internal class UnderGround : Ground
     {
-        public UnderGround(string assetName = "Tile_dirt", float scale = 1.6f) : base("Tile_dirt", scale: 1.6f)
+        public UnderGround(string assetName = "Tile_dirt", float scale = 1.6f) : base("Tile_dirt")
         {
             position = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
             shade = Color.White;

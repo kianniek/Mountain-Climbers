@@ -6,7 +6,7 @@ public class SpriteGameObject : GameObject
     protected Color shade = Color.White;
     protected SpriteSheet sprite;
     protected Vector2 origin;
-    public float scale = 1f;
+    protected float scale;
     protected SpriteEffects effective = SpriteEffects.None;
     public bool PerPixelCollisionDetection = true;
 
@@ -20,7 +20,7 @@ public class SpriteGameObject : GameObject
         {
             sprite = null;
         }
-        this.scale = scale;
+        Scale = scale;
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
