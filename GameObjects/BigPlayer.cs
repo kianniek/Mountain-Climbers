@@ -15,14 +15,14 @@ namespace BaseProject
         public BigPlayer() : base("player2")
         {
             position.Y = 300;
-            velocity.Y = 20;
-            velocity.X = 500;
             gravity = 10f;
+            origin = new Vector2(Center.X, Center.Y);
         }
 
         public override void Update(GameTime gameTime)
         {
             velocity.X = 0;
+            gravity = 10f;
 
             if (jump)
             {
@@ -77,16 +77,11 @@ namespace BaseProject
         //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
         public void OnGround(float standPosition)
         {
-            if (position.Y >= standPosition)
+            if (position.Y > standPosition)
             {
-                gravity = 0;
-                //velocity.Y = 0;
                 stand = true;
                 position.Y = standPosition;
-            }
-            else
-            {
-                gravity = 10f;
+                velocity.Y -= gravity;
             }
         }
 

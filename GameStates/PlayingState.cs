@@ -81,14 +81,18 @@ namespace BaseProject.GameStates
                         groundLevel = tile.Position.Y;
                         smallPlayer.OnGround(groundLevel);
                     }
+                    if (tile.CollidesWith(bigPlayer))
+                    {
+                        Console.WriteLine(tile);
+                        groundLevel = tile.Position.Y;
+                        bigPlayer.OnGround(groundLevel - bigPlayer.Sprite.Height / 2);
+                    }
                 }
             }
             
-            //smallPlayer.OnGround(500);
             smallPlayer.hitWallLeft(0);
             smallPlayer.hitWallRight(1700);
 
-            bigPlayer.OnGround(300 - bigPlayer.Sprite.Height / 2 + 10);
             bigPlayer.hitWallLeft(0);
             bigPlayer.hitWallRight(1700);
 
