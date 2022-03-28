@@ -50,13 +50,11 @@ public class SmallPlayer : SpriteGameObject
         if (inputHelper.IsKeyDown(Keys.Left))
         {
             left = true;
-            //effective = SpriteEffects.FlipHorizontally;
             Mirror = true;
         }
         if (inputHelper.IsKeyDown(Keys.Right))
         {
             right = true;
-            // effective = SpriteEffects.None;
             Mirror = false;
         }
 

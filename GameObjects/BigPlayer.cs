@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-//Dion
+//Dion & Thimo
 namespace BaseProject
 {
     class BigPlayer : SpriteGameObject
