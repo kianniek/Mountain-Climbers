@@ -13,7 +13,6 @@ namespace BaseProject
 
         public BigPlayer() : base("player2")
         {
-            origin = new Vector2(Center.X, Center.Y);
         }
 
         public override void Update(GameTime gameTime)
