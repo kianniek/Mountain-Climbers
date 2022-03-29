@@ -77,13 +77,13 @@ namespace BaseProject.GameStates
                 {
                     if (tile.CollidesWith(smallPlayer))
                     {
-                        Console.WriteLine(tile);
+                        //Console.WriteLine(tile);
                         groundLevel = tile.Position.Y;
                         smallPlayer.OnGround(groundLevel);
                     }
                     if (tile.CollidesWith(bigPlayer))
                     {
-                        Console.WriteLine(tile);
+                        //Console.WriteLine(tile);
                         groundLevel = tile.Position.Y;
                         bigPlayer.OnGround(groundLevel - bigPlayer.Sprite.Height / 2);
                     }
