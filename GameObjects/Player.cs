@@ -1,64 +1,34 @@
 ﻿using System;
+using BaseProject;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 //Dion
-	public class SmallPlayer : SpriteGameObject
-	{
-	float gravity;
-    public bool left, right, jump, stand;
-		public SmallPlayer() : base("Player")
-		{
-		position.Y = 300;
-		velocity.Y = 20;
-		velocity.X = 0;
-        gravity = 10f;
-		}
+class SmallPlayer : HeadPlayer
+{
+
+    public SmallPlayer() : base("Player")
+    {
+    }
 
     public override void Update(GameTime gameTime)
     {
-        velocity.X = 0;
-        //gravity = 10f;
-
-        if (jump)
-        {
-            jump = false;
-            stand = false;
-            velocity.Y = -460;
-        }
-
-        if (left)
-        {
-            velocity.X = -175;
-            left = false;
-        }
-        if (right)
-        {
-            velocity.X = 175;
-            right = false;
-        }
-
-        Console.WriteLine(position.Y);
-        
         base.Update(gameTime);
-        velocity.Y += gravity;
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
 
-		if (inputHelper.IsKeyDown(Keys.Left))
+        if (inputHelper.IsKeyDown(Keys.Left))
         {
             left = true;
-            //effective = SpriteEffects.FlipHorizontally;
             Mirror = true;
         }
         if (inputHelper.IsKeyDown(Keys.Right))
         {
             right = true;
-            // effective = SpriteEffects.None;
             Mirror = false;
         }
 
@@ -69,41 +39,25 @@ using Microsoft.Xna.Framework.Input;
                 stand = false;
                 jump = true;
             }
-        } 
-    }
-    
-    //Player is touching the ground
-    //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
-    public void OnGround(float standPosition)
-    {
-        if (position.Y >= standPosition)
-        {
-            gravity = 0;
-            //velocity.Y = 0;
-            stand = true;
-            position.Y = standPosition;
-        }
-        else
-        {
-            gravity = 10f;
         }
     }
 
-    //Deze kun je gebruiken bij een wall collision aan de linkerkant 
-    public void hitWallLeft(float leftPosition)
+    //Player is touching the ground
+    //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
+    public override void OnGround(float standPosition)
     {
-        if (position.X <= leftPosition)
-        {
-            position.X = leftPosition;
-        }
+        base.OnGround(standPosition);
+    }
+
+    //Deze kun je gebruiken bij een wall collision aan de linkerkant 
+    public override void hitWallLeft(float leftPosition)
+    {
+        base.hitWallLeft(leftPosition);
     }
 
     //Deze kun je gebruiken bij een wall collision aan de rechterkant
     public void hitWallRight(float rightPosition)
     {
-        if (position.X >= rightPosition)
-        {
-            position.X = rightPosition;
-        }
+        base.hitWallRight(rightPosition);
     }
 }

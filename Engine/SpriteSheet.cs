@@ -28,8 +28,7 @@ public class SpriteSheet
         {
             collisionMask[i] = colorData[i].A != 0;
         }
-
-        this.sheetIndex = sheetIndex;
+        
         sheetColumns = 1;
         sheetRows = 1;
 
@@ -37,6 +36,7 @@ public class SpriteSheet
         string[] assetSplit = assetname.Split('@');
         if (assetSplit.Length <= 1)
         {
+            this.sheetIndex = sheetIndex;
             return;
         }
 
@@ -47,6 +47,8 @@ public class SpriteSheet
         {
             sheetRows = int.Parse(colRow[1]);
         }
+
+        this.sheetIndex = sheetIndex;
     }
 
     public void Draw(SpriteBatch spriteBatch, Vector2 position, Vector2 origin, float scale, Color color)

@@ -18,6 +18,8 @@ namespace BaseProject
             // TODO: use this.Content to load your game content here 
             GameStateManager.AddGameState("PlayingState", new PlayingState());
             GameStateManager.SwitchTo("PlayingState");
+            
+            
         }
 
     }
