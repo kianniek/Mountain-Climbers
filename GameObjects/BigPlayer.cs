@@ -13,6 +13,9 @@ namespace BaseProject
 
         public BigPlayer() : base("player2")
         {
+            position.Y = 300;
+            gravity = 10f;
+            origin = new Vector2(Center.X, Center.Y);
         }
 
         public override void Update(GameTime gameTime)
@@ -23,8 +26,6 @@ namespace BaseProject
 
         public override void HandleInput(InputHelper inputHelper)
         {
-            base.HandleInput(inputHelper);
-
             if (inputHelper.IsKeyDown(Keys.A))
             {
                 left = true;
@@ -46,29 +47,6 @@ namespace BaseProject
                     jump = true;
                 }
             }
-        }
-
-        //Player is touching the ground
-        //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
-        public override void OnGround(float standPosition)
-        {
-            base.OnGround(standPosition);
-        }
-
-        //Deze kun je gebruiken bij een wall collision aan de linkerkant 
-        public override void hitWallLeft(float leftPosition)
-        {
-            /*if (position.X <= leftPosition)
-            {
-                position.X = leftPosition;
-            }*/
-            base.hitWallLeft(leftPosition);
-        }
-
-        //Deze kun je gebruiken bij een wall collision aan de rechterkant
-        public override void hitWallRight(float rightPosition)
-        {
-            base.hitWallRight(rightPosition);
         }
     }
 }

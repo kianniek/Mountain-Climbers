@@ -44,7 +44,7 @@ namespace BaseProject
             velocity.Y += gravity;
         }
 
-        /*public override void HandleInput(InputHelper inputHelper)
+        public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
 
@@ -67,7 +67,7 @@ namespace BaseProject
                     jump = true;
                 }
             }
-        }*/
+        }
 
         //Player is touching the ground
         //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
@@ -77,7 +77,7 @@ namespace BaseProject
             {
                 stand = true;
                 position.Y = standPosition;
-                velocity.Y -= gravity;
+                velocity.Y -= gravity*2;
             }
         }
 

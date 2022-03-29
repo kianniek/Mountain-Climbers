@@ -10,17 +10,13 @@ class SmallPlayer : HeadPlayer
 
     public SmallPlayer() : base("Player")
     {
-    }
-
-    public override void Update(GameTime gameTime)
-    {
-        base.Update(gameTime);
+        position.Y = 300;
+        gravity = 10f;
+        origin = new Vector2(Center.X, Center.Y + sprite.Height / 2);
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        base.HandleInput(inputHelper);
-
         if (inputHelper.IsKeyDown(Keys.Left))
         {
             left = true;
@@ -42,22 +38,8 @@ class SmallPlayer : HeadPlayer
         }
     }
 
-    //Player is touching the ground
-    //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
-    public override void OnGround(float standPosition)
+    public override void Update(GameTime gameTime)
     {
-        base.OnGround(standPosition);
-    }
-
-    //Deze kun je gebruiken bij een wall collision aan de linkerkant 
-    public override void hitWallLeft(float leftPosition)
-    {
-        base.hitWallLeft(leftPosition);
-    }
-
-    //Deze kun je gebruiken bij een wall collision aan de rechterkant
-    public void hitWallRight(float rightPosition)
-    {
-        base.hitWallRight(rightPosition);
+        base.Update(gameTime);
     }
 }
