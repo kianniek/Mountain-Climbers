@@ -3,13 +3,13 @@ using Microsoft.Xna.Framework;
 
 namespace BaseProject.GameObjects
 {
-    public class StrongWind : SpriteGameObject
+    public class StrongWind : GameObject
     {
         public float Height { get; private set; }
         public float Range { get; private set; }
         public WindDirection Direction { get; private set; }
 
-        public StrongWind(Vector2 position, float height, float range, WindDirection direction) : base("wind")
+        public StrongWind(Vector2 position, float height, float range, WindDirection direction)
         {
             IWindObject.windAreas.Add(this);
             this.position = position;
