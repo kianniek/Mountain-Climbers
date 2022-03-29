@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseProject.GameObjects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseProject.GameStates
@@ -14,6 +15,10 @@ namespace BaseProject.GameStates
 
             this.Add(bigPlayer);
             this.Add(smallPlayer);
+            
+            
+            Add(new StrongWind(GameEnvironment.Screen.ToVector2()/2, 5, 200, WindDirection.Left));
+            Add(new Box(GameEnvironment.Screen.ToVector2()/2));
         }
 
         public override void Update(GameTime gameTime)

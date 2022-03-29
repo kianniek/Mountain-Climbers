@@ -38,7 +38,7 @@ using Microsoft.Xna.Framework.Input;
             right = false;
         }
 
-        Console.WriteLine(position.Y);
+        //Console.WriteLine(position.Y);
         
         base.Update(gameTime);
         velocity.Y += gravity;
