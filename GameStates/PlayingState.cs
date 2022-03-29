@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseProject.GameObjects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace BaseProject.GameStates
 {
@@ -10,6 +12,7 @@ namespace BaseProject.GameStates
         GameObjectList livesBig;
         SmallPlayer smallPlayer;
         BigPlayer bigPlayer;
+        Button button;
 
         int livesSmallPlayer;
         int livesBigPlayer;
@@ -19,13 +22,17 @@ namespace BaseProject.GameStates
             livesBig = new GameObjectList();
             smallPlayer = new SmallPlayer();
             bigPlayer = new BigPlayer();
+           
             LevelGenerator levelGen = new LevelGenerator();
+
+            button = new Button();
 
             livesSmallPlayer = 2;
             livesBigPlayer = 2;
 
             this.Add(bigPlayer);
             this.Add(smallPlayer);
+            this.Add(button);   
 
             //Orange health
             for (int i = 0; i < livesSmallPlayer; i++)
@@ -68,6 +75,11 @@ namespace BaseProject.GameStates
             bigPlayer.hitWallLeft(0);
             bigPlayer.hitWallRight(1700);
 
+
+            
+
+           
+
             //Test for losing a live. You can comment these if-statements if it's annoying for you.
             if (smallPlayer.jump)
             {
@@ -92,6 +104,18 @@ namespace BaseProject.GameStates
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
+
+            if ((smallPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
+            {
+                Console.WriteLine("lets go");          
+
+            }
+
+            if((bigPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter))
+            {
+                Console.WriteLine("alleen voor de grote spelers");
+            }
+
         }
     }
 }
