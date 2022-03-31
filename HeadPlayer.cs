@@ -7,8 +7,8 @@ using System.Text;
 namespace BaseProject
 {
     //Dion
-    class HeadPlayer : SpriteGameObject
-    {
+       class HeadPlayer : SpriteGameObject
+       {
         public float gravity;
         public bool left, right, jump, stand;
         public HeadPlayer(string assetName) : base(assetName)
@@ -43,6 +43,13 @@ namespace BaseProject
 
             base.Update(gameTime);
             velocity.Y += gravity;
+        }
+
+        //Roep deze functie aan als de speler normaal springt en de waterval raakt,
+        //maar zodra je de pickup gebruikt, roep deze niet aan.
+        public virtual void hitWaterfall()
+        {
+            velocity.Y = 520;
         }
 
         public override void HandleInput(InputHelper inputHelper)

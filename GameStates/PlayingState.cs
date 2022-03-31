@@ -12,6 +12,7 @@ namespace BaseProject.GameStates
         GameObjectList livesSmall;
         GameObjectList livesBig;
         GameObjectList noLives;
+        GameObjectList waterfalls;
         SmallPlayer smallPlayer;
         LevelGenerator levelGen;
         BigPlayer bigPlayer;
@@ -27,6 +28,7 @@ namespace BaseProject.GameStates
             livesSmall = new GameObjectList();
             livesBig = new GameObjectList();
             noLives = new GameObjectList();
+            waterfalls = new GameObjectList();
             smallPlayer = new SmallPlayer();
             bigPlayer = new BigPlayer();
             button = new Button();
@@ -45,6 +47,9 @@ namespace BaseProject.GameStates
                 Add(levelObject);
             }
 
+            waterfalls.Add(new Waterfall("player2"));
+
+            this.Add(waterfalls);
             this.Add(bigPlayer);
             this.Add(smallPlayer);
             this.Add(button);
@@ -102,10 +107,17 @@ namespace BaseProject.GameStates
             bigPlayer.hitWallLeft(0);
             bigPlayer.hitWallRight(1700);
 
-
-
-
-
+            foreach(Waterfall waterfall in waterfalls.Children)
+            {
+                if (waterfall.CollidesWith(smallPlayer))
+                {
+                    smallPlayer.hitWaterfall();
+                }
+                if (waterfall.CollidesWith(bigPlayer))
+                {
+                    bigPlayer.hitWaterfall();
+                }
+            }
 
             //Test for losing a live. You can comment these if-statements if it's annoying for you.
             /*if (smallPlayer.jump)

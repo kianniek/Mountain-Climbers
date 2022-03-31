@@ -22,6 +22,11 @@ namespace BaseProject
             base.Update(gameTime);
         }
 
+        public override void hitWaterfall()
+        {
+           base.hitWaterfall();
+        }
+
         public override void HandleInput(InputHelper inputHelper)
         {
             if (inputHelper.IsKeyDown(Keys.A))

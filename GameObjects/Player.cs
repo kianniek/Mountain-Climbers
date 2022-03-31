@@ -40,4 +40,9 @@ class SmallPlayer : HeadPlayer
     {
         base.Update(gameTime);
     }
+
+    public override void hitWaterfall()
+    {
+        base.hitWaterfall();
+    }
 }
