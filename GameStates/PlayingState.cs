@@ -27,8 +27,8 @@ namespace BaseProject.GameStates
             livesSmall = new GameObjectList();
             livesBig = new GameObjectList();
             noLives = new GameObjectList();
-            smallPlayer = new SmallPlayer();
-            bigPlayer = new BigPlayer();
+            smallPlayer = new SmallPlayer(levelGen);
+            bigPlayer = new BigPlayer(levelGen);
             button = new Button();
 
             livesSmallPlayer = 2;
@@ -77,48 +77,7 @@ namespace BaseProject.GameStates
 
         public override void Update(GameTime gameTime)
         {
-            foreach (SpriteGameObject tile in levelGen.tiles)
-            {
-                if (tile != null)
-                {
-                    if (tile.CollidesWith(smallPlayer))
-                    {
-                        //Console.WriteLine(tile);
-                        groundLevel = tile.Position.Y + tile.Sprite.Height;
-                        smallPlayer.OnGround(groundLevel);
-                    }
-                    if (tile.CollidesWith(bigPlayer))
-                    {
-                        //Console.WriteLine(tile);
-                        groundLevel = tile.Position.Y + tile.Sprite.Height;
-                        bigPlayer.OnGround(groundLevel);
-                    }
-                }
-            }
-
-            smallPlayer.hitWallLeft(0);
-            smallPlayer.hitWallRight(1700);
-
-            bigPlayer.hitWallLeft(0);
-            bigPlayer.hitWallRight(1700);
-
-
-
-
-
-
-            //Test for losing a live. You can comment these if-statements if it's annoying for you.
-            /*if (smallPlayer.jump)
-            {
-                livesSmallPlayer--;
-                livesSmall.Children[livesSmallPlayer].Velocity = new Vector2(0, -20);
-            }
-
-            if (bigPlayer.jump)
-            {
-                livesBigPlayer--;
-                livesBig.Children[livesBigPlayer].Velocity = new Vector2(0, -20);
-            }*/
+            Console.WriteLine(smallPlayer.Position);
 
             base.Update(gameTime);
         }
