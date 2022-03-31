@@ -87,4 +87,9 @@ class SmallPlayer : HeadPlayer
             }
         }
     }
+
+    public override void hitWaterfall()
+    {
+        base.hitWaterfall();
+    }
 }

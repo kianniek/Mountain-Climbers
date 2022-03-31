@@ -69,6 +69,11 @@ namespace BaseProject
             }
         }
 
+        public override void hitWaterfall()
+        {
+           base.hitWaterfall();
+        }
+
         public override void HandleInput(InputHelper inputHelper)
         {
             if (inputHelper.IsKeyDown(Keys.A))

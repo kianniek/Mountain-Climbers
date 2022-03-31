@@ -12,6 +12,7 @@ namespace BaseProject.GameStates
         GameObjectList livesSmall;
         GameObjectList livesBig;
         GameObjectList noLives;
+        GameObjectList waterfalls;
         SmallPlayer smallPlayer;
         LevelGenerator levelGen;
         BigPlayer bigPlayer;
@@ -45,6 +46,9 @@ namespace BaseProject.GameStates
                 Add(levelObject);
             }
 
+            waterfalls.Add(new Waterfall("player2"));
+
+            this.Add(waterfalls);
             this.Add(bigPlayer);
             this.Add(smallPlayer);
             this.Add(button);
