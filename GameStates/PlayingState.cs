@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseProject.GameObjects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -12,8 +13,9 @@ namespace BaseProject.GameStates
         GameObjectList livesBig;
         GameObjectList noLives;
         SmallPlayer smallPlayer;
-        BigPlayer bigPlayer;
         LevelGenerator levelGen;
+        BigPlayer bigPlayer;
+        Button button;
 
         int livesSmallPlayer;
         int livesBigPlayer;
@@ -21,25 +23,16 @@ namespace BaseProject.GameStates
 
         public PlayingState()
         {
+            levelGen = new LevelGenerator();
             livesSmall = new GameObjectList();
             livesBig = new GameObjectList();
             noLives = new GameObjectList();
             smallPlayer = new SmallPlayer();
             bigPlayer = new BigPlayer();
-            levelGen = new LevelGenerator();
+            button = new Button();
 
             livesSmallPlayer = 2;
             livesBigPlayer = 2;
-
-
-
-            //Orange health
-            for (int i = 0; i < livesSmallPlayer; i++)
-            {
-                Lives liveOrange = new Lives("Hartje_oranje", new Vector2(40 * i, 0));
-                noLives.Add(new Lives("Hartje_leeg", new Vector2(40 * i, 0)));
-                livesSmall.Add(liveOrange);
-            }
 
             this.Add(levelGen);
             foreach (GameObject tile in levelGen.tiles)
@@ -51,6 +44,19 @@ namespace BaseProject.GameStates
                 }
                 Add(levelObject);
             }
+
+            this.Add(bigPlayer);
+            this.Add(smallPlayer);
+            this.Add(button);
+
+            //Orange health
+            for (int i = 0; i < livesSmallPlayer; i++)
+            {
+                Lives liveOrange = new Lives("Hartje_oranje", new Vector2(40 * i, 0));
+                noLives.Add(new Lives("Hartje_leeg", new Vector2(40 * i, 0)));
+                livesSmall.Add(liveOrange);
+            }
+
 
             //Green health
             for (int i = 0; i < livesBigPlayer; i++)
@@ -78,23 +84,28 @@ namespace BaseProject.GameStates
                     if (tile.CollidesWith(smallPlayer))
                     {
                         //Console.WriteLine(tile);
-                        groundLevel = tile.Position.Y;
+                        groundLevel = tile.Position.Y + tile.Sprite.Height;
                         smallPlayer.OnGround(groundLevel);
                     }
                     if (tile.CollidesWith(bigPlayer))
                     {
                         //Console.WriteLine(tile);
-                        groundLevel = tile.Position.Y;
-                        bigPlayer.OnGround(groundLevel - bigPlayer.Sprite.Height / 2);
+                        groundLevel = tile.Position.Y + tile.Sprite.Height;
+                        bigPlayer.OnGround(groundLevel);
                     }
                 }
             }
-            
+
             smallPlayer.hitWallLeft(0);
             smallPlayer.hitWallRight(1700);
 
             bigPlayer.hitWallLeft(0);
             bigPlayer.hitWallRight(1700);
+
+
+
+
+
 
             //Test for losing a live. You can comment these if-statements if it's annoying for you.
             /*if (smallPlayer.jump)
@@ -120,6 +131,18 @@ namespace BaseProject.GameStates
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
+
+            if ((smallPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
+            {
+                Console.WriteLine("lets go");
+
+            }
+
+            if ((bigPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter))
+            {
+                Console.WriteLine("alleen voor de grote spelers");
+            }
+
         }
     }
 }

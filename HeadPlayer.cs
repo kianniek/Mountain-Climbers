@@ -13,9 +13,9 @@ namespace BaseProject
         public bool left, right, jump, stand;
         public HeadPlayer(string assetName) : base(assetName)
         {
-            position.Y = 300;
+            position.Y = 0;
             gravity = 10f;
-            origin = new Vector2(Center.X, Center.Y + sprite.Height / 2);
+            origin = Center;
         }
 
         public override void Update(GameTime gameTime)
@@ -45,7 +45,7 @@ namespace BaseProject
             velocity.Y += gravity;
         }
 
-        /*public override void HandleInput(InputHelper inputHelper)
+        public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
 
@@ -68,7 +68,7 @@ namespace BaseProject
                     jump = true;
                 }
             }
-        }*/
+        }
 
         //Player is touching the ground
         //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
@@ -78,7 +78,7 @@ namespace BaseProject
             {
                 stand = true;
                 position.Y = standPosition;
-                velocity.Y -= gravity;
+                velocity.Y = 0;
             }
         }
 
