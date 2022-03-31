@@ -10,9 +10,7 @@ class SmallPlayer : HeadPlayer
 
     public SmallPlayer() : base("Player")
     {
-        position.Y = 300;
-        gravity = 10f;
-        origin = new Vector2(Center.X, Center.Y + sprite.Height / 2);
+        origin = new Vector2(Center.X, Center.Y + sprite.Height);
     }
 
     public override void HandleInput(InputHelper inputHelper)

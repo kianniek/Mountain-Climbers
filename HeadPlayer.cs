@@ -6,15 +6,16 @@ using System.Text;
 
 namespace BaseProject
 {
+    
     class HeadPlayer : SpriteGameObject
     {
         public float gravity;
         public bool left, right, jump, stand;
         public HeadPlayer(string assetName) : base(assetName)
         {
-            position.Y = 300;
+            position.Y = 0;
             gravity = 10f;
-            origin = new Vector2(Center.X, Center.Y + sprite.Height / 2);
+            origin = Center;
         }
 
         public override void Update(GameTime gameTime)
@@ -77,7 +78,7 @@ namespace BaseProject
             {
                 stand = true;
                 position.Y = standPosition;
-                velocity.Y -= gravity*2;
+                velocity.Y = 0;
             }
         }
 

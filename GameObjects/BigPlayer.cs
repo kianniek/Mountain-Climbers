@@ -13,9 +13,7 @@ namespace BaseProject
 
         public BigPlayer() : base("player2")
         {
-            position.Y = 300;
-            gravity = 10f;
-            origin = new Vector2(Center.X, Center.Y);
+            origin = new Vector2(Center.X, Center.Y + sprite.Height/2);
         }
 
         public override void Update(GameTime gameTime)
