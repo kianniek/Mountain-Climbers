@@ -11,11 +11,11 @@ namespace BaseProject
        {
         public float gravity;
         public bool left, right, jump, stand;
+
         public HeadPlayer(string assetName) : base(assetName)
         {
             position.Y = 0;
             gravity = 10f;
-            origin = Center;
         }
 
         public override void Update(GameTime gameTime)
@@ -43,6 +43,10 @@ namespace BaseProject
 
             base.Update(gameTime);
             velocity.Y += gravity;
+
+            
+
+
         }
 
         //Roep deze functie aan als de speler normaal springt en de waterval raakt,
@@ -77,34 +81,34 @@ namespace BaseProject
             }
         }
 
-        //Player is touching the ground
-        //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
-        public virtual void OnGround(float standPosition)
-        {
-            if (position.Y > standPosition)
-            {
-                stand = true;
-                position.Y = standPosition;
-                velocity.Y = 0;
-            }
-        }
+        ////Player is touching the ground
+        ////Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
+        //public virtual void OnGround(float standPosition)
+        //{
+        //    if (position.Y > standPosition)
+        //    {
+        //        stand = true;
+        //        position.Y = standPosition;
+        //        velocity.Y = 0;
+        //    }
+        //}
 
-        //Deze kun je gebruiken bij een wall collision aan de linkerkant 
-        public virtual void hitWallLeft(float leftPosition)
-        {
-            if (position.X <= leftPosition)
-            {
-                position.X = leftPosition;
-            }
-        }
+        ////Deze kun je gebruiken bij een wall collision aan de linkerkant 
+        //public virtual void hitWallLeft(float leftPosition)
+        //{
+        //    if (position.X <= leftPosition)
+        //    {
+        //        position.X = leftPosition;
+        //    }
+        //}
 
-        //Deze kun je gebruiken bij een wall collision aan de rechterkant
-        public virtual void hitWallRight(float rightPosition)
-        {
-            if (position.X >= rightPosition)
-            {
-                position.X = rightPosition;
-            }
-        }
+        ////Deze kun je gebruiken bij een wall collision aan de rechterkant
+        //public virtual void hitWallRight(float rightPosition)
+        //{
+        //    if (position.X >= rightPosition)
+        //    {
+        //        position.X = rightPosition;
+        //    }
+        //}
     }
 }
