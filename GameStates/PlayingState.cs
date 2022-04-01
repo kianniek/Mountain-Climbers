@@ -13,6 +13,7 @@ namespace BaseProject.GameStates
         GameObjectList livesBig;
         GameObjectList noLives;
         GameObjectList waterfalls;
+        GameObjectList rocks;
         SmallPlayer smallPlayer;
         LevelGenerator levelGen;
         BigPlayer bigPlayer;
@@ -20,6 +21,7 @@ namespace BaseProject.GameStates
 
         int livesSmallPlayer;
         int livesBigPlayer;
+        bool waar;
         private float groundLevel = Game1.Screen.Y;
 
         public PlayingState()
@@ -29,12 +31,15 @@ namespace BaseProject.GameStates
             livesBig = new GameObjectList();
             noLives = new GameObjectList();
             waterfalls = new GameObjectList();
+            rocks = new GameObjectList();
             smallPlayer = new SmallPlayer();
             bigPlayer = new BigPlayer();
             button = new Button();
 
             livesSmallPlayer = 2;
             livesBigPlayer = 2;
+
+            waar = false;
 
             this.Add(levelGen);
             foreach (GameObject tile in levelGen.tiles)
@@ -47,12 +52,17 @@ namespace BaseProject.GameStates
                 Add(levelObject);
             }
 
+            //Test
             waterfalls.Add(new Waterfall("player2"));
+
+            rocks.Add(new FallingRock("Player", new Vector2(100, 0)));
+            rocks.Add(new FallingRock("Player", new Vector2(800, 0)));
 
             this.Add(waterfalls);
             this.Add(bigPlayer);
             this.Add(smallPlayer);
             this.Add(button);
+            this.Add(rocks);
 
             //Orange health
             for (int i = 0; i < livesSmallPlayer; i++)
@@ -98,8 +108,19 @@ namespace BaseProject.GameStates
                         groundLevel = tile.Position.Y + tile.Sprite.Height;
                         bigPlayer.OnGround(groundLevel);
                     }
+
+                    //Test collision Rock - Ground
+                    foreach(FallingRock rock in rocks.Children)
+                    {
+
+                        if (tile.CollidesWith(rock))
+                        {
+                            rock.fall = true;
+                            rock.Visible = false;
+                        }
+                    }
                 }
-            }
+            }            
 
             smallPlayer.hitWallLeft(0);
             smallPlayer.hitWallRight(1700);
