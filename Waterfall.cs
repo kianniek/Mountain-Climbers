@@ -5,13 +5,12 @@ using System.Text;
 
 namespace BaseProject
 {
+    //Dion
     class Waterfall : SpriteGameObject
-    {
-
-        public Waterfall(string assetName) : base(assetName)
+    { 
+        public Waterfall(string assetName, Vector2 waterPosition) : base(assetName)
         {
-            position.X = 600;
-            position.Y = 250;
+            position = waterPosition;
         }
 
         public override void Update(GameTime gameTime)

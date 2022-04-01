@@ -14,6 +14,7 @@ namespace BaseProject.GameStates
         GameObjectList livesBig;
         GameObjectList noLives;
         GameObjectList waterfalls;
+        GameObjectList rocks;
         SmallPlayer smallPlayer;
         LevelGenerator levelGen;
         BigPlayer bigPlayer;
@@ -31,14 +32,22 @@ namespace BaseProject.GameStates
             livesBig = new GameObjectList();
             noLives = new GameObjectList();
             waterfalls = new GameObjectList();
+
+            rocks = new GameObjectList();
+            //smallPlayer = new SmallPlayer();
+            //bigPlayer = new BigPlayer();
+
             smallPlayer = new SmallPlayer(levelGen);
             bigPlayer = new BigPlayer(levelGen);
+
             button = new Button();
 
             this.cam = camera;
 
             livesSmallPlayer = 2;
             livesBigPlayer = 2;
+
+           //waar = false;
 
             this.Add(levelGen);
             foreach (GameObject tile in levelGen.tiles)
@@ -51,12 +60,17 @@ namespace BaseProject.GameStates
                 Add(levelObject);
             }
 
-            waterfalls.Add(new Waterfall("player2"));
+            //Test
+            waterfalls.Add(new Waterfall("Waterfall200", new Vector2(600, 500)));
+
+            rocks.Add(new FallingRock("stone100", new Vector2(100, 0 - 100)));
+            rocks.Add(new FallingRock("stone300", new Vector2(800, 0 - 300)));
 
             this.Add(waterfalls);
             this.Add(bigPlayer);
             this.Add(smallPlayer);
             this.Add(button);
+            this.Add(rocks);
 
             //Orange health
             for (int i = 0; i < livesSmallPlayer; i++)
