@@ -1,4 +1,5 @@
 ﻿using System;
+using BaseProject.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -17,6 +18,9 @@ public class GameEnvironment : Game
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
 
+    public Camera cam;
+
+
     public GameEnvironment()
     {
         graphics = new GraphicsDeviceManager(this);
@@ -27,6 +31,8 @@ public class GameEnvironment : Game
         random = new Random();
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
+        cam = new Camera();
+        
     }
 
     protected override void Initialize()
@@ -59,6 +65,12 @@ public class GameEnvironment : Game
     public static GameSettingsManager GameSettingsManager
     {
         get { return gameSettingsManager; }
+    }
+
+    public Camera Camera
+    {
+        get { return cam; }
+        set { cam = value; }
     }
 
     public bool FullScreen
@@ -137,8 +149,16 @@ public class GameEnvironment : Game
 
     protected override void Draw(GameTime gameTime)
     {
+        //cam.Pos = new Vector2(screen.X / 2, screen.Y / 2);
         GraphicsDevice.Clear(Color.Black);
-        spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, spriteScale);
+        //spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, spriteScale);
+        spriteBatch.Begin(SpriteSortMode.Deferred,
+                        BlendState.AlphaBlend,
+                        null,
+                        null,
+                        null,
+                        null,
+                        cam.get_transformation(graphics.GraphicsDevice));
         gameStateManager.Draw(gameTime, spriteBatch);
         spriteBatch.End();
     }

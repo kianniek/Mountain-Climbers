@@ -1,4 +1,5 @@
-﻿using BaseProject.GameObjects;
+﻿using BaseProject.Engine;
+using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,11 +19,12 @@ namespace BaseProject.GameStates
         BigPlayer bigPlayer;
         Button button;
 
+        Camera cam;
+
         int livesSmallPlayer;
         int livesBigPlayer;
-        private float groundLevel = Game1.Screen.Y;
 
-        public PlayingState()
+        public PlayingState(Camera camera)
         {
             levelGen = new LevelGenerator();
             livesSmall = new GameObjectList();
@@ -32,6 +34,8 @@ namespace BaseProject.GameStates
             smallPlayer = new SmallPlayer(levelGen);
             bigPlayer = new BigPlayer(levelGen);
             button = new Button();
+
+            this.cam = camera;
 
             livesSmallPlayer = 2;
             livesBigPlayer = 2;
@@ -77,13 +81,28 @@ namespace BaseProject.GameStates
             this.Add(noLives);
             this.Add(livesSmall);
             this.Add(livesBig);
+
+            cam.Pos = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
         }
 
 
         public override void Update(GameTime gameTime)
         {
-            Console.WriteLine(smallPlayer.Position);
+            Vector2 sharedPlayerPos = (smallPlayer.Position + bigPlayer.Position)/2;
+            int offsetFromCenter = 100;
+            Vector2 moveAmount = Vector2.Zero;
+            Console.WriteLine(sharedPlayerPos.X - cam.Pos.X);
+            if (Game1.Screen.X + offsetFromCenter < sharedPlayerPos.X + cam.Pos.X)
+            {
+                moveAmount = Vector2.Lerp(moveAmount, Vector2.UnitX, 0.5f);
+            }
+            else
+            if (Game1.Screen.X - offsetFromCenter > sharedPlayerPos.X + cam.Pos.X)
+            {
+                moveAmount = Vector2.Lerp(moveAmount, -Vector2.UnitX, 0.5f);
+            }
 
+            cam.Move(moveAmount);
             base.Update(gameTime);
         }
 
