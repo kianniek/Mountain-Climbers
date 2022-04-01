@@ -21,7 +21,7 @@ namespace BaseProject.GameStates
 
         int livesSmallPlayer;
         int livesBigPlayer;
-        bool waar;
+        //bool waar;
         private float groundLevel = Game1.Screen.Y;
 
         public PlayingState()
@@ -31,15 +31,20 @@ namespace BaseProject.GameStates
             livesBig = new GameObjectList();
             noLives = new GameObjectList();
             waterfalls = new GameObjectList();
+
             rocks = new GameObjectList();
-            smallPlayer = new SmallPlayer();
-            bigPlayer = new BigPlayer();
+            //smallPlayer = new SmallPlayer();
+            //bigPlayer = new BigPlayer();
+
+            smallPlayer = new SmallPlayer(levelGen);
+            bigPlayer = new BigPlayer(levelGen);
+
             button = new Button();
 
             livesSmallPlayer = 2;
             livesBigPlayer = 2;
 
-            waar = false;
+           //waar = false;
 
             this.Add(levelGen);
             foreach (GameObject tile in levelGen.tiles)
@@ -53,10 +58,10 @@ namespace BaseProject.GameStates
             }
 
             //Test
-            waterfalls.Add(new Waterfall("player2"));
+            waterfalls.Add(new Waterfall("Waterfall200", new Vector2(600, 500)));
 
-            rocks.Add(new FallingRock("Player", new Vector2(100, 0)));
-            rocks.Add(new FallingRock("Player", new Vector2(800, 0)));
+            rocks.Add(new FallingRock("stone100", new Vector2(100, 0 - 100)));
+            rocks.Add(new FallingRock("stone300", new Vector2(800, 0 - 300)));
 
             this.Add(waterfalls);
             this.Add(bigPlayer);
@@ -100,13 +105,13 @@ namespace BaseProject.GameStates
                     {
                         //Console.WriteLine(tile);
                         groundLevel = tile.Position.Y + tile.Sprite.Height;
-                        smallPlayer.OnGround(groundLevel);
+                        //smallPlayer.OnGround(groundLevel);
                     }
                     if (tile.CollidesWith(bigPlayer))
                     {
                         //Console.WriteLine(tile);
                         groundLevel = tile.Position.Y + tile.Sprite.Height;
-                        bigPlayer.OnGround(groundLevel);
+                        //bigPlayer.OnGround(groundLevel);
                     }
 
                     //Test collision Rock - Ground
@@ -122,11 +127,11 @@ namespace BaseProject.GameStates
                 }
             }            
 
-            smallPlayer.hitWallLeft(0);
-            smallPlayer.hitWallRight(1700);
+            //smallPlayer.hitWallLeft(0);
+            //smallPlayer.hitWallRight(1700);
 
-            bigPlayer.hitWallLeft(0);
-            bigPlayer.hitWallRight(1700);
+            //bigPlayer.hitWallLeft(0);
+            //bigPlayer.hitWallRight(1700);
 
             foreach(Waterfall waterfall in waterfalls.Children)
             {
@@ -152,6 +157,8 @@ namespace BaseProject.GameStates
                 livesBigPlayer--;
                 livesBig.Children[livesBigPlayer].Velocity = new Vector2(0, -20);
             }*/
+
+            Console.WriteLine(smallPlayer.Position);
 
             base.Update(gameTime);
         }
