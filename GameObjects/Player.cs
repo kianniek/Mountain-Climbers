@@ -31,7 +31,7 @@ class SmallPlayer : HeadPlayer
         {
             if (inputHelper.KeyPressed(Keys.Up))
             {
-                stand = false;
+                //stand = false;
                 jump = true;
             }
         }
@@ -91,5 +91,15 @@ class SmallPlayer : HeadPlayer
     public override void hitWaterfall()
     {
         base.hitWaterfall();
+
+
+    internal void pickedUp(Vector2 grabPosition)
+    {
+        velocity = Vector2.Zero;
+        position = grabPosition;
+        canMove = false;
+        beingHeld = true;
+
+        //stand = false;
     }
 }

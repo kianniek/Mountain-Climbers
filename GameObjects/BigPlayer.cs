@@ -11,7 +11,7 @@ namespace BaseProject
     class BigPlayer : HeadPlayer
     {
         LevelGenerator levelGen;
-        public BigPlayer(LevelGenerator levelGen) : base("player2")
+        public BigPlayer(LevelGenerator levelGen, SmallPlayer smallPlayer) : base("player2")
         {
             origin = new Vector2(Center.X, Center.Y/4);
             this.levelGen = levelGen;
@@ -69,9 +69,24 @@ namespace BaseProject
             }
         }
 
+            base.Update(gameTime);
+            velocity.Y += gravity;
+
+            if (holdingPlayer)
+            {
+                grabPlayer();
+            }
+            else
+            {
+                smallPlayer.canMove = true;
+            }
         public override void hitWaterfall()
         {
            base.hitWaterfall();
+        }
+
+
+
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -89,12 +104,42 @@ namespace BaseProject
                 Mirror = false;
             }
 
+            if (inputHelper.KeyPressed(Keys.E))
+            {
+                holdingPlayer = false;
+                //smallPlayer.stand = false;
+                if (smallPlayer.CollidesWith(this) && smallPlayer.stand)
+                    {
+                    holdingPlayer = true;
+                    smallPlayer.stand = false;
+                }
+            }
+
+
             if (stand)
             {
                 if (inputHelper.KeyPressed(Keys.W))
                 {
                     stand = false;
                     jump = true;
+                }
+            }
+        }
+        public void grabPlayer()
+        {
+            smallPlayer.pickedUp(new Vector2(position.X, position.Y - 80));
+            smallPlayer.stand = false;
+            if (smallPlayer.beingHeld)
+            {
+                if (left)
+                { 
+                    smallPlayer.left = true;
+                    //smallPlayer.effective = SpriteEffects.FlipHorizontally;
+                }
+                if(right)
+                {
+                    smallPlayer.right = true;
+                    //smallPlayer.effective = SpriteEffects.None;
                 }
             }
         }
