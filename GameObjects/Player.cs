@@ -4,23 +4,26 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 //Dion
-	public class SmallPlayer : SpriteGameObject
-	{
-	float gravity;
-    public bool left, right, jump, stand;
-		public SmallPlayer() : base("Player")
-		{
-		position.Y = 300;
-		velocity.Y = 20;
-		velocity.X = 0;
+public class SmallPlayer : SpriteGameObject
+{
+    float gravity;
+    public bool left, right, jump, stand, canMove, beingHeld;
+    public SmallPlayer() : base("Player")
+    {
+        position.Y = 300;
+        velocity.Y = 20;
+        velocity.X = 0;
         gravity = 10f;
-		}
+    }
 
     public override void Update(GameTime gameTime)
     {
         velocity.X = 0;
         //gravity = 10f;
-
+        if (!canMove)
+        {
+            return;
+        }
         if (jump)
         {
             jump = false;
@@ -39,8 +42,8 @@ using Microsoft.Xna.Framework.Input;
             right = false;
         }
 
-        Console.WriteLine(position.Y);
-        
+        Console.WriteLine(stand);
+
         base.Update(gameTime);
         velocity.Y += gravity;
     }
@@ -49,7 +52,7 @@ using Microsoft.Xna.Framework.Input;
     {
         base.HandleInput(inputHelper);
 
-		if (inputHelper.IsKeyDown(Keys.Left))
+        if (inputHelper.IsKeyDown(Keys.Left))
         {
             left = true;
             effective = SpriteEffects.FlipHorizontally;
@@ -64,12 +67,12 @@ using Microsoft.Xna.Framework.Input;
         {
             if (inputHelper.KeyPressed(Keys.Up))
             {
-                stand = false;
+                //stand = false;
                 jump = true;
             }
-        } 
+        }
     }
-    
+
     //Player is touching the ground
     //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
     public void OnGround(float standPosition)
@@ -103,5 +106,15 @@ using Microsoft.Xna.Framework.Input;
         {
             position.X = rightPosition;
         }
+    }
+
+    internal void pickedUp(Vector2 grabPosition)
+    {
+        velocity = Vector2.Zero;
+        position = grabPosition;
+        canMove = false;
+        beingHeld = true;
+
+        //stand = false;
     }
 }

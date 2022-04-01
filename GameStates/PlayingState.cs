@@ -19,7 +19,7 @@ namespace BaseProject.GameStates
             livesBig = new GameObjectList();
             noLives = new GameObjectList();
             smallPlayer = new SmallPlayer();
-            bigPlayer = new BigPlayer();
+            bigPlayer = new BigPlayer(smallPlayer);
 
             livesSmallPlayer = 2;
             livesBigPlayer = 2;
@@ -61,14 +61,16 @@ namespace BaseProject.GameStates
             if (smallPlayer.jump)
             {
               livesSmallPlayer--;
-              livesSmall.Children[livesSmallPlayer].Velocity = new Vector2(0, -20);
+              //livesSmall.Children[livesSmallPlayer].Velocity = new Vector2(0, -20);
             }
 
             if (bigPlayer.jump)
             {
               livesBigPlayer--;
-              livesBig.Children[livesBigPlayer].Velocity = new Vector2(0, -20);
+              //livesBig.Children[livesBigPlayer].Velocity = new Vector2(0, -20);
             }
+
+            
 
             base.Update(gameTime);
         }

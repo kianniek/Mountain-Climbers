@@ -10,14 +10,16 @@ namespace BaseProject
 {
     class BigPlayer : SpriteGameObject
     {
+        SmallPlayer smallPlayer;
         float gravity;
-        public bool left, right, jump, stand;
-        public BigPlayer() : base("player2")
+        public bool left, right, jump, stand, holdingPlayer;
+        public BigPlayer(SmallPlayer smallPlayer) : base("player2")
         {
             position.Y = 300;
             velocity.Y = 20;
             velocity.X = 500;
             gravity = 10f;
+            this.smallPlayer = smallPlayer;
         }
 
         public override void Update(GameTime gameTime)
@@ -44,6 +46,18 @@ namespace BaseProject
 
             base.Update(gameTime);
             velocity.Y += gravity;
+
+            if (holdingPlayer)
+            {
+                grabPlayer();
+            }
+            else
+            {
+                smallPlayer.canMove = true;
+            }
+
+
+
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -60,6 +74,18 @@ namespace BaseProject
                 right = true;
                 effective = SpriteEffects.None;
             }
+
+            if (inputHelper.KeyPressed(Keys.E))
+            {
+                holdingPlayer = false;
+                //smallPlayer.stand = false;
+                if (smallPlayer.CollidesWith(this) && smallPlayer.stand)
+                    {
+                    holdingPlayer = true;
+                    smallPlayer.stand = false;
+                }
+            }
+
 
             if (stand)
             {
@@ -103,6 +129,24 @@ namespace BaseProject
             if (position.X >= rightPosition)
             {
                 position.X = rightPosition;
+            }
+        }
+        public void grabPlayer()
+        {
+            smallPlayer.pickedUp(new Vector2(position.X, position.Y - 80));
+            smallPlayer.stand = false;
+            if (smallPlayer.beingHeld)
+            {
+                if (left)
+                { 
+                    smallPlayer.left = true;
+                    //smallPlayer.effective = SpriteEffects.FlipHorizontally;
+                }
+                if(right)
+                {
+                    smallPlayer.right = true;
+                    //smallPlayer.effective = SpriteEffects.None;
+                }
             }
         }
     }
