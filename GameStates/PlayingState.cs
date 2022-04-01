@@ -62,7 +62,7 @@ namespace BaseProject.GameStates
             }
 
             //Test
-            waterfalls.Add(new Waterfall("Waterfall200"));
+            waterfalls.Add(new Waterfall("Waterfall200", new Vector2(500, 10)));
 
             rocks.Add(new FallingRock("stone100", new Vector2(100, 0 - 100)));
             rocks.Add(new FallingRock("stone300", new Vector2(800, 0 - 300)));
