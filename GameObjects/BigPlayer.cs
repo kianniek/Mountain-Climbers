@@ -11,10 +11,14 @@ namespace BaseProject
     class BigPlayer : HeadPlayer
     {
         LevelGenerator levelGen;
+        SmallPlayer smallPlayer;
+
+        public bool holdingPlayer;
         public BigPlayer(LevelGenerator levelGen, SmallPlayer smallPlayer) : base("player2")
         {
-            origin = new Vector2(Center.X, Center.Y/4);
+            origin = new Vector2(Center.X, Center.Y / 4);
             this.levelGen = levelGen;
+            this.smallPlayer = smallPlayer;
         }
 
         public override void Update(GameTime gameTime)
@@ -67,7 +71,6 @@ namespace BaseProject
                     }
                 }
             }
-        }
 
             base.Update(gameTime);
             velocity.Y += gravity;
@@ -80,14 +83,14 @@ namespace BaseProject
             {
                 smallPlayer.canMove = true;
             }
+        }
         public override void hitWaterfall()
         {
-           base.hitWaterfall();
+            base.hitWaterfall();
         }
 
 
 
-        }
 
         public override void HandleInput(InputHelper inputHelper)
         {
@@ -108,10 +111,9 @@ namespace BaseProject
             {
                 holdingPlayer = false;
                 //smallPlayer.stand = false;
-                if (smallPlayer.CollidesWith(this) && smallPlayer.stand)
-                    {
+                if (smallPlayer.CollidesWith(this))
+                {
                     holdingPlayer = true;
-                    smallPlayer.stand = false;
                 }
             }
 
@@ -128,15 +130,14 @@ namespace BaseProject
         public void grabPlayer()
         {
             smallPlayer.pickedUp(new Vector2(position.X, position.Y - 80));
-            smallPlayer.stand = false;
             if (smallPlayer.beingHeld)
             {
                 if (left)
-                { 
+                {
                     smallPlayer.left = true;
                     //smallPlayer.effective = SpriteEffects.FlipHorizontally;
                 }
-                if(right)
+                if (right)
                 {
                     smallPlayer.right = true;
                     //smallPlayer.effective = SpriteEffects.None;
@@ -145,3 +146,4 @@ namespace BaseProject
         }
     }
 }
+

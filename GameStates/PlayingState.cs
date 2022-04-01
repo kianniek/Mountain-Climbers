@@ -32,15 +32,14 @@ namespace BaseProject.GameStates
             livesBig = new GameObjectList();
             noLives = new GameObjectList();
             waterfalls = new GameObjectList();
-            smallPlayer = new SmallPlayer();
-            bigPlayer = new BigPlayer(smallPlayer);
+            smallPlayer = new SmallPlayer(levelGen);
 
             rocks = new GameObjectList();
             //smallPlayer = new SmallPlayer();
             //bigPlayer = new BigPlayer();
 
             smallPlayer = new SmallPlayer(levelGen);
-            bigPlayer = new BigPlayer(levelGen);
+            bigPlayer = new BigPlayer(levelGen, smallPlayer);
 
             button = new Button();
 
@@ -63,7 +62,7 @@ namespace BaseProject.GameStates
             }
 
             //Test
-            waterfalls.Add(new Waterfall("Waterfall200" );
+            waterfalls.Add(new Waterfall("Waterfall200"));
 
             rocks.Add(new FallingRock("stone100", new Vector2(100, 0 - 100)));
             rocks.Add(new FallingRock("stone300", new Vector2(800, 0 - 300)));

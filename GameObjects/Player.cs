@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 class SmallPlayer : HeadPlayer
 {
     LevelGenerator levelGen;
+    public bool canMove, beingHeld;
     public SmallPlayer(LevelGenerator levelGen) : base("Player")
     {
         origin = new Vector2(Center.X, Center.Y / 2);
@@ -91,7 +92,7 @@ class SmallPlayer : HeadPlayer
     public override void hitWaterfall()
     {
         base.hitWaterfall();
-
+    }
 
     internal void pickedUp(Vector2 grabPosition)
     {
