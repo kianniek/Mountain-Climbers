@@ -21,7 +21,7 @@ namespace BaseProject.GameStates
         Button button;
 
         Camera cam;
-
+        Vector2 cameraUI_offset; // use this to negate the ccamera movement for UI objects
         int livesSmallPlayer;
         int livesBigPlayer;
 
@@ -41,10 +41,9 @@ namespace BaseProject.GameStates
 
             this.cam = camera;
 
+            cameraUI_offset = new Vector2(cam._transform.M41, cam._transform.M42);
             livesSmallPlayer = 2;
             livesBigPlayer = 2;
-
-           //waar = false;
 
             this.Add(levelGen);
             foreach (GameObject tile in levelGen.tiles)
@@ -72,8 +71,8 @@ namespace BaseProject.GameStates
             //Orange health
             for (int i = 0; i < livesSmallPlayer; i++)
             {
-                Lives liveOrange = new Lives("Hartje_oranje", new Vector2(40 * i, 0));
-                noLives.Add(new Lives("Hartje_leeg", new Vector2(40 * i, 0)));
+                Lives liveOrange = new Lives("Hartje_oranje", new Vector2(40 - cameraUI_offset.X * i, 0));
+                noLives.Add(new Lives("Hartje_leeg", new Vector2(40 - cameraUI_offset.X * i, 0)));
                 livesSmall.Add(liveOrange);
             }
 
@@ -81,8 +80,8 @@ namespace BaseProject.GameStates
             //Green health
             for (int i = 0; i < livesBigPlayer; i++)
             {
-                Lives liveGreen = new Lives("Hartje_groen", new Vector2(GameEnvironment.Screen.X - 50 - (40 * i), 0));
-                noLives.Add(new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - 50 - (40 * i), 0)));
+                Lives liveGreen = new Lives("Hartje_groen", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
+                noLives.Add(new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0)));
                 livesBig.Add(liveGreen);
             }
 
@@ -93,27 +92,15 @@ namespace BaseProject.GameStates
             this.Add(livesSmall);
             this.Add(livesBig);
 
+
             cam.Pos = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
+
         }
 
 
         public override void Update(GameTime gameTime)
         {
-            Vector2 sharedPlayerPos = (smallPlayer.Position + bigPlayer.Position)/2;
-            int offsetFromCenter = 100;
-            Vector2 moveAmount = Vector2.Zero;
-            Console.WriteLine(sharedPlayerPos.X - cam.Pos.X);
-            if (Game1.Screen.X + offsetFromCenter < sharedPlayerPos.X + cam.Pos.X)
-            {
-                moveAmount = Vector2.Lerp(moveAmount, Vector2.UnitX, 0.5f);
-            }
-            else
-            if (Game1.Screen.X - offsetFromCenter > sharedPlayerPos.X + cam.Pos.X)
-            {
-                moveAmount = Vector2.Lerp(moveAmount, -Vector2.UnitX, 0.5f);
-            }
-
-            cam.Move(moveAmount);
+            KeepPlayersCenterd();
             base.Update(gameTime);
         }
 
@@ -137,6 +124,38 @@ namespace BaseProject.GameStates
                 Console.WriteLine("alleen voor de grote spelers");
             }
 
+        }
+
+        void KeepPlayersCenterd()
+        {
+            Vector2 sharedPlayerPos = (smallPlayer.Position + bigPlayer.Position) / 2;
+            Vector2 offsetFromCenter = new Vector2(0, 0);
+            Vector2 moveAmount = Vector2.Zero;
+
+            float falloff = 1f;
+            
+            Console.WriteLine(falloff);
+            if (Game1.Screen.X / 2 - offsetFromCenter.X - cam._transform.M41 > sharedPlayerPos.X)
+            {
+                moveAmount += Vector2.Lerp(moveAmount, -Vector2.UnitX, falloff);
+            }
+            else
+            if (Game1.Screen.X / 2 + offsetFromCenter.X - cam._transform.M41 < sharedPlayerPos.X)
+            {
+                moveAmount += Vector2.Lerp(moveAmount, Vector2.UnitX, falloff);
+            }
+
+            if (Game1.Screen.Y / 2 - offsetFromCenter.Y - cam._transform.M42 > sharedPlayerPos.Y)
+            {
+                moveAmount += Vector2.Lerp(moveAmount, -Vector2.UnitY, falloff);
+            }
+            else
+            if (Game1.Screen.Y / 2 + offsetFromCenter.Y - cam._transform.M42 < sharedPlayerPos.Y)
+            {
+                moveAmount += Vector2.Lerp(moveAmount, Vector2.UnitY, falloff);
+            }
+
+            cam.Move(moveAmount);
         }
     }
 }
