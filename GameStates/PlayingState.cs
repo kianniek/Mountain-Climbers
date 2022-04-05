@@ -127,7 +127,7 @@ namespace BaseProject.GameStates
         void KeepPlayersCenterd()
         {
             Vector2 sharedPlayerPos = (smallPlayer.Position + bigPlayer.Position) / 2;
-            Vector2 offsetFromCenter = new Vector2(0, 0);
+            Vector2 offsetFromCenter = new Vector2(10, 0);
             Vector2 moveAmount = Vector2.Zero;
 
             float falloff = 1f;
