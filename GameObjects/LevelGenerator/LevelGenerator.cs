@@ -54,7 +54,7 @@ public class LevelGenerator : GameObject
                 else if (colors[x, y] == Color.Chocolate) //use this color for smart generation with texture;
                 {
                     //Chocolate color (R:210,G:105,B:30,A:255).
-                    TerrainTexture(x, y, "Tile_dirt", "Tile_GrassHorizontal", "Tile_dirt", "Tile_dirt", "Tile_dirt", "Tile_dirt");
+                    TerrainTexture(x, y, "Tile_GrassHorizontal", "Tile_GrassHorizontal", "Tile_GrassRightCorner", "Tile_GrassHorizontal", "Tile_GrassRightCorner", "Tile_dirt");
                 }
                 else if (colors[x, y] == Color.Magenta)
                 {

@@ -13,10 +13,5 @@ namespace BaseProject
             position = startPosition;
             velocity.Y = 0;
         }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
     }
 }
