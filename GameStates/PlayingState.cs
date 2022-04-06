@@ -21,7 +21,7 @@ namespace BaseProject.GameStates
         Button button;
 
         Camera cam;
-        Vector2 cameraUI_offset; // use this to negate the ccamera movement for UI objects
+        Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
         int livesPlayer;
 
         public PlayingState(Camera camera)
@@ -126,13 +126,13 @@ namespace BaseProject.GameStates
 
         void KeepPlayersCenterd()
         {
+            Console.WriteLine(cam.Pos.Y);
             Vector2 sharedPlayerPos = (smallPlayer.Position + bigPlayer.Position) / 2;
             Vector2 offsetFromCenter = new Vector2(10, 0);
             Vector2 moveAmount = Vector2.Zero;
 
             float falloff = 1f;
 
-            Console.WriteLine(falloff);
             if (Game1.Screen.X / 2 - offsetFromCenter.X - cam._transform.M41 > sharedPlayerPos.X)
             {
                 moveAmount += Vector2.Lerp(moveAmount, -Vector2.UnitX, falloff);
@@ -152,7 +152,14 @@ namespace BaseProject.GameStates
             {
                 moveAmount += Vector2.Lerp(moveAmount, Vector2.UnitY, falloff);
             }
-
+            if (cam.Pos.X < GameEnvironment.Screen.X / 2)
+            {
+                moveAmount += Vector2.UnitX;
+            }
+            if (cam.Pos.Y > GameEnvironment.Screen.Y / 2)
+            {
+                moveAmount -= Vector2.UnitY;
+            }
             cam.Move(moveAmount);
         }
         void UI_ElementUpdate()
