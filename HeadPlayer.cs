@@ -7,21 +7,20 @@ using System.Text;
 namespace BaseProject
 {
     //Dion
-       class HeadPlayer : SpriteGameObject
-       {
+    class HeadPlayer : SpriteGameObject
+    {
         public float gravity;
         public bool left, right, jump, stand;
 
         public HeadPlayer(string assetName) : base(assetName)
         {
-            position.Y = 0;
+            position.Y = GameEnvironment.Screen.Y / 1.5f;
             gravity = 10f;
         }
 
         public override void Update(GameTime gameTime)
         {
             velocity.X = 0;
-            gravity = 10f;
 
             if (jump)
             {
@@ -44,7 +43,7 @@ namespace BaseProject
             base.Update(gameTime);
             velocity.Y += gravity;
 
-            
+
 
 
         }
@@ -55,6 +54,8 @@ namespace BaseProject
         {
             velocity.Y = 520;
         }
+
+        
 
         public override void HandleInput(InputHelper inputHelper)
         {

@@ -26,6 +26,19 @@ namespace BaseProject
             //Console.WriteLine(velocity.Y);
             base.Update(gameTime);
 
+            CollisonWithGround();
+
+            if (holdingPlayer)
+            {
+                grabPlayer();
+            }
+            else
+            {
+                smallPlayer.canMove = true;
+            }
+        }
+        public void CollisonWithGround()
+        {
             for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
             {
                 for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
@@ -71,27 +84,7 @@ namespace BaseProject
                     }
                 }
             }
-
-            base.Update(gameTime);
-            velocity.Y += gravity;
-
-            if (holdingPlayer)
-            {
-                grabPlayer();
-            }
-            else
-            {
-                smallPlayer.canMove = true;
-            }
         }
-        public override void hitWaterfall()
-        {
-            base.hitWaterfall();
-        }
-
-
-
-
         public override void HandleInput(InputHelper inputHelper)
         {
             if (inputHelper.IsKeyDown(Keys.A))

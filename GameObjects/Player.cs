@@ -14,7 +14,12 @@ class SmallPlayer : HeadPlayer
         origin = new Vector2(Center.X, Center.Y / 2);
         this.levelGen = levelGen;
     }
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
 
+        CollisonWithGround();
+    }
     public override void HandleInput(InputHelper inputHelper)
     {
         if (inputHelper.IsKeyDown(Keys.Left))
@@ -37,11 +42,8 @@ class SmallPlayer : HeadPlayer
             }
         }
     }
-
-    public override void Update(GameTime gameTime)
+    public void CollisonWithGround()
     {
-        base.Update(gameTime);
-
         for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
         {
             for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
@@ -88,12 +90,6 @@ class SmallPlayer : HeadPlayer
             }
         }
     }
-
-    public override void hitWaterfall()
-    {
-        base.hitWaterfall();
-    }
-
     internal void pickedUp(Vector2 grabPosition)
     {
         velocity = Vector2.Zero;
