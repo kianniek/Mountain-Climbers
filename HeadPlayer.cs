@@ -10,7 +10,7 @@ namespace BaseProject
     class HeadPlayer : SpriteGameObject
     {
         public float gravity;
-        public bool left, right, jump, stand;
+        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed;
 
         public HeadPlayer(string assetName) : base(assetName)
         {
@@ -42,10 +42,6 @@ namespace BaseProject
 
             base.Update(gameTime);
             velocity.Y += gravity;
-
-
-
-
         }
 
         //Roep deze functie aan als de speler normaal springt en de waterval raakt,
@@ -76,10 +72,25 @@ namespace BaseProject
             {
                 if (inputHelper.KeyPressed(Keys.Up))
                 {
-                    stand = false;
-                    jump = true;
+                     stand = false;
+                     jump = true;
                 }
             }
+        }
+
+        public virtual void Climb()
+        {
+            left = false;
+            right = false;
+            stand = true;
+            gravity = 0;
+            velocity.Y = 0;
+            velocity.X = 0;
+        }
+
+        public virtual void notClimbing()
+        {
+            gravity = 10f;
         }
 
         ////Player is touching the ground

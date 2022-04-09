@@ -23,7 +23,9 @@ namespace BaseProject
 
         public override void Update(GameTime gameTime)
         {
-            //Console.WriteLine(velocity.Y);
+            //Console.WriteLine(zPressed);
+            zPressed = false;
+
             base.Update(gameTime);
 
             CollisonWithGround();
@@ -87,30 +89,32 @@ namespace BaseProject
         }
         public override void HandleInput(InputHelper inputHelper)
         {
-            if (inputHelper.IsKeyDown(Keys.A))
-            {
-                left = true;
-                //effective = SpriteEffects.FlipHorizontally;
-                Mirror = true;
-            }
-            if (inputHelper.IsKeyDown(Keys.D))
-            {
-                right = true;
-                //effective = SpriteEffects.None;
-                Mirror = false;
-            }
-
-            if (inputHelper.KeyPressed(Keys.E))
-            {
-                holdingPlayer = false;
-                //smallPlayer.stand = false;
-                if (smallPlayer.CollidesWith(this))
+            //if ((!hitClimbWall) && (!zPressed))
+            //{
+                if (inputHelper.IsKeyDown(Keys.A))
                 {
-                    holdingPlayer = true;
+                    left = true;
+                    //effective = SpriteEffects.FlipHorizontally;
+                    Mirror = true;
                 }
-            }
+                if (inputHelper.IsKeyDown(Keys.D))
+                {
+                    right = true;
+                    //effective = SpriteEffects.None;
+                    Mirror = false;
+                }
 
-
+                if (inputHelper.KeyPressed(Keys.E))
+                {
+                    holdingPlayer = false;
+                    //smallPlayer.stand = false;
+                    if (smallPlayer.CollidesWith(this))
+                    {
+                        holdingPlayer = true;
+                    }
+                }
+            //}
+            
             if (stand)
             {
                 if (inputHelper.KeyPressed(Keys.W))
@@ -118,6 +122,29 @@ namespace BaseProject
                     stand = false;
                     jump = true;
                 }
+                if (inputHelper.IsKeyDown(Keys.Z))
+                {
+                    zPressed = true;
+                }
+            }
+         
+            //Player is climbing the wall
+            if (hitClimbWall && zPressed)
+            {
+                Climb();
+
+                if (inputHelper.IsKeyDown(Keys.Q))
+                {
+                    velocity.Y = -20;
+                }
+                if (inputHelper.IsKeyDown(Keys.S))
+                {
+                    velocity.Y = 20;
+                }
+            }
+            else
+            {
+                notClimbing();
             }
         }
         public void grabPlayer()
@@ -136,6 +163,11 @@ namespace BaseProject
                     //smallPlayer.effective = SpriteEffects.None;
                 }
             }
+        }
+
+        public override void Climb()
+        {
+            base.Climb();
         }
     }
 }

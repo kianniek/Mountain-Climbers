@@ -15,6 +15,7 @@ namespace BaseProject.GameStates
         Lives[] noLives;
         GameObjectList waterfalls;
         GameObjectList rocks;
+        GameObjectList climbWall;
         SmallPlayer smallPlayer;
         LevelGenerator levelGen;
         BigPlayer bigPlayer;
@@ -35,6 +36,7 @@ namespace BaseProject.GameStates
             waterfalls = new GameObjectList();
             smallPlayer = new SmallPlayer(levelGen);
             bigPlayer = new BigPlayer(levelGen, smallPlayer);
+            climbWall = new GameObjectList();
 
             rocks = new GameObjectList();
 
@@ -54,16 +56,18 @@ namespace BaseProject.GameStates
             }
 
             //Test
-            waterfalls.Add(new Waterfall("Waterfall200", new Vector2(500, 10)));
+            //waterfalls.Add(new Waterfall("Waterfall200", new Vector2(500, 10)));
 
-            rocks.Add(new FallingRock("stone100", new Vector2(100, 0 - 100)));
-            rocks.Add(new FallingRock("stone300", new Vector2(800, 0 - 300)));
+            //rocks.Add(new FallingRock("stone100", new Vector2(100, 0 - 100)));
+            //rocks.Add(new FallingRock("stone300", new Vector2(800, 0 - 300)));
+            climbWall.Add(new ClimbWall("Waterfall200", new Vector2(200, 500)));
 
             this.Add(waterfalls);
             this.Add(bigPlayer);
             this.Add(smallPlayer);
             this.Add(button);
             this.Add(rocks);
+            this.Add(climbWall);
 
             //Orange health
             for (int i = 0; i < livesPlayer; i++)
@@ -99,6 +103,27 @@ namespace BaseProject.GameStates
         {
             KeepPlayersCenterd();
             UI_ElementUpdate();
+
+            //Climbing test!!!
+            foreach (ClimbWall climb in climbWall.Children)
+            {
+                if (bigPlayer.stand)
+                {
+                    if (bigPlayer.CollidesWith(climb))
+                    {
+                        bigPlayer.hitClimbWall = true;
+                    }
+                }
+
+                if (smallPlayer.stand)
+                {
+                    if (smallPlayer.CollidesWith(climb))
+                    {
+                        smallPlayer.hitClimbWall = true;
+                    }
+                }
+            }
+
             base.Update(gameTime);
         }
 

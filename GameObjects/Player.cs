@@ -16,6 +16,8 @@ class SmallPlayer : HeadPlayer
     }
     public override void Update(GameTime gameTime)
     {
+        mPressed = false;
+
         base.Update(gameTime);
 
         CollisonWithGround();
@@ -40,6 +42,29 @@ class SmallPlayer : HeadPlayer
                 //stand = false;
                 jump = true;
             }
+            if (inputHelper.IsKeyDown(Keys.M))
+            {
+                mPressed = true;
+            }
+        }
+
+        //Small Player is climbing a wall
+        if (hitClimbWall && mPressed)
+        {
+            Climb();
+
+            if (inputHelper.IsKeyDown(Keys.K))
+            {
+                velocity.Y = -20;
+            }
+            if (inputHelper.IsKeyDown(Keys.Down))
+            {
+                velocity.Y = 20;
+            }
+        }
+        else
+        {
+            notClimbing();
         }
     }
     public void CollisonWithGround()
