@@ -32,7 +32,25 @@ public class LevelGenerator : GameObject
                 //De Colors die hier staan coresnsponderen met pixels in de Texture2D van map
                 if (colors[x, y] == Color.Red)
                 {
-                    RoughTerrainTexture(x, y, "Tile_GrassHorizontal", "Tile_LeftverticalBlock", "Tile_RightverticalBlock", "Tile_GrassLeftCorner", "Tile_GrassRightCorner", "Tile_GrassLeftCornerDown", "Tile_GrassRightCornerDown", "Tile_GrassHorizontalDown", "Tile_dirt");
+                    RoughTerrainTexture(x, y,
+                        "Tile_GrassHorizontal",
+                        "Tile_LeftverticalBlock",
+                        "Tile_RightverticalBlock",
+                        "Tile_Grasstopandbottom",
+                        "Tile_GrassLeftCorner",
+                        "Tile_GrassRightCorner",
+                        "Tile_GrassLeftCornerDown",
+                        "Tile_GrassRightCornerDown",
+                        "Tile_GrassHorizontalDown",
+                        "Tile_Grasstopend",
+                        "Tile_Grassbottomend",
+                        "Tile_Grassrightend",
+                        "Tile_Grassleftend",
+                        "Tile_Grasstopleftknob",
+                        "Tile_Grasstoprightknob",
+                        "Tile_Grassbottomleftknob",
+                        "Tile_Grassbottomrightknob",
+                        "Tile_dirt");
                 }
                 else if (colors[x, y] == Color.Chocolate) //use this color for smart generation with texture;
                 {
@@ -108,6 +126,8 @@ public class LevelGenerator : GameObject
                         };
                     }
                 }
+
+
             }
             tiles[x, y] = ground;
         }
@@ -128,8 +148,25 @@ public class LevelGenerator : GameObject
             }
         }
     }
-
-    private void RoughTerrainTexture(int x, int y, string horizontalBlock, string LeftverticalBlock, string RightverticalBlock, string cornerLeft, string cornerRight, string cornerLeftDown, string cornerRightDown, string UndersideBlock, string undergroundBlock = "")
+    private void RoughTerrainTexture(int x, int y,
+        string horizontalBlock,
+        string LeftverticalBlock,
+        string RightverticalBlock,
+        string GrassTopAndBottom,
+        string cornerLeft,
+        string cornerRight,
+        string cornerLeftDown,
+        string cornerRightDown,
+        string UndersideBlock,
+        string TopLedge,
+        string BottomLedge,
+        string rightLedge,
+        string leftLedge,
+        string leftKnob,
+        string rightKnob,
+        string leftKnobDown,
+        string rightKnobDown,
+        string undergroundBlock = "")
     {
         bool arrayOutOfBound = y < 0 || y >= map.Height || x < 0 || x >= map.Width;
 
@@ -141,6 +178,47 @@ public class LevelGenerator : GameObject
             ground.Position = posBlock;
             if (x != 0)
             {
+                if (colors[x - 1, y] != Color.Transparent && colors[x + 1, y] != Color.Transparent && colors[x, y + 1] != Color.Transparent && colors[x, y - 1] != Color.Transparent)
+                {
+                    if (colors[x - 1, y] != Color.Transparent && colors[x, y - 1] != Color.Transparent && colors[x - 1, y - 1] == Color.Transparent)
+                    {
+                        ground = new Ground(assetName: leftKnob)
+                        {
+                            Position = posBlock
+                        };
+                    }
+                    else
+                    if (colors[x + 1, y] != Color.Transparent && colors[x, y - 1] != Color.Transparent && colors[x + 1, y - 1] == Color.Transparent)
+                    {
+                        ground = new Ground(assetName: rightKnob)
+                        {
+                            Position = posBlock
+                        };
+                    }
+                    else
+                    if (colors[x - 1, y] != Color.Transparent && colors[x, y + 1] != Color.Transparent && colors[x - 1, y + 1] == Color.Transparent)
+                    {
+                        ground = new Ground(assetName: leftKnobDown)
+                        {
+                            Position = posBlock
+                        };
+                    }
+                    else
+                    if (colors[x + 1, y] != Color.Transparent && colors[x, y + 1] != Color.Transparent && colors[x + 1, y + 1] == Color.Transparent)
+                    {
+                        ground = new Ground(assetName: rightKnobDown)
+                        {
+                            Position = posBlock
+                        };
+                    }
+                    else
+                    {
+                        ground = new Ground(assetName: undergroundBlock)
+                        {
+                            Position = posBlock
+                        };
+                    }
+                }
                 if (colors[x - 1, y] == Color.Transparent)
                 {
                     ground = new Ground(assetName: LeftverticalBlock)
@@ -162,6 +240,7 @@ public class LevelGenerator : GameObject
                         Position = posBlock
                     };
                 }
+
                 if (colors[x - 1, y] == Color.Transparent && colors[x, y - 1] == Color.Transparent)
                 {
                     ground = new Ground(assetName: cornerLeft)
@@ -190,13 +269,45 @@ public class LevelGenerator : GameObject
                         Position = posBlock
                     };
                 }
-                if (colors[x - 1, y] != Color.Transparent && colors[x + 1, y] != Color.Transparent && colors[x, y + 1] != Color.Transparent && colors[x, y - 1] != Color.Transparent)
+
+                if (colors[x + 1, y] != Color.Transparent && colors[x - 1, y] != Color.Transparent && colors[x, y + 1] == Color.Transparent && colors[x, y - 1] == Color.Transparent)
                 {
-                    ground = new Ground(assetName: undergroundBlock)
+                    ground = new Ground(assetName: GrassTopAndBottom)
                     {
                         Position = posBlock
                     };
                 }
+
+                if (colors[x + 1, y] == Color.Transparent && colors[x, y - 1] == Color.Transparent && colors[x, y + 1] == Color.Transparent)
+                {
+                    ground = new Ground(assetName: rightLedge)
+                    {
+                        Position = posBlock
+                    };
+                }
+                if (colors[x - 1, y] == Color.Transparent && colors[x, y - 1] == Color.Transparent && colors[x, y + 1] == Color.Transparent)
+                {
+                    ground = new Ground(assetName: leftLedge)
+                    {
+                        Position = posBlock
+                    };
+                }
+
+                if (colors[x + 1, y] == Color.Transparent && colors[x - 1, y] == Color.Transparent && colors[x, y - 1] == Color.Transparent)
+                {
+                    ground = new Ground(assetName: TopLedge)
+                    {
+                        Position = posBlock
+                    };
+                }
+                if (colors[x + 1, y] == Color.Transparent && colors[x - 1, y] == Color.Transparent && colors[x, y + 1] == Color.Transparent)
+                {
+                    ground = new Ground(assetName: BottomLedge)
+                    {
+                        Position = posBlock
+                    };
+                }
+
             }
             tiles[x, y] = ground;
         }
