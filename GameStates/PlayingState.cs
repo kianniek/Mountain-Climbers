@@ -17,8 +17,9 @@ namespace BaseProject.GameStates
             this.Add(smallPlayer);
             
             
-            Add(new StrongWind(GameEnvironment.Screen.ToVector2()/2, 5, 200, WindDirection.Left));
-            Add(new Box(GameEnvironment.Screen.ToVector2()/2));
+            Add(new StrongWind(GameEnvironment.Screen.ToVector2()/2, 136, 200, WindDirection.Left));
+            Add(new Box(GameEnvironment.Screen.ToVector2()/2 + Vector2.UnitY * -68));
+            Add(new Box(GameEnvironment.Screen.ToVector2()/2 + Vector2.UnitY * 44));
         }
 
         public override void Update(GameTime gameTime)

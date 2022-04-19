@@ -8,6 +8,7 @@ namespace BaseProject.GameObjects
         private readonly float height;
         private readonly float range;
         private readonly WindDirection direction;
+        private const float maxWindForce = 5;
 
         public StrongWind(Vector2 position, float height, float range, WindDirection direction)
         {
@@ -29,10 +30,10 @@ namespace BaseProject.GameObjects
             switch (direction)
             {
                 case WindDirection.Left:
-                    force = new Vector2(-(1 - 1/(range + Math.Abs(ObjectOffset(obj).X))*distance), 0) * 5;
+                    force = new Vector2(-(1 - 1/(range + Math.Abs(ObjectOffset(obj).X))*distance), 0) * maxWindForce;
                     break;
                 case WindDirection.Right:
-                    force = new Vector2(1 - 1/(range + Math.Abs(ObjectOffset(obj).X))*distance, 0) * 5;
+                    force = new Vector2(1 - 1/(range + Math.Abs(ObjectOffset(obj).X))*distance, 0) * maxWindForce;
                     break;
             }
             
@@ -41,14 +42,18 @@ namespace BaseProject.GameObjects
 
         public bool IsObjectUnderInfluence(SpriteGameObject obj)
         {
-            var inHeight = obj.Position.Y > position.Y - height / 2 && obj.Position.Y < position.Y + height / 2;
+            var offset = ObjectOffset(obj);
+            var inHeight = obj.Position.Y >= position.Y - height/2 && obj.Position.Y <= position.Y + height/2;
+            
+            if (!inHeight)
+                return false;
+            
             switch (direction)
             {
                 case WindDirection.Left:
-                    var inRange = obj.Position.X > Position.X - range + ObjectOffset(obj).X;
-                    return obj.Position.X > Position.X - range + ObjectOffset(obj).X;
+                    return obj.Position.X > Position.X - range + offset.X;
                 case WindDirection.Right:
-                    return obj.Position.X < Position.X + range + ObjectOffset(obj).X;
+                    return obj.Position.X < Position.X + range + offset.X;
             }
 
             return false;
@@ -57,6 +62,12 @@ namespace BaseProject.GameObjects
         private Vector2 ObjectOffset(SpriteGameObject obj)
         {
             var offset = new Vector2();
+
+            if (obj.Position.Y < position.Y)
+                offset.Y = obj.Origin.Y - obj.Center.Y + obj.Height / 2f;
+            else
+                offset.Y = obj.Origin.Y - obj.Center.Y - obj.Height / 2f;
+            
             switch (direction)
             {
                 case WindDirection.Left:
