@@ -5,8 +5,7 @@ using System.Text;
 
 namespace BaseProject
 {
-    //Dion
-    class FallingRock : RotatingSpriteGameObject
+    class FallingRock : SpriteGameObject
     {
         public bool fall;
         public int fallingRockCount;
@@ -18,7 +17,6 @@ namespace BaseProject
             velocity.Y = 100;
             fall = false;
             fallingRockCount = 240;
-            origin = Center;
         }
 
         public override void Update(GameTime gameTime)
@@ -33,16 +31,16 @@ namespace BaseProject
                 Reset();
                 fall = false;
             }
-           
+
             base.Update(gameTime);
         }
-        
+
         public override void Reset()
         {
-           fallingRockCount = 240;
-           position = resetPosition;
-           visible = true;
-           base.Reset();
-       }
+            fallingRockCount = 240;
+            position = resetPosition;
+            visible = true;
+            base.Reset();
+        }
     }
 }

@@ -20,37 +20,43 @@ public class LevelGenerator : GameObject
     {
         map = GameEnvironment.AssetManager.Content.Load<Texture2D>("FirstMapTest");
         tiles = new SpriteGameObject[map.Width, map.Height];
-        Start();
+        colors = TextureTo2DArray(map);
+        Start(1);
     }
-    public void Start()
+    public void Start(int section)
     {
+        int sectionSize = (int) map.Width / 10;
         colors = TextureTo2DArray(map);
         for (int x = 0; x < map.Width; x++)
         {
             for (int y = 0; y < map.Height; y++)
             {
+                ground = new Ground();
+                float heightOffset = Game1.Screen.Y - map.Height * ground.Height;
+                Vector2 posBlock = new Vector2(x * ground.Width, y * ground.Height + heightOffset);
+
                 //De Colors die hier staan coresnsponderen met pixels in de Texture2D van map
                 if (colors[x, y] == Color.Red)
                 {
                     RoughTerrainTexture(x, y,
-                        "Tile_GrassHorizontal",
-                        "Tile_LeftverticalBlock",
-                        "Tile_RightverticalBlock",
-                        "Tile_Grasstopandbottom",
-                        "Tile_GrassLeftCorner",
-                        "Tile_GrassRightCorner",
-                        "Tile_GrassLeftCornerDown",
-                        "Tile_GrassRightCornerDown",
-                        "Tile_GrassHorizontalDown",
-                        "Tile_Grasstopend",
-                        "Tile_Grassbottomend",
-                        "Tile_Grassrightend",
-                        "Tile_Grassleftend",
-                        "Tile_Grasstopleftknob",
-                        "Tile_Grasstoprightknob",
-                        "Tile_Grassbottomleftknob",
-                        "Tile_Grassbottomrightknob",
-                        "Tile_dirt");
+                                       "Tile_GrassHorizontal",
+                                           "Tile_LeftverticalBlock",
+                                           "Tile_RightverticalBlock",
+                                           "Tile_Grasstopandbottom",
+                                           "Tile_GrassLeftCorner",
+                                           "Tile_GrassRightCorner",
+                                           "Tile_GrassLeftCornerDown",
+                                           "Tile_GrassRightCornerDown",
+                                           "Tile_GrassHorizontalDown",
+                                           "Tile_Grasstopend",
+                                           "Tile_Grassbottomend",
+                                           "Tile_Grassrightend",
+                                           "Tile_Grassleftend",
+                                           "Tile_Grasstopleftknob",
+                                           "Tile_Grasstoprightknob",
+                                           "Tile_Grassbottomleftknob",
+                                           "Tile_Grassbottomrightknob",
+                                           "Tile_dirt");
                 }
                 else if (colors[x, y] == Color.Chocolate) //use this color for smart generation with texture;
                 {
@@ -59,7 +65,7 @@ public class LevelGenerator : GameObject
                 }
                 else if (colors[x, y] == Color.Magenta)
                 {
-
+                    tiles[x, y] = new FallingRock("stone100", posBlock);
                 }
             }
         }
