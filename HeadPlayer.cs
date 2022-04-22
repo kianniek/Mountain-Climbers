@@ -3,10 +3,11 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using BaseProject.GameObjects;
 
 namespace BaseProject
 {
-    class HeadPlayer : SpriteGameObject
+    class HeadPlayer : SpriteGameObject, IWindObject
     {
         public float gravity;
         public bool left, right, jump, stand;
@@ -42,6 +43,10 @@ namespace BaseProject
 
             base.Update(gameTime);
             velocity.Y += gravity;
+            var wind = IWindObject.CurrentWind(this);
+            if (wind != null)
+                position += wind.WindForce(this, gameTime);
+            Console.WriteLine(position);
         }
 
         /*public override void HandleInput(InputHelper inputHelper)

@@ -17,7 +17,7 @@ namespace BaseProject.GameObjects
             var wind = IWindObject.CurrentWind(this);
             
             if (wind != null)
-                position += wind.WindForce(this);
+                position += wind.WindForce(this, gameTime);
         }
     }
 }

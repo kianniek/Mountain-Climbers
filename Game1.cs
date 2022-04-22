@@ -11,7 +11,7 @@ namespace BaseProject
         {
             base.LoadContent();
 
-            screen = new Point(1920, 1080);
+            screen = new Point(1920/2, 1080/2);
             
             ApplyResolutionSettings();
 

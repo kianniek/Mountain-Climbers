@@ -8,7 +8,7 @@ namespace BaseProject.GameObjects
         private readonly float height;
         private readonly float range;
         private readonly WindDirection direction;
-        private const float maxWindForce = 5;
+        private const float maxWindForce = 150;
 
         public StrongWind(Vector2 position, float height, float range, WindDirection direction)
         {
@@ -19,7 +19,7 @@ namespace BaseProject.GameObjects
             this.direction = direction;
         }
 
-        public Vector2 WindForce(SpriteGameObject obj)
+        public Vector2 WindForce(SpriteGameObject obj, GameTime gameTime)
         {
             var distance = Math.Abs(obj.Position.X - position.X);
             if (!IsObjectUnderInfluence(obj))
@@ -30,10 +30,10 @@ namespace BaseProject.GameObjects
             switch (direction)
             {
                 case WindDirection.Left:
-                    force = new Vector2(-(1 - 1/(range + Math.Abs(ObjectOffset(obj).X))*distance), 0) * maxWindForce;
+                    force = new Vector2(-(1 - 1/(range + Math.Abs(ObjectOffset(obj).X))*distance), 0) * maxWindForce * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case WindDirection.Right:
-                    force = new Vector2(1 - 1/(range + Math.Abs(ObjectOffset(obj).X))*distance, 0) * maxWindForce;
+                    force = new Vector2(1 - 1/(range + Math.Abs(ObjectOffset(obj).X))*distance, 0) * maxWindForce * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
             }
             
@@ -51,9 +51,9 @@ namespace BaseProject.GameObjects
             switch (direction)
             {
                 case WindDirection.Left:
-                    return obj.Position.X > Position.X - range + offset.X;
+                    return obj.Position.X <= Position.X && obj.Position.X > Position.X - range + offset.X;
                 case WindDirection.Right:
-                    return obj.Position.X < Position.X + range + offset.X;
+                    return obj.Position.X >= Position.X && obj.Position.X < Position.X + range + offset.X;
             }
 
             return false;
