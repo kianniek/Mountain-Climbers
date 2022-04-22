@@ -10,35 +10,111 @@ namespace BaseProject
 {
     class BigPlayer : HeadPlayer
     {
+        LevelGenerator levelGen;
+        SmallPlayer smallPlayer;
 
-        public BigPlayer() : base("player2")
+        public bool holdingPlayer;
+        public BigPlayer(LevelGenerator levelGen, SmallPlayer smallPlayer) : base("player2")
         {
-            origin = new Vector2(Center.X, Center.Y);
+            origin = new Vector2(Center.X, Center.Y / 4);
+            this.levelGen = levelGen;
+            this.smallPlayer = smallPlayer;
         }
 
         public override void Update(GameTime gameTime)
         {
-            //Console.WriteLine(velocity.Y);
-            base.Update(gameTime);
-        }
+            //Console.WriteLine(zPressed);
+            zPressed = false;
 
+            base.Update(gameTime);
+
+            CollisonWithGround();
+
+            if (holdingPlayer)
+            {
+                grabPlayer();
+            }
+            else
+            {
+                smallPlayer.canMove = true;
+            }
+        }
+        public void CollisonWithGround()
+        {
+            for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+            {
+                for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+                {
+                    var tile = levelGen.tiles[x, y];
+                    if (tile == null || tile == this)
+                        continue;
+
+                    if (this.Position.X + this.Width > tile.Position.X && this.Position.X < tile.Position.X + tile.Width
+                        && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
+                    {
+                        var mx = (this.Position.X - tile.Position.X);
+                        var my = (this.Position.Y - tile.Position.Y);
+
+                        if (Math.Abs(mx) > Math.Abs(my))
+                        {
+                            if (mx > 0 && this.Velocity.X < 0)
+                            {
+                                this.velocity.X = 0;
+                                this.position.X = tile.Position.X + tile.Width;
+                            }
+                            else if (mx < 0 && this.Velocity.X > 0)
+                            {
+                                this.position.X = tile.Position.X - this.Width;
+                                this.velocity.X = 0;
+                            }
+                        }
+
+                        else
+                        {
+                            if (my > 0 && this.velocity.Y < 0)
+                            {
+                                this.velocity.Y = 0;
+                                this.position.Y = tile.Position.Y + tile.Height;
+                            }
+                            else if (my < 0 && this.velocity.Y > 0)
+                            {
+                                this.velocity.Y = 0;
+                                this.position.Y = tile.Position.Y - this.Height;
+                                this.stand = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         public override void HandleInput(InputHelper inputHelper)
         {
-            base.HandleInput(inputHelper);
+            //if ((!hitClimbWall) && (!zPressed))
+            //{
+                if (inputHelper.IsKeyDown(Keys.A))
+                {
+                    left = true;
+                    //effective = SpriteEffects.FlipHorizontally;
+                    Mirror = true;
+                }
+                if (inputHelper.IsKeyDown(Keys.D))
+                {
+                    right = true;
+                    //effective = SpriteEffects.None;
+                    Mirror = false;
+                }
 
-            if (inputHelper.IsKeyDown(Keys.A))
-            {
-                left = true;
-                //effective = SpriteEffects.FlipHorizontally;
-                Mirror = true;
-            }
-            if (inputHelper.IsKeyDown(Keys.D))
-            {
-                right = true;
-                //effective = SpriteEffects.None;
-                Mirror = false;
-            }
-
+                if (inputHelper.KeyPressed(Keys.E))
+                {
+                    holdingPlayer = false;
+                    //smallPlayer.stand = false;
+                    if (smallPlayer.CollidesWith(this))
+                    {
+                        holdingPlayer = true;
+                    }
+                }
+            //}
+            
             if (stand)
             {
                 if (inputHelper.KeyPressed(Keys.W))
@@ -46,30 +122,53 @@ namespace BaseProject
                     stand = false;
                     jump = true;
                 }
+                if (inputHelper.IsKeyDown(Keys.Z))
+                {
+                    zPressed = true;
+                }
+            }
+         
+            //Player is climbing the wall
+            if (hitClimbWall && zPressed)
+            {
+                Climb();
+
+                if (inputHelper.IsKeyDown(Keys.Q))
+                {
+                    velocity.Y = -20;
+                }
+                if (inputHelper.IsKeyDown(Keys.S))
+                {
+                    velocity.Y = 20;
+                }
+            }
+            else
+            {
+                notClimbing();
+            }
+        }
+        public void grabPlayer()
+        {
+            smallPlayer.pickedUp(new Vector2(position.X, position.Y - 80));
+            if (smallPlayer.beingHeld)
+            {
+                if (left)
+                {
+                    smallPlayer.left = true;
+                    //smallPlayer.effective = SpriteEffects.FlipHorizontally;
+                }
+                if (right)
+                {
+                    smallPlayer.right = true;
+                    //smallPlayer.effective = SpriteEffects.None;
+                }
             }
         }
 
-        //Player is touching the ground
-        //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
-        public override void OnGround(float standPosition)
+        public override void Climb()
         {
-            base.OnGround(standPosition);
-        }
-
-        //Deze kun je gebruiken bij een wall collision aan de linkerkant 
-        public override void hitWallLeft(float leftPosition)
-        {
-            /*if (position.X <= leftPosition)
-            {
-                position.X = leftPosition;
-            }*/
-            base.hitWallLeft(leftPosition);
-        }
-
-        //Deze kun je gebruiken bij een wall collision aan de rechterkant
-        public override void hitWallRight(float rightPosition)
-        {
-            base.hitWallRight(rightPosition);
+            base.Climb();
         }
     }
 }
+

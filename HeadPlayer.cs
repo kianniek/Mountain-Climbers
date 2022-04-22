@@ -3,25 +3,24 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using BaseProject.GameObjects;
 
 namespace BaseProject
 {
-    class HeadPlayer : SpriteGameObject, IWindObject
+    //Dion
+    class HeadPlayer : SpriteGameObject
     {
         public float gravity;
-        public bool left, right, jump, stand;
+        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed;
+
         public HeadPlayer(string assetName) : base(assetName)
         {
-            position.Y = 300;
+            position.Y = GameEnvironment.Screen.Y / 1.5f;
             gravity = 10f;
-            origin = new Vector2(Center.X, Center.Y + sprite.Height / 2);
         }
 
         public override void Update(GameTime gameTime)
         {
             velocity.X = 0;
-            gravity = 10f;
 
             if (jump)
             {
@@ -43,13 +42,18 @@ namespace BaseProject
 
             base.Update(gameTime);
             velocity.Y += gravity;
-            var wind = IWindObject.CurrentWind(this);
-            if (wind != null)
-                position += wind.WindForce(this, gameTime);
-            Console.WriteLine(position);
         }
 
-        /*public override void HandleInput(InputHelper inputHelper)
+        //Roep deze functie aan als de speler normaal springt en de waterval raakt,
+        //maar zodra je de pickup gebruikt, roep deze niet aan.
+        public virtual void hitWaterfall()
+        {
+            velocity.Y = 520;
+        }
+
+        
+
+        public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
 
@@ -68,40 +72,55 @@ namespace BaseProject
             {
                 if (inputHelper.KeyPressed(Keys.Up))
                 {
-                    stand = false;
-                    jump = true;
+                     stand = false;
+                     jump = true;
                 }
             }
-        }*/
-
-        //Player is touching the ground
-        //Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
-        public virtual void OnGround(float standPosition)
-        {
-            if (position.Y > standPosition)
-            {
-                stand = true;
-                position.Y = standPosition;
-                velocity.Y -= gravity;
-            }
         }
 
-        //Deze kun je gebruiken bij een wall collision aan de linkerkant 
-        public virtual void hitWallLeft(float leftPosition)
+        public virtual void Climb()
         {
-            if (position.X <= leftPosition)
-            {
-                position.X = leftPosition;
-            }
+            left = false;
+            right = false;
+            stand = true;
+            gravity = 0;
+            velocity.Y = 0;
+            velocity.X = 0;
         }
 
-        //Deze kun je gebruiken bij een wall collision aan de rechterkant
-        public virtual void hitWallRight(float rightPosition)
+        public virtual void notClimbing()
         {
-            if (position.X >= rightPosition)
-            {
-                position.X = rightPosition;
-            }
+            gravity = 10f;
         }
+
+        ////Player is touching the ground
+        ////Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
+        //public virtual void OnGround(float standPosition)
+        //{
+        //    if (position.Y > standPosition)
+        //    {
+        //        stand = true;
+        //        position.Y = standPosition;
+        //        velocity.Y = 0;
+        //    }
+        //}
+
+        ////Deze kun je gebruiken bij een wall collision aan de linkerkant 
+        //public virtual void hitWallLeft(float leftPosition)
+        //{
+        //    if (position.X <= leftPosition)
+        //    {
+        //        position.X = leftPosition;
+        //    }
+        //}
+
+        ////Deze kun je gebruiken bij een wall collision aan de rechterkant
+        //public virtual void hitWallRight(float rightPosition)
+        //{
+        //    if (position.X >= rightPosition)
+        //    {
+        //        position.X = rightPosition;
+        //    }
+        //}
     }
 }
