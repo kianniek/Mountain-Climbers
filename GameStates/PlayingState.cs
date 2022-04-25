@@ -24,6 +24,7 @@ namespace BaseProject.GameStates
         Camera cam;
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
         int livesPlayer;
+        int loadNextSection = 1;
 
         public PlayingState(Camera camera)
         {
@@ -44,7 +45,7 @@ namespace BaseProject.GameStates
 
             this.cam = camera;
 
-            this.Add(levelGen);
+            //this.Add(levelGen);
             foreach (GameObject tile in levelGen.tiles)
             {
                 GameObject levelObject = tile;
@@ -54,6 +55,8 @@ namespace BaseProject.GameStates
                 }
                 Add(levelObject);
             }
+            //levelGen.sectionStep = 3;
+
 
             //Test
             //waterfalls.Add(new Waterfall("Waterfall200", new Vector2(500, 10)));
@@ -95,7 +98,6 @@ namespace BaseProject.GameStates
 
 
             cam.Pos = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
-
         }
 
 
@@ -103,6 +105,26 @@ namespace BaseProject.GameStates
         {
             KeepPlayersCenterd();
             UI_ElementUpdate();
+
+            if (levelGen.sectionLoaded != loadNextSection)
+            {
+                levelGen.Load(loadNextSection);
+
+                for (int x = levelGen.sectionSizeX - levelGen.sectionStep; x < levelGen.sectionSizeX; x++)
+                {
+                    for (int y = 0; y < levelGen.sectionSizeY; y++)
+                    {
+                        GameObject levelObject = levelGen.tiles[x, y];
+                        if (levelObject == null)
+                        {
+                            continue;
+                        }
+                        
+                        Add(levelObject);
+                    }
+                }
+                Console.WriteLine("Loaded Section: " + levelGen.sectionLoaded);
+            }
 
             //Climbing test!!!
             foreach (ClimbWall climb in climbWall.Children)
@@ -146,17 +168,20 @@ namespace BaseProject.GameStates
             {
                 Console.WriteLine("alleen voor de grote spelers");
             }
+            if (inputHelper.MouseLeftButtonPressed())
+            {
+                loadNextSection++;
+            }
 
         }
 
         void KeepPlayersCenterd()
         {
-            Console.WriteLine(cam.Pos.Y);
             Vector2 sharedPlayerPos = (smallPlayer.Position + bigPlayer.Position) / 2;
-            Vector2 offsetFromCenter = new Vector2(10, 0);
+            Vector2 offsetFromCenter = new Vector2(10, 10);
             Vector2 moveAmount = Vector2.Zero;
 
-            float falloff = 1f;
+            float falloff = 2f;
 
             if (Game1.Screen.X / 2 - offsetFromCenter.X - cam._transform.M41 > sharedPlayerPos.X)
             {

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
-public class LevelGenerator : GameObject
+public class LevelGenerator
 {
     public SpriteGameObject[,] tiles;
     public SpriteGameObject ground;
@@ -14,22 +14,30 @@ public class LevelGenerator : GameObject
     public float offsetX = 1f;
     public float offsetY = 1f;
 
+    public int sectionLoaded;
+    public int sectionStep = 60;
+    public int sectionSizeX;
+    public int sectionSizeY;
+
 
     // Use this for initialization
     public LevelGenerator()
     {
-        map = GameEnvironment.AssetManager.Content.Load<Texture2D>("FirstMapTest");
+        map = GameEnvironment.AssetManager.Content.Load<Texture2D>("PerTes");
         tiles = new SpriteGameObject[map.Width, map.Height];
         colors = TextureTo2DArray(map);
-        Start(1);
+        Load(1);
     }
-    public void Start(int section)
+    public void Load(int section)
     {
-        int sectionSize = (int) map.Width / 10;
+        sectionLoaded = section;
+        sectionSizeX = (int) sectionStep * sectionLoaded;
+        sectionSizeY = (int) map.Height;
+
         colors = TextureTo2DArray(map);
-        for (int x = 0; x < map.Width; x++)
+        for (int x = sectionSizeX - sectionStep; x < sectionSizeX; x++)
         {
-            for (int y = 0; y < map.Height; y++)
+            for (int y = 0; y < sectionSizeY; y++)
             {
                 ground = new Ground();
                 float heightOffset = Game1.Screen.Y - map.Height * ground.Height;
@@ -313,22 +321,10 @@ public class LevelGenerator : GameObject
                         Position = posBlock
                     };
                 }
-
             }
             tiles[x, y] = ground;
         }
     }
-    private long ToColint(int x, int y, Color[,] colors) // Color + int = Colint
-    {
-        //string a = colors[x, y].A.ToString();
-        string r = colors[x, y].R.ToString();
-        string g = colors[x, y].G.ToString();
-        string b = colors[x, y].B.ToString();
-        string rgb = "1" + r + "1" + g + "1" + b;
-        long Intrgb = long.Parse(rgb);
-        return Intrgb;
-    }
-
     private Color[,] TextureTo2DArray(Texture2D texture)
     {
         Color[] colors1D = new Color[texture.Width * texture.Height];
