@@ -45,17 +45,21 @@ namespace BaseProject.GameStates
 
             this.cam = camera;
 
-            //this.Add(levelGen);
-            foreach (GameObject tile in levelGen.tiles)
+            levelGen.Load(loadNextSection);
+
+            for (int x = levelGen.sectionSizeX - levelGen.sectionStep; x < levelGen.sectionSizeX; x++)
             {
-                GameObject levelObject = tile;
-                if (levelObject == null)
+                for (int y = 0; y < levelGen.sectionSizeY; y++)
                 {
-                    continue;
+                    GameObject levelObject = levelGen.tiles[x, y];
+                    if (levelObject == null)
+                    {
+                        continue;
+                    }
+
+                    Add(levelObject);
                 }
-                Add(levelObject);
             }
-            //levelGen.sectionStep = 3;
 
 
             //Test
@@ -106,6 +110,11 @@ namespace BaseProject.GameStates
             KeepPlayersCenterd();
             UI_ElementUpdate();
 
+            if (gameTime.TotalGameTime.Seconds % 60 == 0) 
+            {
+                loadNextSection++;
+            }
+
             if (levelGen.sectionLoaded != loadNextSection)
             {
                 levelGen.Load(loadNextSection);
@@ -149,10 +158,6 @@ namespace BaseProject.GameStates
             base.Update(gameTime);
         }
 
-        public override void Reset()
-        {
-            base.Reset();
-        }
 
         public override void HandleInput(InputHelper inputHelper)
         {
@@ -168,10 +173,10 @@ namespace BaseProject.GameStates
             {
                 Console.WriteLine("alleen voor de grote spelers");
             }
-            if (inputHelper.MouseLeftButtonPressed())
-            {
-                loadNextSection++;
-            }
+            //if (inputHelper.MouseLeftButtonPressed())
+            //{
+            //    loadNextSection++;
+            //}
 
         }
 
@@ -181,7 +186,7 @@ namespace BaseProject.GameStates
             Vector2 offsetFromCenter = new Vector2(10, 10);
             Vector2 moveAmount = Vector2.Zero;
 
-            float falloff = 2f;
+            float falloff = 1f;
 
             if (Game1.Screen.X / 2 - offsetFromCenter.X - cam._transform.M41 > sharedPlayerPos.X)
             {

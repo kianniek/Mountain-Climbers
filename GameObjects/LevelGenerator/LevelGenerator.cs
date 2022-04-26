@@ -15,7 +15,7 @@ public class LevelGenerator
     public float offsetY = 1f;
 
     public int sectionLoaded;
-    public int sectionStep = 60;
+    public int sectionStep = 1;
     public int sectionSizeX;
     public int sectionSizeY;
 
@@ -35,10 +35,15 @@ public class LevelGenerator
         sectionSizeY = (int) map.Height;
 
         colors = TextureTo2DArray(map);
+        
         for (int x = sectionSizeX - sectionStep; x < sectionSizeX; x++)
         {
             for (int y = 0; y < sectionSizeY; y++)
             {
+                if(colors[x, y] == Color.Transparent)
+                {
+                    continue;
+                }
                 ground = new Ground();
                 float heightOffset = Game1.Screen.Y - map.Height * ground.Height;
                 Vector2 posBlock = new Vector2(x * ground.Width, y * ground.Height + heightOffset);
