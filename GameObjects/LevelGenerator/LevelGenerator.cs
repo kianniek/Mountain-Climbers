@@ -26,7 +26,7 @@ public class LevelGenerator : SpriteGameObject
     }
     public void Start(int section)
     {
-        int sectionSize = (int) map.Width / 10;
+        int sectionSize = (int)map.Width / 10;
         colors = TextureTo2DArray(map);
         for (int x = 0; x < map.Width; x++)
         {
@@ -67,12 +67,17 @@ public class LevelGenerator : SpriteGameObject
                 else if (colors[x, y] == Color.Magenta)
                 {
                     tiles[x, y] = new FallingRock("stone100", posBlock);
-                }else if(colors[x, y] == Color.Lime)
+                }
+                else if (colors[x, y] == Color.Lime)
                 {
-                    tiles[x, y] = new CuttebleRope(this, x,y)
+                    tiles[x, y] = new CuttebleRope(this, x, y)
                     {
                         Position = posBlock
                     };
+                }
+                else if (colors[x, y] == Color.Yellow)
+                {
+                    tiles[x, y] = new ClimbWall("Tile_ClimebleLeftverticalBlock", posBlock);
                 }
             }
         }

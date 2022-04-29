@@ -27,6 +27,8 @@ namespace BaseProject.GameStates
 
         public PlayingState(Camera camera)
         {
+            Add(new SpriteGameObject("DarkForestBackground") { Shade = new Color(100,100,100)});
+
             livesPlayer = 2;
             noLives = new Lives[livesPlayer * 2];
             livesSmall = new Lives[livesPlayer];
@@ -104,10 +106,6 @@ namespace BaseProject.GameStates
             KeepPlayersCenterd();
             UI_ElementUpdate();
 
-
-
-            
-
             //Climbing test!!!
             foreach (ClimbWall climb in climbWall.Children)
             {
@@ -128,8 +126,19 @@ namespace BaseProject.GameStates
                 }
             }
 
-            Console.WriteLine(bigPlayer.hitClimbWall);
+            CheckGameOver();
             base.Update(gameTime);
+        }
+
+        private void CheckGameOver()
+        {
+            if (smallPlayer.isDead && bigPlayer.isDead) 
+            {
+                bigPlayer.Reset();
+                smallPlayer.Reset();
+
+                GameEnvironment.GameStateManager.SwitchTo("StartState");
+            }
         }
 
         public void DropDownRope(CuttebleRope cuttebleRope, int x, int y)
@@ -173,13 +182,13 @@ namespace BaseProject.GameStates
         {
             base.HandleInput(inputHelper);
 
-            if ((smallPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
+            if ((smallPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Keys.Space))
             {
                 Console.WriteLine("lets go");
 
             }
 
-            if ((bigPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter))
+            if ((bigPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Keys.Enter))
             {
                 Console.WriteLine("alleen voor de grote spelers");
             }

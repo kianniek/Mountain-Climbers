@@ -9,6 +9,7 @@ namespace BaseProject
     //Dion
     class HeadPlayer : SpriteGameObject
     {
+        public bool isDead;
         public float gravity;
         public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed;
 
@@ -19,7 +20,8 @@ namespace BaseProject
 
         public HeadPlayer(string assetName) : base(assetName)
         {
-            position.Y = GameEnvironment.Screen.Y / 1.5f;
+            position.Y = GameEnvironment.Screen.Y / 1.4f;
+            position.X = 10;
             gravity = 10f;
         }
 
@@ -43,6 +45,11 @@ namespace BaseProject
             {
                 velocity.X = horizontalSpeed;
                 right = false;
+            }
+
+            if (position.Y > 1080)
+            {
+                isDead = true;
             }
 
             base.Update(gameTime);
@@ -82,7 +89,7 @@ namespace BaseProject
                 }
             }
 
-            
+
         }
 
         public virtual void Climb()

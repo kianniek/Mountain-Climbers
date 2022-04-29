@@ -22,7 +22,8 @@ class SmallPlayer : HeadPlayer
         base.Update(gameTime);
 
         CollisonWithGround();
-        hitClimbWall = CollisonWithRope();
+        hitClimbWall = CollisonWithRope() || CollisonWithClimebleWall();
+
     }
     public override void HandleInput(InputHelper inputHelper)
     {
@@ -92,6 +93,31 @@ class SmallPlayer : HeadPlayer
                 if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
                     && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
                 {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public bool CollisonWithClimebleWall()
+    {
+        for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+        {
+            for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+            {
+                var tile = levelGen.tiles[x, y];
+
+                if (tile == null || tile == this || tile.Sprite.Sprite.Name != "Tile_ClimebleLeftverticalBlock")
+                    continue;
+
+                if (this.Position.X + this.Width / 1.5f > tile.Position.X && 
+                    this.Position.X < tile.Position.X + tile.Width &&
+                    this.Position.Y + this.Height > tile.Position.Y && 
+                    this.Position.Y < tile.Position.Y + tile.Height
+                    )
+                {
+                    Console.WriteLine("CollisionWith Climeble Wall");
                     return true;
                 }
             }
