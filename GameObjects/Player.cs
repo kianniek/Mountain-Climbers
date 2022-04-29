@@ -50,6 +50,15 @@ class SmallPlayer : HeadPlayer
             }
         }
 
+        if (inputHelper.IsKeyDown(Keys.RightShift))
+        {
+            horizontalSpeed = sprintingSpeed;
+        }
+        else
+        {
+            horizontalSpeed = walkingSpeed;
+        }
+
         //Small Player is climbing a wall
         if (hitClimbWall)
         {

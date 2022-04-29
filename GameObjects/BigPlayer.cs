@@ -110,6 +110,16 @@ namespace BaseProject
         }
         public override void HandleInput(InputHelper inputHelper)
         {
+
+            if (inputHelper.IsKeyDown(Keys.LeftShift))
+            {
+                horizontalSpeed = sprintingSpeed;
+            }
+            else
+            {
+                horizontalSpeed = walkingSpeed;
+            } 
+
             //Player is climbing the wall
             if (hitClimbWall)
             {

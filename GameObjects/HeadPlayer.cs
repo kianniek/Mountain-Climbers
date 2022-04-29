@@ -12,6 +12,11 @@ namespace BaseProject
         public float gravity;
         public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed;
 
+        public static float JumpForce = 460;
+        public float horizontalSpeed = 175;
+        public static float walkingSpeed = 175;
+        public static float sprintingSpeed = 500;
+
         public HeadPlayer(string assetName) : base(assetName)
         {
             position.Y = GameEnvironment.Screen.Y / 1.5f;
@@ -26,17 +31,17 @@ namespace BaseProject
             {
                 jump = false;
                 stand = false;
-                velocity.Y = -460;
+                velocity.Y = -JumpForce;
             }
 
             if (left)
             {
-                velocity.X = -175;
+                velocity.X = -horizontalSpeed;
                 left = false;
             }
             if (right)
             {
-                velocity.X = 175;
+                velocity.X = horizontalSpeed;
                 right = false;
             }
 
@@ -51,7 +56,7 @@ namespace BaseProject
             velocity.Y = 520;
         }
 
-        
+
 
         public override void HandleInput(InputHelper inputHelper)
         {
@@ -72,10 +77,12 @@ namespace BaseProject
             {
                 if (inputHelper.KeyPressed(Keys.Up))
                 {
-                     stand = false;
-                     jump = true;
+                    stand = false;
+                    jump = true;
                 }
             }
+
+            
         }
 
         public virtual void Climb()
