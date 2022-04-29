@@ -22,7 +22,7 @@ class SmallPlayer : HeadPlayer
         base.Update(gameTime);
 
         CollisonWithGround();
-        CollisonWithRope();
+        hitClimbWall = CollisonWithRope();
     }
     public override void HandleInput(InputHelper inputHelper)
     {
@@ -51,17 +51,17 @@ class SmallPlayer : HeadPlayer
         }
 
         //Small Player is climbing a wall
-        if (hitClimbWall && mPressed)
+        if (hitClimbWall)
         {
             Climb();
 
             if (inputHelper.IsKeyDown(Keys.Up))
             {
-                velocity.Y = -20;
+                velocity.Y = -100;
             }
             if (inputHelper.IsKeyDown(Keys.Down))
             {
-                velocity.Y = 20;
+                velocity.Y = 100;
             }
         }
         else
@@ -69,30 +69,25 @@ class SmallPlayer : HeadPlayer
             notClimbing();
         }
     }
-    public void CollisonWithRope()
+    public bool CollisonWithRope()
     {
         for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
         {
             for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
             {
                 var tile = levelGen.tiles[x, y];
+
                 if (tile == null || tile == this || tile.Sprite.Sprite.Name != "RopeSegment")
                     continue;
 
                 if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
                     && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
                 {
-                    var mx = (this.Position.X - tile.Position.X);
-                    var my = (this.Position.Y - tile.Position.Y);
-
-                    hitClimbWall = true;
-                }
-                else
-                {
-                    hitClimbWall = false;
+                    return true;
                 }
             }
         }
+        return false;
     }
     public void CollisonWithGround()
     {
@@ -142,7 +137,7 @@ class SmallPlayer : HeadPlayer
             }
         }
     }
-    internal void pickedUp(Vector2 grabPosition)
+    internal void PickedUp(Vector2 grabPosition)
     {
         velocity = Vector2.Zero;
         position = grabPosition;

@@ -60,7 +60,7 @@ namespace BaseProject.GameStates
 
             //rocks.Add(new FallingRock("stone100", new Vector2(100, 0 - 100)));
             //rocks.Add(new FallingRock("stone300", new Vector2(800, 0 - 300)));
-            climbWall.Add(new ClimbWall("Waterfall200", new Vector2(200, 500)));
+            //climbWall.Add(new ClimbWall("Waterfall200", new Vector2(200, 500)));
 
             this.Add(waterfalls);
             this.Add(bigPlayer);
@@ -106,20 +106,7 @@ namespace BaseProject.GameStates
 
 
 
-            //Player with Rope Collision test
-            for (int x = 0; x < levelGen.tiles.GetLength(0); x++)
-            {
-                for (int y = 0; y < levelGen.tiles.GetLength(1); y++)
-                {
-                    if (levelGen.tiles[x, y] == null || !(levelGen.tiles[x, y] is CuttebleRope))
-                        continue;
-
-                    if (smallPlayer.CollidesWith(levelGen.tiles[x, y]))
-                    {
-                        DropDownRope((CuttebleRope)levelGen.tiles[x, y], x, y);
-                    }
-                }
-            }
+            
 
             //Climbing test!!!
             foreach (ClimbWall climb in climbWall.Children)
@@ -141,6 +128,7 @@ namespace BaseProject.GameStates
                 }
             }
 
+            Console.WriteLine(bigPlayer.hitClimbWall);
             base.Update(gameTime);
         }
 
@@ -153,7 +141,6 @@ namespace BaseProject.GameStates
 
                 if (levelGen.tiles[cuttebleRope.x - 1, cuttebleRope.y + 1] != null)
                 {
-                    Console.WriteLine("rechts leeg");
                     for (int i = 1; i < 10; i++)
                     {
                         Rope rope = new Rope()
@@ -161,8 +148,7 @@ namespace BaseProject.GameStates
                             Position = new Vector2(cuttebleRope.Position.X + levelGen.ground.Width, cuttebleRope.Position.Y + levelGen.ground.Width * i),
                         };
                         Add(rope);
-                        levelGen.tiles[x - 1, y + 1 * i] = rope;
-                        Console.WriteLine(levelGen.tiles[x - 1, y + 1 * i]);
+                        levelGen.tiles[x - 1, y + i] = rope;
                     }
                 }
                 cuttebleRope.isOut = true;
@@ -170,7 +156,6 @@ namespace BaseProject.GameStates
             else
             if (levelGen.tiles[cuttebleRope.x + 1, cuttebleRope.y + 1] != null)
             {
-                Console.WriteLine("links leeg");
                 for (int i = 1; i < 10; i++)
                 {
                     Rope rope = new Rope()
@@ -178,7 +163,7 @@ namespace BaseProject.GameStates
                         Position = new Vector2(cuttebleRope.Position.X - levelGen.ground.Width, cuttebleRope.Position.Y + levelGen.ground.Width * i),
                     };
                     Add(rope);
-                    levelGen.tiles[x + 1, y + 1 * i] = rope;
+                    levelGen.tiles[x + 1, y + i] = rope;
                 }
             }
             cuttebleRope.isOut = true;
@@ -197,6 +182,25 @@ namespace BaseProject.GameStates
             if ((bigPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter))
             {
                 Console.WriteLine("alleen voor de grote spelers");
+            }
+
+            //Player with Rope Collision test
+            for (int x = 0; x < levelGen.tiles.GetLength(0); x++)
+            {
+                for (int y = 0; y < levelGen.tiles.GetLength(1); y++)
+                {
+                    if (levelGen.tiles[x, y] == null || !(levelGen.tiles[x, y] is CuttebleRope))
+                        continue;
+
+                    if (smallPlayer.CollidesWith(levelGen.tiles[x, y]))
+                    {
+                        if (inputHelper.KeyPressed(Keys.E))
+                        {
+                            DropDownRope((CuttebleRope)levelGen.tiles[x, y], x, y);
+                            //levelGen.tiles[x, y].Scale = 0f;
+                        }
+                    }
+                }
             }
 
         }

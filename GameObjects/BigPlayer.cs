@@ -29,7 +29,7 @@ namespace BaseProject
             base.Update(gameTime);
 
             CollisonWithGround();
-            CollisonWithRope();
+            hitClimbWall = CollisonWithRope();
 
             if (holdingPlayer)
             {
@@ -88,31 +88,46 @@ namespace BaseProject
                 }
             }
         }
-        public void CollisonWithRope()
+        public bool CollisonWithRope()
         {
             for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
             {
                 for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
                 {
                     var tile = levelGen.tiles[x, y];
+
                     if (tile == null || tile == this || tile.Sprite.Sprite.Name != "RopeSegment")
                         continue;
 
                     if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
                         && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
                     {
-
-                        hitClimbWall = true;
-                    }
-                    else
-                    {
-                        hitClimbWall = false;
+                        return true;
                     }
                 }
             }
+            return false;
         }
         public override void HandleInput(InputHelper inputHelper)
         {
+            //Player is climbing the wall
+            if (hitClimbWall)
+            {
+                Climb();
+
+                if (inputHelper.IsKeyDown(Keys.W))
+                {
+                    velocity.Y = -100;
+                }
+                if (inputHelper.IsKeyDown(Keys.S))
+                {
+                    velocity.Y = 100;
+                }
+            }
+            else
+            {
+                notClimbing();
+            }
             //if ((!hitClimbWall) && (!zPressed))
             //{
                 if (inputHelper.IsKeyDown(Keys.A))
@@ -152,28 +167,10 @@ namespace BaseProject
                 }
             }
          
-            //Player is climbing the wall
-            if (hitClimbWall && zPressed)
-            {
-                Climb();
-
-                if (inputHelper.IsKeyDown(Keys.W))
-                {
-                    velocity.Y = -20;
-                }
-                if (inputHelper.IsKeyDown(Keys.S))
-                {
-                    velocity.Y = 20;
-                }
-            }
-            else
-            {
-                notClimbing();
-            }
         }
         public void grabPlayer()
         {
-            smallPlayer.pickedUp(new Vector2(position.X, position.Y - 80));
+            smallPlayer.PickedUp(new Vector2(position.X, position.Y - 80));
             if (smallPlayer.beingHeld)
             {
                 if (left)
