@@ -27,7 +27,7 @@ namespace BaseProject.GameStates
 
         public PlayingState(Camera camera)
         {
-            Add(new SpriteGameObject("DarkForestBackground") { Shade = new Color(100,100,100)});
+            Add(new SpriteGameObject("DarkForestBackground") { Shade = new Color(200,200,200)});
 
             livesPlayer = 2;
             noLives = new Lives[livesPlayer * 2];
@@ -132,6 +132,17 @@ namespace BaseProject.GameStates
 
         private void CheckGameOver()
         {
+            if (smallPlayer.isDead)
+            {
+                smallPlayer.Position = bigPlayer.Position;
+                smallPlayer.canMove = true;
+                //smallPlayer.Visible = false;
+            }
+            if (bigPlayer.isDead)
+            {
+                bigPlayer.Position = smallPlayer.Position;
+                //bigPlayer.Visible = false;
+            }
             if (smallPlayer.isDead && bigPlayer.isDead) 
             {
                 bigPlayer.Reset();

@@ -12,7 +12,7 @@ class SmallPlayer : HeadPlayer
     public bool canMove, beingHeld;
     public SmallPlayer(LevelGenerator levelGen) : base("Player")
     {
-        origin = new Vector2(Center.X, Center.Y / 2);
+        origin = new Vector2(Center.X, Center.Y - Center.Y / 2);
         this.levelGen = levelGen;
     }
     public override void Update(GameTime gameTime)
