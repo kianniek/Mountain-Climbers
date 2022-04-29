@@ -1,5 +1,6 @@
 ﻿using System;
 using BaseProject;
+using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -21,6 +22,7 @@ class SmallPlayer : HeadPlayer
         base.Update(gameTime);
 
         CollisonWithGround();
+        CollisonWithRope();
     }
     public override void HandleInput(InputHelper inputHelper)
     {
@@ -53,7 +55,7 @@ class SmallPlayer : HeadPlayer
         {
             Climb();
 
-            if (inputHelper.IsKeyDown(Keys.K))
+            if (inputHelper.IsKeyDown(Keys.Up))
             {
                 velocity.Y = -20;
             }
@@ -67,6 +69,31 @@ class SmallPlayer : HeadPlayer
             notClimbing();
         }
     }
+    public void CollisonWithRope()
+    {
+        for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+        {
+            for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+            {
+                var tile = levelGen.tiles[x, y];
+                if (tile == null || tile == this || tile.Sprite.Sprite.Name != "RopeSegment")
+                    continue;
+
+                if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
+                    && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
+                {
+                    var mx = (this.Position.X - tile.Position.X);
+                    var my = (this.Position.Y - tile.Position.Y);
+
+                    hitClimbWall = true;
+                }
+                else
+                {
+                    hitClimbWall = false;
+                }
+            }
+        }
+    }
     public void CollisonWithGround()
     {
         for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
@@ -74,10 +101,10 @@ class SmallPlayer : HeadPlayer
             for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
             {
                 var tile = levelGen.tiles[x, y];
-                if (tile == null || tile == this)
+                if (tile == null || tile == this || tile.Sprite.Sprite.Name == "RopeSegment")
                     continue;
 
-                if (this.Position.X + this.Width > tile.Position.X && this.Position.X < tile.Position.X + tile.Width
+                if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
                     && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
                 {
                     var mx = (this.Position.X - tile.Position.X);
@@ -88,11 +115,11 @@ class SmallPlayer : HeadPlayer
                         if (mx > 0 && this.Velocity.X < 0)
                         {
                             this.velocity.X = 0;
-                            this.position.X = tile.Position.X + tile.Width;
+                            this.position.X = tile.Position.X + tile.Width / 2;
                         }
                         else if (mx < 0 && this.Velocity.X > 0)
                         {
-                            this.position.X = tile.Position.X - this.Width;
+                            this.position.X = tile.Position.X - this.Width / 2;
                             this.velocity.X = 0;
                         }
                     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseProject.GameObjects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -23,12 +24,12 @@ namespace BaseProject
 
         public override void Update(GameTime gameTime)
         {
-            //Console.WriteLine(zPressed);
             zPressed = false;
 
             base.Update(gameTime);
 
             CollisonWithGround();
+            CollisonWithRope();
 
             if (holdingPlayer)
             {
@@ -46,10 +47,10 @@ namespace BaseProject
                 for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
                 {
                     var tile = levelGen.tiles[x, y];
-                    if (tile == null || tile == this)
+                    if (tile == null || tile == this || tile.Sprite.Sprite.Name == "RopeSegment")
                         continue;
 
-                    if (this.Position.X + this.Width > tile.Position.X && this.Position.X < tile.Position.X + tile.Width
+                    if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
                         && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
                     {
                         var mx = (this.Position.X - tile.Position.X);
@@ -60,11 +61,11 @@ namespace BaseProject
                             if (mx > 0 && this.Velocity.X < 0)
                             {
                                 this.velocity.X = 0;
-                                this.position.X = tile.Position.X + tile.Width;
+                                this.position.X = tile.Position.X + tile.Width / 2;
                             }
                             else if (mx < 0 && this.Velocity.X > 0)
                             {
-                                this.position.X = tile.Position.X - this.Width;
+                                this.position.X = tile.Position.X - this.Width / 2;
                                 this.velocity.X = 0;
                             }
                         }
@@ -83,6 +84,29 @@ namespace BaseProject
                                 this.stand = true;
                             }
                         }
+                    }
+                }
+            }
+        }
+        public void CollisonWithRope()
+        {
+            for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+            {
+                for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+                {
+                    var tile = levelGen.tiles[x, y];
+                    if (tile == null || tile == this || tile.Sprite.Sprite.Name != "RopeSegment")
+                        continue;
+
+                    if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
+                        && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
+                    {
+
+                        hitClimbWall = true;
+                    }
+                    else
+                    {
+                        hitClimbWall = false;
                     }
                 }
             }
@@ -133,7 +157,7 @@ namespace BaseProject
             {
                 Climb();
 
-                if (inputHelper.IsKeyDown(Keys.Q))
+                if (inputHelper.IsKeyDown(Keys.W))
                 {
                     velocity.Y = -20;
                 }
@@ -163,11 +187,6 @@ namespace BaseProject
                     //smallPlayer.effective = SpriteEffects.None;
                 }
             }
-        }
-
-        public override void Climb()
-        {
-            base.Climb();
         }
     }
 }

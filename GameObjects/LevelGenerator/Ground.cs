@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BaseProject.GameObjects
 {
-    internal class Ground : SpriteGameObject
+    public class Ground : SpriteGameObject
     {
         public Ground(string assetName = "Tile_dirt") : base(assetName)
         {

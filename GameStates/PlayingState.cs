@@ -104,6 +104,23 @@ namespace BaseProject.GameStates
             KeepPlayersCenterd();
             UI_ElementUpdate();
 
+
+
+            //Player with Rope Collision test
+            for (int x = 0; x < levelGen.tiles.GetLength(0); x++)
+            {
+                for (int y = 0; y < levelGen.tiles.GetLength(1); y++)
+                {
+                    if (levelGen.tiles[x, y] == null || !(levelGen.tiles[x, y] is CuttebleRope))
+                        continue;
+
+                    if (smallPlayer.CollidesWith(levelGen.tiles[x, y]))
+                    {
+                        DropDownRope((CuttebleRope)levelGen.tiles[x, y], x, y);
+                    }
+                }
+            }
+
             //Climbing test!!!
             foreach (ClimbWall climb in climbWall.Children)
             {
@@ -127,9 +144,44 @@ namespace BaseProject.GameStates
             base.Update(gameTime);
         }
 
-        public override void Reset()
+        public void DropDownRope(CuttebleRope cuttebleRope, int x, int y)
         {
-            base.Reset();
+            if (!cuttebleRope.isOut)
+            {
+                Console.WriteLine("dropdown");
+                float heightOffset = Game1.Screen.Y - levelGen.map.Height * levelGen.ground.Height;
+
+                if (levelGen.tiles[cuttebleRope.x - 1, cuttebleRope.y + 1] != null)
+                {
+                    Console.WriteLine("rechts leeg");
+                    for (int i = 1; i < 10; i++)
+                    {
+                        Rope rope = new Rope()
+                        {
+                            Position = new Vector2(cuttebleRope.Position.X + levelGen.ground.Width, cuttebleRope.Position.Y + levelGen.ground.Width * i),
+                        };
+                        Add(rope);
+                        levelGen.tiles[x - 1, y + 1 * i] = rope;
+                        Console.WriteLine(levelGen.tiles[x - 1, y + 1 * i]);
+                    }
+                }
+                cuttebleRope.isOut = true;
+            }
+            else
+            if (levelGen.tiles[cuttebleRope.x + 1, cuttebleRope.y + 1] != null)
+            {
+                Console.WriteLine("links leeg");
+                for (int i = 1; i < 10; i++)
+                {
+                    Rope rope = new Rope()
+                    {
+                        Position = new Vector2(cuttebleRope.Position.X - levelGen.ground.Width, cuttebleRope.Position.Y + levelGen.ground.Width * i),
+                    };
+                    Add(rope);
+                    levelGen.tiles[x + 1, y + 1 * i] = rope;
+                }
+            }
+            cuttebleRope.isOut = true;
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -151,40 +203,45 @@ namespace BaseProject.GameStates
 
         void KeepPlayersCenterd()
         {
-            Console.WriteLine(cam.Pos.Y);
             Vector2 sharedPlayerPos = (smallPlayer.Position + bigPlayer.Position) / 2;
-            Vector2 offsetFromCenter = new Vector2(10, 0);
+            Vector2 offsetFromCenter = new Vector2(10, 10);
             Vector2 moveAmount = Vector2.Zero;
+            Vector2 camToScreenPos = new Vector2(Game1.Screen.X / 2 - offsetFromCenter.X - cam._transform.M41, Game1.Screen.Y / 2 - offsetFromCenter.Y - cam._transform.M42);
 
-            float falloff = 1f;
+            float falloff = Vector2.Distance(camToScreenPos, sharedPlayerPos) > 1 ? 1 : 0;
 
-            if (Game1.Screen.X / 2 - offsetFromCenter.X - cam._transform.M41 > sharedPlayerPos.X)
+            if (camToScreenPos.X > sharedPlayerPos.X)
             {
-                moveAmount += Vector2.Lerp(moveAmount, -Vector2.UnitX, falloff);
+                moveAmount += Vector2.SmoothStep(moveAmount, -Vector2.UnitX, falloff);
+                //moveAmount += -Vector2.UnitX * falloff;
             }
             else
-            if (Game1.Screen.X / 2 + offsetFromCenter.X - cam._transform.M41 < sharedPlayerPos.X)
+            if (camToScreenPos.X < sharedPlayerPos.X)
             {
-                moveAmount += Vector2.Lerp(moveAmount, Vector2.UnitX, falloff);
+                moveAmount += Vector2.SmoothStep(moveAmount, Vector2.UnitX, falloff);
+                //moveAmount += Vector2.UnitX * falloff;
             }
 
-            if (Game1.Screen.Y / 2 - offsetFromCenter.Y - cam._transform.M42 > sharedPlayerPos.Y)
+            if (camToScreenPos.Y > sharedPlayerPos.Y)
             {
-                moveAmount += Vector2.Lerp(moveAmount, -Vector2.UnitY, falloff);
+                moveAmount += Vector2.SmoothStep(moveAmount, -Vector2.UnitY, falloff);
+                //moveAmount += -Vector2.UnitY * falloff;
             }
             else
-            if (Game1.Screen.Y / 2 + offsetFromCenter.Y - cam._transform.M42 < sharedPlayerPos.Y)
+            if (camToScreenPos.Y < sharedPlayerPos.Y)
             {
-                moveAmount += Vector2.Lerp(moveAmount, Vector2.UnitY, falloff);
+                moveAmount += Vector2.SmoothStep(moveAmount, Vector2.UnitY, falloff);
+                //moveAmount += Vector2.UnitY * falloff;
             }
             if (cam.Pos.X < GameEnvironment.Screen.X / 2)
             {
-                moveAmount += Vector2.UnitX;
+                moveAmount += Vector2.UnitX * falloff;
             }
             if (cam.Pos.Y > GameEnvironment.Screen.Y / 2)
             {
-                moveAmount -= Vector2.UnitY;
+                moveAmount -= Vector2.UnitY * falloff;
             }
+
             cam.Move(moveAmount);
         }
         void UI_ElementUpdate()
