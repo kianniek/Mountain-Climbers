@@ -6,9 +6,10 @@ namespace BaseProject.GameObjects
 {
     public class Rope : SpriteGameObject
     {
-        public Rope() : base("RopeSegment")
+        public Rope(string assetname = "RopeSegment") : base(assetname, -1)
         {
             origin = Center;
+            id = Tags.Interactible.ToString();
         }
     }
 }

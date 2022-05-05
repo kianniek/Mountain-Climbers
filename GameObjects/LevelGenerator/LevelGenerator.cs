@@ -22,11 +22,10 @@ public class LevelGenerator : SpriteGameObject
         map = GameEnvironment.AssetManager.Content.Load<Texture2D>("FirstMapTest");
         tiles = new SpriteGameObject[map.Width, map.Height];
         colors = TextureTo2DArray(map);
-        Start(1);
+        Start();
     }
-    public void Start(int section)
+    public void Start()
     {
-        int sectionSize = (int)map.Width / 10;
         colors = TextureTo2DArray(map);
         for (int x = 0; x < map.Width; x++)
         {

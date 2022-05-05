@@ -12,6 +12,7 @@ namespace BaseProject.GameObjects
         {
             origin = Center;
             position = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
+            id = Tags.Ground.ToString();
         }
         public override void Update(GameTime gameTime)
         {

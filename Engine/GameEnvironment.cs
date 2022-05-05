@@ -158,7 +158,7 @@ public class GameEnvironment : Game
                         null,
                         null,
                         null,
-                        cam.get_transformation(graphics.GraphicsDevice));
+                        cam.Get_transformation(graphics.GraphicsDevice));
         gameStateManager.Draw(gameTime, spriteBatch);
         spriteBatch.End();
     }

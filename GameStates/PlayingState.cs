@@ -10,6 +10,7 @@ namespace BaseProject.GameStates
 
     public class PlayingState : GameObjectList
     {
+        SpriteGameObject background;
         Lives[] livesSmall;
         Lives[] livesBig;
         Lives[] noLives;
@@ -27,7 +28,8 @@ namespace BaseProject.GameStates
 
         public PlayingState(Camera camera)
         {
-            Add(new SpriteGameObject("DarkForestBackground") { Shade = new Color(200,200,200)});
+            background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
+            Add(background);
 
             livesPlayer = 2;
             noLives = new Lives[livesPlayer * 2];
@@ -106,7 +108,6 @@ namespace BaseProject.GameStates
             KeepPlayersCenterd();
             UI_ElementUpdate();
 
-            //Climbing test!!!
             foreach (ClimbWall climb in climbWall.Children)
             {
                 if (bigPlayer.stand)
@@ -143,7 +144,7 @@ namespace BaseProject.GameStates
                 bigPlayer.Position = smallPlayer.Position;
                 //bigPlayer.Visible = false;
             }
-            if (smallPlayer.isDead && bigPlayer.isDead) 
+            if (smallPlayer.isDead && bigPlayer.isDead)
             {
                 bigPlayer.Reset();
                 smallPlayer.Reset();
@@ -156,37 +157,61 @@ namespace BaseProject.GameStates
         {
             if (!cuttebleRope.isOut)
             {
-                Console.WriteLine("dropdown");
-                float heightOffset = Game1.Screen.Y - levelGen.map.Height * levelGen.ground.Height;
-
                 if (levelGen.tiles[cuttebleRope.x - 1, cuttebleRope.y + 1] != null)
                 {
-                    for (int i = 1; i < 10; i++)
+                    for (int i = 0; i < 10; i++)
                     {
-                        Rope rope = new Rope()
+                        Rope rope;
+                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X + levelGen.ground.Width, cuttebleRope.Position.Y + levelGen.ground.Width * i);
+                        if (i == 0)
                         {
-                            Position = new Vector2(cuttebleRope.Position.X + levelGen.ground.Width, cuttebleRope.Position.Y + levelGen.ground.Width * i),
-                        };
-                        Add(rope);
+                            rope = new Rope("RopeConnectingLeft")
+                            {
+                                Position = ropePos
+                            };
+                            Add(rope);
+                        }
+                        else
+                        {
+                            rope = new Rope()
+                            {
+                                Position = ropePos
+                            };
+                            Add(rope);
+                        }
                         levelGen.tiles[x - 1, y + i] = rope;
+                    }
+                }
+                else
+                if (levelGen.tiles[cuttebleRope.x + 1, cuttebleRope.y + 1] != null)
+                {
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Rope rope;
+                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X - levelGen.ground.Width, cuttebleRope.Position.Y + levelGen.ground.Width * i);
+                        if (i == 0)
+                        {
+                            rope = new Rope("RopeConnectingRight")
+                            {
+                                Position = ropePos
+                            };
+                            Add(rope);
+                        }
+                        else
+                        {
+                            rope = new Rope()
+                            {
+                                Position = ropePos
+                            };
+                            Add(rope);
+                        }
+
+                        levelGen.tiles[x + 1, y + i] = rope;
                     }
                 }
                 cuttebleRope.isOut = true;
             }
-            else
-            if (levelGen.tiles[cuttebleRope.x + 1, cuttebleRope.y + 1] != null)
-            {
-                for (int i = 1; i < 10; i++)
-                {
-                    Rope rope = new Rope()
-                    {
-                        Position = new Vector2(cuttebleRope.Position.X - levelGen.ground.Width, cuttebleRope.Position.Y + levelGen.ground.Width * i),
-                    };
-                    Add(rope);
-                    levelGen.tiles[x + 1, y + i] = rope;
-                }
-            }
-            cuttebleRope.isOut = true;
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -217,7 +242,6 @@ namespace BaseProject.GameStates
                         if (inputHelper.KeyPressed(Keys.E))
                         {
                             DropDownRope((CuttebleRope)levelGen.tiles[x, y], x, y);
-                            //levelGen.tiles[x, y].Scale = 0f;
                         }
                     }
                 }
@@ -237,25 +261,21 @@ namespace BaseProject.GameStates
             if (camToScreenPos.X > sharedPlayerPos.X)
             {
                 moveAmount += Vector2.SmoothStep(moveAmount, -Vector2.UnitX, falloff);
-                //moveAmount += -Vector2.UnitX * falloff;
             }
             else
             if (camToScreenPos.X < sharedPlayerPos.X)
             {
                 moveAmount += Vector2.SmoothStep(moveAmount, Vector2.UnitX, falloff);
-                //moveAmount += Vector2.UnitX * falloff;
             }
 
             if (camToScreenPos.Y > sharedPlayerPos.Y)
             {
                 moveAmount += Vector2.SmoothStep(moveAmount, -Vector2.UnitY, falloff);
-                //moveAmount += -Vector2.UnitY * falloff;
             }
             else
             if (camToScreenPos.Y < sharedPlayerPos.Y)
             {
                 moveAmount += Vector2.SmoothStep(moveAmount, Vector2.UnitY, falloff);
-                //moveAmount += Vector2.UnitY * falloff;
             }
             if (cam.Pos.X < GameEnvironment.Screen.X / 2)
             {
@@ -286,6 +306,9 @@ namespace BaseProject.GameStates
                 livesBig[i].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y);
                 noLives[i + livesPlayer].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y);
             }
+
+            //for background
+            background.Position = -cameraUI_offset;
         }
     }
 }

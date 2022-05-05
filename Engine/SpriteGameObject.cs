@@ -37,6 +37,7 @@ public class SpriteGameObject : GameObject
     public SpriteSheet Sprite
     {
         get { return sprite; }
+        set { sprite = value; }
     }
 
     public Vector2 Center

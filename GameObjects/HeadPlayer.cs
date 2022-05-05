@@ -58,7 +58,7 @@ namespace BaseProject
 
         //Roep deze functie aan als de speler normaal springt en de waterval raakt,
         //maar zodra je de pickup gebruikt, roep deze niet aan.
-        public virtual void hitWaterfall()
+        public virtual void HitWaterfall()
         {
             velocity.Y = 520;
         }
@@ -102,7 +102,7 @@ namespace BaseProject
             velocity.X = 0;
         }
 
-        public virtual void notClimbing()
+        public virtual void NotClimbing()
         {
             gravity = 10f;
         }
