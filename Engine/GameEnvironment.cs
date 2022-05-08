@@ -18,7 +18,7 @@ public class GameEnvironment : Game
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
 
-    public Camera cam;
+    protected Camera cam;
 
 
     public GameEnvironment()

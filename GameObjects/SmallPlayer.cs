@@ -5,24 +5,55 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-//Dion
 class SmallPlayer : HeadPlayer
 {
     LevelGenerator levelGen;
     public bool canMove, beingHeld, hitLeftWall, hitRightWall;
+
+    public Lives[] livesSmall;
+    public Lives[] noLives;
+    public int livesPlayer;
+
     public SmallPlayer(LevelGenerator levelGen) : base("Player")
     {
         origin = new Vector2(Center.X, Center.Y - Center.Y / 2);
         this.levelGen = levelGen;
+
+        livesPlayer = 2;
+        noLives = new Lives[livesPlayer * 2];
+        livesSmall = new Lives[livesPlayer];
     }
     public override void Update(GameTime gameTime)
     {
         mPressed = false;
 
-        base.Update(gameTime);
+        hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
 
+        if (!CollisonWith(Tags.ClimebleWall) || !CollisonWith(Tags.Rope) || !CollisonWith(Tags.Lava))
+        {
+            savePosTimer++;
+            if (savePosTimer > 500)
+            {
+                savePosTimer = 0;
+                LastSavedPos = Position;
+            }
+        }
+       
+        if (CollisonWith(Tags.Lava))
+        {
+            //position = LastSavedPos;
+            knockback = true;
+        }
+
+
+        base.Update(gameTime);
         CollisonWithGround();
-        hitClimbWall = CollisonWithRope() || CollisonWithClimebleWall();
+        BreakeblePlatform breakebleplatform = CollisonWithBreakingPlatform();
+        if (breakebleplatform != null)
+        {
+            breakebleplatform.isBreaking = true;
+        }
+
     }
     public void CollisonWithGround()
     {
@@ -33,11 +64,13 @@ class SmallPlayer : HeadPlayer
             for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
             {
                 var tile = levelGen.tiles[x, y];
-                if (tile == null || tile == this || tile.Id == Tags.Interactible.ToString())
+                if (tile == null || tile == this || tile.Id != Tags.Ground.ToString() && tile.Id != Tags.BreakeblePlatform.ToString())
                     continue;
 
-                if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width
-                    && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
+                if (this.Position.X + this.Width / 2 > tile.Position.X &&
+                        this.Position.X < tile.Position.X + tile.Width / 2 &&
+                        this.Position.Y + this.Height > tile.Position.Y &&
+                        this.Position.Y < tile.Position.Y + tile.Height)
                 {
                     var mx = (this.Position.X - tile.Position.X);
                     var my = (this.Position.Y - tile.Position.Y);
@@ -57,7 +90,7 @@ class SmallPlayer : HeadPlayer
 
                         if (beingHeld)
                         {
-                            
+
                             if (mx > 0)
                             {
                                 hitLeftWall = true;
@@ -69,7 +102,7 @@ class SmallPlayer : HeadPlayer
                         }
                     }
 
-                    else if(!beingHeld)
+                    else if (!beingHeld)
                     {
                         if (my > 0 && this.velocity.Y < 0)
                         {
@@ -107,22 +140,20 @@ class SmallPlayer : HeadPlayer
         }
         return false;
     }
-    public bool CollisonWithClimebleWall()
+    public bool CollisonWith(GameObject.Tags Tag)
     {
+        string id = Tag.ToString();
         for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
         {
             for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
             {
                 var tile = levelGen.tiles[x, y];
 
-                if (tile == null || tile == this || tile.Sprite.Sprite.Name != "Tile_ClimebleLeftverticalBlock")
+                if (tile == null || tile == this || tile.Id != id)
                     continue;
 
-                if (this.Position.X + this.Width / 1.5f > tile.Position.X &&
-                    this.Position.X < tile.Position.X + tile.Width &&
-                    this.Position.Y + this.Height > tile.Position.Y &&
-                    this.Position.Y < tile.Position.Y + tile.Height
-                    )
+                if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
+                    && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
                 {
                     return true;
                 }
@@ -130,8 +161,29 @@ class SmallPlayer : HeadPlayer
         }
         return false;
     }
+    public BreakeblePlatform CollisonWithBreakingPlatform()
+    {
+        for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+        {
+            for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+            {
+                var tile = levelGen.tiles[x, y];
+
+                if (tile == null || tile == this || tile.Id != Tags.BreakeblePlatform.ToString())
+                    continue;
+
+                if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
+                    && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
+                {
+                    return (BreakeblePlatform)tile;
+                }
+            }
+        }
+        return null;
+    }
     public override void HandleInput(InputHelper inputHelper)
     {
+        base.HandleInput(inputHelper);
         if (inputHelper.IsKeyDown(Keys.RightShift))
         {
             horizontalSpeed = sprintingSpeed;

@@ -123,6 +123,9 @@ public abstract class GameObject : IGameLoopObject
         Ground,
         Player,
         Obsticle,
-        Rope
+        Rope,
+        Lava, 
+        ClimebleWall,
+        BreakeblePlatform
     }
 }

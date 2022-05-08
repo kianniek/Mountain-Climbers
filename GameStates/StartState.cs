@@ -16,10 +16,8 @@ namespace BaseProject.GameStates
             base.HandleInput(inputHelper);
             if (inputHelper.AnyKeyPressed)
             {
-                GameEnvironment.GameStateManager.SwitchTo("PlayingState");
+                GameEnvironment.GameStateManager.SwitchTo("LoadingState");
             }
-
-
         }
     }
 }

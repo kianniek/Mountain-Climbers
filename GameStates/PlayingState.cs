@@ -11,9 +11,6 @@ namespace BaseProject.GameStates
     public class PlayingState : GameObjectList
     {
         SpriteGameObject background;
-        Lives[] livesSmall;
-        Lives[] livesBig;
-        Lives[] noLives;
         GameObjectList waterfalls;
         GameObjectList rocks;
         GameObjectList climbWall;
@@ -24,17 +21,12 @@ namespace BaseProject.GameStates
 
         Camera cam;
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
-        int livesPlayer;
-
+        
         public PlayingState(Camera camera)
         {
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
 
-            livesPlayer = 2;
-            noLives = new Lives[livesPlayer * 2];
-            livesSmall = new Lives[livesPlayer];
-            livesBig = new Lives[livesPlayer];
             levelGen = new LevelGenerator();
 
             waterfalls = new GameObjectList();
@@ -73,25 +65,25 @@ namespace BaseProject.GameStates
             this.Add(rocks);
             this.Add(climbWall);
 
-            //Orange health
-            for (int i = 0; i < livesPlayer; i++)
+            //Small health
+            for (int i = 0; i < smallPlayer.livesPlayer; i++)
             {
                 Lives liveOrange = new Lives("Hartje_oranje", new Vector2(40 * i - cameraUI_offset.X, 0));
-                livesSmall[i] = liveOrange;
-                noLives[i] = (new Lives("Hartje_leeg", new Vector2(40 * i - cameraUI_offset.X, 0)));
-                this.Add(noLives[i]);
-                this.Add(livesSmall[i]);
+                smallPlayer.livesSmall[i] = liveOrange;
+                smallPlayer.noLives[i] = (new Lives("Hartje_leeg", new Vector2(40 * i - cameraUI_offset.X, 0)));
+                this.Add(smallPlayer.noLives[i]);
+                this.Add(smallPlayer.livesSmall[i]);
             }
 
 
-            //Green health
-            for (int i = 0; i < livesPlayer; i++)
+            //Big health
+            for (int i = 0; i < bigPlayer.livesPlayer; i++)
             {
                 Lives liveGreen = new Lives("Hartje_groen", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
-                livesBig[i] = liveGreen;
-                noLives[i + livesPlayer] = new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
-                this.Add(noLives[i + livesPlayer]);
-                this.Add(livesBig[i]);
+                bigPlayer.livesBig[i] = liveGreen;
+                bigPlayer.noLives[i + bigPlayer.livesPlayer] = new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
+                this.Add(bigPlayer.noLives[i + bigPlayer.livesPlayer]);
+                this.Add(bigPlayer.livesBig[i]);
             }
 
             this.Add(bigPlayer);
@@ -101,36 +93,15 @@ namespace BaseProject.GameStates
             cam.Pos = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
 
         }
-
-
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
             KeepPlayersCenterd();
             UI_ElementUpdate();
 
-            foreach (ClimbWall climb in climbWall.Children)
-            {
-                if (bigPlayer.stand)
-                {
-                    if (bigPlayer.CollidesWith(climb))
-                    {
-                        bigPlayer.hitClimbWall = true;
-                    }
-                }
-
-                if (smallPlayer.stand)
-                {
-                    if (smallPlayer.CollidesWith(climb))
-                    {
-                        smallPlayer.hitClimbWall = true;
-                    }
-                }
-            }
-
             CheckGameOver();
-            base.Update(gameTime);
+            
         }
-
         private void CheckGameOver()
         {
             if (smallPlayer.isDead)
@@ -152,7 +123,6 @@ namespace BaseProject.GameStates
                 GameEnvironment.GameStateManager.SwitchTo("StartState");
             }
         }
-
         public void DropDownRope(CuttebleRope cuttebleRope, int x, int y)
         {
             if (!cuttebleRope.isOut)
@@ -213,7 +183,6 @@ namespace BaseProject.GameStates
                 cuttebleRope.isOut = true;
             }
         }
-
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
@@ -237,7 +206,7 @@ namespace BaseProject.GameStates
                     if (levelGen.tiles[x, y] == null || !(levelGen.tiles[x, y] is CuttebleRope))
                         continue;
 
-                    if (smallPlayer.CollidesWith(levelGen.tiles[x, y]))
+                    if (smallPlayer.CollidesWith(levelGen.tiles[x, y]) || bigPlayer.CollidesWith(levelGen.tiles[x, y]))
                     {
                         if (inputHelper.KeyPressed(Keys.E))
                         {
@@ -248,7 +217,6 @@ namespace BaseProject.GameStates
             }
 
         }
-
         void KeepPlayersCenterd()
         {
             Vector2 sharedPlayerPos = (smallPlayer.Position + bigPlayer.Position) / 2;
@@ -293,18 +261,18 @@ namespace BaseProject.GameStates
             cameraUI_offset = new Vector2(cam._transform.M41, cam._transform.M42);
 
             //orange health
-            for (int i = 0; i < livesPlayer; i++)
+            for (int i = 0; i < smallPlayer.livesPlayer; i++)
             {
-                livesSmall[i].Position = new Vector2(40 * i - cameraUI_offset.X, 0 - cameraUI_offset.Y);
-                noLives[i].Position = new Vector2(40 * i - cameraUI_offset.X, 0 - cameraUI_offset.Y);
+                smallPlayer.livesSmall[i].Position = new Vector2(40 * i - cameraUI_offset.X, 0 - cameraUI_offset.Y);
+                smallPlayer.noLives[i].Position = new Vector2(40 * i - cameraUI_offset.X, 0 - cameraUI_offset.Y);
             }
 
 
             //Green health
-            for (int i = 0; i < livesPlayer; i++)
+            for (int i = 0; i < bigPlayer.livesPlayer; i++)
             {
-                livesBig[i].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y);
-                noLives[i + livesPlayer].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y);
+                bigPlayer.livesBig[i].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y);
+                bigPlayer.noLives[i + bigPlayer.livesPlayer].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y);
             }
 
             //for background

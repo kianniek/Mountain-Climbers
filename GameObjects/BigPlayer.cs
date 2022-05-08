@@ -6,13 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-//Dion & Thimo
 namespace BaseProject
 {
     class BigPlayer : HeadPlayer
     {
         readonly LevelGenerator levelGen;
         readonly SmallPlayer smallPlayer;
+
+        public Lives[] livesBig;
+        public Lives[] noLives;
+        public int livesPlayer;
 
         public bool holdingPlayer;
         public BigPlayer(LevelGenerator levelGen, SmallPlayer smallPlayer) : base("player2")
@@ -21,20 +24,38 @@ namespace BaseProject
             this.levelGen = levelGen;
             this.smallPlayer = smallPlayer;
 
+            livesPlayer = 2;
+            noLives = new Lives[livesPlayer * 2];
+            livesBig = new Lives[livesPlayer];
         }
 
         public override void Update(GameTime gameTime)
         {
+
+
             zPressed = false;
 
-            CollisonWithGround();
+            hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
 
-            hitClimbWall = CollisonWithRope() || CollisonWithClimebleWall();
+            if (!CollisonWith(Tags.ClimebleWall) && !CollisonWith(Tags.Rope) && !CollisonWith(Tags.Lava))
+            {
+                savePosTimer++;
+                if (savePosTimer > 1000)
+                {
+                    savePosTimer = 0;
+                    LastSavedPos = Position;
+                }
+            }
+
+            if (CollisonWith(Tags.Lava))
+            {
+                position = LastSavedPos;
+            }
 
             if (holdingPlayer)
             {
                 GrabPlayer();
-                if (smallPlayer.hitRightWall) 
+                if (smallPlayer.hitRightWall)
                 {
                     right = false;
                 }
@@ -50,6 +71,31 @@ namespace BaseProject
             }
 
             base.Update(gameTime);
+            BreakeblePlatform breakebleplatform = CollisonWithBreakingPlatform();
+            if (breakebleplatform != null)
+            {
+                breakebleplatform.isBreaking = true;
+            }
+
+            CollisonWithGround();
+        }
+        public void GrabPlayer()
+        {
+            smallPlayer.PickedUp(new Vector2(position.X, position.Y - smallPlayer.Height));
+
+            if (smallPlayer.beingHeld)
+            {
+                if (left)
+                {
+                    smallPlayer.left = true;
+                    smallPlayer.Mirror = true;
+                }
+                if (right)
+                {
+                    smallPlayer.right = true;
+                    smallPlayer.Mirror = false;
+                }
+            }
         }
         public void CollisonWithGround()
         {
@@ -58,7 +104,7 @@ namespace BaseProject
                 for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
                 {
                     var tile = levelGen.tiles[x, y];
-                    if (tile == null || tile == this || tile.Id != Tags.Ground.ToString())
+                    if (tile == null || tile == this || tile.Id != Tags.Ground.ToString() && tile.Id != Tags.BreakeblePlatform.ToString())
                         continue;
 
                     if (this.Position.X + this.Width / 2 > tile.Position.X &&
@@ -80,6 +126,7 @@ namespace BaseProject
                             {
                                 this.position.X = tile.Position.X - this.Width / 2;
                                 this.velocity.X = 0;
+
                             }
                         }
                         else
@@ -88,12 +135,14 @@ namespace BaseProject
                             {
                                 this.velocity.Y = 0;
                                 this.position.Y = tile.Position.Y + tile.Height;
+                                Console.WriteLine("c");
                             }
                             else if (my < 0 && this.velocity.Y > 0)
                             {
                                 this.velocity.Y = 0;
                                 this.position.Y = tile.Position.Y - this.Height;
                                 this.stand = true;
+                                Console.WriteLine("d");
                             }
                         }
                     }
@@ -120,22 +169,20 @@ namespace BaseProject
             }
             return false;
         }
-        public bool CollisonWithClimebleWall()
+        public bool CollisonWith(GameObject.Tags Tag)
         {
+            string id = Tag.ToString();
             for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
             {
                 for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
                 {
                     var tile = levelGen.tiles[x, y];
 
-                    if (tile == null || tile == this || tile.Sprite.Sprite.Name != "Tile_ClimebleLeftverticalBlock")
+                    if (tile == null || tile == this || tile.Id != id)
                         continue;
 
-                    if (this.Position.X + this.Width / 1.5f > tile.Position.X &&
-                        this.Position.X < tile.Position.X + tile.Width &&
-                        this.Position.Y + this.Height > tile.Position.Y &&
-                        this.Position.Y < tile.Position.Y + tile.Height
-                        )
+                    if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
+                        && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
                     {
                         return true;
                     }
@@ -145,7 +192,7 @@ namespace BaseProject
         }
         public override void HandleInput(InputHelper inputHelper)
         {
-
+            base.HandleInput(inputHelper);
             if (inputHelper.IsKeyDown(Keys.LeftShift))
             {
                 horizontalSpeed = sprintingSpeed;
@@ -208,24 +255,25 @@ namespace BaseProject
                 }
             }
         }
-        public void GrabPlayer()
+        public BreakeblePlatform CollisonWithBreakingPlatform()
         {
-            smallPlayer.PickedUp(new Vector2(position.X, position.Y - smallPlayer.Height));
-
-            if (smallPlayer.beingHeld)
+            for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
             {
-                if (left)
+                for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
                 {
-                    smallPlayer.left = true;
-                    smallPlayer.Mirror = true;
-                }
-                if (right)
-                {
-                    smallPlayer.right = true;
-                    smallPlayer.Mirror = false;
+                    var tile = levelGen.tiles[x, y];
+
+                    if (tile == null || tile == this || tile.Id != Tags.BreakeblePlatform.ToString())
+                        continue;
+
+                    if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
+                        && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
+                    {
+                        return (BreakeblePlatform)tile;
+                    }
                 }
             }
+            return null;
         }
     }
 }
-
