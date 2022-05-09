@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+
+//Dion & Thimo
 namespace BaseProject
 {
-    class BigPlayer : HeadPlayer
+    public class BigPlayer : HeadPlayer
     {
         readonly LevelGenerator levelGen;
         readonly SmallPlayer smallPlayer;
@@ -18,10 +20,9 @@ namespace BaseProject
         public int livesPlayer;
 
         public bool holdingPlayer;
-        public BigPlayer(LevelGenerator levelGen, SmallPlayer smallPlayer) : base("player2")
+        public BigPlayer(Tile[,] worldTiles, SmallPlayer smallPlayer) : base("player2", worldTiles)
         {
             origin = new Vector2(Center.X, Center.Y / 4);
-            this.levelGen = levelGen;
             this.smallPlayer = smallPlayer;
 
             livesPlayer = 2;
@@ -87,12 +88,12 @@ namespace BaseProject
         }
         public void CollisonWithGround()
         {
-            for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+            for (var x = 0; x < worldTiles.GetLength(0); x++)
             {
-                for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+                for (var y = 0; y < worldTiles.GetLength(1); y++)
                 {
-                    var tile = levelGen.tiles[x, y];
-                    if (tile == null || tile == this || tile.Id != Tags.Ground.ToString() && tile.Id != Tags.BreakeblePlatform.ToString())
+                    var tile = worldTiles[x, y];
+                    if (tile == null)
                         continue;
 
                     if (this.Position.X + this.Width / 2 > tile.Position.X &&

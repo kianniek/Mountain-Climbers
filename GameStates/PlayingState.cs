@@ -24,6 +24,9 @@ namespace BaseProject.GameStates
         Camera cam;
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
 
+
+        private LevelManager levelManager;
+
         public PlayingState(Camera camera)
         {
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
@@ -32,8 +35,6 @@ namespace BaseProject.GameStates
             levelGen = new LevelGenerator();
 
             waterfalls = new GameObjectList();
-            smallPlayer = new SmallPlayer(levelGen);
-            bigPlayer = new BigPlayer(levelGen, smallPlayer);
             climbWall = new GameObjectList();
 
             rocks = new GameObjectList();
@@ -93,11 +94,20 @@ namespace BaseProject.GameStates
                 this.Add(bigPlayer.livesBig[i]);
             }
 
+            cam.Pos = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
+            
+            
+            smallPlayer = new SmallPlayer(new Tile[0,0]);
+            bigPlayer = new BigPlayer(new Tile[0,0], smallPlayer);
+            
             this.Add(bigPlayer);
             this.Add(smallPlayer);
-
-
-            cam.Pos = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
+            
+            levelManager = new LevelManager(bigPlayer, smallPlayer);
+            Add(levelManager);
+            
+            this.cam = camera;
+            cam.Pos = bigPlayer.Position; //new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
 
         }
         public override void Update(GameTime gameTime)
