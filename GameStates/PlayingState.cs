@@ -23,7 +23,7 @@ namespace BaseProject.GameStates
 
         Camera cam;
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
-        
+
         public PlayingState(Camera camera)
         {
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
@@ -102,12 +102,33 @@ namespace BaseProject.GameStates
         }
         public override void Update(GameTime gameTime)
         {
+            if (smallPlayer.CollidesWith(wall) && (!smallPlayer.Mirror))
+            {
+
+                smallPlayer.noRight = true;
+                smallPlayer.noLeft = false;
+
+            }
+            else
+                smallPlayer.noRight = false;
+            if (smallPlayer.CollidesWith(wall) && (smallPlayer.Mirror))
+            {
+                smallPlayer.noLeft = true;
+                smallPlayer.noRight = false;
+
+            }
+            else
+                smallPlayer.noLeft = false;
+
+            Console.WriteLine(smallPlayer.noLeft);
             base.Update(gameTime);
             KeepPlayersCenterd();
             UI_ElementUpdate();
 
+
+
             CheckGameOver();
-            
+
         }
         private void CheckGameOver()
         {
@@ -183,39 +204,20 @@ namespace BaseProject.GameStates
                             };
                             Add(rope);
                         }
-            if (smallPlayer.CollidesWith(wall) && (!smallPlayer.Mirror))
-            {
-                
-                smallPlayer.noRight = true;
-                smallPlayer.noLeft = false;
-               
-            }else 
-            smallPlayer.noRight = false;
-            if (smallPlayer.CollidesWith(wall) && (smallPlayer.Mirror))
-            {
-                smallPlayer.noLeft = true;
-                smallPlayer.noRight = false;
-               
-            }else 
-                smallPlayer.noLeft=false;
-                
-            Console.WriteLine(smallPlayer.noLeft);
-
-            base.Update(gameTime);
-           
-        }
-
-        public override void Reset()
-        {
-            base.Reset();
-        }
-
                         levelGen.tiles[x + 1, y + i] = rope;
                     }
                 }
                 cuttebleRope.isOut = true;
             }
         }
+
+
+        public override void Reset()
+        {
+            base.Reset();
+        }
+
+
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);

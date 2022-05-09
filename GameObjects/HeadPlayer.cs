@@ -80,24 +80,24 @@ namespace BaseProject
             velocity.Y = 520;
         }
 
-        
+
 
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-           
-           //     if (inputHelper.IsKeyDown(Keys.Left))
-             //   {
-               //     left = true;
-                 //   Mirror = true;
-                //}
-            
 
-           // if (inputHelper.IsKeyDown(Keys.Right))
-            //{
-              //  right = true;
-                //Mirror = false;
+            //     if (inputHelper.IsKeyDown(Keys.Left))
+            //   {
+            //     left = true;
+            //   Mirror = true;
             //}
+
+
+            // if (inputHelper.IsKeyDown(Keys.Right))
+            //{
+            //  right = true;
+            //Mirror = false;
+        }
 
 
         public virtual void Climb()
