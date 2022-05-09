@@ -14,7 +14,7 @@ namespace BaseProject.GameStates
         public Tile[,] Tiles { get; private set; }
         private Color[,] colorData;
         
-        private const float tileScale = 1.5f;
+        private const float tileScale = 1f;
         public const int TileWidth = 32;
         public const int TileHeight = 32;
 
