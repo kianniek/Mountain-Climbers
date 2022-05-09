@@ -31,13 +31,9 @@ namespace BaseProject
 
         public override void Update(GameTime gameTime)
         {
-
-
             zPressed = false;
 
             hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
-
-            
 
             if (CollisonWith(Tags.Lava))
             {
