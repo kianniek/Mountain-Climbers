@@ -222,18 +222,16 @@ namespace BaseProject.GameStates
             }
 
             //Player with Rope Collision test
-            for (int x = 0; x < levelManager.CurrentLevel().Tiles.GetLength(0); x++)
+            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
             {
-                for (int y = 0; y < levelManager.CurrentLevel().Tiles.GetLength(1); y++)
-                {
-                    if (levelManager.CurrentLevel().Tiles[x, y] == null || !(levelManager.CurrentLevel().Tiles[x, y] is CuttebleRope))
-                        continue;
-
+                var tileType = levelManager.CurrentLevel().LevelObjects.Children[x].GetType();
+                if (tileType == typeof(CuttebleRope)) {
                     if (smallPlayer.CollidesWith(levelManager.CurrentLevel().Tiles[x, y]) || bigPlayer.CollidesWith(levelManager.CurrentLevel().Tiles[x, y]))
                     {
                         if (inputHelper.KeyPressed(Keys.E))
                         {
                             //DropDownRope((CuttebleRope)levelManager.CurrentLevel().Tiles[x, y], x, y);
+                            //levelManager.CurrentLevel().LevelObjects.Add
                         }
                     }
                 }

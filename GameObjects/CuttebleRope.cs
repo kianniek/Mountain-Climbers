@@ -19,6 +19,7 @@ namespace BaseProject.GameObjects
             origin = Center;
             this.y = y;
             this.x = x;
+            position = new Vector2(x, y);
             this.level = level;
             id = Tags.Interactible.ToString();
         }
