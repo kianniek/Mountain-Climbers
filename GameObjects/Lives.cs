@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BaseProject
 {
-    class Lives : SpriteGameObject
+    public class Lives : SpriteGameObject
     {
         public Lives(string assetName, Vector2 startPosition) : base(assetName)
         {

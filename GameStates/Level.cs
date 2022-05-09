@@ -14,9 +14,9 @@ namespace BaseProject.GameStates
         public Tile[,] Tiles { get; private set; }
         private Color[,] colorData;
         
-        private const float tileScale = 1f;
-        private const int tileWidth = 32;
-        private const int tileHeight = 32;
+        private const float tileScale = 1.5f;
+        public const int TileWidth = 32;
+        public const int TileHeight = 32;
 
         protected SmallPlayer smallPlayer;
         protected BigPlayer bigPlayer;
@@ -103,9 +103,9 @@ namespace BaseProject.GameStates
         private GameObject GeneratedObject(Vector2 gridPos)
         {
             var color = colorData[(int)gridPos.X, (int)gridPos.Y];
-            var offset = new Vector2(tileWidth, tileHeight)/2;
+            var offset = new Vector2(TileWidth, TileHeight)/2;
             
-            var objPos = gridPos * new Vector2(tileWidth, tileHeight) * tileScale;
+            var objPos = gridPos * new Vector2(TileWidth, TileHeight) * tileScale;
             objPos += offset;
             
             GameObject obj = null;

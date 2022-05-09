@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BaseProject
 {
-    class HeadPlayer : SpriteGameObject
+    public class HeadPlayer : SpriteGameObject
     {
         public bool isDead;
         public float gravity;
@@ -23,14 +23,16 @@ namespace BaseProject
         public bool knockback;
         public int knockbackForce = 100;
 
-        public HeadPlayer(string assetName) : base(assetName)
+        protected Tile[,] WorldTiles { get; private set; }
+
+        public HeadPlayer(string assetName, Tile[,] worldTiles) : base(assetName)
         {
             position.Y = GameEnvironment.Screen.Y / 1.4f;
             position.X = 10;
             gravity = 10f;
             noLeft = false;
             noRight = false;
-
+            this.WorldTiles = worldTiles;
         }
 
         public override void Update(GameTime gameTime)
@@ -113,6 +115,13 @@ namespace BaseProject
         public virtual void NotClimbing()
         {
             gravity = 10f;
+        }
+        
+        public void GoToNewLevel(Tile[,] tiles, Vector2 pos)
+        {
+            WorldTiles = tiles;
+            position = pos;
+            velocity = Vector2.Zero;
         }
     }
 }

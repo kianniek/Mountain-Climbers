@@ -15,7 +15,6 @@ namespace BaseProject.GameStates
         GameObjectList rocks;
         GameObjectList climbWall;
         SmallPlayer smallPlayer;
-        LevelGenerator levelGen;
         BigPlayer bigPlayer;
         Button button;
         ButtonWall wall;
@@ -31,8 +30,9 @@ namespace BaseProject.GameStates
         {
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
-
-            levelGen = new LevelGenerator();
+            
+            smallPlayer = new SmallPlayer(new Tile[0,0]);
+            bigPlayer = new BigPlayer(new Tile[0,0], smallPlayer);
 
             waterfalls = new GameObjectList();
             climbWall = new GameObjectList();
@@ -45,17 +45,6 @@ namespace BaseProject.GameStates
             cp = new Checkpoint();
 
             this.cam = camera;
-
-            this.Add(levelGen);
-            foreach (GameObject tile in levelGen.tiles)
-            {
-                GameObject levelObject = tile;
-                if (levelObject == null)
-                {
-                    continue;
-                }
-                Add(levelObject);
-            }
 
             //Test
             //waterfalls.Add(new Waterfall("Waterfall200", new Vector2(500, 10)));
@@ -97,18 +86,13 @@ namespace BaseProject.GameStates
             cam.Pos = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
             
             
-            smallPlayer = new SmallPlayer(new Tile[0,0]);
-            bigPlayer = new BigPlayer(new Tile[0,0], smallPlayer);
             
-            this.Add(bigPlayer);
-            this.Add(smallPlayer);
             
             levelManager = new LevelManager(bigPlayer, smallPlayer);
             Add(levelManager);
             
             this.cam = camera;
             cam.Pos = bigPlayer.Position; //new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
-
         }
         public override void Update(GameTime gameTime)
         {
@@ -142,6 +126,7 @@ namespace BaseProject.GameStates
         }
         private void CheckGameOver()
         {
+            return;
             if (smallPlayer.isDead)
             {
                 smallPlayer.Position = bigPlayer.Position;
@@ -165,12 +150,12 @@ namespace BaseProject.GameStates
         {
             if (!cuttebleRope.isOut)
             {
-                if (levelGen.tiles[cuttebleRope.x - 1, cuttebleRope.y + 1] != null)
+                if (levelManager.CurrentLevel().Tiles[cuttebleRope.x - 1, cuttebleRope.y + 1] != null)
                 {
                     for (int i = 0; i < 10; i++)
                     {
                         Rope rope;
-                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X + levelGen.ground.Width, cuttebleRope.Position.Y + levelGen.ground.Width * i);
+                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X + Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
                         if (i == 0)
                         {
                             rope = new Rope("RopeConnectingLeft")
@@ -187,17 +172,17 @@ namespace BaseProject.GameStates
                             };
                             Add(rope);
                         }
-                        levelGen.tiles[x - 1, y + i] = rope;
+                        //levelManager.CurrentLevel().Tiles[x - 1, y + i] = rope;
                     }
                 }
                 else
-                if (levelGen.tiles[cuttebleRope.x + 1, cuttebleRope.y + 1] != null)
+                if (levelManager.CurrentLevel().Tiles[cuttebleRope.x + 1, cuttebleRope.y + 1] != null)
                 {
 
                     for (int i = 0; i < 10; i++)
                     {
                         Rope rope;
-                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X - levelGen.ground.Width, cuttebleRope.Position.Y + levelGen.ground.Width * i);
+                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X - Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
                         if (i == 0)
                         {
                             rope = new Rope("RopeConnectingRight")
@@ -214,7 +199,7 @@ namespace BaseProject.GameStates
                             };
                             Add(rope);
                         }
-                        levelGen.tiles[x + 1, y + i] = rope;
+                        //levelManager.CurrentLevel().Tiles[x + 1, y + i] = rope;
                     }
                 }
                 cuttebleRope.isOut = true;
@@ -244,18 +229,18 @@ namespace BaseProject.GameStates
             }
 
             //Player with Rope Collision test
-            for (int x = 0; x < levelGen.tiles.GetLength(0); x++)
+            for (int x = 0; x < levelManager.CurrentLevel().Tiles.GetLength(0); x++)
             {
-                for (int y = 0; y < levelGen.tiles.GetLength(1); y++)
+                for (int y = 0; y < levelManager.CurrentLevel().Tiles.GetLength(1); y++)
                 {
-                    if (levelGen.tiles[x, y] == null || !(levelGen.tiles[x, y] is CuttebleRope))
+                    if (levelManager.CurrentLevel().Tiles[x, y] == null || !(levelManager.CurrentLevel().Tiles[x, y] is CuttebleRope))
                         continue;
 
-                    if (smallPlayer.CollidesWith(levelGen.tiles[x, y]) || bigPlayer.CollidesWith(levelGen.tiles[x, y]))
+                    if (smallPlayer.CollidesWith(levelManager.CurrentLevel().Tiles[x, y]) || bigPlayer.CollidesWith(levelManager.CurrentLevel().Tiles[x, y]))
                     {
                         if (inputHelper.KeyPressed(Keys.E))
                         {
-                            DropDownRope((CuttebleRope)levelGen.tiles[x, y], x, y);
+                            //DropDownRope((CuttebleRope)levelManager.CurrentLevel().Tiles[x, y], x, y);
                         }
                     }
                 }

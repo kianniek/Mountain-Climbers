@@ -5,24 +5,23 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-class SmallPlayer : HeadPlayer
+public class SmallPlayer : HeadPlayer
 {
-    LevelGenerator levelGen;
     public bool canMove, beingHeld, hitLeftWall, hitRightWall;
 
     public Lives[] livesSmall;
     public Lives[] noLives;
     public int livesPlayer;
 
-    public SmallPlayer(LevelGenerator levelGen) : base("Player")
+    public SmallPlayer(Tile[,] worldTiles) : base("Player", worldTiles)
     {
         origin = new Vector2(Center.X, Center.Y - Center.Y / 2);
-        this.levelGen = levelGen;
 
         livesPlayer = 2;
         noLives = new Lives[livesPlayer * 2];
         livesSmall = new Lives[livesPlayer];
     }
+
     public override void Update(GameTime gameTime)
     {
         mPressed = false;
@@ -47,12 +46,12 @@ class SmallPlayer : HeadPlayer
     {
         hitLeftWall = false;
         hitRightWall = false;
-        for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+        for (var x = 0; x < WorldTiles.GetLength(0); x++)
         {
-            for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+            for (var y = 0; y < WorldTiles.GetLength(1); y++)
             {
-                var tile = levelGen.tiles[x, y];
-                if (tile == null || tile == this || tile.Id != Tags.Ground.ToString() && tile.Id != Tags.BreakeblePlatform.ToString())
+                var tile = WorldTiles[x, y];
+                if (tile == null || tile.Id != Tags.Ground.ToString() && tile.Id != Tags.BreakeblePlatform.ToString())
                     continue;
 
                 if (this.Position.X + this.Width / 2 > tile.Position.X &&
@@ -110,13 +109,13 @@ class SmallPlayer : HeadPlayer
     }
     public bool CollisonWithRope()
     {
-        for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+        for (var x = 0; x < WorldTiles.GetLength(0); x++)
         {
-            for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+            for (var y = 0; y < WorldTiles.GetLength(1); y++)
             {
-                var tile = levelGen.tiles[x, y];
+                var tile = WorldTiles[x, y];
 
-                if (tile == null || tile == this || tile.Sprite.Sprite.Name != "RopeSegment")
+                if (tile == null || tile.Sprite.Sprite.Name != "RopeSegment")
                     continue;
 
                 if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
@@ -131,13 +130,13 @@ class SmallPlayer : HeadPlayer
     public bool CollisonWith(GameObject.Tags Tag)
     {
         string id = Tag.ToString();
-        for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+        for (var x = 0; x < WorldTiles.GetLength(0); x++)
         {
-            for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+            for (var y = 0; y < WorldTiles.GetLength(1); y++)
             {
-                var tile = levelGen.tiles[x, y];
+                var tile = WorldTiles[x, y];
 
-                if (tile == null || tile == this || tile.Id != id)
+                if (tile == null || tile.Id != id)
                     continue;
 
                 if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
@@ -151,19 +150,19 @@ class SmallPlayer : HeadPlayer
     }
     public BreakeblePlatform CollisonWithBreakingPlatform()
     {
-        for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+        for (var x = 0; x < WorldTiles.GetLength(0); x++)
         {
-            for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+            for (var y = 0; y < WorldTiles.GetLength(1); y++)
             {
-                var tile = levelGen.tiles[x, y];
+                var tile = WorldTiles[x, y];
 
-                if (tile == null || tile == this || tile.Id != Tags.BreakeblePlatform.ToString())
+                if (tile == null || tile.Id != Tags.BreakeblePlatform.ToString())
                     continue;
 
                 if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
                     && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
                 {
-                    return (BreakeblePlatform)tile;
+                    return null;//(BreakeblePlatform)tile;
                 }
             }
         }

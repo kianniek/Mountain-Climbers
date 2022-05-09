@@ -12,7 +12,6 @@ namespace BaseProject
 {
     public class BigPlayer : HeadPlayer
     {
-        readonly LevelGenerator levelGen;
         readonly SmallPlayer smallPlayer;
 
         public Lives[] livesBig;
@@ -60,7 +59,7 @@ namespace BaseProject
             }
 
             base.Update(gameTime);
-            BreakeblePlatform breakebleplatform = CollisonWithBreakingPlatform();
+            BreakeblePlatform breakebleplatform = CollisionWithBreakingPlatform();
             if (breakebleplatform != null)
             {
                 breakebleplatform.isBreaking = true;
@@ -88,11 +87,11 @@ namespace BaseProject
         }
         public void CollisonWithGround()
         {
-            for (var x = 0; x < worldTiles.GetLength(0); x++)
+            for (var x = 0; x < WorldTiles.GetLength(0); x++)
             {
-                for (var y = 0; y < worldTiles.GetLength(1); y++)
+                for (var y = 0; y < WorldTiles.GetLength(1); y++)
                 {
-                    var tile = worldTiles[x, y];
+                    var tile = WorldTiles[x, y];
                     if (tile == null)
                         continue;
 
@@ -138,13 +137,13 @@ namespace BaseProject
         }
         public bool CollisonWithRope()
         {
-            for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+            for (var x = 0; x < WorldTiles.GetLength(0); x++)
             {
-                for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+                for (var y = 0; y < WorldTiles.GetLength(1); y++)
                 {
-                    var tile = levelGen.tiles[x, y];
+                    var tile = WorldTiles[x, y];
 
-                    if (tile == null || tile == this || tile.Sprite.Sprite.Name != "RopeSegment")
+                    if (tile == null || tile.Sprite.Sprite.Name != "RopeSegment")
                         continue;
 
                     if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
@@ -159,13 +158,13 @@ namespace BaseProject
         public bool CollisonWith(GameObject.Tags Tag)
         {
             string id = Tag.ToString();
-            for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+            for (var x = 0; x < WorldTiles.GetLength(0); x++)
             {
-                for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+                for (var y = 0; y < WorldTiles.GetLength(1); y++)
                 {
-                    var tile = levelGen.tiles[x, y];
+                    var tile = WorldTiles[x, y];
 
-                    if (tile == null || tile == this || tile.Id != id)
+                    if (tile == null || tile.Id != id)
                         continue;
 
                     if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
@@ -242,21 +241,21 @@ namespace BaseProject
                 }
             }
         }
-        public BreakeblePlatform CollisonWithBreakingPlatform()
+        public BreakeblePlatform CollisionWithBreakingPlatform()
         {
-            for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+            for (var x = 0; x < WorldTiles.GetLength(0); x++)
             {
-                for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+                for (var y = 0; y < WorldTiles.GetLength(1); y++)
                 {
-                    var tile = levelGen.tiles[x, y];
+                    var tile = WorldTiles[x, y];
 
-                    if (tile == null || tile == this || tile.Id != Tags.BreakeblePlatform.ToString())
+                    if (tile == null || tile.Id != Tags.BreakeblePlatform.ToString())
                         continue;
 
-                    if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
+                    if (this.Position.X + this.Width / 2f > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2f
                         && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
                     {
-                        return (BreakeblePlatform)tile;
+                        return null;//(BreakeblePlatform)tile;
                     }
                 }
             }
