@@ -8,16 +8,14 @@ using System.Text;
 //Dion & Thimo
 namespace BaseProject
 {
-    class BigPlayer : HeadPlayer
+    public class BigPlayer : HeadPlayer
     {
-        LevelGenerator levelGen;
         SmallPlayer smallPlayer;
 
         public bool holdingPlayer;
-        public BigPlayer(LevelGenerator levelGen, SmallPlayer smallPlayer) : base("player2")
+        public BigPlayer(Tile[,] worldTiles, SmallPlayer smallPlayer) : base("player2", worldTiles)
         {
             origin = new Vector2(Center.X, Center.Y / 4);
-            this.levelGen = levelGen;
             this.smallPlayer = smallPlayer;
         }
 
@@ -41,12 +39,12 @@ namespace BaseProject
         }
         public void CollisonWithGround()
         {
-            for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+            for (var x = 0; x < worldTiles.GetLength(0); x++)
             {
-                for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+                for (var y = 0; y < worldTiles.GetLength(1); y++)
                 {
-                    var tile = levelGen.tiles[x, y];
-                    if (tile == null || tile == this)
+                    var tile = worldTiles[x, y];
+                    if (tile == null)
                         continue;
 
                     if (this.Position.X + this.Width > tile.Position.X && this.Position.X < tile.Position.X + tile.Width

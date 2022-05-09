@@ -7,15 +7,19 @@ using System.Text;
 namespace BaseProject
 {
     //Dion
-    class HeadPlayer : SpriteGameObject
+    public class HeadPlayer : SpriteGameObject
     {
         public float gravity;
         public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed;
 
-        public HeadPlayer(string assetName) : base(assetName)
+        protected Tile[,] worldTiles;
+        
+        public HeadPlayer(string assetName, Tile[,] worldTiles) : base(assetName)
         {
             position.Y = GameEnvironment.Screen.Y / 1.5f;
             gravity = 10f;
+
+            this.worldTiles = worldTiles;
         }
 
         public override void Update(GameTime gameTime)
@@ -122,5 +126,12 @@ namespace BaseProject
         //        position.X = rightPosition;
         //    }
         //}
+
+        public void GoToNewLevel(Tile[,] tiles, Vector2 pos)
+        {
+            worldTiles = tiles;
+            position = pos;
+            velocity = Vector2.Zero;
+        }
     }
 }

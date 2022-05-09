@@ -5,14 +5,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 //Dion
-class SmallPlayer : HeadPlayer
+public class SmallPlayer : HeadPlayer
 {
-    LevelGenerator levelGen;
     public bool canMove, beingHeld;
-    public SmallPlayer(LevelGenerator levelGen) : base("Player")
+    public SmallPlayer(Tile[,] worldTiles) : base("Player", worldTiles)
     {
         origin = new Vector2(Center.X, Center.Y / 2);
-        this.levelGen = levelGen;
     }
     public override void Update(GameTime gameTime)
     {
@@ -69,12 +67,12 @@ class SmallPlayer : HeadPlayer
     }
     public void CollisonWithGround()
     {
-        for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
+        for (var x = 0; x < worldTiles.GetLength(0); x++)
         {
-            for (var y = 0; y < levelGen.tiles.GetLength(1); y++)
+            for (var y = 0; y < worldTiles.GetLength(1); y++)
             {
-                var tile = levelGen.tiles[x, y];
-                if (tile == null || tile == this)
+                var tile = worldTiles[x, y];
+                if (tile == null)
                     continue;
 
                 if (this.Position.X + this.Width > tile.Position.X && this.Position.X < tile.Position.X + tile.Width

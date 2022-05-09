@@ -25,17 +25,18 @@ namespace BaseProject.GameStates
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
         int livesPlayer;
 
+
+        private LevelManager levelManager;
+
         public PlayingState(Camera camera)
         {
-            livesPlayer = 2;
+            /*livesPlayer = 2;
             noLives = new Lives[livesPlayer * 2];
             livesSmall = new Lives[livesPlayer];
             livesBig = new Lives[livesPlayer];
             levelGen = new LevelGenerator();
 
             waterfalls = new GameObjectList();
-            smallPlayer = new SmallPlayer(levelGen);
-            bigPlayer = new BigPlayer(levelGen, smallPlayer);
             climbWall = new GameObjectList();
 
             rocks = new GameObjectList();
@@ -95,13 +96,26 @@ namespace BaseProject.GameStates
 
 
             cam.Pos = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
+            */
+            
+            smallPlayer = new SmallPlayer(new Tile[0,0]);
+            bigPlayer = new BigPlayer(new Tile[0,0], smallPlayer);
+            
+            this.Add(bigPlayer);
+            this.Add(smallPlayer);
+            
+            levelManager = new LevelManager(bigPlayer, smallPlayer);
+            Add(levelManager);
+            
+            this.cam = camera;
+            cam.Pos = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
 
         }
 
 
         public override void Update(GameTime gameTime)
         {
-            KeepPlayersCenterd();
+            /*KeepPlayersCenterd();
             UI_ElementUpdate();
 
             //Climbing test!!!
@@ -123,6 +137,7 @@ namespace BaseProject.GameStates
                     }
                 }
             }
+            */
 
             base.Update(gameTime);
         }
@@ -136,6 +151,7 @@ namespace BaseProject.GameStates
         {
             base.HandleInput(inputHelper);
 
+            /*
             if ((smallPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
             {
                 Console.WriteLine("lets go");
@@ -146,6 +162,7 @@ namespace BaseProject.GameStates
             {
                 Console.WriteLine("alleen voor de grote spelers");
             }
+            */
 
         }
 
