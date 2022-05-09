@@ -24,16 +24,35 @@ class SmallPlayer : HeadPlayer
     }
     public override void HandleInput(InputHelper inputHelper)
     {
-        if (inputHelper.IsKeyDown(Keys.Left))
+
+        base.HandleInput(inputHelper);
+
+        if (!noLeft)
         {
-            left = true;
-            Mirror = true;
+            if (inputHelper.IsKeyDown(Keys.Left))
+            {
+                left = true;
+                Mirror = true;
+               
+            }
         }
-        if (inputHelper.IsKeyDown(Keys.Right))
+
+        if (!noRight)
         {
-            right = true;
-            Mirror = false;
+            if (inputHelper.IsKeyDown(Keys.Right))
+            {
+                right = true;
+                Mirror = false;
+                
+            }
         }
+
+       
+
+        
+        
+
+        
 
         if (stand)
         {
@@ -66,6 +85,8 @@ class SmallPlayer : HeadPlayer
         {
             notClimbing();
         }
+
+
     }
     public void CollisonWithGround()
     {

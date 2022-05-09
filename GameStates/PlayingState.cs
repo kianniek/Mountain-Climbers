@@ -20,6 +20,8 @@ namespace BaseProject.GameStates
         LevelGenerator levelGen;
         BigPlayer bigPlayer;
         Button button;
+        ButtonWall wall;
+        Checkpoint cp;
 
         Camera cam;
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
@@ -40,7 +42,10 @@ namespace BaseProject.GameStates
 
             rocks = new GameObjectList();
 
-            button = new Button();
+            wall = new ButtonWall(new Vector2(800, 300), new Vector2(800, 395));
+            button = new Button(smallPlayer, bigPlayer, wall);
+
+            cp = new Checkpoint();
 
             this.cam = camera;
 
@@ -66,6 +71,8 @@ namespace BaseProject.GameStates
             this.Add(bigPlayer);
             this.Add(smallPlayer);
             this.Add(button);
+            this.Add(wall);
+            this.Add(cp);
             this.Add(rocks);
             this.Add(climbWall);
 
@@ -124,7 +131,26 @@ namespace BaseProject.GameStates
                 }
             }
 
+            if (smallPlayer.CollidesWith(wall) && (!smallPlayer.Mirror))
+            {
+                
+                smallPlayer.noRight = true;
+                smallPlayer.noLeft = false;
+               
+            }else 
+            smallPlayer.noRight = false;
+            if (smallPlayer.CollidesWith(wall) && (smallPlayer.Mirror))
+            {
+                smallPlayer.noLeft = true;
+                smallPlayer.noRight = false;
+               
+            }else 
+                smallPlayer.noLeft=false;
+                
+            Console.WriteLine(smallPlayer.noLeft);
+
             base.Update(gameTime);
+           
         }
 
         public override void Reset()

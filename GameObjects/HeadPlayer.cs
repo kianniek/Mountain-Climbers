@@ -10,12 +10,15 @@ namespace BaseProject
     class HeadPlayer : SpriteGameObject
     {
         public float gravity;
-        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed;
+        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight;
 
         public HeadPlayer(string assetName) : base(assetName)
         {
             position.Y = GameEnvironment.Screen.Y / 1.5f;
             gravity = 10f;
+            noLeft = false;
+            noRight = false;
+
         }
 
         public override void Update(GameTime gameTime)
@@ -56,17 +59,19 @@ namespace BaseProject
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
+           
+           //     if (inputHelper.IsKeyDown(Keys.Left))
+             //   {
+               //     left = true;
+                 //   Mirror = true;
+                //}
+            
 
-            if (inputHelper.IsKeyDown(Keys.Left))
-            {
-                left = true;
-                Mirror = true;
-            }
-            if (inputHelper.IsKeyDown(Keys.Right))
-            {
-                right = true;
-                Mirror = false;
-            }
+           // if (inputHelper.IsKeyDown(Keys.Right))
+            //{
+              //  right = true;
+                //Mirror = false;
+            //}
 
             if (stand)
             {
