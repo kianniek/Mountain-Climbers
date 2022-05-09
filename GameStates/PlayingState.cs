@@ -108,7 +108,7 @@ namespace BaseProject.GameStates
             Add(levelManager);
             
             this.cam = camera;
-            cam.Pos = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
+            cam.Pos = bigPlayer.Position; //new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
 
         }
 
