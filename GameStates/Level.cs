@@ -26,6 +26,7 @@ namespace BaseProject.GameStates
         public Vector2 StartPosition { get; private set; }
         public Vector2 EndPosition { get; private set; }
 
+        // Color codes for all the objects
         private static readonly Dictionary<string, Color> colorCodes = new Dictionary<string, Color>
         {
             {"Ground", Color.Green},
@@ -40,6 +41,7 @@ namespace BaseProject.GameStates
             {"End", Color.Yellow}
         };
 
+        // All color codes that represent level tiles
         private static readonly Color[] environmentalTiles =
         {
             colorCodes["Ground"],
@@ -54,6 +56,7 @@ namespace BaseProject.GameStates
             this.smallPlayer = smallPlayer;
         }
 
+        // Load the Level
         public void LoadLevel()
         {
             if (Loaded)
@@ -63,24 +66,18 @@ namespace BaseProject.GameStates
             Loaded = true;
         }
 
-        public async void GenerateLevel()
+        // Generate the level
+        private async void GenerateLevel()
         {
-            Console.WriteLine("Started Generating " + DateTime.Now);
-            
             Tiles = new Tile[levelSprite.Width,levelSprite.Height];
             colorData = FetchColorData(levelSprite);
 
             await GenerateRows();
 
-            Console.WriteLine("Finished Generating " + DateTime.Now);
-            
-            Console.WriteLine("Start position =  " + StartPosition);
-            
-            Console.WriteLine("End position =  " + EndPosition);
-            
             SetupLevel();
         }
 
+        // Split the source image to generate the level faster
         private async Task GenerateRows()
         {
             var rows = new List<Task>();
@@ -90,6 +87,7 @@ namespace BaseProject.GameStates
             await Task.WhenAll(rows);
         }
 
+        // Generate all the objects of row X
         private async Task GenerateObjects(int x)
         {
             for (var y = 0; y < levelSprite.Height; y++)
@@ -101,12 +99,13 @@ namespace BaseProject.GameStates
             }
         }
 
+        // Generate the correct object according to the color code
         private GameObject GeneratedObject(Vector2 gridPos)
         {
             var color = colorData[(int)gridPos.X, (int)gridPos.Y];
             var offset = new Vector2(tileWidth, tileHeight)/2;
             
-            var objPos = gridPos*  new Vector2(tileWidth, tileHeight) * tileScale;
+            var objPos = gridPos * new Vector2(tileWidth, tileHeight) * tileScale;
             objPos += offset;
             
             GameObject obj = null;
@@ -134,6 +133,7 @@ namespace BaseProject.GameStates
             return obj;
         }
 
+        // Fetch the correct sprite for the tile
         private string FetchTileSprite(Color tileColor, int x, int y)
         {
             if (tileColor == Color.Transparent)
@@ -166,6 +166,7 @@ namespace BaseProject.GameStates
             return string.Empty;
         }
 
+        // Returns if there is a tile on the given position
         private bool TileOnLocation(int x, int y)
         {
             if (y < 0 || y >= levelSprite.Height || x < 0 || x >= levelSprite.Width) 
@@ -178,6 +179,7 @@ namespace BaseProject.GameStates
             return false;
         }
         
+        // Convert the image to an 2D color array
         private Color[,] FetchColorData(Texture2D texture)
         {
             var colors = new Color[levelSprite.Width * levelSprite.Height];
