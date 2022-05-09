@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BaseProject.Engine;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using BaseProject.GameObjects;
 
 namespace BaseProject.GameStates
 {
@@ -14,7 +15,7 @@ namespace BaseProject.GameStates
         public Tile[,] Tiles { get; private set; }
         private Color[,] colorData;
         
-        private const float tileScale = 1.5f;
+        private const float tileScale = 1f;
         public const int TileWidth = 32;
         public const int TileHeight = 32;
 
@@ -115,6 +116,9 @@ namespace BaseProject.GameStates
             
             if (color == colorCodes["End"])
                 EndPosition = objPos;
+
+            if (color == colorCodes["Rope"])
+                obj = new CuttebleRope(this, (int)objPos.X, (int)objPos.Y);
             
             if (environmentalTiles.Any(c => c == color))
             {
@@ -167,7 +171,7 @@ namespace BaseProject.GameStates
         }
 
         // Returns if there is a tile on the given position
-        private bool TileOnLocation(int x, int y)
+        public bool TileOnLocation(int x, int y)
         {
             if (y < 0 || y >= levelSprite.Height || x < 0 || x >= levelSprite.Width) 
                 return false;

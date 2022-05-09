@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseProject.GameStates;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,31 +10,32 @@ namespace BaseProject.GameObjects
     {
         public int x;
         public int y;
-        public LevelGenerator levelGen;
         public bool isOut, outLeft, outRight;
         bool changeSprite = false;
+        Level level;
 
-        public CuttebleRope(LevelGenerator levelGen, int x, int y) : base("RopePile")
+        public CuttebleRope(Level level, int x, int y) : base("RopePile")
         {
             origin = Center;
             this.y = y;
             this.x = x;
-            this.levelGen = levelGen;
+            this.level = level;
             id = Tags.Interactible.ToString();
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
             if (isOut && !changeSprite)
             {
-                if (levelGen.tiles[x - 1, y + 1] != null)
+                if(level.TileOnLocation(x-1, y+1))
                 {
                     //left
                     changeSprite = true;
                     Sprite = new SpriteSheet("RopeAnchorLeft");
                 }
-                else if (levelGen.tiles[x + 1, y + 1] != null)
+                else if(level.TileOnLocation(x + 1, y + 1))
                 {
                     //right
                     changeSprite = true;

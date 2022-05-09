@@ -82,8 +82,6 @@ namespace BaseProject.GameStates
                 this.Add(bigPlayer.noLives[i + bigPlayer.livesPlayer]);
                 this.Add(bigPlayer.livesBig[i]);
             }
-
-            cam.Pos = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
             
             
             
@@ -91,8 +89,8 @@ namespace BaseProject.GameStates
             levelManager = new LevelManager(bigPlayer, smallPlayer);
             Add(levelManager);
             
-            this.cam = camera;
-            cam.Pos = bigPlayer.Position; //new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
+            cam = camera;
+            cam.Pos = bigPlayer.Position;
         }
         public override void Update(GameTime gameTime)
         {
@@ -114,15 +112,10 @@ namespace BaseProject.GameStates
             else
                 smallPlayer.noLeft = false;
 
-            Console.WriteLine(smallPlayer.noLeft);
             base.Update(gameTime);
             KeepPlayersCenterd();
             UI_ElementUpdate();
-
-
-
             CheckGameOver();
-
         }
         private void CheckGameOver()
         {
@@ -275,14 +268,16 @@ namespace BaseProject.GameStates
             {
                 moveAmount += Vector2.SmoothStep(moveAmount, Vector2.UnitY, falloff);
             }
-            if (cam.Pos.X < GameEnvironment.Screen.X / 2)
-            {
-                moveAmount += Vector2.UnitX * falloff;
-            }
-            if (cam.Pos.Y > GameEnvironment.Screen.Y / 2)
-            {
-                moveAmount -= Vector2.UnitY * falloff;
-            }
+            //if (cam.Pos.X < GameEnvironment.Screen.X / 2)
+            //{
+            //    moveAmount += Vector2.UnitX * falloff;
+            //    Console.WriteLine("offscreen");
+            //}
+            //if (cam.Pos.Y > GameEnvironment.Screen.Y / 2)
+            //{
+            //    moveAmount -= Vector2.UnitY * falloff;
+            //    Console.WriteLine("offscreen");
+            //}
 
             cam.Move(moveAmount);
         }

@@ -10,7 +10,7 @@ namespace BaseProject
     {
         public bool isDead;
         public float gravity;
-        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight;
+        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight, hitRope;
 
         public static float JumpForce = 460;
         public float horizontalSpeed = 175;
@@ -40,7 +40,6 @@ namespace BaseProject
             if (knockback)
             {
                 velocity.X = -1 * knockbackForce;
-                Console.WriteLine(Velocity.X);
                 jump = true;
                 knockback = false;
             }

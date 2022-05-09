@@ -26,21 +26,21 @@ public class SmallPlayer : HeadPlayer
     {
         mPressed = false;
 
-        hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
-       
+        hitClimbWall = hitRope || CollisonWith(Tags.ClimebleWall);
+
         if (CollisonWith(Tags.Lava))
         {
             knockback = true;
         }
 
         base.Update(gameTime);
-        CollisonWithGround();
         BreakeblePlatform breakebleplatform = CollisonWithBreakingPlatform();
         if (breakebleplatform != null)
         {
             breakebleplatform.isBreaking = true;
         }
 
+        CollisonWithGround();
     }
     public void CollisonWithGround()
     {
@@ -51,58 +51,65 @@ public class SmallPlayer : HeadPlayer
             for (var y = 0; y < WorldTiles.GetLength(1); y++)
             {
                 var tile = WorldTiles[x, y];
-                if (tile == null || tile.Id != Tags.Ground.ToString() && tile.Id != Tags.BreakeblePlatform.ToString())
+                if (tile == null)
                     continue;
-
-                if (this.Position.X + this.Width / 2 > tile.Position.X &&
+                var tileType = tile.GetType();
+                if(tileType == typeof(Tile))
+                {
+                    if (this.Position.X + this.Width / 2 > tile.Position.X &&
                         this.Position.X < tile.Position.X + tile.Width / 2 &&
                         this.Position.Y + this.Height > tile.Position.Y &&
                         this.Position.Y < tile.Position.Y + tile.Height)
+                    {
+                        var mx = (this.Position.X - tile.Position.X);
+                        var my = (this.Position.Y - tile.Position.Y);
+                        if (Math.Abs(mx) > Math.Abs(my))
+                        {
+                            if (mx > 0 && this.Velocity.X < 0)
+                            {
+                                this.velocity.X = 0;
+                                this.position.X = tile.Position.X + tile.Width / 2;
+                            }
+                            else if (mx < 0 && this.Velocity.X > 0)
+                            {
+                                this.position.X = tile.Position.X - this.Width / 2;
+                                this.velocity.X = 0;
+                            }
+
+                            if (beingHeld)
+                            {
+                                if (mx > 0)
+                                {
+                                    hitLeftWall = true;
+                                }
+                                else if (mx < 0)
+                                {
+                                    hitRightWall = true;
+                                }
+                            }
+                        }
+
+                        else if (!beingHeld)
+                        {
+                            if (my > 0 && this.velocity.Y < 0)
+                            {
+                                this.velocity.Y = 0;
+                                this.position.Y = tile.Position.Y + tile.Height;
+                            }
+                            else if (my < 0 && this.velocity.Y > 0)
+                            {
+                                this.velocity.Y = 0;
+                                this.position.Y = tile.Position.Y - this.Height;
+                                this.stand = true;
+                            }
+                        }
+                    }
+                }
+
+                if(tileType == typeof(Rope))
                 {
-                    var mx = (this.Position.X - tile.Position.X);
-                    var my = (this.Position.Y - tile.Position.Y);
-
-                    if (Math.Abs(mx) > Math.Abs(my))
-                    {
-                        if (mx > 0 && this.Velocity.X < 0)
-                        {
-                            this.velocity.X = 0;
-                            this.position.X = tile.Position.X + tile.Width / 2;
-                        }
-                        else if (mx < 0 && this.Velocity.X > 0)
-                        {
-                            this.position.X = tile.Position.X - this.Width / 2;
-                            this.velocity.X = 0;
-                        }
-
-                        if (beingHeld)
-                        {
-
-                            if (mx > 0)
-                            {
-                                hitLeftWall = true;
-                            }
-                            else if (mx < 0)
-                            {
-                                hitRightWall = true;
-                            }
-                        }
-                    }
-
-                    else if (!beingHeld)
-                    {
-                        if (my > 0 && this.velocity.Y < 0)
-                        {
-                            this.velocity.Y = 0;
-                            this.position.Y = tile.Position.Y + tile.Height;
-                        }
-                        else if (my < 0 && this.velocity.Y > 0)
-                        {
-                            this.velocity.Y = 0;
-                            this.position.Y = tile.Position.Y - this.Height;
-                            this.stand = true;
-                        }
-                    }
+                    hitRope = (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
+                    && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height);
                 }
             }
         }
