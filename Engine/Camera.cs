@@ -45,7 +45,7 @@ namespace BaseProject.Engine
             set { _pos = value; }
         }
 
-        public Matrix get_transformation(GraphicsDevice graphicsDevice)
+        public Matrix Get_transformation(GraphicsDevice graphicsDevice)
         {
             _transform =
               Matrix.CreateTranslation(new Vector3(-_pos.X, -_pos.Y, 0)) *

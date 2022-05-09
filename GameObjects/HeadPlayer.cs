@@ -6,15 +6,27 @@ using System.Text;
 
 namespace BaseProject
 {
-    //Dion
     class HeadPlayer : SpriteGameObject
     {
+        public bool isDead;
         public float gravity;
         public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight;
 
+        public static float JumpForce = 460;
+        public float horizontalSpeed = 175;
+        public static float walkingSpeed = 175;
+        public static float sprintingSpeed = 200;
+
+        public Vector2 LastSavedPos;
+        public int savePosTimer;
+
+        public bool knockback;
+        public int knockbackForce = 100;
+
         public HeadPlayer(string assetName) : base(assetName)
         {
-            position.Y = GameEnvironment.Screen.Y / 1.5f;
+            position.Y = GameEnvironment.Screen.Y / 1.4f;
+            position.X = 10;
             gravity = 10f;
             noLeft = false;
             noRight = false;
@@ -23,33 +35,47 @@ namespace BaseProject
 
         public override void Update(GameTime gameTime)
         {
-            velocity.X = 0;
-
+            if (knockback)
+            {
+                velocity.X = -1 * knockbackForce;
+                Console.WriteLine(Velocity.X);
+                jump = true;
+                knockback = false;
+            }
             if (jump)
             {
                 jump = false;
                 stand = false;
-                velocity.Y = -460;
+                velocity.Y = -JumpForce;
             }
 
             if (left)
             {
-                velocity.X = -175;
+                velocity.X = -horizontalSpeed;
                 left = false;
             }
             if (right)
             {
-                velocity.X = 175;
+                velocity.X = horizontalSpeed;
                 right = false;
+            }
+
+            if (position.Y > 1080)
+            {
+                isDead = true;
             }
 
             base.Update(gameTime);
             velocity.Y += gravity;
+            if (stand)
+            {
+                velocity.X = 0;
+            }
         }
 
         //Roep deze functie aan als de speler normaal springt en de waterval raakt,
         //maar zodra je de pickup gebruikt, roep deze niet aan.
-        public virtual void hitWaterfall()
+        public virtual void HitWaterfall()
         {
             velocity.Y = 520;
         }
@@ -73,15 +99,6 @@ namespace BaseProject
                 //Mirror = false;
             //}
 
-            if (stand)
-            {
-                if (inputHelper.KeyPressed(Keys.Up))
-                {
-                     stand = false;
-                     jump = true;
-                }
-            }
-        }
 
         public virtual void Climb()
         {
@@ -93,39 +110,9 @@ namespace BaseProject
             velocity.X = 0;
         }
 
-        public virtual void notClimbing()
+        public virtual void NotClimbing()
         {
             gravity = 10f;
         }
-
-        ////Player is touching the ground
-        ////Deze methode kun je gebruiken voor elk object dat collision heeft met de player als die op platform staat.
-        //public virtual void OnGround(float standPosition)
-        //{
-        //    if (position.Y > standPosition)
-        //    {
-        //        stand = true;
-        //        position.Y = standPosition;
-        //        velocity.Y = 0;
-        //    }
-        //}
-
-        ////Deze kun je gebruiken bij een wall collision aan de linkerkant 
-        //public virtual void hitWallLeft(float leftPosition)
-        //{
-        //    if (position.X <= leftPosition)
-        //    {
-        //        position.X = leftPosition;
-        //    }
-        //}
-
-        ////Deze kun je gebruiken bij een wall collision aan de rechterkant
-        //public virtual void hitWallRight(float rightPosition)
-        //{
-        //    if (position.X >= rightPosition)
-        //    {
-        //        position.X = rightPosition;
-        //    }
-        //}
     }
 }

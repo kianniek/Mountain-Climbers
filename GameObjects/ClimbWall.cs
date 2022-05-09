@@ -10,6 +10,7 @@ namespace BaseProject
         public ClimbWall(string assetName, Vector2 climbPosition) : base(assetName)
         {
             position = climbPosition;
+            id = Tags.ClimebleWall.ToString();
         }
     }
 }

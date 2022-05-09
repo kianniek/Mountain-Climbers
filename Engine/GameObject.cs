@@ -116,4 +116,16 @@ public abstract class GameObject : IGameLoopObject
             return new Rectangle((int)GlobalPosition.X, (int)GlobalPosition.Y, 0, 0);
         }
     }
+
+    public enum Tags
+    {
+        Interactible,
+        Ground,
+        Player,
+        Obsticle,
+        Rope,
+        Lava, 
+        ClimebleWall,
+        BreakeblePlatform
+    }
 }

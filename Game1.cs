@@ -15,8 +15,10 @@ namespace BaseProject
             ApplyResolutionSettings();
 
             // TODO: use this.Content to load your game content here 
+            GameStateManager.AddGameState("StartState", new StartState());
+            GameStateManager.AddGameState("LoadingState", new LoadingState());
             GameStateManager.AddGameState("PlayingState", new PlayingState(Camera));
-            GameStateManager.SwitchTo("PlayingState");
+            GameStateManager.SwitchTo("StartState");
             
             
         }

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
-public class LevelGenerator : GameObject
+public class LevelGenerator : SpriteGameObject
 {
     public SpriteGameObject[,] tiles;
     public SpriteGameObject ground;
@@ -13,19 +13,19 @@ public class LevelGenerator : GameObject
     public Color[,] colors;
     public float offsetX = 1f;
     public float offsetY = 1f;
+    public Vector2 posBlock;
 
 
     // Use this for initialization
-    public LevelGenerator()
+    public LevelGenerator() : base("")
     {
         map = GameEnvironment.AssetManager.Content.Load<Texture2D>("FirstMapTest");
         tiles = new SpriteGameObject[map.Width, map.Height];
         colors = TextureTo2DArray(map);
-        Start(1);
+        Start();
     }
-    public void Start(int section)
+    public void Start()
     {
-        int sectionSize = (int) map.Width / 10;
         colors = TextureTo2DArray(map);
         for (int x = 0; x < map.Width; x++)
         {
@@ -33,7 +33,7 @@ public class LevelGenerator : GameObject
             {
                 ground = new Ground();
                 float heightOffset = Game1.Screen.Y - map.Height * ground.Height;
-                Vector2 posBlock = new Vector2(x * ground.Width, y * ground.Height + heightOffset);
+                posBlock = new Vector2(x * ground.Width, y * ground.Height + heightOffset);
 
                 //De Colors die hier staan coresnsponderen met pixels in de Texture2D van map
                 if (colors[x, y] == Color.Red)
@@ -66,6 +66,25 @@ public class LevelGenerator : GameObject
                 else if (colors[x, y] == Color.Magenta)
                 {
                     tiles[x, y] = new FallingRock("stone100", posBlock);
+                }
+                else if (colors[x, y] == Color.Lime)
+                {
+                    tiles[x, y] = new CuttebleRope(this, x, y)
+                    {
+                        Position = posBlock
+                    };
+                }
+                else if (colors[x, y] == Color.Yellow)
+                {
+                    tiles[x, y] = new ClimbWall("Tile_ClimebleLeftverticalBlock", posBlock);
+                }
+                else if (colors[x, y] == Color.Goldenrod)
+                {
+                    tiles[x, y] = new Lava(this, x,y) { Position = posBlock };
+                }
+                else if (colors[x, y] == Color.DarkOrange)
+                {
+                    tiles[x, y] = new BreakeblePlatform() { Position = posBlock };
                 }
             }
         }

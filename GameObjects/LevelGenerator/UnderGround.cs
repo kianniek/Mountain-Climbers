@@ -12,6 +12,7 @@ namespace BaseProject.GameObjects
         {
             position = new Vector2(Game1.Screen.X / 2, Game1.Screen.Y / 2);
             shade = Color.White;
+            id = Tags.Ground.ToString();
         }
         public override void Update(GameTime gameTime)
         {
