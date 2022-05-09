@@ -37,15 +37,7 @@ namespace BaseProject
 
             hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
 
-            if (!CollisonWith(Tags.ClimebleWall) && !CollisonWith(Tags.Rope) && !CollisonWith(Tags.Lava))
-            {
-                savePosTimer++;
-                if (savePosTimer > 1000)
-                {
-                    savePosTimer = 0;
-                    LastSavedPos = Position;
-                }
-            }
+            
 
             if (CollisonWith(Tags.Lava))
             {
@@ -135,14 +127,12 @@ namespace BaseProject
                             {
                                 this.velocity.Y = 0;
                                 this.position.Y = tile.Position.Y + tile.Height;
-                                Console.WriteLine("c");
                             }
                             else if (my < 0 && this.velocity.Y > 0)
                             {
                                 this.velocity.Y = 0;
                                 this.position.Y = tile.Position.Y - this.Height;
                                 this.stand = true;
-                                Console.WriteLine("d");
                             }
                         }
                     }

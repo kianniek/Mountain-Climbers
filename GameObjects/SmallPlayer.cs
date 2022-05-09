@@ -28,23 +28,11 @@ class SmallPlayer : HeadPlayer
         mPressed = false;
 
         hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
-
-        if (!CollisonWith(Tags.ClimebleWall) || !CollisonWith(Tags.Rope) || !CollisonWith(Tags.Lava))
-        {
-            savePosTimer++;
-            if (savePosTimer > 500)
-            {
-                savePosTimer = 0;
-                LastSavedPos = Position;
-            }
-        }
        
         if (CollisonWith(Tags.Lava))
         {
-            //position = LastSavedPos;
             knockback = true;
         }
-
 
         base.Update(gameTime);
         CollisonWithGround();
