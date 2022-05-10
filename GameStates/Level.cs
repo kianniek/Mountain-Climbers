@@ -99,6 +99,7 @@ namespace BaseProject.GameStates
                 if (obj != null)
                     Add(obj);
             }
+            Add(LevelObjects);
         }
 
         // Generate the correct object according to the color code

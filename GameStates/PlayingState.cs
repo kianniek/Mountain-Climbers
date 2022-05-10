@@ -141,10 +141,12 @@ namespace BaseProject.GameStates
         }
         public void DropDownRope(CuttebleRope cuttebleRope, int x, int y)
         {
+            Console.WriteLine(cuttebleRope.isOut);
             if (!cuttebleRope.isOut)
             {
-                if (levelManager.CurrentLevel().Tiles[cuttebleRope.x - 1, cuttebleRope.y + 1] != null)
+                if (cuttebleRope.level.TileOnLocation(x - 1, y + 1))
                 {
+                    
                     for (int i = 0; i < 10; i++)
                     {
                         Rope rope;
@@ -165,11 +167,11 @@ namespace BaseProject.GameStates
                             };
                             Add(rope);
                         }
-                        //levelManager.CurrentLevel().Tiles[x - 1, y + i] = rope;
+                        levelManager.CurrentLevel().LevelObjects.Add(rope);
                     }
                 }
                 else
-                if (levelManager.CurrentLevel().Tiles[cuttebleRope.x + 1, cuttebleRope.y + 1] != null)
+                if (cuttebleRope.level.TileOnLocation(x + 1, y + 1))
                 {
 
                     for (int i = 0; i < 10; i++)
@@ -192,19 +194,12 @@ namespace BaseProject.GameStates
                             };
                             Add(rope);
                         }
-                        //levelManager.CurrentLevel().Tiles[x + 1, y + i] = rope;
+                        levelManager.CurrentLevel().LevelObjects.Add(rope);
                     }
                 }
                 cuttebleRope.isOut = true;
             }
         }
-
-
-        public override void Reset()
-        {
-            base.Reset();
-        }
-
 
         public override void HandleInput(InputHelper inputHelper)
         {
@@ -224,14 +219,15 @@ namespace BaseProject.GameStates
             //Player with Rope Collision test
             for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
             {
-                var tileType = levelManager.CurrentLevel().LevelObjects.Children[x].GetType();
+                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+                var tileType = obj.GetType();
                 if (tileType == typeof(CuttebleRope)) {
-                    if (smallPlayer.CollidesWith(levelManager.CurrentLevel().Tiles[x, y]) || bigPlayer.CollidesWith(levelManager.CurrentLevel().Tiles[x, y]))
+                    if (smallPlayer.CollidesWith(obj) || bigPlayer.CollidesWith(obj))
                     {
                         if (inputHelper.KeyPressed(Keys.E))
                         {
-                            //DropDownRope((CuttebleRope)levelManager.CurrentLevel().Tiles[x, y], x, y);
-                            //levelManager.CurrentLevel().LevelObjects.Add
+                            CuttebleRope cuttebleRope = (CuttebleRope)levelManager.CurrentLevel().LevelObjects.Children[x];
+                            DropDownRope(cuttebleRope, cuttebleRope.x, cuttebleRope.y);
                         }
                     }
                 }
