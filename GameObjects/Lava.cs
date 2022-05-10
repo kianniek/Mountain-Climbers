@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BaseProject.GameStates;
+using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,21 +12,21 @@ namespace BaseProject.GameObjects
         public int y;
         public LevelGenerator levelGen;
         private bool changeSprite;
+        Level level;
 
-        public Lava(LevelGenerator levelGen, int x, int y, string assetname = "Lava") : base(assetname)
+        public Lava(Level level, int x, int y, string assetname = "Lava") : base(assetname)
         {
             origin = Center;
             this.y = y;
             this.x = x;
-            this.levelGen = levelGen;
+            Position = new Vector2(x, y);
+            this.level = level;
             id = Tags.Lava.ToString();
             CheckIfSurfice();
         }
         void CheckIfSurfice()
         {
-            if (levelGen != null)
-            {
-                if (levelGen.tiles[x, y - 1] == null)
+                if (level.TileOnLocation(x, y - 1))
                 {
                     if (!changeSprite)
                     {
@@ -32,7 +34,6 @@ namespace BaseProject.GameObjects
                         Sprite = new SpriteSheet("LavaTop");
                     }
                 }
-            }
         }
     }
 }

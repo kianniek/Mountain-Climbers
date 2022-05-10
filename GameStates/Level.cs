@@ -14,6 +14,7 @@ namespace BaseProject.GameStates
         private readonly Texture2D levelSprite;
         public Tile[,] Tiles { get; private set; }
         private Color[,] colorData;
+        public GameObjectList LevelObjects { get; private set; } = new GameObjectList();
         
         private const float tileScale = 1f;
         public const int TileWidth = 32;
@@ -33,8 +34,8 @@ namespace BaseProject.GameStates
             {"Ground", Color.Green},
             {"Waterfall", Color.Blue},
             {"Spike", Color.Brown},
-            {"Rope", Color.Gold},
-            {"Boulder", Color.Black},
+            {"Rope", Color.Honeydew},
+            {"Boulder", Color.Gainsboro},
             {"ClimbWall", Color.Orange},
             {"Lava", Color.Red},
             {"Platform", Color.Purple},
@@ -98,6 +99,7 @@ namespace BaseProject.GameStates
                 if (obj != null)
                     Add(obj);
             }
+            Add(LevelObjects);
         }
 
         // Generate the correct object according to the color code
@@ -118,8 +120,10 @@ namespace BaseProject.GameStates
                 EndPosition = objPos;
 
             if (color == colorCodes["Rope"])
-                obj = new CuttebleRope(this, (int)objPos.X, (int)objPos.Y);
-            
+                LevelObjects.Add(new CuttebleRope(this, (int)objPos.X, (int)objPos.Y));
+            if (color == colorCodes["Lava"])
+                obj = new Lava(this ,(int)objPos.X, (int)objPos.Y);
+
             if (environmentalTiles.Any(c => c == color))
             {
                 var sprite = FetchTileSprite(color, (int)gridPos.X, (int)gridPos.Y);

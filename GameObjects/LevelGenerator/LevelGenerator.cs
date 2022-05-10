@@ -15,7 +15,6 @@ public class LevelGenerator : SpriteGameObject
     public float offsetY = 1f;
     public Vector2 posBlock;
 
-
     // Use this for initialization
     public LevelGenerator() : base("")
     {
@@ -78,10 +77,10 @@ public class LevelGenerator : SpriteGameObject
                 {
                     tiles[x, y] = new ClimbWall("Tile_ClimebleLeftverticalBlock", posBlock);
                 }
-                else if (colors[x, y] == Color.Goldenrod)
-                {
-                    tiles[x, y] = new Lava(this, x,y) { Position = posBlock };
-                }
+                //else if (colors[x, y] == Color.Goldenrod)
+                //{
+                //    tiles[x, y] = new Lava(this, x,y) { Position = posBlock };
+                //}
                 else if (colors[x, y] == Color.DarkOrange)
                 {
                     tiles[x, y] = new BreakeblePlatform() { Position = posBlock };

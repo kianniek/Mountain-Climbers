@@ -12,7 +12,7 @@ namespace BaseProject.GameObjects
         public int y;
         public bool isOut, outLeft, outRight;
         bool changeSprite = false;
-        Level level;
+        public Level level;
 
         public CuttebleRope(Level level, int x, int y) : base("RopePile")
         {
@@ -20,7 +20,9 @@ namespace BaseProject.GameObjects
             this.y = y;
             this.x = x;
             this.level = level;
+            position = new Vector2(x, y);
             id = Tags.Interactible.ToString();
+            Console.WriteLine(Position);
         }
 
         public override void Update(GameTime gameTime)
@@ -41,7 +43,6 @@ namespace BaseProject.GameObjects
                     changeSprite = true;
                     Sprite = new SpriteSheet("RopeAnchorRight");
                 }
-                
             }
         }
 
