@@ -8,7 +8,7 @@ namespace BaseProject
     //Dion
     class Waterfall : SpriteGameObject
     { 
-        public Waterfall(string assetName, Vector2 waterPosition) : base(assetName)
+        public Waterfall(Vector2 waterPosition) : base("Waterfall200")
         {
             position = waterPosition;
         }

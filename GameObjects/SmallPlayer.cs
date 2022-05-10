@@ -26,11 +26,21 @@ public class SmallPlayer : HeadPlayer
     {
         mPressed = false;
 
-        hitClimbWall = hitRope || CollisonWith(Tags.ClimebleWall);
+
+        if (stand && !left && !right)
+        {
+            hitClimbWall = hitRope || CollisonWith(Tags.ClimebleWall);
+            // hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
+        }
 
         if (CollisonWith(Tags.Lava))
         {
             knockback = true;
+        }
+
+        if (stand)
+        {
+            hitWaterfall = true;
         }
 
         base.Update(gameTime);
@@ -188,7 +198,7 @@ public class SmallPlayer : HeadPlayer
         }
 
         //Small Player is climbing a wall
-        if (hitClimbWall)
+        if (hitClimbWall && mPressed)
         {
             Climb();
 
@@ -218,26 +228,34 @@ public class SmallPlayer : HeadPlayer
                 mPressed = true;
             }
         }
-        if (inputHelper.IsKeyDown(Keys.Left))
-        {
-            left = true;
-            Mirror = true;
-        }
-        if (inputHelper.IsKeyDown(Keys.Right))
-        {
-            right = true;
-            Mirror = false;
-        }
 
-
+        if (!hitClimbWall)
+        {
+            if (inputHelper.IsKeyDown(Keys.Left))
+            {
+                left = true;
+                Mirror = true;
+            }
+            if (inputHelper.IsKeyDown(Keys.Right))
+            {
+                right = true;
+                Mirror = false;
+            }
+        }
+       
     }
+
+    public override void Knockback()
+    {
+        base.Knockback();
+    }
+
     internal void PickedUp(Vector2 grabPosition)
     {
         velocity = Vector2.Zero;
         position = grabPosition;
         canMove = false;
         beingHeld = true;
-
-
+        hitWaterfall = false;
     }
 }

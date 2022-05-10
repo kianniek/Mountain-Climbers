@@ -46,8 +46,16 @@ namespace BaseProject.GameStates
 
             this.cam = camera;
 
+
+            rocks.Add(new FallingRock("stone300", new Vector2(280, GameEnvironment.Screen.Y / 2 - 200)));
+            rocks.Add(new FallingRock("stone300", new Vector2(800, 300)));
+
+
+
+
+
             //Test
-            //waterfalls.Add(new Waterfall("Waterfall200", new Vector2(500, 10)));
+            waterfalls.Add(new Waterfall(new Vector2(800, 150)));
 
             //rocks.Add(new FallingRock("stone100", new Vector2(100, 0 - 100)));
             //rocks.Add(new FallingRock("stone300", new Vector2(800, 0 - 300)));
@@ -115,6 +123,59 @@ namespace BaseProject.GameStates
             base.Update(gameTime);
             KeepPlayersCenterd();
             UI_ElementUpdate();
+
+
+           
+
+            //Falling Rocks
+            foreach (FallingRock rock in rocks.Children)
+            {
+                //Resets rock if rock is off screen
+                if (rock.Position.Y > GameEnvironment.Screen.Y)
+                {
+                    rock.Reset();
+                }
+
+                //Rock hits one of the players and that causes knockback
+                if (rock.CollidesWith(smallPlayer))
+                {
+                    smallPlayer.hitRock = true;
+                    smallPlayer.Knockback();
+                }
+                else
+                {
+                    smallPlayer.hitRock = false;
+                }
+
+                if (rock.CollidesWith(bigPlayer))
+                {  
+                    bigPlayer.hitRock = true;
+                    bigPlayer.Knockback();  
+                }
+                else
+                {
+                    bigPlayer.hitRock = false;
+                }
+            }
+
+            //Waterfalls
+            foreach (Waterfall waterfall in waterfalls.Children)
+            {
+                if (smallPlayer.hitWaterfall)
+                {
+                    if (waterfall.CollidesWith(smallPlayer))
+                    {
+                        smallPlayer.HitWaterfall();
+                    }
+                }
+               
+                if (waterfall.CollidesWith(bigPlayer))
+                {
+                    bigPlayer.HitWaterfall();
+                }
+            }
+
+
             CheckGameOver();
         }
         private void CheckGameOver()
