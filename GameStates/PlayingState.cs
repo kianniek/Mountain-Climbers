@@ -39,7 +39,7 @@ namespace BaseProject.GameStates
 
             rocks = new GameObjectList();
 
-            wall = new ButtonWall(new Vector2(800, 300), new Vector2(800, 395));
+            wall = new ButtonWall(new Vector2(900, 1010), new Vector2(900, 950));
             button = new Button(smallPlayer, bigPlayer, wall);
 
             cp = new Checkpoint();
@@ -97,17 +97,15 @@ namespace BaseProject.GameStates
             if (smallPlayer.CollidesWith(wall) && (!smallPlayer.Mirror))
             {
 
-                smallPlayer.noRight = true;
-                smallPlayer.noLeft = false;
+               
+                smallPlayer.right = false;
 
             }
             else
                 smallPlayer.noRight = false;
             if (smallPlayer.CollidesWith(wall) && (smallPlayer.Mirror))
             {
-                smallPlayer.noLeft = true;
-                smallPlayer.noRight = false;
-
+                //smallPlayer.left = false;
             }
             else
                 smallPlayer.noLeft = false;
