@@ -30,9 +30,9 @@ namespace BaseProject.GameStates
         {
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
-            
-            smallPlayer = new SmallPlayer(new Tile[0,0]);
-            bigPlayer = new BigPlayer(new Tile[0,0], smallPlayer);
+
+            smallPlayer = new SmallPlayer(new Tile[0, 0]);
+            bigPlayer = new BigPlayer(new Tile[0, 0], smallPlayer);
 
             waterfalls = new GameObjectList();
             climbWall = new GameObjectList();
@@ -82,13 +82,16 @@ namespace BaseProject.GameStates
                 this.Add(bigPlayer.noLives[i + bigPlayer.livesPlayer]);
                 this.Add(bigPlayer.livesBig[i]);
             }
-            
-            
-            
-            
+
+
+
+
             levelManager = new LevelManager(bigPlayer, smallPlayer);
+
+            smallPlayer.levelManager = levelManager;
+            bigPlayer.levelManager = levelManager;
             Add(levelManager);
-            
+
             cam = camera;
             cam.Pos = bigPlayer.Position;
         }
@@ -139,14 +142,15 @@ namespace BaseProject.GameStates
                 GameEnvironment.GameStateManager.SwitchTo("StartState");
             }
         }
-        public void DropDownRope(CuttebleRope cuttebleRope, int x, int y)
+        public void DropDownRope(CuttebleRope cuttebleRope)
         {
-            Console.WriteLine(cuttebleRope.isOut);
             if (!cuttebleRope.isOut)
             {
+                int x = cuttebleRope.x;
+                int y = cuttebleRope.y;
+                Console.WriteLine(cuttebleRope.level.TileOnLocation(x + 1, y + 1) + "  " + cuttebleRope.level.TileOnLocation(x - 1, y + 1));
                 if (cuttebleRope.level.TileOnLocation(x - 1, y + 1))
                 {
-                    
                     for (int i = 0; i < 10; i++)
                     {
                         Rope rope;
@@ -167,11 +171,12 @@ namespace BaseProject.GameStates
                             };
                             Add(rope);
                         }
+                        Console.WriteLine("Added Rope");
                         levelManager.CurrentLevel().LevelObjects.Add(rope);
                     }
                 }
                 else
-                if (cuttebleRope.level.TileOnLocation(x + 1, y + 1))
+                if (!cuttebleRope.level.TileOnLocation(x + 1, y + 1))
                 {
 
                     for (int i = 0; i < 10; i++)
@@ -194,6 +199,7 @@ namespace BaseProject.GameStates
                             };
                             Add(rope);
                         }
+                        Console.WriteLine("Added Rope");
                         levelManager.CurrentLevel().LevelObjects.Add(rope);
                     }
                 }
@@ -221,13 +227,14 @@ namespace BaseProject.GameStates
             {
                 var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
                 var tileType = obj.GetType();
-                if (tileType == typeof(CuttebleRope)) {
+                if (tileType == typeof(CuttebleRope))
+                {
                     if (smallPlayer.CollidesWith(obj) || bigPlayer.CollidesWith(obj))
                     {
                         if (inputHelper.KeyPressed(Keys.E))
                         {
                             CuttebleRope cuttebleRope = (CuttebleRope)levelManager.CurrentLevel().LevelObjects.Children[x];
-                            DropDownRope(cuttebleRope, cuttebleRope.x, cuttebleRope.y);
+                            DropDownRope(cuttebleRope);
                         }
                     }
                 }

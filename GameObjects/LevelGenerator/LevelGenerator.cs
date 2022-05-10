@@ -78,10 +78,10 @@ public class LevelGenerator : SpriteGameObject
                 {
                     tiles[x, y] = new ClimbWall("Tile_ClimebleLeftverticalBlock", posBlock);
                 }
-                else if (colors[x, y] == Color.Goldenrod)
-                {
-                    tiles[x, y] = new Lava(this, x,y) { Position = posBlock };
-                }
+                //else if (colors[x, y] == Color.Goldenrod)
+                //{
+                //    tiles[x, y] = new Lava(this, x,y) { Position = posBlock };
+                //}
                 else if (colors[x, y] == Color.DarkOrange)
                 {
                     tiles[x, y] = new BreakeblePlatform() { Position = posBlock };

@@ -23,6 +23,8 @@ namespace BaseProject
         public bool knockback;
         public int knockbackForce = 100;
 
+        public LevelManager levelManager;
+
         protected Tile[,] WorldTiles { get; private set; }
 
         public HeadPlayer(string assetName, Tile[,] worldTiles) : base(assetName)

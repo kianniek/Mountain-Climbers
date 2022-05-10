@@ -137,17 +137,13 @@ namespace BaseProject
         }
         public bool CollisonWithRope()
         {
-            for (var x = 0; x < WorldTiles.GetLength(0); x++)
+            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
             {
-                for (var y = 0; y < WorldTiles.GetLength(1); y++)
+                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+                var tileType = obj.GetType();
+                if (tileType == typeof(Rope))
                 {
-                    var tile = WorldTiles[x, y];
-
-                    if (tile == null || tile.Sprite.Sprite.Name != "RopeSegment")
-                        continue;
-
-                    if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
-                        && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
+                    if (CollidesWith(obj))
                     {
                         return true;
                     }
