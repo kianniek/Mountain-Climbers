@@ -15,7 +15,6 @@ public class LevelGenerator : SpriteGameObject
     public float offsetY = 1f;
     public Vector2 posBlock;
 
-
     // Use this for initialization
     public LevelGenerator() : base("")
     {

@@ -33,7 +33,11 @@ namespace BaseProject
         {
             zPressed = false;
 
-            hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
+            if (stand && !left && !right)
+            {
+               hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
+            }
+            
 
             if (CollisonWith(Tags.Lava))
             {
@@ -172,6 +176,12 @@ namespace BaseProject
             }
             return false;
         }
+
+        public override void Knockback()
+        {
+            base.Knockback();
+        }
+
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
@@ -184,12 +194,12 @@ namespace BaseProject
                 horizontalSpeed = walkingSpeed;
             }
 
-            //Player is climbing the wall
-            if (hitClimbWall)
+            //Player is climbing the wall by hitting a climbing wall or rope and pressing Z
+            if (hitClimbWall && zPressed)
             {
                 Climb();
 
-                if (inputHelper.IsKeyDown(Keys.W))
+                if (inputHelper.IsKeyDown(Keys.Q))
                 {
                     velocity.Y = -100;
                 }
@@ -216,16 +226,20 @@ namespace BaseProject
                 }
             }
 
-            if (inputHelper.IsKeyDown(Keys.A))
+            if (!hitClimbWall)
             {
-                left = true;
-                Mirror = true;
+                if (inputHelper.IsKeyDown(Keys.A))
+                {
+                    left = true;
+                    Mirror = true;
+                }
+                if (inputHelper.IsKeyDown(Keys.D))
+                {
+                    right = true;
+                    Mirror = false;
+                }
             }
-            if (inputHelper.IsKeyDown(Keys.D))
-            {
-                right = true;
-                Mirror = false;
-            }
+            
 
             if (inputHelper.KeyPressed(Keys.E))
             {
