@@ -9,12 +9,16 @@ namespace BaseProject.GameObjects
     {
 
         private Vector2 endPosition;
+        
 
         public ButtonWall(Vector2 startPosition, Vector2 endPosition) : base("testWall")
         {
 
             position = startPosition;
             this.endPosition = endPosition;
+            origin = Center;
+
+            
 
 
         }
