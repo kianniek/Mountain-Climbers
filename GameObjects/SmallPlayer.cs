@@ -26,7 +26,6 @@ public class SmallPlayer : HeadPlayer
     {
         mPressed = false;
 
-        Console.WriteLine(CollisonWithRope());
         hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
 
         if (CollisonWith(Tags.Lava))
@@ -71,15 +70,18 @@ public class SmallPlayer : HeadPlayer
                         var my = (this.Position.Y - tile.Position.Y);
                         if (Math.Abs(mx) > Math.Abs(my))
                         {
-                            if (mx > 0 && this.Velocity.X < 0)
+                            if (Math.Abs(mx) > Math.Abs(my))
                             {
-                                this.velocity.X = 0;
-                                this.position.X = tile.Position.X + tile.Width / 2;
-                            }
-                            else if (mx < 0 && this.Velocity.X > 0)
-                            {
-                                this.position.X = tile.Position.X - this.Width / 2;
-                                this.velocity.X = 0;
+                                if (mx > 0)
+                                {
+                                    this.velocity.X = 0;
+                                    this.position.X = tile.Position.X + this.Width / 4;
+                                }
+                                if (mx < 0)
+                                {
+                                    this.position.X = tile.Position.X - this.Width / 2;
+                                    this.velocity.X = 0;
+                                }
                             }
 
                             if (beingHeld)
@@ -97,12 +99,12 @@ public class SmallPlayer : HeadPlayer
 
                         else if (!beingHeld)
                         {
-                            if (my > 0 && this.velocity.Y < 0)
+                            if (my > 0)
                             {
                                 this.velocity.Y = 0;
                                 this.position.Y = tile.Position.Y + tile.Height;
                             }
-                            else if (my < 0 && this.velocity.Y > 0)
+                            if (my < 0)
                             {
                                 this.velocity.Y = 0;
                                 this.position.Y = tile.Position.Y - this.Height;
@@ -111,15 +113,16 @@ public class SmallPlayer : HeadPlayer
                         }
                     }
                 }
-
                 if (tileType == typeof(Rope))
                 {
                     hitRope = (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
                     && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height);
                 }
             }
+
         }
     }
+
 
     public bool CollisonWithRope()
     {
@@ -235,7 +238,7 @@ public class SmallPlayer : HeadPlayer
                 Mirror = false;
             }
         }
-       
+
     }
 
     public override void Knockback()

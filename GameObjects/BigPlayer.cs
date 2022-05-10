@@ -106,29 +106,27 @@ namespace BaseProject
                     {
                         var mx = (this.Position.X - tile.Position.X);
                         var my = (this.Position.Y - tile.Position.Y);
-
                         if (Math.Abs(mx) > Math.Abs(my))
                         {
-                            if (mx > 0 && this.Velocity.X < 0)
+                            if (mx > 0)
                             {
                                 this.velocity.X = 0;
-                                this.position.X = tile.Position.X + tile.Width / 2;
+                                this.position.X = tile.Position.X + this.Width/4;
                             }
-                            else if (mx < 0 && this.Velocity.X > 0)
+                            if (mx < 0)
                             {
-                                this.position.X = tile.Position.X - this.Width / 2;
+                                this.position.X = tile.Position.X - this.Width/2;
                                 this.velocity.X = 0;
-
                             }
                         }
                         else
                         {
-                            if (my > 0 && this.velocity.Y < 0)
+                            if (my > 0)
                             {
                                 this.velocity.Y = 0;
                                 this.position.Y = tile.Position.Y + tile.Height;
                             }
-                            else if (my < 0 && this.velocity.Y > 0)
+                            if (my < 0)
                             {
                                 this.velocity.Y = 0;
                                 this.position.Y = tile.Position.Y - this.Height;

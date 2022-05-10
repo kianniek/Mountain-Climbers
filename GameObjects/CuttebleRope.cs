@@ -22,7 +22,6 @@ namespace BaseProject.GameObjects
             this.level = level;
             position = new Vector2(x, y);
             id = Tags.Interactible.ToString();
-            Console.WriteLine(Position);
         }
 
         public override void Update(GameTime gameTime)
