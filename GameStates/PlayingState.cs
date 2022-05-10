@@ -232,7 +232,6 @@ namespace BaseProject.GameStates
                             };
                             Add(rope);
                         }
-                        Console.WriteLine("Added Rope");
                         levelManager.CurrentLevel().LevelObjects.Add(rope);
                     }
                 }
@@ -260,7 +259,6 @@ namespace BaseProject.GameStates
                             };
                             Add(rope);
                         }
-                        Console.WriteLine("Added Rope");
                         levelManager.CurrentLevel().LevelObjects.Add(rope);
                     }
                 }
