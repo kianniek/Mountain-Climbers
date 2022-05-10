@@ -11,6 +11,7 @@ namespace BaseProject
         public int fallingRockCount;
         float gravity;
         Vector2 resetPosition;
+
         public FallingRock(string assetName, Vector2 rockPosition) : base(assetName)
         {
             resetPosition = rockPosition;

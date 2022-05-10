@@ -55,7 +55,7 @@ namespace BaseProject.GameStates
 
 
             //Test
-            waterfalls.Add(new Waterfall(new Vector2(800, 150)));
+            waterfalls.Add(new Waterfall(new Vector2(1100, 550)));
 
             //rocks.Add(new FallingRock("stone100", new Vector2(100, 0 - 100)));
             //rocks.Add(new FallingRock("stone300", new Vector2(800, 0 - 300)));
@@ -131,7 +131,7 @@ namespace BaseProject.GameStates
             foreach (FallingRock rock in rocks.Children)
             {
                 //Resets rock if rock is off screen
-                if (rock.Position.Y > GameEnvironment.Screen.Y)
+                if (rock.Position.Y > GameEnvironment.Screen.Y - cam._transform.M42)
                 {
                     rock.Reset();
                 }
