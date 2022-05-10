@@ -39,7 +39,7 @@ namespace BaseProject.GameStates
 
             rocks = new GameObjectList();
 
-            wall = new ButtonWall(new Vector2(900, 1010), new Vector2(900, 950));
+            wall = new ButtonWall(new Vector2(1000, 1010), new Vector2(1000, 950));
             button = new Button(smallPlayer, bigPlayer, wall);
 
             cp = new Checkpoint();
