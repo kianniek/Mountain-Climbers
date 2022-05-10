@@ -10,8 +10,6 @@ namespace BaseProject
     {
         public bool isDead;
         public float gravity;
-        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight;
-
         public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight, climb, hitRock, hitWaterfall, hitRope;
 
 
@@ -126,13 +124,6 @@ namespace BaseProject
         {
             velocity.Y *= -1;
             velocity.X *= -1;
-        }
-        
-        public void GoToNewLevel(Tile[,] tiles, Vector2 pos)
-        {
-            WorldTiles = tiles;
-            position = pos;
-            velocity = Vector2.Zero;
         }
         
         public void GoToNewLevel(Tile[,] tiles, Vector2 pos)
