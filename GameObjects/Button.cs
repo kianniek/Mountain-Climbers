@@ -32,6 +32,11 @@ namespace BaseProject.GameObjects
             base.HandleInput(inputHelper);
 
 
+            if (bigPlayer.CollidesWith(this) && inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
+            {
+                ButtonPress = true;
+            }
+
             if (smallPlayer.CollidesWith(this) && inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Space))
             {
                 ButtonPress = true;
@@ -39,23 +44,14 @@ namespace BaseProject.GameObjects
 
             if (ButtonPress)
             {
-                Console.WriteLine("lets go");
+                
 
                 wall.Velocity = new Vector2(0, -50);
 
 
             }
 
-            if (smallPlayer.CollidesWith(wall))
-            {
-
-                Console.WriteLine("hit");
-
-               
-
-
-                smallPlayer.Velocity = Vector2.Zero;
-            }
+           
 
             if (wall.Position.Y < 900)
             {
@@ -63,17 +59,10 @@ namespace BaseProject.GameObjects
 
             }
 
-            if (ButtonPress)
-            {
-                Console.WriteLine("pressed");
-            }
-            else if (!ButtonPress)
-            {
-                Console.WriteLine("notPressed");
+           
 
 
-
-            }
+            
 
 
 

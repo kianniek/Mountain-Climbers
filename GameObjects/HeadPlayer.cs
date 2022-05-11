@@ -65,7 +65,7 @@ namespace BaseProject
                 right = false;
             }
 
-            if (position.Y > 1080)
+            if (position.Y > 1580)
             {
                 isDead = true;
             }
