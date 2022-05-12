@@ -39,7 +39,7 @@ namespace BaseProject.GameObjects
 
             if (ButtonPress)
             {
-                Console.WriteLine("lets go");
+                //Console.WriteLine("lets go");
 
                 wall.Velocity = new Vector2(0, -50);
 
@@ -65,11 +65,11 @@ namespace BaseProject.GameObjects
 
             if (ButtonPress)
             {
-                Console.WriteLine("pressed");
+                //Console.WriteLine("pressed");
             }
             else if (!ButtonPress)
             {
-                Console.WriteLine("notPressed");
+                //Console.WriteLine("notPressed");
 
 
 

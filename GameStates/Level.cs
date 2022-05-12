@@ -121,8 +121,9 @@ namespace BaseProject.GameStates
 
             if (color == colorCodes["Rope"])
                 LevelObjects.Add(new CuttebleRope(this, (int)objPos.X, (int)objPos.Y));
+
             if (color == colorCodes["Lava"])
-                obj = new Lava(this ,(int)objPos.X, (int)objPos.Y);
+                LevelObjects.Add(new Lava(this, (int)objPos.X, (int)objPos.Y));
 
             if (environmentalTiles.Any(c => c == color))
             {

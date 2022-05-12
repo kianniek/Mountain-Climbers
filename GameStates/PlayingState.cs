@@ -108,7 +108,7 @@ namespace BaseProject.GameStates
             if (smallPlayer.CollidesWith(wall) && (!smallPlayer.Mirror))
             {
 
-               
+
                 smallPlayer.right = false;
 
             }
@@ -126,7 +126,7 @@ namespace BaseProject.GameStates
             UI_ElementUpdate();
 
 
-           
+
 
             //Falling Rocks
             foreach (FallingRock rock in rocks.Children)
@@ -149,9 +149,9 @@ namespace BaseProject.GameStates
                 }
 
                 if (rock.CollidesWith(bigPlayer))
-                {  
+                {
                     bigPlayer.hitRock = true;
-                    bigPlayer.Knockback();  
+                    bigPlayer.Knockback();
                 }
                 else
                 {
@@ -169,7 +169,7 @@ namespace BaseProject.GameStates
                         smallPlayer.HitWaterfall();
                     }
                 }
-               
+
                 if (waterfall.CollidesWith(bigPlayer))
                 {
                     bigPlayer.HitWaterfall();
@@ -181,7 +181,14 @@ namespace BaseProject.GameStates
         }
         private void CheckGameOver()
         {
-            return;
+            if (smallPlayer.Position.Y > GameEnvironment.Screen.Y - cam._transform.M42)
+            {
+                smallPlayer.isDead = true;
+            }
+            if (bigPlayer.Position.Y > GameEnvironment.Screen.Y - cam._transform.M42)
+            {
+                bigPlayer.isDead = true;
+            }
             if (smallPlayer.isDead)
             {
                 smallPlayer.Position = bigPlayer.Position;

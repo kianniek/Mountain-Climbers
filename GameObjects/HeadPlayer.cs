@@ -65,10 +65,7 @@ namespace BaseProject
                 right = false;
             }
 
-            if (position.Y > 1080)
-            {
-                isDead = true;
-            }
+            
 
             base.Update(gameTime);
             velocity.Y += gravity;

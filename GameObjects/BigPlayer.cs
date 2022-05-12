@@ -35,9 +35,9 @@ namespace BaseProject
 
             if (stand && !left && !right)
             {
-               hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
+                hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
             }
-            
+
 
             if (CollisonWith(Tags.Lava))
             {
@@ -99,6 +99,8 @@ namespace BaseProject
                     if (tile == null)
                         continue;
 
+                    var tileType = tile.GetType();
+
                     if (this.Position.X + this.Width / 2 > tile.Position.X &&
                         this.Position.X < tile.Position.X + tile.Width / 2 &&
                         this.Position.Y + this.Height > tile.Position.Y &&
@@ -111,11 +113,11 @@ namespace BaseProject
                             if (mx > 0)
                             {
                                 this.velocity.X = 0;
-                                this.position.X = tile.Position.X + this.Width/4;
+                                this.position.X = tile.Position.X + this.Width / 4;
                             }
                             if (mx < 0)
                             {
-                                this.position.X = tile.Position.X - this.Width/2;
+                                this.position.X = tile.Position.X - this.Width / 2;
                                 this.velocity.X = 0;
                             }
                         }
@@ -133,6 +135,11 @@ namespace BaseProject
                                 this.stand = true;
                             }
                         }
+                    }
+
+                    if (tileType == typeof(Lava))
+                    {
+                        isDead = true;
                     }
                 }
             }
@@ -237,7 +244,7 @@ namespace BaseProject
                     Mirror = false;
                 }
             }
-            
+
 
             if (inputHelper.KeyPressed(Keys.E))
             {
