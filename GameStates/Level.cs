@@ -15,14 +15,14 @@ namespace BaseProject.GameStates
         public Tile[,] Tiles { get; private set; }
         private Color[,] colorData;
         public GameObjectList LevelObjects { get; private set; } = new GameObjectList();
-        
+
         private const float tileScale = 1f;
         public const int TileWidth = 32;
         public const int TileHeight = 32;
 
         protected SmallPlayer smallPlayer;
         protected BigPlayer bigPlayer;
-        
+
         public bool Loaded { get; private set; }
 
         public Vector2 StartPosition { get; private set; }
@@ -49,8 +49,8 @@ namespace BaseProject.GameStates
             colorCodes["Ground"],
             colorCodes["Lava"],
         };
-        
-        
+
+
         public Level(string levelSprite, BigPlayer bigPlayer, SmallPlayer smallPlayer)
         {
             this.levelSprite = GameEnvironment.AssetManager.Content.Load<Texture2D>(levelSprite);
@@ -63,7 +63,7 @@ namespace BaseProject.GameStates
         {
             if (Loaded)
                 return;
-            
+
             GenerateLevel();
             Loaded = true;
         }
@@ -71,7 +71,7 @@ namespace BaseProject.GameStates
         // Generate the level
         private async void GenerateLevel()
         {
-            Tiles = new Tile[levelSprite.Width,levelSprite.Height];
+            Tiles = new Tile[levelSprite.Width, levelSprite.Height];
             colorData = FetchColorData(levelSprite);
 
             await GenerateRows();
@@ -106,16 +106,16 @@ namespace BaseProject.GameStates
         private GameObject GeneratedObject(Vector2 gridPos)
         {
             var color = colorData[(int)gridPos.X, (int)gridPos.Y];
-            var offset = new Vector2(TileWidth, TileHeight)/2;
-            
+            var offset = new Vector2(TileWidth, TileHeight) / 2;
+
             var objPos = gridPos * new Vector2(TileWidth, TileHeight) * tileScale;
             objPos += offset;
-            
+
             GameObject obj = null;
 
             if (color == colorCodes["Start"])
                 StartPosition = objPos;
-            
+
             if (color == colorCodes["End"])
                 EndPosition = objPos;
 
@@ -125,6 +125,9 @@ namespace BaseProject.GameStates
             if (color == colorCodes["Lava"])
                 LevelObjects.Add(new Lava(this, (int)objPos.X, (int)objPos.Y));
 
+            if (color == colorCodes["Platform"])
+                LevelObjects.Add(new BreakeblePlatform(new Vector2((int)objPos.X, (int)objPos.Y)));
+
             if (environmentalTiles.Any(c => c == color))
             {
                 var sprite = FetchTileSprite(color, (int)gridPos.X, (int)gridPos.Y);
@@ -133,7 +136,7 @@ namespace BaseProject.GameStates
                     return null;
 
                 var t = new Tile(sprite, objPos, tileScale);
-                
+
                 Tiles[(int)gridPos.X, (int)gridPos.Y] = t;
 
                 obj = t;
@@ -160,8 +163,8 @@ namespace BaseProject.GameStates
                     return "Tile_LeftverticalBlock";
                 if (TileOnLocation(x - 1, y) && TileOnLocation(x, y + 1) && TileOnLocation(x, y - 1)) // No tile right
                     return "Tile_RightverticalBlock";
-            
-            
+
+
                 if (TileOnLocation(x + 1, y) && TileOnLocation(x, y + 1)) // No tile left and above
                     return "Tile_GrassLeftCorner";
                 if (TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1)) // No tile left and under
@@ -178,7 +181,7 @@ namespace BaseProject.GameStates
         // Returns if there is a tile on the given position
         public bool TileOnLocation(int x, int y)
         {
-            if (y < 0 || y >= levelSprite.Height || x < 0 || x >= levelSprite.Width) 
+            if (y < 0 || y >= levelSprite.Height || x < 0 || x >= levelSprite.Width)
                 return false;
 
             foreach (var tile in environmentalTiles)
@@ -187,18 +190,18 @@ namespace BaseProject.GameStates
 
             return false;
         }
-        
+
         // Convert the image to an 2D color array
         private Color[,] FetchColorData(Texture2D texture)
         {
             var colors = new Color[levelSprite.Width * levelSprite.Height];
             texture.GetData(colors);
             var colors2D = new Color[texture.Width, texture.Height];
-            
+
             for (var x = 0; x < texture.Width; x++)
                 for (var y = 0; y < texture.Height; y++)
                     colors2D[x, y] = colors[x + y * texture.Width];
-            
+
             return colors2D;
         }
 
