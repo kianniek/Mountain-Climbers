@@ -40,8 +40,7 @@ namespace BaseProject.GameStates
             {"Lava", Color.Red},
             {"Platform", Color.Purple},
             {"Start", Color.Aqua},
-            {"End", Color.Yellow},
-            {"checkPoint", Color.Beige}
+            {"End", Color.Yellow}
         };
 
         // All color codes that represent level tiles
@@ -125,8 +124,6 @@ namespace BaseProject.GameStates
 
             if (color == colorCodes["Lava"])
                 LevelObjects.Add(new Lava(this, (int)objPos.X, (int)objPos.Y));
-            if (color == colorCodes["checkPoint"])
-                LevelObjects.Add(new Checkpoint(new Vector2((int)objPos.X, (int)objPos.Y)));
 
             if (color == colorCodes["Platform"])
                 LevelObjects.Add(new BreakeblePlatform(new Vector2((int)objPos.X, (int)objPos.Y)));
