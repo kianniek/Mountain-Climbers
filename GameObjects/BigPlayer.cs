@@ -35,14 +35,10 @@ namespace BaseProject
 
             if (stand && !left && !right)
             {
-                hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
+                hitClimbWall = hitRope || CollisonWith(Tags.ClimebleWall);
             }
-
-
-            if (CollisonWith(Tags.Lava))
-            {
-                position = LastSavedPos;
-            }
+            
+            CollisonWithLevelObjecs();
 
             if (holdingPlayer)
             {
@@ -136,29 +132,8 @@ namespace BaseProject
                             }
                         }
                     }
-
-                    if (tileType == typeof(Lava))
-                    {
-                        isDead = true;
-                    }
                 }
             }
-        }
-        public bool CollisonWithRope()
-        {
-            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
-            {
-                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
-                var tileType = obj.GetType();
-                if (tileType == typeof(Rope))
-                {
-                    if (CollidesWith(obj))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
         public bool CollisonWith(GameObject.Tags Tag)
         {
