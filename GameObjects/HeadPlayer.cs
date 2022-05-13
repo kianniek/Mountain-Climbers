@@ -87,18 +87,6 @@ namespace BaseProject
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-
-            //     if (inputHelper.IsKeyDown(Keys.Left))
-            //   {
-            //     left = true;
-            //   Mirror = true;
-            //}
-
-
-            // if (inputHelper.IsKeyDown(Keys.Right))
-            //{
-            //  right = true;
-            //Mirror = false;
         }
 
 

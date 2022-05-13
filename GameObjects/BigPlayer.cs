@@ -33,7 +33,7 @@ namespace BaseProject
         {
             zPressed = false;
 
-            if (stand && !left && !right)
+            if (stand)
             {
                 hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
             }
@@ -182,11 +182,6 @@ namespace BaseProject
             return false;
         }
 
-        public override void Knockback()
-        {
-            base.Knockback();
-        }
-
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
@@ -200,11 +195,11 @@ namespace BaseProject
             }
 
             //Player is climbing the wall by hitting a climbing wall or rope and pressing Z
-            if (hitClimbWall && zPressed)
+            if (hitClimbWall)
             {
                 Climb();
 
-                if (inputHelper.IsKeyDown(Keys.Q))
+                if (inputHelper.IsKeyDown(Keys.W))
                 {
                     velocity.Y = -100;
                 }
@@ -216,6 +211,7 @@ namespace BaseProject
             else
             {
                 NotClimbing();
+                
             }
 
             if (stand)
@@ -231,21 +227,6 @@ namespace BaseProject
                 }
             }
 
-            if (!hitClimbWall)
-            {
-                if (inputHelper.IsKeyDown(Keys.A))
-                {
-                    left = true;
-                    Mirror = true;
-                }
-                if (inputHelper.IsKeyDown(Keys.D))
-                {
-                    right = true;
-                    Mirror = false;
-                }
-            }
-
-
             if (inputHelper.KeyPressed(Keys.E))
             {
                 holdingPlayer = false;
@@ -254,6 +235,17 @@ namespace BaseProject
                 {
                     holdingPlayer = true;
                 }
+            }
+
+            if (inputHelper.IsKeyDown(Keys.A))
+            {
+                left = true;
+                Mirror = true;
+            }
+            if (inputHelper.IsKeyDown(Keys.D))
+            {
+                right = true;
+                Mirror = false;
             }
         }
         public BreakeblePlatform CollisionWithBreakingPlatform()

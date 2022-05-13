@@ -125,9 +125,6 @@ namespace BaseProject.GameStates
             KeepPlayersCenterd();
             UI_ElementUpdate();
 
-
-
-
             //Falling Rocks
             foreach (FallingRock rock in rocks.Children)
             {
@@ -162,12 +159,9 @@ namespace BaseProject.GameStates
             //Waterfalls
             foreach (Waterfall waterfall in waterfalls.Children)
             {
-                if (smallPlayer.hitWaterfall)
+                if (waterfall.CollidesWith(smallPlayer))
                 {
-                    if (waterfall.CollidesWith(smallPlayer))
-                    {
-                        smallPlayer.HitWaterfall();
-                    }
+                    smallPlayer.HitWaterfall();
                 }
 
                 if (waterfall.CollidesWith(bigPlayer))
