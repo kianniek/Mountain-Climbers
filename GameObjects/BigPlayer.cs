@@ -6,12 +6,15 @@ using System.Collections.Generic;
 using System.Text;
 
 //Dion & Thimo
-namespace BaseProject
+namespace BaseProject.GameObjects
 {
     class BigPlayer : HeadPlayer
     {
         LevelGenerator levelGen;
         SmallPlayer smallPlayer;
+        ThrowDirection throwDirection;
+
+        private float directionIncrease;
 
         public bool holdingPlayer;
         public BigPlayer(LevelGenerator levelGen, SmallPlayer smallPlayer) : base("player2")
@@ -19,6 +22,8 @@ namespace BaseProject
             origin = new Vector2(Center.X, Center.Y / 4);
             this.levelGen = levelGen;
             this.smallPlayer = smallPlayer;
+            throwDirection = new ThrowDirection(this, smallPlayer);
+            
         }
 
         public override void Update(GameTime gameTime)
@@ -81,8 +86,10 @@ namespace BaseProject
             }
             else
             {
-                smallPlayer.canMove = true;
+                //smallPlayer.canMove = true;
             }
+            directionIncrease = 3 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            throwDirection.Update(gameTime);
         }
         public override void hitWaterfall()
         {
@@ -117,6 +124,19 @@ namespace BaseProject
                 }
             }
 
+            if(holdingPlayer)
+            {
+                if (inputHelper.IsKeyDown(Keys.O))
+                {
+                    throwDirection.DecreaseAngle(directionIncrease);
+                }
+                if (inputHelper.IsKeyDown(Keys.P))
+                {
+                    throwDirection.IncreaseAngle(directionIncrease);
+                }
+
+            }
+
 
             if (stand)
             {
@@ -130,7 +150,7 @@ namespace BaseProject
         public void grabPlayer()
         {
             smallPlayer.pickedUp(new Vector2(position.X, position.Y - 80));
-            if (smallPlayer.beingHeld)
+            /*if (smallPlayer.beingHeld)
             {
                 if (left)
                 {
@@ -142,7 +162,13 @@ namespace BaseProject
                     smallPlayer.right = true;
                     //smallPlayer.effective = SpriteEffects.None;
                 }
-            }
+            }*/
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            base.Draw(gameTime, spriteBatch);
+            throwDirection.Draw(gameTime, spriteBatch);
         }
     }
 }

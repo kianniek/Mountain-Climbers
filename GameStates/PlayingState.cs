@@ -32,8 +32,9 @@ namespace BaseProject.GameStates
             livesBig = new GameObjectList();
             noLives = new GameObjectList();
             waterfalls = new GameObjectList();
-            smallPlayer = new SmallPlayer(levelGen);
             bigPlayer = new BigPlayer(levelGen, smallPlayer);
+            smallPlayer = new SmallPlayer(levelGen);
+           
 
             rocks = new GameObjectList();
 

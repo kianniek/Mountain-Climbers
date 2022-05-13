@@ -1,5 +1,6 @@
 ﻿using System;
 using BaseProject;
+using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -9,6 +10,7 @@ class SmallPlayer : HeadPlayer
 {
     LevelGenerator levelGen;
     public bool canMove, beingHeld;
+    
     public SmallPlayer(LevelGenerator levelGen) : base("Player")
     {
         origin = new Vector2(Center.X, Center.Y / 2);
@@ -17,17 +19,19 @@ class SmallPlayer : HeadPlayer
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        if (inputHelper.IsKeyDown(Keys.Left))
+        if (!beingHeld)
         {
-            left = true;
-            Mirror = true;
+            if (inputHelper.IsKeyDown(Keys.Left))
+            {
+                left = true;
+                Mirror = true;
+            }
+            if (inputHelper.IsKeyDown(Keys.Right))
+            {
+                right = true;
+                Mirror = false;
+            }
         }
-        if (inputHelper.IsKeyDown(Keys.Right))
-        {
-            right = true;
-            Mirror = false;
-        }
-
         if (stand)
         {
             if (inputHelper.KeyPressed(Keys.Up))
@@ -41,6 +45,17 @@ class SmallPlayer : HeadPlayer
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        if(beingHeld)
+        {
+         /* if(bigPlayer.left)
+            {
+                left = true;
+            }
+          else if(bigPlayer.right)
+            {
+                right= true;
+            }*/
+        }
 
         for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
         {
