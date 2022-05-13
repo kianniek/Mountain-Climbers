@@ -7,9 +7,10 @@ namespace BaseProject.GameObjects
 {
     public class Checkpoint : SpriteGameObject
     {
-        public Checkpoint() : base("CP")
+        public Checkpoint(Vector2 pos) : base("CP")
         {
-            position = new Vector2(800, 100);
+            position = pos;
+            origin = new Vector2(Center.X,Center.Y + Center.Y/2);
         }
 
     }

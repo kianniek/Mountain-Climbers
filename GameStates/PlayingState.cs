@@ -42,7 +42,6 @@ namespace BaseProject.GameStates
             wall = new ButtonWall(new Vector2(1000, 1010), new Vector2(1000, 950));
             button = new Button(smallPlayer, bigPlayer, wall);
 
-            cp = new Checkpoint();
 
             this.cam = camera;
 
@@ -66,7 +65,6 @@ namespace BaseProject.GameStates
             this.Add(smallPlayer);
             this.Add(button);
             this.Add(wall);
-            this.Add(cp);
             this.Add(rocks);
             this.Add(climbWall);
 
