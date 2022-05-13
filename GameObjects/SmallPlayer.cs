@@ -56,6 +56,8 @@ public class SmallPlayer : HeadPlayer
                 if (tile == null)
                     continue;
 
+                var tileType = tile.GetType();
+
                 if (this.Position.X + this.Width / 2 > tile.Position.X &&
                     this.Position.X < tile.Position.X + tile.Width / 2 &&
                     this.Position.Y + this.Height > tile.Position.Y &&
@@ -115,6 +117,31 @@ public class SmallPlayer : HeadPlayer
         }
     }
 
+
+    public void CollisonWithLevelObjecs()
+    {
+        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+        {
+            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+            var tileType = obj.GetType();
+
+            if (tileType == typeof(Rope))
+            {
+                if (CollidesWith(obj))
+                {
+                    hitRope = true;
+                }
+                else { hitRope = false; }
+            }
+            if (tileType == typeof(Lava))
+            {
+                if (CollidesWith(obj))
+                {
+                    isDead = true;
+                }
+            }
+        }
+    }
     public bool CollisonWith(GameObject.Tags Tag)
     {
         string id = Tag.ToString();

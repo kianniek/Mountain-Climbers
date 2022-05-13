@@ -125,6 +125,9 @@ namespace BaseProject.GameStates
             KeepPlayersCenterd();
             UI_ElementUpdate();
 
+
+
+
             //Falling Rocks
             foreach (FallingRock rock in rocks.Children)
             {
@@ -174,7 +177,6 @@ namespace BaseProject.GameStates
             }
 
 
-            
             CheckGameOver();
         }
         private void CheckGameOver()

@@ -8,7 +8,6 @@ namespace BaseProject.GameObjects
     public class BreakeblePlatform : Ground
     {
         public bool isBreaking;
-        public bool broken;
         int breakingStage = 0;
         int preFrameSec; //store second cound of previous frame
         string[] frames =
@@ -21,11 +20,11 @@ namespace BaseProject.GameObjects
             "BreakPlatformAnim/CrumbelingBlockAnim6",
             "BreakPlatformAnim/CrumbelingBlockAnim7"
         };
-        public BreakeblePlatform(Vector2 pos) : base("BreakPlatformAnim/CrumbelingBlockAnim1")
+        public BreakeblePlatform() : base("BreakPlatformAnim/CrumbelingBlockAnim1")
         {
-            position = pos;
             origin = Center;
-            broken = false;
+            id = Tags.BreakeblePlatform.ToString();
+
         }
 
         public override void Update(GameTime gameTime)
@@ -35,7 +34,7 @@ namespace BaseProject.GameObjects
             if (breakingStage == frames.Length -1)
             {
                 isBreaking = false;
-                broken = true;
+                id = "";
             }
 
             if (breakingStage == frames.Length - 1)
@@ -43,16 +42,16 @@ namespace BaseProject.GameObjects
                 if (milliSecNow % 100 == 0)
                 {
                     breakingStage = 0;
-                    broken = false;
+                    id = Tags.BreakeblePlatform.ToString();
                 }
             }
 
             if (isBreaking)
             {
+                
                 if (milliSecNow != preFrameSec && milliSecNow % 10 == 0)
                 {
                     breakingStage++;
-                    Console.Write(breakingStage);
                 }
             }
 

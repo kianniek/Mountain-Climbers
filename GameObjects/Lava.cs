@@ -26,7 +26,6 @@ namespace BaseProject.GameObjects
         }
         void CheckIfSurfice()
         {
-            Console.WriteLine(level.TileOnLocation(x, y - 1));
                 if (level.TileOnLocation(x, y - 1))
                 {
                     if (!changeSprite)
