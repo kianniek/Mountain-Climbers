@@ -103,7 +103,6 @@ namespace BaseProject.GameStates
             Vector2 sharedPlayerPos = (smallPlayer.Position + bigPlayer.Position)/2;
             int offsetFromCenter = 100;
             Vector2 moveAmount = Vector2.Zero;
-            Console.WriteLine(sharedPlayerPos.X - cam.Pos.X);
             if (Game1.Screen.X + offsetFromCenter < sharedPlayerPos.X + cam.Pos.X)
             {
                 moveAmount = Vector2.Lerp(moveAmount, Vector2.UnitX, 0.5f);

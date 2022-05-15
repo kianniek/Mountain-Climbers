@@ -139,6 +139,10 @@ namespace BaseProject.GameObjects
                 {
                     throwDirection.IncreaseAngle(directionIncrease);
                 }
+                if (inputHelper.IsKeyDown(Keys.X))
+                {
+                    throwDirection.ThrowPlayer();
+                }
 
             }
 

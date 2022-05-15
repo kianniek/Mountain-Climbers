@@ -13,6 +13,7 @@ public class SmallPlayer : HeadPlayer
     public bool canMove, beingHeld;
     PlayingState state;
 
+
     public SmallPlayer(LevelGenerator levelGen, PlayingState playingState) : base("Player")
     {
         origin = new Vector2(Center.X, Center.Y / 2);
@@ -22,8 +23,11 @@ public class SmallPlayer : HeadPlayer
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        velocity.X = 0;
-        if (!beingHeld)
+        if (stand)
+        {
+            
+        }
+        if (!beingHeld && stand)
         {
             if (inputHelper.IsKeyDown(Keys.Left))
             {
@@ -57,8 +61,6 @@ public class SmallPlayer : HeadPlayer
         base.Update(gameTime);
         if (beingHeld)
         {
-            Console.WriteLine(state.bigPlayer.left);
-            //Console.WriteLine(state.bigPlayer.right);
             if (state.bigPlayer.left)
             {
                 left = true;
@@ -133,5 +135,12 @@ public class SmallPlayer : HeadPlayer
         beingHeld = true;
 
         //stand = false;
+    }
+
+    public void SetVelocity(Vector2 velocity)
+    {
+        int throwPower = 500;
+        this.velocity = velocity * throwPower;
+        
     }
 }
