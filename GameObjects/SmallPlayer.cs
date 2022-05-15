@@ -4,32 +4,38 @@ using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using BaseProject.GameStates;
 
 //Dion
-class SmallPlayer : HeadPlayer
+public class SmallPlayer : HeadPlayer
 {
     LevelGenerator levelGen;
     public bool canMove, beingHeld;
-    
-    public SmallPlayer(LevelGenerator levelGen) : base("Player")
+    PlayingState state;
+
+    public SmallPlayer(LevelGenerator levelGen, PlayingState playingState) : base("Player")
     {
         origin = new Vector2(Center.X, Center.Y / 2);
         this.levelGen = levelGen;
+        state = playingState;
     }
 
     public override void HandleInput(InputHelper inputHelper)
     {
+        velocity.X = 0;
         if (!beingHeld)
         {
             if (inputHelper.IsKeyDown(Keys.Left))
             {
                 left = true;
                 Mirror = true;
+                velocity.X = -100;
             }
             if (inputHelper.IsKeyDown(Keys.Right))
             {
                 right = true;
                 Mirror = false;
+                velocity.X = 100;
             }
         }
         if (stand)
@@ -40,21 +46,30 @@ class SmallPlayer : HeadPlayer
                 jump = true;
             }
         }
+        if(!state.bigPlayer.holdingPlayer)
+        {
+            beingHeld = false;
+        }
     }
 
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        if(beingHeld)
+        if (beingHeld)
         {
-         /* if(bigPlayer.left)
+            Console.WriteLine(state.bigPlayer.left);
+            //Console.WriteLine(state.bigPlayer.right);
+            if (state.bigPlayer.left)
             {
                 left = true;
+                this.Mirror = true;
+               
             }
-          else if(bigPlayer.right)
+            else if (state.bigPlayer.right)
             {
-                right= true;
-            }*/
+                right = true;
+                this.Mirror = false;
+            }
         }
 
         for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
@@ -102,6 +117,7 @@ class SmallPlayer : HeadPlayer
                 }
             }
         }
+        
     }
 
     public override void hitWaterfall()

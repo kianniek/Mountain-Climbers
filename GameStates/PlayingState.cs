@@ -17,7 +17,7 @@ namespace BaseProject.GameStates
         GameObjectList rocks;
         SmallPlayer smallPlayer;
         LevelGenerator levelGen;
-        BigPlayer bigPlayer;
+        public BigPlayer bigPlayer;
         Button button;
 
         Camera cam;
@@ -31,10 +31,10 @@ namespace BaseProject.GameStates
             livesSmall = new GameObjectList();
             livesBig = new GameObjectList();
             noLives = new GameObjectList();
-            waterfalls = new GameObjectList();
+            waterfalls = new GameObjectList();           
+            smallPlayer = new SmallPlayer(levelGen, this);
             bigPlayer = new BigPlayer(levelGen, smallPlayer);
-            smallPlayer = new SmallPlayer(levelGen);
-           
+
 
             rocks = new GameObjectList();
 

@@ -8,11 +8,11 @@ using System.Text;
 //Dion & Thimo
 namespace BaseProject.GameObjects
 {
-    class BigPlayer : HeadPlayer
+    public class BigPlayer : HeadPlayer
     {
-        LevelGenerator levelGen;
-        SmallPlayer smallPlayer;
-        ThrowDirection throwDirection;
+        readonly LevelGenerator levelGen;
+        readonly SmallPlayer smallPlayer;
+        readonly ThrowDirection throwDirection;
 
         private float directionIncrease;
 
@@ -82,11 +82,11 @@ namespace BaseProject.GameObjects
 
             if (holdingPlayer)
             {
-                grabPlayer();
+                GrabPlayer();
             }
             else
             {
-                //smallPlayer.canMove = true;
+                smallPlayer.canMove = true;
             }
             directionIncrease = 3 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             throwDirection.Update(gameTime);
@@ -101,17 +101,22 @@ namespace BaseProject.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
+            velocity.X = 0;
             if (inputHelper.IsKeyDown(Keys.A))
             {
                 left = true;
+                right = false;
                 //effective = SpriteEffects.FlipHorizontally;
                 Mirror = true;
+                velocity.X = -100;
             }
             if (inputHelper.IsKeyDown(Keys.D))
             {
                 right = true;
+                left = false;
                 //effective = SpriteEffects.None;
                 Mirror = false;
+                velocity.X = 100;
             }
 
             if (inputHelper.KeyPressed(Keys.E))
@@ -120,7 +125,7 @@ namespace BaseProject.GameObjects
                 //smallPlayer.stand = false;
                 if (smallPlayer.CollidesWith(this))
                 {
-                    holdingPlayer = true;
+                    holdingPlayer = !holdingPlayer;
                 }
             }
 
@@ -147,7 +152,7 @@ namespace BaseProject.GameObjects
                 }
             }
         }
-        public void grabPlayer()
+        public void GrabPlayer()
         {
             smallPlayer.pickedUp(new Vector2(position.X, position.Y - 80));
             /*if (smallPlayer.beingHeld)
@@ -155,12 +160,12 @@ namespace BaseProject.GameObjects
                 if (left)
                 {
                     smallPlayer.left = true;
-                    //smallPlayer.effective = SpriteEffects.FlipHorizontally;
+                    smallPlayer.Mirror = true;
                 }
                 if (right)
                 {
                     smallPlayer.right = true;
-                    //smallPlayer.effective = SpriteEffects.None;
+                    smallPlayer.Mirror = false;
                 }
             }*/
         }

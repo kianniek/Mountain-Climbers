@@ -7,7 +7,7 @@ using System.Text;
 namespace BaseProject
 {
     //Dion
-       class HeadPlayer : SpriteGameObject
+       public class HeadPlayer : SpriteGameObject
        {
         public float gravity;
         public bool left, right, jump, stand;
@@ -20,7 +20,7 @@ namespace BaseProject
 
         public override void Update(GameTime gameTime)
         {
-            velocity.X = 0;
+            //velocity.X = 0;
             gravity = 10f;
 
             if (jump)
@@ -30,16 +30,18 @@ namespace BaseProject
                 velocity.Y = -460;
             }
 
-            if (left)
+            /*if (left)
             {
-                velocity.X = -175;
-                left = false;
+                velocity.X = -100;
+                left = true;
+                right = false;
             }
             if (right)
             {
-                velocity.X = 175;
-                right = false;
-            }
+                velocity.X = 100;
+                right = ;
+                left = false;
+            }*/
 
             base.Update(gameTime);
             velocity.Y += gravity;
