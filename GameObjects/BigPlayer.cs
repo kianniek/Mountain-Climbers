@@ -19,7 +19,7 @@ namespace BaseProject
         public int livesPlayer;
 
         public bool holdingPlayer;
-        public BigPlayer(Tile[,] worldTiles, SmallPlayer smallPlayer) : base("player2", worldTiles)
+        public BigPlayer(SmallPlayer smallPlayer) : base("player2")
         {
             origin = new Vector2(Center.X, Center.Y / 4);
             this.smallPlayer = smallPlayer;
@@ -33,12 +33,12 @@ namespace BaseProject
         {
             zPressed = false;
 
-            hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
-
+            /*hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
+            
             if (CollisonWith(Tags.Lava))
             {
                 position = LastSavedPos;
-            }
+            }*/
 
             if (holdingPlayer)
             {
@@ -59,11 +59,11 @@ namespace BaseProject
             }
 
             base.Update(gameTime);
-            BreakeblePlatform breakebleplatform = CollisionWithBreakingPlatform();
+            /*BreakeblePlatform breakebleplatform = CollisionWithBreakingPlatform();
             if (breakebleplatform != null)
             {
                 breakebleplatform.isBreaking = true;
-            }
+            }*/
 
             CollisonWithGround();
         }
@@ -87,18 +87,21 @@ namespace BaseProject
         }
         public void CollisonWithGround()
         {
-            for (var x = 0; x < WorldTiles.GetLength(0); x++)
+            
+        foreach (var chunk in level.ActiveChunks())
+        {
+            for (var y = 0; y < Chunk.Height; y++)
             {
-                for (var y = 0; y < WorldTiles.GetLength(1); y++)
+                for (var x = 0; x < Chunk.Height; x++)
                 {
-                    var tile = WorldTiles[x, y];
+                    var tile = chunk.TilesInChunk[x, y];
                     if (tile == null)
                         continue;
 
-                    if (this.Position.X + this.Width / 2 > tile.Position.X &&
-                        this.Position.X < tile.Position.X + tile.Width / 2 &&
-                        this.Position.Y + this.Height > tile.Position.Y &&
-                        this.Position.Y < tile.Position.Y + tile.Height)
+                    if (Position.X + Width/2f >= tile.Position.X - tile.Width/2f && 
+                        Position.X - Width/2f <= tile.Position.X + tile.Width/2f && 
+                        Position.Y - Height <= tile.Position.Y + tile.Height/2f && 
+                        Position.Y >= tile.Position.Y - tile.Height/2f)
                     {
                         var mx = (this.Position.X - tile.Position.X);
                         var my = (this.Position.Y - tile.Position.Y);
@@ -114,7 +117,6 @@ namespace BaseProject
                             {
                                 this.position.X = tile.Position.X - this.Width / 2;
                                 this.velocity.X = 0;
-
                             }
                         }
                         else
@@ -127,7 +129,7 @@ namespace BaseProject
                             else if (my < 0 && this.velocity.Y > 0)
                             {
                                 this.velocity.Y = 0;
-                                this.position.Y = tile.Position.Y - this.Height;
+                                this.position.Y = tile.Position.Y - Height;
                                 this.stand = true;
                             }
                         }
@@ -135,7 +137,7 @@ namespace BaseProject
                 }
             }
         }
-        public bool CollisonWithRope()
+    }        public bool CollisonWithRope()
         {
             for (var x = 0; x < WorldTiles.GetLength(0); x++)
             {
@@ -155,6 +157,33 @@ namespace BaseProject
             }
             return false;
         }
+
+        public void TileCollision()
+        {
+            foreach (var chunk in level.ActiveChunks())
+            {
+                for (var y = 0; y < Chunk.Height; y++)
+                {
+                    for (var x = 0; x < Chunk.Height; x++)
+                    {
+                        var tile = chunk.TilesInChunk[x, y];
+                        if (tile == null)
+                            continue;
+
+                        if (Position.X + Width/2f >= tile.Position.X - tile.Width/2f && 
+                            Position.X - Width/2f <= tile.Position.X + tile.Width/2f && 
+                            Position.Y - Height <= tile.Position.Y + tile.Height/2f && 
+                            Position.Y >= tile.Position.Y - tile.Height/2f)
+                        {
+                        }
+                        
+                        
+                        
+                    }
+                }
+            }
+        }
+
         public bool CollisonWith(GameObject.Tags Tag)
         {
             string id = Tag.ToString();

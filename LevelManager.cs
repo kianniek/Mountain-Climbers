@@ -92,8 +92,8 @@ namespace BaseProject
             PreviousLevel()?.LoadLevel();
             Levels[currentLevelIndex]?.LoadLevel();
             NextLevel()?.LoadLevel();
-            bigPlayer.GoToNewLevel(CurrentLevel().Tiles, CurrentLevel().StartPosition);
-            smallPlayer.GoToNewLevel(CurrentLevel().Tiles, CurrentLevel().StartPosition);
+            bigPlayer.GoToNewLevel(CurrentLevel(), CurrentLevel().StartPosition);
+            smallPlayer.GoToNewLevel(CurrentLevel(), CurrentLevel().StartPosition);
         }
     }
 }

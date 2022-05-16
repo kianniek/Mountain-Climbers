@@ -31,8 +31,8 @@ namespace BaseProject.GameStates
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
             
-            smallPlayer = new SmallPlayer(new Tile[0,0]);
-            bigPlayer = new BigPlayer(new Tile[0,0], smallPlayer);
+            smallPlayer = new SmallPlayer();
+            bigPlayer = new BigPlayer(smallPlayer);
 
             waterfalls = new GameObjectList();
             climbWall = new GameObjectList();
@@ -114,7 +114,6 @@ namespace BaseProject.GameStates
             else
                 smallPlayer.noLeft = false;
 
-            Console.WriteLine(smallPlayer.noLeft);
             base.Update(gameTime);
             KeepPlayersCenterd();
             UI_ElementUpdate();
@@ -146,11 +145,11 @@ namespace BaseProject.GameStates
                 GameEnvironment.GameStateManager.SwitchTo("StartState");
             }
         }
-        public void DropDownRope(CuttebleRope cuttebleRope, int x, int y)
+        /*public void DropDownRope(CuttebleRope cuttebleRope, int x, int y)
         {
             if (!cuttebleRope.isOut)
             {
-                if (levelManager.CurrentLevel().Tiles[cuttebleRope.x - 1, cuttebleRope.y + 1] != null)
+                if (levelManager.CurrentLevel().ActiveTiles[cuttebleRope.x - 1, cuttebleRope.y + 1] != null)
                 {
                     for (int i = 0; i < 10; i++)
                     {
@@ -176,7 +175,7 @@ namespace BaseProject.GameStates
                     }
                 }
                 else
-                if (levelManager.CurrentLevel().Tiles[cuttebleRope.x + 1, cuttebleRope.y + 1] != null)
+                if (levelManager.CurrentLevel().ActiveTiles[cuttebleRope.x + 1, cuttebleRope.y + 1] != null)
                 {
 
                     for (int i = 0; i < 10; i++)
@@ -204,7 +203,7 @@ namespace BaseProject.GameStates
                 }
                 cuttebleRope.isOut = true;
             }
-        }
+        }*/
 
 
         public override void Reset()
@@ -227,26 +226,8 @@ namespace BaseProject.GameStates
             {
                 Console.WriteLine("alleen voor de grote spelers");
             }
-
-            //Player with Rope Collision test
-            for (int x = 0; x < levelManager.CurrentLevel().Tiles.GetLength(0); x++)
-            {
-                for (int y = 0; y < levelManager.CurrentLevel().Tiles.GetLength(1); y++)
-                {
-                    if (levelManager.CurrentLevel().Tiles[x, y] == null || !(levelManager.CurrentLevel().Tiles[x, y] is CuttebleRope))
-                        continue;
-
-                    if (smallPlayer.CollidesWith(levelManager.CurrentLevel().Tiles[x, y]) || bigPlayer.CollidesWith(levelManager.CurrentLevel().Tiles[x, y]))
-                    {
-                        if (inputHelper.KeyPressed(Keys.E))
-                        {
-                            //DropDownRope((CuttebleRope)levelManager.CurrentLevel().Tiles[x, y], x, y);
-                        }
-                    }
-                }
-            }
-
         }
+        
         void KeepPlayersCenterd()
         {
             Vector2 sharedPlayerPos = (smallPlayer.Position + bigPlayer.Position) / 2;
