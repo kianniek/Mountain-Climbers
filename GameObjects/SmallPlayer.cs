@@ -25,7 +25,7 @@ public class SmallPlayer : HeadPlayer
     {
         if (stand)
         {
-            
+          velocity.X = 0;
         }
         if (!beingHeld && stand)
         {
@@ -139,8 +139,6 @@ public class SmallPlayer : HeadPlayer
 
     public void SetVelocity(Vector2 velocity)
     {
-        int throwPower = 500;
-        this.velocity = velocity * throwPower;
-        
+        this.velocity = velocity;
     }
 }

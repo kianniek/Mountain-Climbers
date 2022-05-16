@@ -28,7 +28,6 @@ namespace BaseProject.GameObjects
 
         public override void Update(GameTime gameTime)
         {
-            //Console.WriteLine(velocity.Y);
             base.Update(gameTime);
 
             for (var x = 0; x < levelGen.tiles.GetLength(0); x++)
@@ -122,10 +121,12 @@ namespace BaseProject.GameObjects
             if (inputHelper.KeyPressed(Keys.E))
             {
                 holdingPlayer = false;
+                smallPlayer.stand = true;
                 //smallPlayer.stand = false;
                 if (smallPlayer.CollidesWith(this))
                 {
                     holdingPlayer = !holdingPlayer;
+                    smallPlayer.stand = false;
                 }
             }
 

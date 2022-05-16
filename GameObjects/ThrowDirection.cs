@@ -19,13 +19,14 @@ namespace BaseProject.GameObjects
             this.bigPlayer = bigPlayer;
             this.smallPlayer = smallPlayer;
 
-            cosVel = MathF.Cos(throwAngle);
-            sinVel = MathF.Sin(throwAngle);
+            
         }
 
         public override void Update(GameTime gameTime)
         {
-            Console.WriteLine(MathF.Sin(throwAngle));
+            cosVel = MathF.Cos(throwAngle);
+            sinVel = MathF.Sin(throwAngle);
+            Console.WriteLine(smallPlayer.stand);
             base.Update(gameTime);
             if (smallPlayer.beingHeld)
             {
@@ -37,8 +38,6 @@ namespace BaseProject.GameObjects
             {
                 visible = false;
             }
-            
-            //Console.WriteLine(Math.Cos(throwAngle));
             
             Angle = throwAngle;
         }
@@ -57,8 +56,10 @@ namespace BaseProject.GameObjects
         {
             smallPlayer.beingHeld = false;
             bigPlayer.holdingPlayer = false;
-            smallPlayer.SetVelocity(new Vector2(sinVel, -cosVel));
-            Console.WriteLine("werkt");
+            float throwVelX = cosVel * 500;
+            float throwVelY = sinVel * 500;
+            smallPlayer.SetVelocity(new Vector2(throwVelX, throwVelY));
+            
         }
     }
 
