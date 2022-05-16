@@ -121,7 +121,6 @@ namespace BaseProject.GameObjects
             if (inputHelper.KeyPressed(Keys.E))
             {
                 holdingPlayer = false;
-                smallPlayer.stand = true;
                 //smallPlayer.stand = false;
                 if (smallPlayer.CollidesWith(this))
                 {
