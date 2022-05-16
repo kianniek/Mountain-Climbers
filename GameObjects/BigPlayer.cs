@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+
+//Dion & Thimo
 namespace BaseProject
 {
     public class BigPlayer : HeadPlayer
@@ -17,7 +19,7 @@ namespace BaseProject
         public int livesPlayer;
 
         public bool holdingPlayer;
-        public BigPlayer(Tile[,] worldTiles, SmallPlayer smallPlayer) : base("player2", worldTiles)
+        public BigPlayer(SmallPlayer smallPlayer) : base("player2")
         {
             origin = new Vector2(Center.X, Center.Y / 4);
             this.smallPlayer = smallPlayer;
@@ -82,61 +84,69 @@ namespace BaseProject
                 }
             }
         }
+
         public void CollisonWithGround()
         {
-            for (var x = 0; x < WorldTiles.GetLength(0); x++)
+            foreach (var chunk in level.ActiveChunks())
             {
-                for (var y = 0; y < WorldTiles.GetLength(1); y++)
+                for (var y = 0; y < Chunk.Height; y++)
                 {
-                    var tile = WorldTiles[x, y];
-                    if (tile == null)
-                        continue;
-
-                    var tileType = tile.GetType();
-
-                    if (this.Position.X + this.Width / 2 > tile.Position.X &&
-                        this.Position.X < tile.Position.X + tile.Width / 2 &&
-                        this.Position.Y + this.Height > tile.Position.Y &&
-                        this.Position.Y < tile.Position.Y + tile.Height)
+                    for (var x = 0; x < Chunk.Height; x++)
                     {
-                        var mx = (this.Position.X - tile.Position.X);
-                        var my = (this.Position.Y - tile.Position.Y);
-                        if (Math.Abs(mx) > Math.Abs(my))
+                        var tile = chunk.TilesInChunk[x, y];
+                        if (tile == null)
+                            continue;
+
+                        var tileType = tile.GetType();
+
+                        if (this.Position.X + this.Width / 2 > tile.Position.X &&
+                            this.Position.X < tile.Position.X + tile.Width / 2 &&
+                            this.Position.Y + this.Height > tile.Position.Y &&
+                            this.Position.Y < tile.Position.Y + tile.Height)
                         {
-                            if (mx > 0)
+                            var mx = (this.Position.X - tile.Position.X);
+                            var my = (this.Position.Y - tile.Position.Y);
+                            if (Math.Abs(mx) > Math.Abs(my))
                             {
-                                this.velocity.X = 0;
-                                this.position.X = tile.Position.X + this.Width / 4;
+                                if (mx > 0)
+                                {
+                                    this.velocity.X = 0;
+                                    this.position.X = tile.Position.X + this.Width / 4;
+                                }
+
+                                if (mx < 0)
+                                {
+                                    this.position.X = tile.Position.X - this.Width / 2;
+                                    this.velocity.X = 0;
+                                }
                             }
-                            if (mx < 0)
+                            else
                             {
-                                this.position.X = tile.Position.X - this.Width / 2;
-                                this.velocity.X = 0;
+                                if (my > 0)
+                                {
+                                    this.velocity.Y = 0;
+                                    this.position.Y = tile.Position.Y + tile.Height;
+                                }
+
+                                if (my < 0)
+                                {
+                                    this.velocity.Y = 0;
+                                    this.position.Y = tile.Position.Y - this.Height;
+                                    this.stand = true;
+                                }
                             }
                         }
-                        else
-                        {
-                            if (my > 0)
-                            {
-                                this.velocity.Y = 0;
-                                this.position.Y = tile.Position.Y + tile.Height;
-                            }
-                            if (my < 0)
-                            {
-                                this.velocity.Y = 0;
-                                this.position.Y = tile.Position.Y - this.Height;
-                                this.stand = true;
-                            }
-                        }
-                    }
 
-                    if (tileType == typeof(Lava))
-                    {
-                        isDead = true;
+                        if (tileType == typeof(Lava))
+                        {
+                            isDead = true;
+                        }
                     }
                 }
             }
         }
+
+
         public bool CollisonWithRope()
         {
             for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
@@ -203,7 +213,6 @@ namespace BaseProject
             else
             {
                 NotClimbing();
-
             }
 
             if (stand)

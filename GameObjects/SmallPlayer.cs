@@ -14,13 +14,14 @@ namespace BaseProject
         public Lives[] noLives;
         public int livesPlayer;
 
-        public SmallPlayer(Tile[,] worldTiles) : base("Player", worldTiles)
-        {
-            origin = new Vector2(Center.X, Center.Y - Center.Y / 2);
-            livesPlayer = 2;
-            noLives = new Lives[livesPlayer * 2];
-            livesSmall = new Lives[livesPlayer];
-        }
+    public SmallPlayer() : base("Player")
+    {
+        origin = new Vector2(Center.X, Center.Y - Center.Y / 2);
+
+        livesPlayer = 2;
+        noLives = new Lives[livesPlayer * 2];
+        livesSmall = new Lives[livesPlayer];
+    }
 
         public override void Update(GameTime gameTime)
         {

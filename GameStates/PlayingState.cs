@@ -30,9 +30,9 @@ namespace BaseProject.GameStates
         {
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
-
-            smallPlayer = new SmallPlayer(new Tile[0, 0]);
-            bigPlayer = new BigPlayer(new Tile[0, 0], smallPlayer);
+            
+            smallPlayer = new SmallPlayer();
+            bigPlayer = new BigPlayer(smallPlayer);
 
             waterfalls = new GameObjectList();
             climbWall = new GameObjectList();

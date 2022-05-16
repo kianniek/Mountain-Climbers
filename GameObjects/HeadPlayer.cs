@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using BaseProject.GameStates;
 
 namespace BaseProject
 {
@@ -28,14 +29,14 @@ namespace BaseProject
         public LevelManager levelManager;
 
         protected Tile[,] WorldTiles { get; private set; }
-
-        public HeadPlayer(string assetName, Tile[,] worldTiles) : base(assetName)
+        protected Level level;
+        
+        public HeadPlayer(string assetName) : base(assetName)
         {
             position.Y = GameEnvironment.Screen.Y / 1.4f;
             position.X = 10;
             noLeft = false;
             noRight = false;
-            this.WorldTiles = worldTiles;
         }
 
         public override void Update(GameTime gameTime)
@@ -110,11 +111,12 @@ namespace BaseProject
             velocity.X *= -1;
         }
         
-        public void GoToNewLevel(Tile[,] tiles, Vector2 pos)
+        public void GoToNewLevel(Level lvl, Vector2 pos)
         {
-            WorldTiles = tiles;
+            level = lvl;
             position = pos;
             velocity = Vector2.Zero;
+            
         }
     }
 }
