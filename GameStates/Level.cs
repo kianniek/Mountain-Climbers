@@ -58,6 +58,7 @@ namespace BaseProject.GameStates
             this.levelSprite = GameEnvironment.AssetManager.Content.Load<Texture2D>(levelSprite);
             this.bigPlayer = bigPlayer;
             this.smallPlayer = smallPlayer;
+            Add(LevelObjects);
         }
         
         private async void GenerateLevel()
@@ -125,8 +126,6 @@ namespace BaseProject.GameStates
             }
             
             Chunks[chunkPos.Item1, chunkPos.Item2] = new Chunk(this, tiles, chunkPos, new Vector2(chunkWorldX, chunkWorldY));
-            }
-            Add(LevelObjects);
         }
 
         private Chunk[,] ChunksInLevel()

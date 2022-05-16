@@ -35,14 +35,14 @@ namespace BaseProject
 
             if (stand)
             {
-                hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
+                hitClimbWall = CollisonWithRope();// || CollisonWith(Tags.ClimebleWall);
             }
 
 
-            if (CollisonWith(Tags.Lava))
+            /*if (CollisonWith(Tags.Lava))
             {
                 position = LastSavedPos;
-            }
+            }*/
 
             if (holdingPlayer)
             {
