@@ -6,8 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-
-//Dion & Thimo
 namespace BaseProject
 {
     public class BigPlayer : HeadPlayer
@@ -63,11 +61,6 @@ namespace BaseProject
             }
 
             base.Update(gameTime);
-            BreakeblePlatform breakebleplatform = CollisionWithBreakingPlatform();
-            if (breakebleplatform != null)
-            {
-                breakebleplatform.isBreaking = true;
-            }
 
             CollisonWithGround();
         }
@@ -181,7 +174,6 @@ namespace BaseProject
             }
             return false;
         }
-
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
@@ -211,7 +203,7 @@ namespace BaseProject
             else
             {
                 NotClimbing();
-                
+
             }
 
             if (stand)
@@ -247,26 +239,6 @@ namespace BaseProject
                 right = true;
                 Mirror = false;
             }
-        }
-        public BreakeblePlatform CollisionWithBreakingPlatform()
-        {
-            for (var x = 0; x < WorldTiles.GetLength(0); x++)
-            {
-                for (var y = 0; y < WorldTiles.GetLength(1); y++)
-                {
-                    var tile = WorldTiles[x, y];
-
-                    if (tile == null || tile.Id != Tags.BreakeblePlatform.ToString())
-                        continue;
-
-                    if (this.Position.X + this.Width / 2f > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2f
-                        && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
-                    {
-                        return null;//(BreakeblePlatform)tile;
-                    }
-                }
-            }
-            return null;
         }
     }
 }

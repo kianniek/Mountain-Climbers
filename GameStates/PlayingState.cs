@@ -185,14 +185,16 @@ namespace BaseProject.GameStates
             }
             if (smallPlayer.isDead)
             {
+                //TODO : make this work with checkpoints
                 smallPlayer.Position = bigPlayer.Position;
                 smallPlayer.canMove = true;
-                //smallPlayer.Visible = false;
+                smallPlayer.Visible = false;
             }
             if (bigPlayer.isDead)
             {
+                //TODO : make this work with checkpoints
                 bigPlayer.Position = smallPlayer.Position;
-                //bigPlayer.Visible = false;
+                bigPlayer.Visible = false;
             }
             if (smallPlayer.isDead && bigPlayer.isDead)
             {

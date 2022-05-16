@@ -9,12 +9,12 @@ namespace BaseProject
     public class HeadPlayer : SpriteGameObject
     {
         public bool isDead;
-        public float gravity;
+        public float gravity = 20f;
         public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight, climb, hitRock, hitWaterfall, hitRope;
 
 
 
-        public static float JumpForce = 460;
+        public static float JumpForce = 500;
         public float horizontalSpeed = 175;
         public static float walkingSpeed = 175;
         public static float sprintingSpeed = 200;
@@ -33,7 +33,6 @@ namespace BaseProject
         {
             position.Y = GameEnvironment.Screen.Y / 1.4f;
             position.X = 10;
-            gravity = 10f;
             noLeft = false;
             noRight = false;
             this.WorldTiles = worldTiles;
@@ -95,7 +94,6 @@ namespace BaseProject
             left = false;
             right = false;
             stand = true;
-            gravity = 0;
             velocity.Y = 0;
             velocity.X = 0;
             climb = true;
@@ -103,7 +101,6 @@ namespace BaseProject
 
         public virtual void NotClimbing()
         {
-            gravity = 10f;
             climb = false;
         }
 

@@ -4,232 +4,233 @@ using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
-public class SmallPlayer : HeadPlayer
+namespace BaseProject
 {
-    public bool canMove, beingHeld, hitLeftWall, hitRightWall;
-
-    public Lives[] livesSmall;
-    public Lives[] noLives;
-    public int livesPlayer;
-
-    public SmallPlayer(Tile[,] worldTiles) : base("Player", worldTiles)
+    public class SmallPlayer : HeadPlayer
     {
-        origin = new Vector2(Center.X, Center.Y - Center.Y / 2);
+        public bool canMove, beingHeld, hitLeftWall, hitRightWall;
 
-        livesPlayer = 2;
-        noLives = new Lives[livesPlayer * 2];
-        livesSmall = new Lives[livesPlayer];
-    }
+        public Lives[] livesSmall;
+        public Lives[] noLives;
+        public int livesPlayer;
 
-    public override void Update(GameTime gameTime)
-    {
-        mPressed = false;
-
-        if (stand)
+        public SmallPlayer(Tile[,] worldTiles) : base("Player", worldTiles)
         {
-            hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
+            origin = new Vector2(Center.X, Center.Y - Center.Y / 2);
+            livesPlayer = 2;
+            noLives = new Lives[livesPlayer * 2];
+            livesSmall = new Lives[livesPlayer];
         }
 
-        CollisonWithLevelObjecs();
-
-        base.Update(gameTime);
-
-        CollisonWithGround();
-    }
-    public void CollisonWithGround()
-    {
-        hitLeftWall = false;
-        hitRightWall = false;
-        for (var x = 0; x < WorldTiles.GetLength(0); x++)
+        public override void Update(GameTime gameTime)
         {
-            for (var y = 0; y < WorldTiles.GetLength(1); y++)
+            mPressed = false;
+
+            if (stand)
             {
-                var tile = WorldTiles[x, y];
-                if (tile == null)
-                    continue;
+                hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
+            }
 
-                var tileType = tile.GetType();
+            CollisonWithLevelObjecs();
 
-                if (this.Position.X + this.Width / 2 > tile.Position.X &&
-                    this.Position.X < tile.Position.X + tile.Width / 2 &&
-                    this.Position.Y + this.Height > tile.Position.Y &&
-                    this.Position.Y < tile.Position.Y + tile.Height)
+            base.Update(gameTime);
+
+            CollisonWithGround();
+        }
+        public void CollisonWithGround()
+        {
+            hitLeftWall = false;
+            hitRightWall = false;
+            for (var x = 0; x < WorldTiles.GetLength(0); x++)
+            {
+                for (var y = 0; y < WorldTiles.GetLength(1); y++)
                 {
-                    var mx = (this.Position.X - tile.Position.X);
-                    var my = (this.Position.Y - tile.Position.Y);
-                    if (Math.Abs(mx) > Math.Abs(my))
+                    var tile = WorldTiles[x, y];
+                    if (tile == null)
+                        continue;
+
+                    var tileType = tile.GetType();
+
+                    if (this.Position.X + this.Width / 2 > tile.Position.X &&
+                        this.Position.X < tile.Position.X + tile.Width / 2 &&
+                        this.Position.Y + this.Height > tile.Position.Y &&
+                        this.Position.Y < tile.Position.Y + tile.Height)
                     {
+                        var mx = (this.Position.X - tile.Position.X);
+                        var my = (this.Position.Y - tile.Position.Y);
                         if (Math.Abs(mx) > Math.Abs(my))
                         {
-                            if (mx > 0)
+                            if (Math.Abs(mx) > Math.Abs(my))
                             {
-                                this.velocity.X = 0;
-                                this.position.X = tile.Position.X + this.Width / 4;
+                                if (mx > 0)
+                                {
+                                    this.velocity.X = 0;
+                                    this.position.X = tile.Position.X + this.Width / 4;
+                                }
+                                if (mx < 0)
+                                {
+                                    this.position.X = tile.Position.X - this.Width / 2;
+                                    this.velocity.X = 0;
+                                }
                             }
-                            if (mx < 0)
+
+                            if (beingHeld)
                             {
-                                this.position.X = tile.Position.X - this.Width / 2;
-                                this.velocity.X = 0;
+                                if (mx > 0)
+                                {
+                                    hitLeftWall = true;
+                                }
+                                else if (mx < 0)
+                                {
+                                    hitRightWall = true;
+                                }
                             }
                         }
 
-                        if (beingHeld)
+                        else if (!beingHeld)
                         {
-                            if (mx > 0)
+                            if (my > 0)
                             {
-                                hitLeftWall = true;
+                                this.velocity.Y = 0;
+                                this.position.Y = tile.Position.Y + tile.Height;
                             }
-                            else if (mx < 0)
+                            if (my < 0)
                             {
-                                hitRightWall = true;
+                                this.velocity.Y = 0;
+                                this.position.Y = tile.Position.Y - this.Height;
+                                this.stand = true;
                             }
+
                         }
+
                     }
 
-                    else if (!beingHeld)
+                }
+
+            }
+        }
+        public bool CollisonWithRope()
+        {
+            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            {
+                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+                var tileType = obj.GetType();
+                if (tileType == typeof(Rope))
+                {
+                    if (CollidesWith(obj))
                     {
-                        if (my > 0)
-                        {
-                            this.velocity.Y = 0;
-                            this.position.Y = tile.Position.Y + tile.Height;
-                        }
-                        if (my < 0)
-                        {
-                            this.velocity.Y = 0;
-                            this.position.Y = tile.Position.Y - this.Height;
-                            this.stand = true;
-                        }
-
+                        return true;
                     }
-
                 }
-
             }
-
+            return false;
         }
-    }
-    public bool CollisonWithRope()
-    {
-        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+        public void CollisonWithLevelObjecs()
         {
-            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
-            var tileType = obj.GetType();
-            if (tileType == typeof(Rope))
+            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
             {
-                if (CollidesWith(obj))
+                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+                var tileType = obj.GetType();
+
+                if (tileType == typeof(Rope))
                 {
-                    return true;
+                    if (CollidesWith(obj))
+                    {
+                        hitRope = true;
+                    }
+                    else { hitRope = false; }
                 }
-            }
-        }
-        return false;
-    }
-    public void CollisonWithLevelObjecs()
-    {
-        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
-        {
-            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
-            var tileType = obj.GetType();
-
-            if (tileType == typeof(Rope))
-            {
-                if (CollidesWith(obj))
+                if (tileType == typeof(Lava))
                 {
-                    hitRope = true;
+                    if (CollidesWith(obj))
+                    {
+                        isDead = true;
+                    }
                 }
-                else { hitRope = false; }
             }
-            if (tileType == typeof(Lava))
+        }
+        public bool CollisonWith(GameObject.Tags Tag)
+        {
+            string id = Tag.ToString();
+            for (var x = 0; x < WorldTiles.GetLength(0); x++)
             {
-                if (CollidesWith(obj))
+                for (var y = 0; y < WorldTiles.GetLength(1); y++)
                 {
-                    isDead = true;
+                    var tile = WorldTiles[x, y];
+
+                    if (tile == null || tile.Id != id)
+                        continue;
+
+                    if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
+                        && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
+                    {
+                        return true;
+                    }
                 }
             }
+            return false;
         }
-    }
-    public bool CollisonWith(GameObject.Tags Tag)
-    {
-        string id = Tag.ToString();
-        for (var x = 0; x < WorldTiles.GetLength(0); x++)
+        public override void HandleInput(InputHelper inputHelper)
         {
-            for (var y = 0; y < WorldTiles.GetLength(1); y++)
+            base.HandleInput(inputHelper);
+            if (inputHelper.IsKeyDown(Keys.RightShift))
             {
-                var tile = WorldTiles[x, y];
+                horizontalSpeed = sprintingSpeed;
+            }
+            else
+            {
+                horizontalSpeed = walkingSpeed;
+            }
 
-                if (tile == null || tile.Id != id)
-                    continue;
+            //Small Player is climbing a wall
+            if (hitClimbWall)
+            {
+                Climb();
 
-                if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
-                    && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
+                if (inputHelper.IsKeyDown(Keys.Up))
                 {
-                    return true;
+                    velocity.Y = -100;
+                }
+                if (inputHelper.IsKeyDown(Keys.Down))
+                {
+                    velocity.Y = 100;
                 }
             }
-        }
-        return false;
-    }
-    public override void HandleInput(InputHelper inputHelper)
-    {
-        base.HandleInput(inputHelper);
-        if (inputHelper.IsKeyDown(Keys.RightShift))
-        {
-            horizontalSpeed = sprintingSpeed;
-        }
-        else
-        {
-            horizontalSpeed = walkingSpeed;
-        }
-
-        //Small Player is climbing a wall
-        if (hitClimbWall)
-        {
-            Climb();
-
-            if (inputHelper.IsKeyDown(Keys.Up))
+            else
             {
-                velocity.Y = -100;
+                NotClimbing();
             }
-            if (inputHelper.IsKeyDown(Keys.Down))
-            {
-                velocity.Y = 100;
-            }
-        }
-        else
-        {
-            NotClimbing();
-        }
 
-        if (stand)
-        {
-            if (inputHelper.KeyPressed(Keys.Up))
+            if (stand)
             {
-                //stand = false;
-                jump = true;
+                if (inputHelper.KeyPressed(Keys.Up))
+                {
+                    //stand = false;
+                    jump = true;
+                }
+                if (inputHelper.IsKeyDown(Keys.M))
+                {
+                    mPressed = true;
+                }
             }
-            if (inputHelper.IsKeyDown(Keys.M))
+
+            if (inputHelper.IsKeyDown(Keys.Left))
             {
-                mPressed = true;
+                left = true;
+                Mirror = true;
+            }
+            if (inputHelper.IsKeyDown(Keys.Right))
+            {
+                right = true;
+                Mirror = false;
             }
         }
-
-        if (inputHelper.IsKeyDown(Keys.Left))
+        internal void PickedUp(Vector2 grabPosition)
         {
-            left = true;
-            Mirror = true;
+            velocity = Vector2.Zero;
+            position = grabPosition;
+            canMove = false;
+            beingHeld = true;
         }
-        if (inputHelper.IsKeyDown(Keys.Right))
-        {
-            right = true;
-            Mirror = false;
-        }
-    }
-    internal void PickedUp(Vector2 grabPosition)
-    {
-        velocity = Vector2.Zero;
-        position = grabPosition;
-        canMove = false;
-        beingHeld = true;
     }
 }
