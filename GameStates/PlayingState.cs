@@ -209,7 +209,7 @@ namespace BaseProject.GameStates
                 bigPlayer.Reset();
                 smallPlayer.Reset();
 
-                GameEnvironment.GameStateManager.SwitchTo("StartState");
+                
             }
         }
         public void DropDownRope(CuttebleRope cuttebleRope)
@@ -284,6 +284,12 @@ namespace BaseProject.GameStates
             if ((bigPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Keys.Enter))
             {
                 Console.WriteLine("alleen voor de grote spelers");
+            }
+
+            if (inputHelper.IsKeyDown(Keys.Space))
+            {
+
+                GameEnvironment.GameStateManager.SwitchTo("ControlsState");
             }
 
             //Player with Rope Collision test
