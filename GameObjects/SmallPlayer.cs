@@ -253,5 +253,4 @@ public class SmallPlayer : HeadPlayer
     {
         this.velocity = velocity;
     }
-
 }
