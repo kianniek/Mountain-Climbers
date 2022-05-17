@@ -34,6 +34,8 @@ namespace BaseProject.GameStates
             smallPlayer = new SmallPlayer(this);
             bigPlayer = new BigPlayer(smallPlayer);
 
+            Add(bigPlayer.throwDirection);
+
             waterfalls = new GameObjectList();
             climbWall = new GameObjectList();
 
