@@ -15,8 +15,8 @@ namespace BaseProject.GameStates
         GameObjectList waterfalls;
         GameObjectList rocks;
         GameObjectList climbWall;
-        SmallPlayer smallPlayer;
-        BigPlayer bigPlayer;
+        public SmallPlayer smallPlayer;
+        public BigPlayer bigPlayer;
         Button button;
         ButtonWall wall;
         Checkpoint cp;
@@ -32,15 +32,16 @@ namespace BaseProject.GameStates
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
             
-            smallPlayer = new SmallPlayer(new Tile[0,0]);
-            bigPlayer = new BigPlayer(new Tile[0,0], smallPlayer);
+            smallPlayer = new SmallPlayer(this);
+            bigPlayer = new BigPlayer(smallPlayer);
 
             waterfalls = new GameObjectList();
             climbWall = new GameObjectList();
 
+
             rocks = new GameObjectList();
 
-            wall = new ButtonWall(new Vector2(800, 300), new Vector2(800, 395));
+            wall = new ButtonWall(new Vector2(1000, 1010), new Vector2(1000, 950));
             button = new Button(smallPlayer, bigPlayer, wall);
 
             cp = new Checkpoint();
@@ -91,13 +92,16 @@ namespace BaseProject.GameStates
                 this.Add(bigPlayer.noLives[i + bigPlayer.livesPlayer]);
                 this.Add(bigPlayer.livesBig[i]);
             }
-            
-            
-            
-            
+
+
+
+
             levelManager = new LevelManager(bigPlayer, smallPlayer);
+
+            smallPlayer.levelManager = levelManager;
+            bigPlayer.levelManager = levelManager;
             Add(levelManager);
-            
+
             cam = camera;
             cam.Pos = bigPlayer.Position;
         }
@@ -107,17 +111,15 @@ namespace BaseProject.GameStates
             if (smallPlayer.CollidesWith(wall) && (!smallPlayer.Mirror))
             {
 
-                smallPlayer.noRight = true;
-                smallPlayer.noLeft = false;
+
+                smallPlayer.right = false;
 
             }
             else
                 smallPlayer.noRight = false;
             if (smallPlayer.CollidesWith(wall) && (smallPlayer.Mirror))
             {
-                smallPlayer.noLeft = true;
-                smallPlayer.noRight = false;
-
+                //smallPlayer.left = false;
             }
             else
                 smallPlayer.noLeft = false;
@@ -125,9 +127,6 @@ namespace BaseProject.GameStates
             base.Update(gameTime);
             KeepPlayersCenterd();
             UI_ElementUpdate();
-
-
-           
 
             //Falling Rocks
             foreach (FallingRock rock in rocks.Children)
@@ -150,9 +149,9 @@ namespace BaseProject.GameStates
                 }
 
                 if (rock.CollidesWith(bigPlayer))
-                {  
+                {
                     bigPlayer.hitRock = true;
-                    bigPlayer.Knockback();  
+                    bigPlayer.Knockback();
                 }
                 else
                 {
@@ -163,14 +162,11 @@ namespace BaseProject.GameStates
             //Waterfalls
             foreach (Waterfall waterfall in waterfalls.Children)
             {
-                if (smallPlayer.hitWaterfall)
+                if (waterfall.CollidesWith(smallPlayer))
                 {
-                    if (waterfall.CollidesWith(smallPlayer))
-                    {
-                        smallPlayer.HitWaterfall();
-                    }
+                    smallPlayer.HitWaterfall();
                 }
-               
+
                 if (waterfall.CollidesWith(bigPlayer))
                 {
                     bigPlayer.HitWaterfall();
@@ -183,17 +179,26 @@ namespace BaseProject.GameStates
 
         private void CheckGameOver()
         {
-            return;
+            if (smallPlayer.Position.Y > GameEnvironment.Screen.Y - cam._transform.M42)
+            {
+                smallPlayer.isDead = true;
+            }
+            if (bigPlayer.Position.Y > GameEnvironment.Screen.Y - cam._transform.M42)
+            {
+                bigPlayer.isDead = true;
+            }
             if (smallPlayer.isDead)
             {
+                //TODO : make this work with checkpoints
                 smallPlayer.Position = bigPlayer.Position;
                 smallPlayer.canMove = true;
-                //smallPlayer.Visible = false;
+                smallPlayer.Visible = false;
             }
             if (bigPlayer.isDead)
             {
+                //TODO : make this work with checkpoints
                 bigPlayer.Position = smallPlayer.Position;
-                //bigPlayer.Visible = false;
+                bigPlayer.Visible = false;
             }
             if (smallPlayer.isDead && bigPlayer.isDead)
             {
@@ -203,14 +208,15 @@ namespace BaseProject.GameStates
                 GameEnvironment.GameStateManager.SwitchTo("StartState");
             }
         }
-        public void DropDownRope(CuttebleRope cuttebleRope, int x, int y)
+        public void DropDownRope(CuttebleRope cuttebleRope)
         {
-            Console.WriteLine(cuttebleRope.isOut);
             if (!cuttebleRope.isOut)
             {
+                int x = cuttebleRope.x;
+                int y = cuttebleRope.y;
+                Console.WriteLine(cuttebleRope.level.TileOnLocation(x + 1, y + 1) + "  " + cuttebleRope.level.TileOnLocation(x - 1, y + 1));
                 if (cuttebleRope.level.TileOnLocation(x - 1, y + 1))
                 {
-                    
                     for (int i = 0; i < 10; i++)
                     {
                         Rope rope;
@@ -235,7 +241,7 @@ namespace BaseProject.GameStates
                     }
                 }
                 else
-                if (cuttebleRope.level.TileOnLocation(x + 1, y + 1))
+                if (!cuttebleRope.level.TileOnLocation(x + 1, y + 1))
                 {
 
                     for (int i = 0; i < 10; i++)
@@ -285,13 +291,14 @@ namespace BaseProject.GameStates
             {
                 var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
                 var tileType = obj.GetType();
-                if (tileType == typeof(CuttebleRope)) {
+                if (tileType == typeof(CuttebleRope))
+                {
                     if (smallPlayer.CollidesWith(obj) || bigPlayer.CollidesWith(obj))
                     {
                         if (inputHelper.KeyPressed(Keys.E))
                         {
                             CuttebleRope cuttebleRope = (CuttebleRope)levelManager.CurrentLevel().LevelObjects.Children[x];
-                            DropDownRope(cuttebleRope, cuttebleRope.x, cuttebleRope.y);
+                            DropDownRope(cuttebleRope);
                         }
                     }
                 }

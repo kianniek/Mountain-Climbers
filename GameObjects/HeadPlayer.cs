@@ -3,18 +3,19 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using BaseProject.GameStates;
 
 namespace BaseProject
 {
     public class HeadPlayer : SpriteGameObject
     {
         public bool isDead;
-        public float gravity;
+        public float gravity = 20f;
         public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight, climb, hitRock, hitWaterfall, hitRope;
 
 
 
-        public static float JumpForce = 460;
+        public static float JumpForce = 500;
         public float horizontalSpeed = 175;
         public static float walkingSpeed = 175;
         public static float sprintingSpeed = 200;
@@ -25,16 +26,17 @@ namespace BaseProject
         public bool knockback;
         public int knockbackForce = 100;
 
-        protected Tile[,] WorldTiles { get; private set; }
+        public LevelManager levelManager;
 
-        public HeadPlayer(string assetName, Tile[,] worldTiles) : base(assetName)
+        protected Tile[,] WorldTiles { get; private set; }
+        protected Level level;
+        
+        public HeadPlayer(string assetName) : base(assetName)
         {
             position.Y = GameEnvironment.Screen.Y / 1.4f;
             position.X = 10;
-            gravity = 10f;
             noLeft = false;
             noRight = false;
-            this.WorldTiles = worldTiles;
         }
 
         public override void Update(GameTime gameTime)
@@ -63,10 +65,7 @@ namespace BaseProject
                 right = false;
             }
 
-            if (position.Y > 1080)
-            {
-                isDead = true;
-            }
+            
 
             base.Update(gameTime);
             velocity.Y += gravity;
@@ -88,18 +87,6 @@ namespace BaseProject
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-
-            //     if (inputHelper.IsKeyDown(Keys.Left))
-            //   {
-            //     left = true;
-            //   Mirror = true;
-            //}
-
-
-            // if (inputHelper.IsKeyDown(Keys.Right))
-            //{
-            //  right = true;
-            //Mirror = false;
         }
 
 
@@ -108,7 +95,6 @@ namespace BaseProject
             left = false;
             right = false;
             stand = true;
-            gravity = 0;
             velocity.Y = 0;
             velocity.X = 0;
             climb = true;
@@ -116,7 +102,6 @@ namespace BaseProject
 
         public virtual void NotClimbing()
         {
-            gravity = 10f;
             climb = false;
         }
 
@@ -126,9 +111,9 @@ namespace BaseProject
             velocity.X *= -1;
         }
         
-        public void GoToNewLevel(Tile[,] tiles, Vector2 pos)
+        public void GoToNewLevel(Level lvl, Vector2 pos)
         {
-            WorldTiles = tiles;
+            level = lvl;
             position = pos;
             velocity = Vector2.Zero;
         }

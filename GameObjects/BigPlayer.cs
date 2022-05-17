@@ -1,103 +1,93 @@
-﻿using BaseProject.GameObjects;
+﻿using System;
+using BaseProject;
+using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using BaseProject.GameStates;
 
-
-//Dion & Thimo
-namespace BaseProject
+public class BigPlayer : HeadPlayer
 {
-    public class BigPlayer : HeadPlayer
+    readonly LevelGenerator levelGen;
+    readonly SmallPlayer smallPlayer;
+    readonly ThrowDirection throwDirection;
+
+    private float directionIncrease;
+
+    public Lives[] livesBig;
+    public Lives[] noLives;
+    public int livesPlayer;
+
+    public bool holdingPlayer;
+    public BigPlayer(SmallPlayer smallPlayer) : base("player2")
     {
-        readonly SmallPlayer smallPlayer;
+        origin = new Vector2(Center.X, Center.Y / 4);
+        this.smallPlayer = smallPlayer;
 
-        public Lives[] livesBig;
-        public Lives[] noLives;
-        public int livesPlayer;
+        livesPlayer = 2;
+        noLives = new Lives[livesPlayer * 2];
+        livesBig = new Lives[livesPlayer];
+        throwDirection = new ThrowDirection(this, smallPlayer);
+    }
 
-        public bool holdingPlayer;
-        public BigPlayer(Tile[,] worldTiles, SmallPlayer smallPlayer) : base("player2", worldTiles)
+    public override void Update(GameTime gameTime)
+    {
+        zPressed = false;
+
+        if (stand)
         {
-            origin = new Vector2(Center.X, Center.Y / 4);
-            this.smallPlayer = smallPlayer;
-
-            livesPlayer = 2;
-            noLives = new Lives[livesPlayer * 2];
-            livesBig = new Lives[livesPlayer];
+            hitClimbWall = CollisonWithRope();// || CollisonWith(Tags.ClimebleWall);
         }
-
-        public override void Update(GameTime gameTime)
+        if (holdingPlayer)
         {
-            zPressed = false;
-
-            if (stand && !left && !right)
-            {
-               hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
-            }
-            
-
-            if (CollisonWith(Tags.Lava))
-            {
-                position = LastSavedPos;
-            }
-
-            if (holdingPlayer)
-            {
-                GrabPlayer();
-                if (smallPlayer.hitRightWall)
-                {
-                    right = false;
-                }
-                if (smallPlayer.hitLeftWall)
-                {
-                    left = false;
-                }
-            }
-            else
-            {
-                smallPlayer.canMove = true;
-                smallPlayer.beingHeld = false;
-            }
-
-            base.Update(gameTime);
-            BreakeblePlatform breakebleplatform = CollisionWithBreakingPlatform();
-            if (breakebleplatform != null)
-            {
-                breakebleplatform.isBreaking = true;
-            }
-
-            CollisonWithGround();
+            GrabPlayer();
         }
-        public void GrabPlayer()
+        else
         {
-            smallPlayer.PickedUp(new Vector2(position.X, position.Y - smallPlayer.Height));
+            smallPlayer.canMove = true;
+        }
+        directionIncrease = 3 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (smallPlayer.beingHeld)
+        if (holdingPlayer)
+        {
+            GrabPlayer();
+            if (smallPlayer.hitRightWall)
             {
-                if (left)
-                {
-                    smallPlayer.left = true;
-                    smallPlayer.Mirror = true;
-                }
-                if (right)
-                {
-                    smallPlayer.right = true;
-                    smallPlayer.Mirror = false;
-                }
+                right = false;
+            }
+            if (smallPlayer.hitLeftWall)
+            {
+                left = false;
             }
         }
-        public void CollisonWithGround()
+        else
         {
-            for (var x = 0; x < WorldTiles.GetLength(0); x++)
+            smallPlayer.canMove = true;
+            smallPlayer.beingHeld = false;
+        }
+
+        base.Update(gameTime);
+        throwDirection.Update(gameTime);
+
+        CollisonWithGround();
+    }
+    public void GrabPlayer()
+    {
+        smallPlayer.PickedUp(new Vector2(position.X, position.Y - smallPlayer.Height));
+    }
+    public void CollisonWithGround()
+    {
+        foreach (var chunk in level.ActiveChunks())
+        {
+            for (var y = 0; y < Chunk.Height; y++)
             {
-                for (var y = 0; y < WorldTiles.GetLength(1); y++)
+                for (var x = 0; x < Chunk.Height; x++)
                 {
-                    var tile = WorldTiles[x, y];
+                    var tile = chunk.TilesInChunk[x, y];
                     if (tile == null)
                         continue;
+
+                    var tileType = tile.GetType();
 
                     if (this.Position.X + this.Width / 2 > tile.Position.X &&
                         this.Position.X < tile.Position.X + tile.Width / 2 &&
@@ -106,29 +96,29 @@ namespace BaseProject
                     {
                         var mx = (this.Position.X - tile.Position.X);
                         var my = (this.Position.Y - tile.Position.Y);
-
                         if (Math.Abs(mx) > Math.Abs(my))
                         {
-                            if (mx > 0 && this.Velocity.X < 0)
+                            if (mx > 0)
                             {
                                 this.velocity.X = 0;
-                                this.position.X = tile.Position.X + tile.Width / 2;
+                                this.position.X = tile.Position.X + this.Width / 4;
                             }
-                            else if (mx < 0 && this.Velocity.X > 0)
+
+                            if (mx < 0)
                             {
                                 this.position.X = tile.Position.X - this.Width / 2;
                                 this.velocity.X = 0;
-
                             }
                         }
                         else
                         {
-                            if (my > 0 && this.velocity.Y < 0)
+                            if (my > 0)
                             {
                                 this.velocity.Y = 0;
                                 this.position.Y = tile.Position.Y + tile.Height;
                             }
-                            else if (my < 0 && this.velocity.Y > 0)
+
+                            if (my < 0)
                             {
                                 this.velocity.Y = 0;
                                 this.position.Y = tile.Position.Y - this.Height;
@@ -136,144 +126,115 @@ namespace BaseProject
                             }
                         }
                     }
-                }
-            }
-        }
-        public bool CollisonWithRope()
-        {
-            for (var x = 0; x < WorldTiles.GetLength(0); x++)
-            {
-                for (var y = 0; y < WorldTiles.GetLength(1); y++)
-                {
-                    var tile = WorldTiles[x, y];
 
-                    if (tile == null || tile.Sprite.Sprite.Name != "RopeSegment")
-                        continue;
-
-                    if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
-                        && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
+                    if (tileType == typeof(Lava))
                     {
-                        return true;
+                        isDead = true;
                     }
                 }
             }
-            return false;
         }
-        public bool CollisonWith(GameObject.Tags Tag)
+    }
+    public bool CollisonWithRope()
+    {
+        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
-            string id = Tag.ToString();
-            for (var x = 0; x < WorldTiles.GetLength(0); x++)
+            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+            var tileType = obj.GetType();
+            if (tileType == typeof(Rope))
             {
-                for (var y = 0; y < WorldTiles.GetLength(1); y++)
+                if (CollidesWith(obj))
                 {
-                    var tile = WorldTiles[x, y];
-
-                    if (tile == null || tile.Id != id)
-                        continue;
-
-                    if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
-                        && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public override void Knockback()
-        {
-            base.Knockback();
-        }
-
-        public override void HandleInput(InputHelper inputHelper)
-        {
-            base.HandleInput(inputHelper);
-            if (inputHelper.IsKeyDown(Keys.LeftShift))
-            {
-                horizontalSpeed = sprintingSpeed;
-            }
-            else
-            {
-                horizontalSpeed = walkingSpeed;
-            }
-
-            //Player is climbing the wall by hitting a climbing wall or rope and pressing Z
-            if (hitClimbWall && zPressed)
-            {
-                Climb();
-
-                if (inputHelper.IsKeyDown(Keys.Q))
-                {
-                    velocity.Y = -100;
-                }
-                if (inputHelper.IsKeyDown(Keys.S))
-                {
-                    velocity.Y = 100;
-                }
-            }
-            else
-            {
-                NotClimbing();
-            }
-
-            if (stand)
-            {
-                if (inputHelper.KeyPressed(Keys.W))
-                {
-                    stand = false;
-                    jump = true;
-                }
-                if (inputHelper.IsKeyDown(Keys.Z))
-                {
-                    zPressed = true;
-                }
-            }
-
-            if (!hitClimbWall)
-            {
-                if (inputHelper.IsKeyDown(Keys.A))
-                {
-                    left = true;
-                    Mirror = true;
-                }
-                if (inputHelper.IsKeyDown(Keys.D))
-                {
-                    right = true;
-                    Mirror = false;
-                }
-            }
-            
-
-            if (inputHelper.KeyPressed(Keys.E))
-            {
-                holdingPlayer = false;
-                //smallPlayer.stand = false;
-                if (smallPlayer.CollidesWith(this))
-                {
-                    holdingPlayer = true;
+                    return true;
                 }
             }
         }
-        public BreakeblePlatform CollisionWithBreakingPlatform()
+        return false;
+    }
+
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        base.HandleInput(inputHelper);
+        velocity.X = 0;
+        if (inputHelper.IsKeyDown(Keys.A))
         {
-            for (var x = 0; x < WorldTiles.GetLength(0); x++)
+            left = true;
+            right = false;
+            //effective = SpriteEffects.FlipHorizontally;
+            Mirror = true;
+            velocity.X = -100;
+        }
+        if (inputHelper.IsKeyDown(Keys.D))
+        {
+            right = true;
+            left = false;
+            //effective = SpriteEffects.None;
+            Mirror = false;
+            velocity.X = 100;
+        }
+        if (inputHelper.IsKeyDown(Keys.LeftShift))
+        {
+            horizontalSpeed = sprintingSpeed;
+        }
+        else
+        {
+            horizontalSpeed = walkingSpeed;
+        }
+
+        //Player is climbing the wall by hitting a climbing wall or rope and pressing Z
+        if (hitClimbWall)
+        {
+            Climb();
+
+            if (inputHelper.IsKeyDown(Keys.W))
             {
-                for (var y = 0; y < WorldTiles.GetLength(1); y++)
-                {
-                    var tile = WorldTiles[x, y];
-
-                    if (tile == null || tile.Id != Tags.BreakeblePlatform.ToString())
-                        continue;
-
-                    if (this.Position.X + this.Width / 2f > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2f
-                        && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
-                    {
-                        return null;//(BreakeblePlatform)tile;
-                    }
-                }
+                velocity.Y = -100;
             }
-            return null;
+            if (inputHelper.IsKeyDown(Keys.S))
+            {
+                velocity.Y = 100;
+            }
+        }
+        else
+        {
+            NotClimbing();
+        }
+        if (inputHelper.KeyPressed(Keys.E))
+        {
+            holdingPlayer = false;
+            //smallPlayer.stand = false;
+            if (smallPlayer.CollidesWith(this))
+            {
+                holdingPlayer = !holdingPlayer;
+                smallPlayer.stand = false;
+            }
+        }
+
+        if (holdingPlayer)
+        {
+            if (inputHelper.IsKeyDown(Keys.O))
+            {
+                throwDirection.DecreaseAngle(directionIncrease);
+            }
+            if (inputHelper.IsKeyDown(Keys.P))
+            {
+                throwDirection.IncreaseAngle(directionIncrease);
+            }
+            if (inputHelper.IsKeyDown(Keys.X))
+            {
+                throwDirection.ThrowPlayer();
+            }
+
+        }
+
+
+        if (stand)
+        {
+            if (inputHelper.KeyPressed(Keys.W))
+            {
+                stand = false;
+                jump = true;
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BaseProject.Engine;
+using BaseProject.GameObjects;
 using BaseProject.GameStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -92,8 +93,8 @@ namespace BaseProject
             PreviousLevel()?.LoadLevel();
             Levels[currentLevelIndex]?.LoadLevel();
             NextLevel()?.LoadLevel();
-            bigPlayer.GoToNewLevel(CurrentLevel().Tiles, CurrentLevel().StartPosition);
-            smallPlayer.GoToNewLevel(CurrentLevel().Tiles, CurrentLevel().StartPosition);
+            bigPlayer.GoToNewLevel(CurrentLevel(), CurrentLevel().StartPosition);
+            smallPlayer.GoToNewLevel(CurrentLevel(), CurrentLevel().StartPosition);
         }
     }
 }
