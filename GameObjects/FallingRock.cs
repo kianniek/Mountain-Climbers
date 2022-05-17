@@ -9,7 +9,9 @@ namespace BaseProject
     {
         public bool fall;
         public int fallingRockCount;
+        float gravity;
         Vector2 resetPosition;
+
         public FallingRock(string assetName, Vector2 rockPosition) : base(assetName)
         {
             resetPosition = rockPosition;
@@ -17,10 +19,13 @@ namespace BaseProject
             velocity.Y = 100;
             fall = false;
             fallingRockCount = 240;
+            gravity = 1.5f;
         }
 
         public override void Update(GameTime gameTime)
         {
+            velocity.Y += gravity;
+
             if (fall)
             {
                 fallingRockCount--;
@@ -31,16 +36,17 @@ namespace BaseProject
                 Reset();
                 fall = false;
             }
-           
+
             base.Update(gameTime);
         }
-        
+
         public override void Reset()
         {
-           fallingRockCount = 240;
-           position = resetPosition;
+            fallingRockCount = 240;
+            velocity.Y = 100;
+            position = resetPosition;
             visible = true;
-           base.Reset();
-       }
+            base.Reset();
+        }
     }
 }

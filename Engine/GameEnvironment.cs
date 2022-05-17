@@ -18,7 +18,7 @@ public class GameEnvironment : Game
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
 
-    public Camera cam;
+    protected Camera cam;
 
 
     public GameEnvironment()
@@ -158,7 +158,7 @@ public class GameEnvironment : Game
                         null,
                         null,
                         null,
-                        cam.get_transformation(graphics.GraphicsDevice));
+                        cam.Get_transformation(graphics.GraphicsDevice));
         gameStateManager.Draw(gameTime, spriteBatch);
         spriteBatch.End();
     }

@@ -1,7 +1,5 @@
 ﻿using BaseProject.GameStates;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject
 {
@@ -15,6 +13,8 @@ namespace BaseProject
             ApplyResolutionSettings();
 
             // TODO: use this.Content to load your game content here 
+            GameStateManager.AddGameState("StartState", new StartState());
+            GameStateManager.AddGameState("LoadingState", new LoadingState());
             GameStateManager.AddGameState("PlayingState", new PlayingState(Camera));
             GameStateManager.SwitchTo("PlayingState");
             
