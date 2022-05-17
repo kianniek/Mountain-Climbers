@@ -28,7 +28,7 @@ namespace BaseProject.GameObjects
             base.Update(gameTime);
             if (smallPlayer.beingHeld)
             {
-                position = smallPlayer.Position - new Vector2(10, 10);
+                position = smallPlayer.Position - new Vector2(10, 0);
                 visible = true;
             }
 
@@ -57,7 +57,7 @@ namespace BaseProject.GameObjects
             float throwVelX = cosVel * 800;
             float throwVelY = sinVel * 800;
             smallPlayer.SetVelocity(new Vector2(throwVelX, throwVelY));
-            
+            smallPlayer.beingThrown = true;
         }
     }
 
