@@ -55,7 +55,7 @@ public class SmallPlayer : HeadPlayer
         {
             for (var y = 0; y < Chunk.Height; y++)
             {
-                for (var x = 0; x < Chunk.Height; x++)
+                for (var x = 0; x < Chunk.Width; x++)
                 {
                     var tile = chunk.TilesInChunk[x, y];
                     if (tile == null)
