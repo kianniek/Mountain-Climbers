@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../Downloads/new_checkpoint.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../Downloads/new_checkpoint.png;new_checkpoint.png
+
 #begin CP.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -140,6 +152,18 @@
 /processorParam:TextureFormat=Color
 /build:LavaTop.png
 
+#begin Level_watervallen_Climbing_Heroes.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Level_watervallen_Climbing_Heroes.png
+
 #begin level1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -211,18 +235,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:level6.png
-
-#begin Level_watervallen_Climbing_Heroes.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Level_watervallen_Climbing_Heroes.png
 
 #begin LevelLayout.png
 /importer:TextureImporter

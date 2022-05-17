@@ -116,10 +116,17 @@ namespace BaseProject.GameStates
                 smallPlayer.noRight = false;
             if (smallPlayer.CollidesWith(wall) && (smallPlayer.Mirror))
             {
-                //smallPlayer.left = false;
+                smallPlayer.left = false;
             }
             else
                 smallPlayer.noLeft = false;
+
+
+
+            if (smallPlayer.CollidesWith(cp))
+            {
+                
+            }
 
             base.Update(gameTime);
             KeepPlayersCenterd();
@@ -177,30 +184,9 @@ namespace BaseProject.GameStates
             }
 
 
-            CheckGameOver();
+           
         }
-        private void CheckGameOver()
-        {
-            return;
-            if (smallPlayer.isDead)
-            {
-                smallPlayer.Position = bigPlayer.Position;
-                smallPlayer.canMove = true;
-                //smallPlayer.Visible = false;
-            }
-            if (bigPlayer.isDead)
-            {
-                bigPlayer.Position = smallPlayer.Position;
-                //bigPlayer.Visible = false;
-            }
-            if (smallPlayer.isDead && bigPlayer.isDead)
-            {
-                bigPlayer.Reset();
-                smallPlayer.Reset();
-
-                GameEnvironment.GameStateManager.SwitchTo("StartState");
-            }
-        }
+       
         public void DropDownRope(CuttebleRope cuttebleRope)
         {
             if (!cuttebleRope.isOut)

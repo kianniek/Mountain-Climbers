@@ -41,6 +41,7 @@ namespace BaseProject.GameStates
             {"Platform", Color.Purple},
             {"Start", Color.Aqua},
             {"End", Color.Yellow}
+            
         };
 
         // All color codes that represent level tiles
@@ -123,6 +124,7 @@ namespace BaseProject.GameStates
                 LevelObjects.Add(new CuttebleRope(this, (int)objPos.X, (int)objPos.Y));
             if (color == colorCodes["Lava"])
                 obj = new Lava(this ,(int)objPos.X, (int)objPos.Y);
+            
 
             if (environmentalTiles.Any(c => c == color))
             {

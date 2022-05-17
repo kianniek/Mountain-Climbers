@@ -15,14 +15,19 @@ namespace BaseProject.GameObjects
         private BigPlayer bigplayer;
 
 
-        public Checkpoint(SmallPlayer smallPlayer, BigPlayer bigPlayer) : base("CP")
+        public Checkpoint(SmallPlayer smallPlayer, BigPlayer bigPlayer) : base("new_checkpoint")
         {
-            position.X = 800;
-            position.Y = 1000;
+            position.X = 900;
+            position.Y = 1027;
+
+            Origin = Center;
+            scale =0.75f;
 
             this.smallplayer = smallPlayer;
             this.bigplayer = bigPlayer;
 
+            
+           
             
         }
 
@@ -33,7 +38,7 @@ namespace BaseProject.GameObjects
             //checkpoint respawn small player
             if (CheckPointAchS && smallplayer.isDead)
             {
-                Console.WriteLine("cp");
+                
                 smallplayer.Position = position;
                 smallplayer.isDead = false;
                
@@ -63,13 +68,14 @@ namespace BaseProject.GameObjects
             if (smallplayer.CollidesWith(this))
             {
                 CheckPointAchS = true;
-                
+              
+
             }
 
             if (bigplayer.CollidesWith(this))
             {
                 CheckpointAchB = true;
-                Console.WriteLine("big");
+               
             }
 
 

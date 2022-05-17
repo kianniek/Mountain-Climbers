@@ -70,6 +70,8 @@ namespace BaseProject
                 isDead = true;
             }
 
+            
+
             base.Update(gameTime);
             velocity.Y += gravity;
             if (stand)
