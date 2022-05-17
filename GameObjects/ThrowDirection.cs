@@ -26,6 +26,7 @@ namespace BaseProject.GameObjects
         {
             cosVel = MathF.Cos(throwAngle);
             sinVel = MathF.Sin(throwAngle);
+            Console.WriteLine(smallPlayer.stand);
             base.Update(gameTime);
             if (smallPlayer.beingHeld)
             {
