@@ -81,14 +81,10 @@ namespace BaseProject
             velocity.Y = 520;
         }
 
-
-
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
         }
-
-
         public virtual void Climb()
         {
             left = false;
