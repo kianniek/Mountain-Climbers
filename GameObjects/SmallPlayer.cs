@@ -36,6 +36,24 @@ public class SmallPlayer : HeadPlayer
             velocity.X = 0;
         }
 
+        //Music jump
+        if (jump)
+        {
+            playJump = false;
+            GameEnvironment.AssetManager.PlaySound("jump");
+        }
+
+        //Music walk
+        if (left && !jump && musicCounter == 30 && !right)
+        {
+            playWalk = false;
+            GameEnvironment.AssetManager.PlaySound("step");
+        }
+        if (right && !jump && musicCounter == 30 && !left)
+        {
+            GameEnvironment.AssetManager.PlaySound("step");
+        }
+
         CollisonWithLevelObjecs();
 
         base.Update(gameTime);
@@ -178,6 +196,7 @@ public class SmallPlayer : HeadPlayer
         }
         if (stand)
         {
+            playJump = true;
             if (inputHelper.KeyPressed(Keys.Up))
             {
                 //stand = false;
@@ -217,6 +236,7 @@ public class SmallPlayer : HeadPlayer
 
         if (stand)
         {
+            playJump = false;
             if (inputHelper.KeyPressed(Keys.Up))
             {
                 //stand = false;

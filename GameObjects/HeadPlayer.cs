@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using BaseProject.GameStates;
+using Microsoft.Xna.Framework.Audio;
 
 namespace BaseProject
 {
@@ -11,9 +12,7 @@ namespace BaseProject
     {
         public bool isDead;
         public float gravity = 20f;
-        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight, climb, hitRock, hitWaterfall, hitRope;
-
-
+        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight, climb, hitRock, hitWaterfall, hitRope, playJump, playWalk;
 
         public static float JumpForce = 500;
         public float horizontalSpeed = 175;
@@ -25,6 +24,7 @@ namespace BaseProject
 
         public bool knockback;
         public int knockbackForce = 100;
+        public int musicCounter = 30;
 
         public LevelManager levelManager;
 
@@ -37,6 +37,8 @@ namespace BaseProject
             position.X = 10;
             noLeft = false;
             noRight = false;
+            playJump = true;
+            playWalk = true;
         }
 
         public override void Update(GameTime gameTime)
@@ -57,15 +59,23 @@ namespace BaseProject
             if (left)
             {
                 velocity.X = -horizontalSpeed;
+                musicCounter--;
                 left = false;
             }
+
             if (right)
             {
                 velocity.X = horizontalSpeed;
+                musicCounter--;
                 right = false;
             }
 
-            
+            if (musicCounter < 0)
+            {
+                musicCounter = 30;
+            }
+
+
 
             base.Update(gameTime);
             velocity.Y += gravity;
@@ -73,6 +83,8 @@ namespace BaseProject
             {
                 velocity.X = 0;
             }
+
+            Console.WriteLine(musicCounter);
         }
 
         //Roep deze functie aan als de speler normaal springt en de waterval raakt,

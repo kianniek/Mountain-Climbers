@@ -66,6 +66,24 @@ public class BigPlayer : HeadPlayer
             smallPlayer.beingHeld = false;
         }
 
+        //Jump sound
+        if (jump && playJump)
+        {
+            playJump = false;
+            GameEnvironment.AssetManager.PlaySound("jump");
+        }
+        
+        //Music walk left + right
+        if (left && !jump && musicCounter == 30 && !right)
+        {
+            playWalk = false;
+            GameEnvironment.AssetManager.PlaySound("step");
+        }
+        if (right && !jump && musicCounter == 30 && !left)
+        {
+            GameEnvironment.AssetManager.PlaySound("step");
+        }
+
         base.Update(gameTime);
         throwDirection.Update(gameTime);
 
@@ -230,11 +248,18 @@ public class BigPlayer : HeadPlayer
 
         if (stand)
         {
+            playJump = true;
             if (inputHelper.KeyPressed(Keys.W))
             {
                 stand = false;
                 jump = true;
+                //PlayJumpMusic("jump");
             }
         }
     }
+
+    /*public override void PlayJumpMusic(string music)
+    {
+        base.PlayJumpMusic(music);
+    }*/
 }

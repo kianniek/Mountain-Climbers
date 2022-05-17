@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../../../OneDrive/Documents/Visual Studio programmeerwerk/Music Climbing Heroes/Sound_effects/walk.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:../../../../OneDrive/Documents/Visual Studio programmeerwerk/Music Climbing Heroes/Sound_effects/walk.wav;walk.wav
+
 #begin aimlijn.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -127,6 +133,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Hartje_oranje.png
+
+#begin jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:jump.wav
 
 #begin Lava.png
 /importer:TextureImporter
@@ -518,6 +530,12 @@
 /processorParam:TextureFormat=Color
 /build:SNES_Start.png
 
+#begin step.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:step.wav
+
 #begin stone100.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -830,11 +848,11 @@
 /processorParam:TextureFormat=Color
 /build:Tile_RightverticalBlock.png
 
-#begin waterfall.ogg
-/importer:OggImporter
-/processor:SongProcessor
+#begin walk.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:waterfall.ogg
+/build:walk.wav
 
 #begin Waterfall200.png
 /importer:TextureImporter
@@ -847,10 +865,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Waterfall200.png
-
-#begin waterMusic.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:waterMusic.ogg
 

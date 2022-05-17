@@ -28,7 +28,7 @@ namespace BaseProject.GameStates
 
         public PlayingState(Camera camera)
         {
-            GameEnvironment.AssetManager.PlayMusic("waterMusic");
+            GameEnvironment.AssetManager.PlaySound("MusicWaterfall");
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
             
@@ -140,18 +140,18 @@ namespace BaseProject.GameStates
                 //Rock hits one of the players and that causes knockback
                 if (rock.CollidesWith(smallPlayer))
                 {
-                    smallPlayer.hitRock = true;
-                    smallPlayer.Knockback();
+                    //smallPlayer.hitRock = true;
+                    smallPlayer.knockback = true;
                 }
-                else
-                {
-                    smallPlayer.hitRock = false;
-                }
+                //else
+                //{
+                    //smallPlayer.hitRock = false;
+                //}
 
                 if (rock.CollidesWith(bigPlayer))
                 {
-                    bigPlayer.hitRock = true;
-                    bigPlayer.Knockback();
+                    //bigPlayer.hitRock = true;
+                    bigPlayer.knockback = true;
                 }
                 else
                 {
