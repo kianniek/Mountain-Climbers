@@ -14,8 +14,8 @@ namespace BaseProject.GameStates
         GameObjectList waterfalls;
         GameObjectList rocks;
         GameObjectList climbWall;
-        SmallPlayer smallPlayer;
-        BigPlayer bigPlayer;
+        public SmallPlayer smallPlayer;
+        public BigPlayer bigPlayer;
         Button button;
         ButtonWall wall;
         Checkpoint cp;
@@ -30,12 +30,13 @@ namespace BaseProject.GameStates
         {
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
-
-            smallPlayer = new SmallPlayer(new Tile[0, 0]);
-            bigPlayer = new BigPlayer(new Tile[0, 0], smallPlayer);
+            
+            smallPlayer = new SmallPlayer(this);
+            bigPlayer = new BigPlayer(smallPlayer);
 
             waterfalls = new GameObjectList();
             climbWall = new GameObjectList();
+
 
             rocks = new GameObjectList();
 
@@ -108,7 +109,7 @@ namespace BaseProject.GameStates
             if (smallPlayer.CollidesWith(wall) && (!smallPlayer.Mirror))
             {
 
-               
+
                 smallPlayer.right = false;
 
             }
@@ -132,9 +133,6 @@ namespace BaseProject.GameStates
             KeepPlayersCenterd();
             UI_ElementUpdate();
 
-
-           
-
             //Falling Rocks
             foreach (FallingRock rock in rocks.Children)
             {
@@ -156,9 +154,9 @@ namespace BaseProject.GameStates
                 }
 
                 if (rock.CollidesWith(bigPlayer))
-                {  
+                {
                     bigPlayer.hitRock = true;
-                    bigPlayer.Knockback();  
+                    bigPlayer.Knockback();
                 }
                 else
                 {
@@ -169,14 +167,11 @@ namespace BaseProject.GameStates
             //Waterfalls
             foreach (Waterfall waterfall in waterfalls.Children)
             {
-                if (smallPlayer.hitWaterfall)
+                if (waterfall.CollidesWith(smallPlayer))
                 {
-                    if (waterfall.CollidesWith(smallPlayer))
-                    {
-                        smallPlayer.HitWaterfall();
-                    }
+                    smallPlayer.HitWaterfall();
                 }
-               
+
                 if (waterfall.CollidesWith(bigPlayer))
                 {
                     bigPlayer.HitWaterfall();
@@ -184,9 +179,39 @@ namespace BaseProject.GameStates
             }
 
 
-           
+            CheckGameOver();
         }
-       
+        private void CheckGameOver()
+        {
+            if (smallPlayer.Position.Y > GameEnvironment.Screen.Y - cam._transform.M42)
+            {
+                smallPlayer.isDead = true;
+            }
+            if (bigPlayer.Position.Y > GameEnvironment.Screen.Y - cam._transform.M42)
+            {
+                bigPlayer.isDead = true;
+            }
+            if (smallPlayer.isDead)
+            {
+                //TODO : make this work with checkpoints
+                smallPlayer.Position = bigPlayer.Position;
+                smallPlayer.canMove = true;
+                smallPlayer.Visible = false;
+            }
+            if (bigPlayer.isDead)
+            {
+                //TODO : make this work with checkpoints
+                bigPlayer.Position = smallPlayer.Position;
+                bigPlayer.Visible = false;
+            }
+            if (smallPlayer.isDead && bigPlayer.isDead)
+            {
+                bigPlayer.Reset();
+                smallPlayer.Reset();
+
+                GameEnvironment.GameStateManager.SwitchTo("StartState");
+            }
+        }
         public void DropDownRope(CuttebleRope cuttebleRope)
         {
             if (!cuttebleRope.isOut)

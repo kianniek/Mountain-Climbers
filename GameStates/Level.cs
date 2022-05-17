@@ -20,8 +20,10 @@ namespace BaseProject.GameStates
         public const int TileWidth = 32;
         public const int TileHeight = 32;
 
-        protected SmallPlayer smallPlayer;
-        protected BigPlayer bigPlayer;
+        public Chunk[,] Chunks { get; private set; }
+
+        private readonly SmallPlayer smallPlayer;
+        private readonly BigPlayer bigPlayer;
         
         public bool Loaded { get; private set; }
 
@@ -57,7 +59,20 @@ namespace BaseProject.GameStates
             this.levelSprite = GameEnvironment.AssetManager.Content.Load<Texture2D>(levelSprite);
             this.bigPlayer = bigPlayer;
             this.smallPlayer = smallPlayer;
+            Add(LevelObjects);
         }
+        
+        private async void GenerateLevel()
+        {
+            colorData = FetchColorData(levelSprite);
+            Chunks = ChunksInLevel();
+
+            await GenerateChunks(Chunks);
+            
+            SetupLevel();
+        }
+        
+        protected abstract void SetupLevel();
 
         // Load the Level
         public void LoadLevel()
@@ -69,43 +84,70 @@ namespace BaseProject.GameStates
             Loaded = true;
         }
 
-        // Generate the level
-        private async void GenerateLevel()
+        private async Task GenerateChunks(Chunk[,] t)
         {
-            Tiles = new Tile[levelSprite.Width,levelSprite.Height];
-            colorData = FetchColorData(levelSprite);
+            var a = t.GetLength(0);
+            var b = t.GetLength(1);
 
-            await GenerateRows();
-
-            SetupLevel();
-        }
-
-        // Split the source image to generate the level faster
-        private async Task GenerateRows()
-        {
-            var rows = new List<Task>();
-            for (var x = 0; x < levelSprite.Width; x++)
-                rows.Add(GenerateObjects(x));
-
-            await Task.WhenAll(rows);
-        }
-
-        // Generate all the objects of row X
-        private async Task GenerateObjects(int x)
-        {
-            for (var y = 0; y < levelSprite.Height; y++)
+            for (var y = 0; y < b; y++)
             {
-                var obj = GeneratedObject(new Vector2(x, y));
-
-                if (obj != null)
-                    Add(obj);
+                for (var x = 0; x < a; x++)
+                {
+                    GenerateChunk(new Tuple<int, int>(x, y),
+                        new Tuple<int, int>(x * Chunk.Width, y * Chunk.Height),
+                        new Tuple<int, int>(x * Chunk.Width + Chunk.Width, y * Chunk.Height + Chunk.Height));
+                }
             }
-            Add(LevelObjects);
         }
+
+        private void GenerateChunk(Tuple<int, int> chunkPos, Tuple<int,int> start, Tuple<int,int> end)
+        {
+            var (startX, startY) = start;
+            var (endX, endY) = end;
+            
+            var chunkWorldX = (startX + (endX - (startX + 1))/2f) * TileWidth;
+            var chunkWorldY = (startY + (endY - (startY + 1))/2f) * TileHeight;
+
+            var tiles = new Tile[Chunk.Width, Chunk.Height];
+
+            for (var y = 0; y < endY - startY; y++)
+            {
+                for (var x = 0; x < endX - startX; x++)
+                {
+                    
+                    var obj = GeneratedObject(new Vector2(startX + x, startY + y));
+                    
+                    if (obj == null)
+                        continue;
+
+                    if (obj.GetType() == typeof(Tile))
+                        tiles[x,y] = (Tile)obj;
+                    Add(obj);
+                }
+            }
+            
+            Chunks[chunkPos.Item1, chunkPos.Item2] = new Chunk(this, tiles, chunkPos, new Vector2(chunkWorldX, chunkWorldY));
+        }
+
+        private Chunk[,] ChunksInLevel()
+        {
+            float decimalChunksOnX = (float)levelSprite.Width / Chunk.Width;
+            int chunksOnX = decimalChunksOnX - (int)decimalChunksOnX > 0f ? (int)decimalChunksOnX + 1 : (int)decimalChunksOnX;
+            
+            float decimalChunksOnY = (float)levelSprite.Height / Chunk.Height;
+            int chunksOnY = decimalChunksOnY - (int)decimalChunksOnY > 0f ? (int)decimalChunksOnY + 1 : (int)decimalChunksOnY;
+
+            var chunkArray = new Chunk[chunksOnX, chunksOnY];
+            
+            return chunkArray;
+        }        
 
         // Generate the correct object according to the color code
         private GameObject GeneratedObject(Vector2 gridPos)
         {
+            if (gridPos.X >= colorData.GetLength(0) || gridPos.Y >= colorData.GetLength(1))
+                return null;
+            
             var color = colorData[(int)gridPos.X, (int)gridPos.Y];
             var offset = new Vector2(TileWidth, TileHeight)/2;
             
@@ -122,9 +164,9 @@ namespace BaseProject.GameStates
 
             if (color == colorCodes["Rope"])
                 LevelObjects.Add(new CuttebleRope(this, (int)objPos.X, (int)objPos.Y));
+
             if (color == colorCodes["Lava"])
-                obj = new Lava(this ,(int)objPos.X, (int)objPos.Y);
-            
+                LevelObjects.Add(new Lava(this, (int)objPos.X, (int)objPos.Y));
 
             if (environmentalTiles.Any(c => c == color))
             {
@@ -135,7 +177,7 @@ namespace BaseProject.GameStates
 
                 var t = new Tile(sprite, objPos, tileScale);
                 
-                Tiles[(int)gridPos.X, (int)gridPos.Y] = t;
+                //ActiveTiles[(int)gridPos.X, (int)gridPos.Y] = t;
 
                 obj = t;
             }
@@ -203,6 +245,25 @@ namespace BaseProject.GameStates
             return colors2D;
         }
 
-        protected abstract void SetupLevel();
+        public Chunk[] ActiveChunks()
+        {
+            var chunks = new List<Chunk>();
+            
+            if (!Loaded)
+                return Array.Empty<Chunk>();
+            
+            foreach (var chunk in Chunks)
+            {
+                if (!chunk.InChunk(bigPlayer) && !chunk.InChunk(smallPlayer))
+                    continue;
+                
+                chunks.Add(chunk);
+                chunks.AddRange(chunk.SurroundingChunks());
+            }
+            
+            Console.WriteLine(chunks.Count);
+            
+            return chunks.ToArray();
+        }
     }
 }
