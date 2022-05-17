@@ -116,7 +116,6 @@ namespace BaseProject
             level = lvl;
             position = pos;
             velocity = Vector2.Zero;
-            
         }
     }
 }

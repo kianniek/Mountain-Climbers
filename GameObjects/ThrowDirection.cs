@@ -18,8 +18,6 @@ namespace BaseProject.GameObjects
             Origin = Center - Vector2.UnitX * Width / 2f;
             this.bigPlayer = bigPlayer;
             this.smallPlayer = smallPlayer;
-
-            
         }
 
         public override void Update(GameTime gameTime)

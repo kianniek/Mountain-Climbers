@@ -14,7 +14,7 @@ namespace BaseProject.GameStates
         GameObjectList waterfalls;
         GameObjectList rocks;
         GameObjectList climbWall;
-        SmallPlayer smallPlayer;
+        public SmallPlayer smallPlayer;
         public BigPlayer bigPlayer;
         Button button;
         ButtonWall wall;

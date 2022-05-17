@@ -7,16 +7,14 @@ using Microsoft.Xna.Framework.Input;
 using BaseProject.GameStates;
 
 //Dion
-    public class SmallPlayer : HeadPlayer
-    {
-    LevelGenerator levelGen;
-    public bool canMove, beingHeld;
+public class SmallPlayer : HeadPlayer
+{
     PlayingState state;
-        public bool canMove, beingHeld, hitLeftWall, hitRightWall;
+    public bool canMove, beingHeld, hitLeftWall, hitRightWall;
 
-        public Lives[] livesSmall;
-        public Lives[] noLives;
-        public int livesPlayer;
+    public Lives[] livesSmall;
+    public Lives[] noLives;
+    public int livesPlayer;
 
     public SmallPlayer(PlayingState playingState) : base("Player")
     {
@@ -28,162 +26,141 @@ using BaseProject.GameStates;
         livesSmall = new Lives[livesPlayer];
     }
 
-        public override void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime)
+    {
+        mPressed = false;
+
+        if (stand)
         {
-            mPressed = false;
-
-            if (stand)
-            {
-                hitClimbWall = CollisonWithRope();// || CollisonWith(Tags.ClimebleWall);
-          velocity.X = 0;
-            }
-
-            CollisonWithLevelObjecs();
-
-            base.Update(gameTime);
-
-            CollisonWithGround();
+            hitClimbWall = CollisonWithRope();// || CollisonWith(Tags.ClimebleWall);
+            velocity.X = 0;
         }
-        public void CollisonWithGround()
+
+        CollisonWithLevelObjecs();
+
+        base.Update(gameTime);
+
+        CollisonWithGround();
+    }
+    public void CollisonWithGround()
+    {
+        hitLeftWall = false;
+        hitRightWall = false;
+        foreach (var chunk in level.ActiveChunks())
         {
-            hitLeftWall = false;
-            hitRightWall = false;
-            foreach (var chunk in level.ActiveChunks())
+            for (var y = 0; y < Chunk.Height; y++)
             {
-                for (var y = 0; y < Chunk.Height; y++)
+                for (var x = 0; x < Chunk.Height; x++)
                 {
-                    for (var x = 0; x < Chunk.Height; x++)
+                    var tile = chunk.TilesInChunk[x, y];
+                    if (tile == null)
+                        continue;
+
+                    var tileType = tile.GetType();
+
+                    if (this.Position.X + this.Width / 2 > tile.Position.X &&
+                        this.Position.X < tile.Position.X + tile.Width / 2 &&
+                        this.Position.Y + this.Height > tile.Position.Y &&
+                        this.Position.Y < tile.Position.Y + tile.Height)
                     {
-                        var tile = chunk.TilesInChunk[x, y];
-                        if (tile == null)
-                            continue;
-
-                        var tileType = tile.GetType();
-
-                        if (this.Position.X + this.Width / 2 > tile.Position.X &&
-                            this.Position.X < tile.Position.X + tile.Width / 2 &&
-                            this.Position.Y + this.Height > tile.Position.Y &&
-                            this.Position.Y < tile.Position.Y + tile.Height)
+                        var mx = (this.Position.X - tile.Position.X);
+                        var my = (this.Position.Y - tile.Position.Y);
+                        if (Math.Abs(mx) > Math.Abs(my))
                         {
-                            var mx = (this.Position.X - tile.Position.X);
-                            var my = (this.Position.Y - tile.Position.Y);
                             if (Math.Abs(mx) > Math.Abs(my))
                             {
-                                if (Math.Abs(mx) > Math.Abs(my))
+                                if (mx > 0)
                                 {
-                                    if (mx > 0)
-                                    {
-                                        this.velocity.X = 0;
-                                        this.position.X = tile.Position.X + this.Width / 4;
-                                    }
-
-                                    if (mx < 0)
-                                    {
-                                        this.position.X = tile.Position.X - this.Width / 2;
-                                        this.velocity.X = 0;
-                                    }
+                                    this.velocity.X = 0;
+                                    this.position.X = tile.Position.X + this.Width / 4;
                                 }
 
-                                if (beingHeld)
+                                if (mx < 0)
                                 {
-                                    if (mx > 0)
-                                    {
-                                        hitLeftWall = true;
-                                    }
-                                    else if (mx < 0)
-                                    {
-                                        hitRightWall = true;
-                                    }
+                                    this.position.X = tile.Position.X - this.Width / 2;
+                                    this.velocity.X = 0;
                                 }
                             }
 
-                            else if (!beingHeld)
+                            if (beingHeld)
                             {
-                                if (my > 0)
+                                if (mx > 0)
                                 {
-                                    this.velocity.Y = 0;
-                                    this.position.Y = tile.Position.Y + tile.Height;
+                                    hitLeftWall = true;
                                 }
-
-                                if (my < 0)
+                                else if (mx < 0)
                                 {
-                                    this.velocity.Y = 0;
-                                    this.position.Y = tile.Position.Y - this.Height;
-                                    this.stand = true;
+                                    hitRightWall = true;
                                 }
+                            }
+                        }
 
+                        else if (!beingHeld)
+                        {
+                            if (my > 0)
+                            {
+                                this.velocity.Y = 0;
+                                this.position.Y = tile.Position.Y + tile.Height;
+                            }
+
+                            if (my < 0)
+                            {
+                                this.velocity.Y = 0;
+                                this.position.Y = tile.Position.Y - this.Height;
+                                this.stand = true;
                             }
 
                         }
+
+                    }
                 }
             }
 
-            }
         }
-        public bool CollisonWithRope()
+    }
+    public bool CollisonWithRope()
+    {
+        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
-            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+            var tileType = obj.GetType();
+            if (tileType == typeof(Rope))
             {
-                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
-                var tileType = obj.GetType();
-                if (tileType == typeof(Rope))
+                if (CollidesWith(obj))
                 {
-                    if (CollidesWith(obj))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
-            return false;
         }
-        public void CollisonWithLevelObjecs()
+        return false;
+    }
+    public void CollisonWithLevelObjecs()
+    {
+        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
-            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+            var tileType = obj.GetType();
+
+            if (tileType == typeof(Rope))
             {
-                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
-                var tileType = obj.GetType();
-
-                if (tileType == typeof(Rope))
+                if (CollidesWith(obj))
                 {
-                    if (CollidesWith(obj))
-                    {
-                        hitRope = true;
-                    }
-                    else { hitRope = false; }
+                    hitRope = true;
                 }
-                if (tileType == typeof(Lava))
-                {
-                    if (CollidesWith(obj))
-                    {
-                        isDead = true;
-                    }
-                }
+                else { hitRope = false; }
             }
-        }
-        public bool CollisonWith(GameObject.Tags Tag)
-        {
-            string id = Tag.ToString();
-            for (var x = 0; x < WorldTiles.GetLength(0); x++)
+            if (tileType == typeof(Lava))
             {
-                for (var y = 0; y < WorldTiles.GetLength(1); y++)
+                if (CollidesWith(obj))
                 {
-                    var tile = WorldTiles[x, y];
-
-                    if (tile == null || tile.Id != id)
-                        continue;
-
-                    if (this.Position.X + this.Width / 2 > tile.Position.X && this.Position.X < tile.Position.X + tile.Width / 2
-                        && this.Position.Y + this.Height > tile.Position.Y && this.Position.Y < tile.Position.Y + tile.Height)
-                    {
-                        return true;
-                    }
+                    isDead = true;
                 }
             }
-            return false;
         }
-        public override void HandleInput(InputHelper inputHelper)
-        {
-            base.HandleInput(inputHelper);
+    }
+    public override void HandleInput(InputHelper inputHelper)
+    {
+        base.HandleInput(inputHelper);
         if (!beingHeld && stand)
         {
             if (inputHelper.IsKeyDown(Keys.Left))
@@ -211,71 +188,70 @@ using BaseProject.GameStates;
         {
             beingHeld = false;
         }
-    }
-            if (inputHelper.IsKeyDown(Keys.RightShift))
-            {
-                horizontalSpeed = sprintingSpeed;
-            }
-            else
-            {
-                horizontalSpeed = walkingSpeed;
-            }
+        if (inputHelper.IsKeyDown(Keys.RightShift))
+        {
+            horizontalSpeed = sprintingSpeed;
+        }
+        else
+        {
+            horizontalSpeed = walkingSpeed;
+        }
+        //Small Player is climbing a wall
+        if (hitClimbWall)
+        {
+            Climb();
 
-            //Small Player is climbing a wall
-            if (hitClimbWall)
+            if (inputHelper.IsKeyDown(Keys.Up))
             {
-                Climb();
-
-                if (inputHelper.IsKeyDown(Keys.Up))
-                {
-                    velocity.Y = -100;
-                }
-                if (inputHelper.IsKeyDown(Keys.Down))
-                {
-                    velocity.Y = 100;
-                }
+                velocity.Y = -100;
             }
-            else
+            if (inputHelper.IsKeyDown(Keys.Down))
             {
-                NotClimbing();
-            }
-
-            if (stand)
-            {
-                if (inputHelper.KeyPressed(Keys.Up))
-                {
-                    //stand = false;
-                    jump = true;
-                }
-                if (inputHelper.IsKeyDown(Keys.M))
-                {
-                    mPressed = true;
-                }
-            }
-
-            if (inputHelper.IsKeyDown(Keys.Left))
-            {
-                left = true;
-                Mirror = true;
-            }
-            if (inputHelper.IsKeyDown(Keys.Right))
-            {
-                right = true;
-                Mirror = false;
+                velocity.Y = 100;
             }
         }
-        internal void PickedUp(Vector2 grabPosition)
+        else
         {
-            velocity = Vector2.Zero;
-            position = grabPosition;
-            canMove = false;
-            beingHeld = true;
+            NotClimbing();
+        }
+
+        if (stand)
+        {
+            if (inputHelper.KeyPressed(Keys.Up))
+            {
+                //stand = false;
+                jump = true;
+            }
+            if (inputHelper.IsKeyDown(Keys.M))
+            {
+                mPressed = true;
+            }
+        }
+
+        if (inputHelper.IsKeyDown(Keys.Left))
+        {
+            left = true;
+            Mirror = true;
+        }
+        if (inputHelper.IsKeyDown(Keys.Right))
+        {
+            right = true;
+            Mirror = false;
+        }
+    }
+    internal void PickedUp(Vector2 grabPosition)
+    {
+        velocity = Vector2.Zero;
+        position = grabPosition;
+        canMove = false;
+        beingHeld = true;
 
         //stand = false;
-        }
+    }
 
     public void SetVelocity(Vector2 velocity)
     {
         this.velocity = velocity;
     }
+
 }
