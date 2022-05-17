@@ -140,6 +140,18 @@
 /processorParam:TextureFormat=Color
 /build:LavaTop.png
 
+#begin Level_watervallen_Climbing_Heroes.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Level_watervallen_Climbing_Heroes.png
+
 #begin level1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -212,18 +224,6 @@
 /processorParam:TextureFormat=Color
 /build:level6.png
 
-#begin Level_watervallen_Climbing_Heroes.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Level_watervallen_Climbing_Heroes.png
-
 #begin LevelLayout.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -247,6 +247,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MainMenu.png
+
+#begin MusicWaterfall.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:MusicWaterfall.wav
 
 #begin new_button.png
 /importer:TextureImporter
@@ -812,6 +818,12 @@
 /processorParam:TextureFormat=Color
 /build:Tile_RightverticalBlock.png
 
+#begin waterfall.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:waterfall.ogg
+
 #begin Waterfall200.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -823,4 +835,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Waterfall200.png
+
+#begin waterMusic.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:waterMusic.ogg
 

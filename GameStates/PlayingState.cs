@@ -3,6 +3,7 @@ using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 
 namespace BaseProject.GameStates
@@ -23,11 +24,11 @@ namespace BaseProject.GameStates
         Camera cam;
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
 
-
         private LevelManager levelManager;
 
         public PlayingState(Camera camera)
         {
+            GameEnvironment.AssetManager.PlayMusic("waterMusic");
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
             
@@ -102,6 +103,7 @@ namespace BaseProject.GameStates
         }
         public override void Update(GameTime gameTime)
         {
+            
             if (smallPlayer.CollidesWith(wall) && (!smallPlayer.Mirror))
             {
 
@@ -178,6 +180,7 @@ namespace BaseProject.GameStates
 
             CheckGameOver();
         }
+
         private void CheckGameOver()
         {
             return;
