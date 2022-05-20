@@ -19,7 +19,7 @@ public class BigPlayer : HeadPlayer
     public int livesPlayer;
 
     public bool holdingPlayer;
-    public BigPlayer(SmallPlayer smallPlayer) : base("player2")
+    public BigPlayer(SmallPlayer smallPlayer, PlayingState playingState) : base("player2", playingState)
     {
         origin = new Vector2(Center.X, Center.Y / 4);
         this.smallPlayer = smallPlayer;

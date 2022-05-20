@@ -9,16 +9,15 @@ using BaseProject.GameStates;
 //Dion
 public class SmallPlayer : HeadPlayer
 {
-    PlayingState state;
+   
     public bool canMove, beingHeld, hitLeftWall, hitRightWall, beingThrown;
 
     public Lives[] livesSmall;
     public Lives[] noLives;
     public int livesPlayer;
 
-    public SmallPlayer(PlayingState playingState) : base("Player")
+    public SmallPlayer(PlayingState playingState) : base("Player", playingState)
     {
-        state = playingState;
         origin = new Vector2(Center.X, Center.Y - Center.Y / 2);
 
         livesPlayer = 2;

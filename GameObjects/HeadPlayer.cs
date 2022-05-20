@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using BaseProject.GameStates;
+using BaseProject.GameObjects;
 
 namespace BaseProject
 {
@@ -27,16 +28,20 @@ namespace BaseProject
         public int knockbackForce = 100;
 
         public LevelManager levelManager;
+        VerticalPlatform verticalPlatform;
+        protected PlayingState state;
 
         protected Tile[,] WorldTiles { get; private set; }
         protected Level level;
-        
-        public HeadPlayer(string assetName) : base(assetName)
+
+        public HeadPlayer(string assetName, PlayingState playingState) : base(assetName)
         {
             position.Y = GameEnvironment.Screen.Y / 1.4f;
             position.X = 10;
             noLeft = false;
             noRight = false;
+            state = playingState;
+            verticalPlatform = playingState.verticalPlatform;
         }
 
         public override void Update(GameTime gameTime)
@@ -65,7 +70,7 @@ namespace BaseProject
                 right = false;
             }
 
-            
+
 
             base.Update(gameTime);
             velocity.Y += gravity;
@@ -73,6 +78,35 @@ namespace BaseProject
             {
                 velocity.X = 0;
             }
+           
+            CheckVerticalPlatformCollision();
+        }
+
+        public void CheckVerticalPlatformCollision()
+        {
+            var playerOrigin = Origin;
+            Origin = Center;
+
+            bool collidePlatformLeft = position.X + Width / 2 > verticalPlatform.Position.X - verticalPlatform.Width / 2;
+            bool collidePlatformRight = position.X - Width / 2 < verticalPlatform.Position.X + verticalPlatform.Width / 2;
+            bool collidePlatformTop = position.Y + Height/2 > verticalPlatform.Position.Y - verticalPlatform.Height/2;
+            bool collidePlatformBottom = position.Y - Height / 2 < verticalPlatform.Position.Y + verticalPlatform.Height / 2;
+
+           
+
+            if (collidePlatformLeft && collidePlatformRight && collidePlatformTop && collidePlatformBottom)
+            {
+                if (position.X + Width/2 == verticalPlatform.Position.X - verticalPlatform.Width/2 && verticalPlatform.movingLeft)
+                {
+                    position.X = (verticalPlatform.Position.X - verticalPlatform.Width / 2 + Width / 2) -1;
+                }
+            }
+
+
+
+
+
+            Origin = playerOrigin;
         }
 
         //Roep deze functie aan als de speler normaal springt en de waterval raakt,
@@ -110,7 +144,7 @@ namespace BaseProject
             velocity.Y *= -1;
             velocity.X *= -1;
         }
-        
+
         public void GoToNewLevel(Level lvl, Vector2 pos)
         {
             level = lvl;

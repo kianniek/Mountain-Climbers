@@ -19,6 +19,7 @@ namespace BaseProject.GameStates
         Button button;
         ButtonWall wall;
         Checkpoint cp;
+        public VerticalPlatform verticalPlatform;
 
         Camera cam;
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
@@ -30,14 +31,18 @@ namespace BaseProject.GameStates
         {
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
-            
+
+            verticalPlatform = new VerticalPlatform(300, 2);
+
             smallPlayer = new SmallPlayer(this);
-            bigPlayer = new BigPlayer(smallPlayer);
+            bigPlayer = new BigPlayer(smallPlayer, this);
 
             Add(bigPlayer.throwDirection);
 
             waterfalls = new GameObjectList();
             climbWall = new GameObjectList();
+
+            
 
 
             rocks = new GameObjectList();
@@ -72,6 +77,7 @@ namespace BaseProject.GameStates
             this.Add(cp);
             this.Add(rocks);
             this.Add(climbWall);
+            this.Add(verticalPlatform);
 
             //Small health
             for (int i = 0; i < smallPlayer.livesPlayer; i++)
