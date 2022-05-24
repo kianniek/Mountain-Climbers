@@ -115,6 +115,20 @@ namespace BaseProject.GameStates
                 playBackgroundMusic = false;
                 GameEnvironment.AssetManager.PlaySound("MusicWaterfall");
             }
+
+            //Losing live
+            if (smallPlayer.isDead)
+            {
+                smallPlayer.isDead = false;
+                smallPlayer.livesPlayer--;
+                smallPlayer.livesSmall[smallPlayer.livesPlayer].Visible = false; 
+            }
+            if (bigPlayer.isDead)
+            {
+                bigPlayer.isDead = false;   
+                bigPlayer.livesPlayer--;
+                bigPlayer.livesBig[bigPlayer.livesPlayer].Visible = false;
+            }
             
             if (smallPlayer.CollidesWith(wall) && (!smallPlayer.Mirror))
             {
