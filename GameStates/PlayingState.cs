@@ -179,11 +179,14 @@ namespace BaseProject.GameStates
             //Waterfalls
             foreach (Waterfall waterfall in waterfalls.Children)
             {
-                if (waterfall.CollidesWith(smallPlayer))
+                if (!smallPlayer.throwToWaterfall)
                 {
-                    smallPlayer.HitWaterfall();
+                    if (waterfall.CollidesWith(smallPlayer))
+                    {
+                        smallPlayer.HitWaterfall();
+                    }
                 }
-
+            
                 if (waterfall.CollidesWith(bigPlayer))
                 {
                     bigPlayer.HitWaterfall();

@@ -34,6 +34,7 @@ public class SmallPlayer : HeadPlayer
         {
             hitClimbWall = CollisonWithRope();// || CollisonWith(Tags.ClimebleWall);
             velocity.X = 0;
+            throwToWaterfall = false;
         }
 
         //Music jump
@@ -267,7 +268,7 @@ public class SmallPlayer : HeadPlayer
         position = grabPosition;
         canMove = false;
         beingHeld = true;
-
+        throwToWaterfall = true;
         //stand = false;
     }
 

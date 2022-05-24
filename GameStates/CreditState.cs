@@ -10,6 +10,7 @@ namespace BaseProject.GameStates
         backgroundMenu background;
         GameObjectList text;
         MenuButton button;
+        Title credit;
 
         bool playMusic = true;
         public CreditState()
@@ -17,16 +18,19 @@ namespace BaseProject.GameStates
             background = new backgroundMenu();
             Add(background);
 
-            text = new GameObjectList();
-            text.Add(new Names(new Vector2(0, -50), "This game is made by:"));
-            text.Add(new Names(new Vector2(50, 0), "Dreymium"));
-            text.Add(new Names(new Vector2(50, 50), "Kian"));
-            text.Add(new Names(new Vector2(50, 100), "Luuk"));
-            text.Add(new Names(new Vector2(50, 150), "Thimo"));
-            text.Add(new Names(new Vector2(50, 200), "Unknownymous"));
-            Add(text);
+            /*text = new GameObjectList();
+            text.Add(new Names(new Vector2(500, 3000), "This game is made by:"));
+            text.Add(new Names(new Vector2(50, 150), "Dreymium"));
+            text.Add(new Names(new Vector2(50, 200), "Kian"));
+            text.Add(new Names(new Vector2(50, 250), "Luuk"));
+            text.Add(new Names(new Vector2(50, 300), "Thimo"));
+            text.Add(new Names(new Vector2(50, 350), "Unknownymous"));
+            Add(text);*/
 
-            button = new MenuButton("teststart", new Vector2(-900, 100));
+            credit = new Title(new Vector2(-100, 600), "madeBy");
+            Add(credit);
+
+            button = new MenuButton("backbutton", new Vector2(-100, 1000));
             Add(button);
         }
         public override void Update(GameTime gameTime)
