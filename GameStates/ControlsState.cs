@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +9,8 @@ namespace BaseProject.GameStates
     {
         public ControlsState() : base()
         {
-            Add(new SpriteGameObject("CP"));
+            Add(new SpriteGameObject("MainMenu"));
+            
         }
 
 
