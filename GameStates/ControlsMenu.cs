@@ -8,17 +8,24 @@ namespace BaseProject.GameStates
     internal class ControlsMenu : GameObjectList
     {
         backgroundMenu background;
-        ControlsMenu controls;
-       
+        Controls controls;
+        MenuButton button;
 
-        
 
-        public ControlsMenu() : base()
+
+
+        public ControlsMenu() 
         {
             background = new backgroundMenu();
             Add(background);
 
-           
+            controls = new Controls();
+            Add(controls);
+
+            button = new MenuButton("backbutton", new Vector2(-600, 450));
+            button.Scale = 0.5f;
+           ;
+            Add(button);
 
 
 

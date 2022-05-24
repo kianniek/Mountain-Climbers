@@ -20,7 +20,7 @@ namespace BaseProject.GameStates
 
             /*text = new GameObjectList();
             text.Add(new Names(new Vector2(500, 3000), "This game is made by:"));
-            text.Add(new Names(new Vector2(50, 150), "Dreymium"));
+            text.Add(new Names(new Vector2(50, 150), "Dreymiun"));
             text.Add(new Names(new Vector2(50, 200), "Kian"));
             text.Add(new Names(new Vector2(50, 250), "Luuk"));
             text.Add(new Names(new Vector2(50, 300), "Thimo"));
