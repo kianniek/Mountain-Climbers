@@ -6,6 +6,8 @@ public class TextGameObject : GameObject
     protected SpriteFont spriteFont;
     protected Color color;
     protected string text;
+    protected float scale;
+    protected float rotation;
 
     public TextGameObject(string assetname, int layer = 0, string id = "")
         : base(layer, id)
@@ -18,7 +20,7 @@ public class TextGameObject : GameObject
     {
         if (visible)
         {
-            spriteBatch.DrawString(spriteFont, text, GlobalPosition, color);
+            spriteBatch.DrawString(spriteFont, text, GlobalPosition, color, rotation, Size / 2, scale, SpriteEffects.None, layer);
         }
     }
 
@@ -32,6 +34,16 @@ public class TextGameObject : GameObject
     {
         get { return text; }
         set { text = value; }
+    }
+    public float Scale
+    {
+        get { return scale; }
+        set { scale = value; }
+    }
+    public float Rotation
+    {
+        get { return rotation; }
+        set { rotation = value; }
     }
 
     public Vector2 Size

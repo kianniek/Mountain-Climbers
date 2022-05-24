@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
+using System.Linq;
 
 namespace BaseProject.GameStates
 {
@@ -20,7 +21,6 @@ namespace BaseProject.GameStates
         Button button;
         ButtonWall wall;
         Checkpoint cp;
-
         Camera cam;
 
         bool playBackgroundMusic = true;
@@ -38,6 +38,7 @@ namespace BaseProject.GameStates
 
             Add(bigPlayer.throwDirection);
 
+
             waterfalls = new GameObjectList();
             climbWall = new GameObjectList();
 
@@ -48,8 +49,6 @@ namespace BaseProject.GameStates
             button = new Button(smallPlayer, bigPlayer, wall);
 
             cp = new Checkpoint();
-
-            this.cam = camera;
 
 
             rocks.Add(new FallingRock("stone300", new Vector2(280, GameEnvironment.Screen.Y / 2 - 200)));
@@ -62,14 +61,16 @@ namespace BaseProject.GameStates
             //rocks.Add(new FallingRock("stone300", new Vector2(800, 0 - 300)));
             //climbWall.Add(new ClimbWall("Waterfall200", new Vector2(200, 500)));
 
-            this.Add(waterfalls);
-            this.Add(bigPlayer);
-            this.Add(smallPlayer);
-            this.Add(button);
-            this.Add(wall);
-            this.Add(cp);
-            this.Add(rocks);
-            this.Add(climbWall);
+            Add(waterfalls);
+            Add(bigPlayer);
+            Add(smallPlayer);
+            Add(bigPlayer.inputIndicator);
+            Add(smallPlayer.inputIndicator);
+            Add(button);
+            Add(wall);
+            Add(cp);
+            Add(rocks);
+            Add(climbWall);
 
             //Small health
             for (int i = 0; i < smallPlayer.livesPlayer; i++)
@@ -77,10 +78,9 @@ namespace BaseProject.GameStates
                 Lives liveOrange = new Lives("Hartje_oranje", new Vector2(40 * i - cameraUI_offset.X, 0));
                 smallPlayer.livesSmall[i] = liveOrange;
                 smallPlayer.noLives[i] = (new Lives("Hartje_leeg", new Vector2(40 * i - cameraUI_offset.X, 0)));
-                this.Add(smallPlayer.noLives[i]);
-                this.Add(smallPlayer.livesSmall[i]);
+                Add(smallPlayer.noLives[i]);
+                Add(smallPlayer.livesSmall[i]);
             }
-
 
             //Big health
             for (int i = 0; i < bigPlayer.livesPlayer; i++)
@@ -88,11 +88,9 @@ namespace BaseProject.GameStates
                 Lives liveGreen = new Lives("Hartje_groen", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
                 bigPlayer.livesBig[i] = liveGreen;
                 bigPlayer.noLives[i + bigPlayer.livesPlayer] = new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
-                this.Add(bigPlayer.noLives[i + bigPlayer.livesPlayer]);
-                this.Add(bigPlayer.livesBig[i]);
+                Add(bigPlayer.noLives[i + bigPlayer.livesPlayer]);
+                Add(bigPlayer.livesBig[i]);
             }
-
-
 
 
             levelManager = new LevelManager(bigPlayer, smallPlayer);
@@ -100,7 +98,6 @@ namespace BaseProject.GameStates
             smallPlayer.levelManager = levelManager;
             bigPlayer.levelManager = levelManager;
             Add(levelManager);
-
             cam = camera;
             cam.Pos = bigPlayer.Position;
         }
@@ -114,10 +111,7 @@ namespace BaseProject.GameStates
             
             if (smallPlayer.CollidesWith(wall) && (!smallPlayer.Mirror))
             {
-
-
                 smallPlayer.right = false;
-
             }
             else
                 smallPlayer.noRight = false;
@@ -222,102 +216,28 @@ namespace BaseProject.GameStates
                 GameEnvironment.GameStateManager.SwitchTo("StartState");
             }
         }
-        public void DropDownRope(CuttebleRope cuttebleRope)
-        {
-            if (!cuttebleRope.isOut)
-            {
-                int x = cuttebleRope.x;
-                int y = cuttebleRope.y;
-                Console.WriteLine(cuttebleRope.level.TileOnLocation(x + 1, y + 1) + "  " + cuttebleRope.level.TileOnLocation(x - 1, y + 1));
-                if (cuttebleRope.level.TileOnLocation(x - 1, y + 1))
-                {
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Rope rope;
-                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X + Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
-                        if (i == 0)
-                        {
-                            rope = new Rope("RopeConnectingLeft")
-                            {
-                                Position = ropePos
-                            };
-                            Add(rope);
-                        }
-                        else
-                        {
-                            rope = new Rope()
-                            {
-                                Position = ropePos
-                            };
-                            Add(rope);
-                        }
-                        levelManager.CurrentLevel().LevelObjects.Add(rope);
-                    }
-                }
-                else
-                if (!cuttebleRope.level.TileOnLocation(x + 1, y + 1))
-                {
 
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Rope rope;
-                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X - Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
-                        if (i == 0)
-                        {
-                            rope = new Rope("RopeConnectingRight")
-                            {
-                                Position = ropePos
-                            };
-                            Add(rope);
-                        }
-                        else
-                        {
-                            rope = new Rope()
-                            {
-                                Position = ropePos
-                            };
-                            Add(rope);
-                        }
-                        levelManager.CurrentLevel().LevelObjects.Add(rope);
-                    }
-                }
-                cuttebleRope.isOut = true;
-            }
-        }
 
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
 
-            if ((smallPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Keys.Space))
+            if (smallPlayer.CollidesWith(button))
             {
-                Console.WriteLine("lets go");
-
-            }
-
-            if ((bigPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Keys.Enter))
-            {
-                Console.WriteLine("alleen voor de grote spelers");
-            }
-
-            //Player with Rope Collision test
-            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
-            {
-                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
-                var tileType = obj.GetType();
-                if (tileType == typeof(CuttebleRope))
+                if (inputHelper.IsKeyDown(ButtonManager.Interact_SmallPlayer))
                 {
-                    if (smallPlayer.CollidesWith(obj) || bigPlayer.CollidesWith(obj))
-                    {
-                        if (inputHelper.KeyPressed(Keys.E))
-                        {
-                            CuttebleRope cuttebleRope = (CuttebleRope)levelManager.CurrentLevel().LevelObjects.Children[x];
-                            DropDownRope(cuttebleRope);
-                        }
-                    }
+                    Console.WriteLine("lets go");
+                }
+
+            }
+
+            if (bigPlayer.CollidesWith(button))
+            {
+                if (inputHelper.IsKeyDown(ButtonManager.Interact_Bigplayer))
+                {
+                    Console.WriteLine("alleen voor de grote spelers");
                 }
             }
-
         }
         void KeepPlayersCenterd()
         {
