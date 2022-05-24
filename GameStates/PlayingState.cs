@@ -69,6 +69,8 @@ namespace BaseProject.GameStates
             this.Add(waterfalls);
             this.Add(bigPlayer);
             this.Add(smallPlayer);
+            this.Add(bigPlayer.InputIndicator);
+            this.Add(smallPlayer.InputIndicator);
             this.Add(button);
             this.Add(wall);
             this.Add(cp);
@@ -300,25 +302,6 @@ namespace BaseProject.GameStates
             {
                 Console.WriteLine("alleen voor de grote spelers");
             }
-
-            //Player with Rope Collision test
-            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
-            {
-                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
-                var tileType = obj.GetType();
-                if (tileType == typeof(CuttebleRope))
-                {
-                    if (smallPlayer.CollidesWith(obj) || bigPlayer.CollidesWith(obj))
-                    {
-                        if (inputHelper.KeyPressed(Keys.E))
-                        {
-                            CuttebleRope cuttebleRope = (CuttebleRope)levelManager.CurrentLevel().LevelObjects.Children[x];
-                            DropDownRope(cuttebleRope);
-                        }
-                    }
-                }
-            }
-
         }
         void KeepPlayersCenterd()
         {
@@ -326,27 +309,27 @@ namespace BaseProject.GameStates
             Vector2 offsetFromCenter = new Vector2(10, 10);
             Vector2 moveAmount = Vector2.Zero;
             Vector2 camToScreenPos = new Vector2(Game1.Screen.X / 2 - offsetFromCenter.X - cam._transform.M41, Game1.Screen.Y / 2 - offsetFromCenter.Y - cam._transform.M42);
-
-            float falloff = Vector2.Distance(camToScreenPos, sharedPlayerPos) > 1 ? 1 : 0;
+            float distanceBetweenPlayer = Vector2.Distance(camToScreenPos, sharedPlayerPos);
+            float falloff = 0.5f;//distanceBetweenPlayer > 1 ? 1 : 0;
 
             if (camToScreenPos.X > sharedPlayerPos.X)
             {
-                moveAmount += Vector2.SmoothStep(moveAmount, -Vector2.UnitX, falloff);
+                moveAmount += Vector2.Lerp(moveAmount, -Vector2.UnitX, falloff);
             }
             else
             if (camToScreenPos.X < sharedPlayerPos.X)
             {
-                moveAmount += Vector2.SmoothStep(moveAmount, Vector2.UnitX, falloff);
+                moveAmount += Vector2.Lerp(moveAmount, Vector2.UnitX, falloff);
             }
 
             if (camToScreenPos.Y > sharedPlayerPos.Y)
             {
-                moveAmount += Vector2.SmoothStep(moveAmount, -Vector2.UnitY, falloff);
+                moveAmount += Vector2.Lerp(moveAmount, -Vector2.UnitY, falloff);
             }
             else
             if (camToScreenPos.Y < sharedPlayerPos.Y)
             {
-                moveAmount += Vector2.SmoothStep(moveAmount, Vector2.UnitY, falloff);
+                moveAmount += Vector2.Lerp(moveAmount, Vector2.UnitY, falloff);
             }
             //if (cam.Pos.X < GameEnvironment.Screen.X / 2)
             //{

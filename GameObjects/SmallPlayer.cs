@@ -146,6 +146,12 @@ public class SmallPlayer : HeadPlayer
             {
                 if (CollidesWith(obj))
                 {
+                    InputIndicator.Sprite = new SpriteSheet(ButtonManager.interract_Button);
+                    InputIndicator.Origin = InputIndicator.Center;
+                    InputIndicator.Scale = 0.5f;
+                    InputIndicator.Position = obj.Position - new Vector2(obj.Width / 2, obj.Height);
+                    InputIndicator.Visible = true;
+
                     return true;
                 }
             }
