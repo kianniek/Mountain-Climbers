@@ -233,6 +233,7 @@ public class BigPlayer : HeadPlayer
         if (inputHelper.KeyPressed(Keys.E))
         {
             holdingPlayer = false;
+            throwToWaterfall = true;
             //smallPlayer.stand = false;
             if (smallPlayer.CollidesWith(this))
             {
