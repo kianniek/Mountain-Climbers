@@ -4,7 +4,10 @@ using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using BaseProject.GameStates;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 public class BigPlayer : HeadPlayer
 {
@@ -18,11 +21,13 @@ public class BigPlayer : HeadPlayer
     public Lives[] noLives;
     public int livesPlayer;
 
-    public bool holdingPlayer;
-    public BigPlayer(SmallPlayer smallPlayer) : base("player2")
-    {
-        origin = new Vector2(Center.X, Center.Y / 4);
-        this.smallPlayer = smallPlayer;
+        public Vector2 buttonIndicatorPos;
+
+        public bool holdingPlayer;
+        public BigPlayer(Tile[,] worldTiles, SmallPlayer smallPlayer) : base("player2", worldTiles)
+        {
+            origin = new Vector2(Center.X, Center.Y / 4);
+            this.smallPlayer = smallPlayer;
 
         livesPlayer = 2;
         noLives = new Lives[livesPlayer * 2];
@@ -30,41 +35,34 @@ public class BigPlayer : HeadPlayer
         throwDirection = new ThrowDirection(this, smallPlayer);
     }
 
-    public override void Update(GameTime gameTime)
-    {
-        zPressed = false;
+        public override void Update(GameTime gameTime)
+        {
+            buttonIndicatorPos = position + new Vector2(0, Height / 2);
 
-        if (stand)
-        {
-            hitClimbWall = CollisonWithRope();// || CollisonWith(Tags.ClimebleWall);
-        }
-        if (holdingPlayer)
-        {
-            GrabPlayer();
-        }
-        else
-        {
-            smallPlayer.canMove = true;
-        }
-        directionIncrease = 3 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            zPressed = false;
 
-        if (holdingPlayer)
-        {
-            GrabPlayer();
-            if (smallPlayer.hitRightWall)
+            if (stand)
             {
-                right = false;
+                hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
             }
-            if (smallPlayer.hitLeftWall)
+
+            if (holdingPlayer)
             {
-                left = false;
+                GrabPlayer();
+                if (smallPlayer.hitRightWall)
+                {
+                    right = false;
+                }
+                if (smallPlayer.hitLeftWall)
+                {
+                    left = false;
+                }
             }
-        }
-        else
-        {
-            smallPlayer.canMove = true;
-            smallPlayer.beingHeld = false;
-        }
+            else
+            {
+                smallPlayer.canMove = true;
+                smallPlayer.beingHeld = false;
+            }
 
         //Jump sound
         if (jump && playJump)
@@ -203,66 +201,67 @@ public class BigPlayer : HeadPlayer
             Mirror = false;
             velocity.X = 100;
         }
-        if (inputHelper.IsKeyDown(Keys.LeftShift))
+        public override void HandleInput(InputHelper inputHelper)
         {
-            horizontalSpeed = sprintingSpeed;
-        }
-        else
-        {
-            horizontalSpeed = walkingSpeed;
-        }
+            base.HandleInput(inputHelper);
+            if (inputHelper.IsKeyDown(ButtonManager.Sprint_Bigplayer))
+            {
+                horizontalSpeed = sprintingSpeed;
+            }
+            else
+            {
+                horizontalSpeed = walkingSpeed;
+            }
 
         //Player is climbing the wall by hitting a climbing wall or rope and pressing Z
         if (hitClimbWall)
         {
             Climb();
 
-            if (inputHelper.IsKeyDown(Keys.W))
-            {
-                velocity.Y = -100;
+                if (inputHelper.IsKeyDown(ButtonManager.Jump_BigPlayer))
+                {
+                    velocity.Y = -100;
+                }
+                if (inputHelper.IsKeyDown(ButtonManager.Down_BigPlayer))
+                {
+                    velocity.Y = 100;
+                }
             }
-            if (inputHelper.IsKeyDown(Keys.S))
+            else
             {
-                velocity.Y = 100;
-            }
-        }
-        else
-        {
-            NotClimbing();
-        }
-        if (inputHelper.KeyPressed(Keys.E))
-        {
-            holdingPlayer = false;
-            //smallPlayer.stand = false;
-            if (smallPlayer.CollidesWith(this))
-            {
-                holdingPlayer = !holdingPlayer;
-                smallPlayer.stand = false;
-            }
-        }
+                NotClimbing();
 
-        if (holdingPlayer)
-        {
-            if (inputHelper.IsKeyDown(Keys.O))
-            {
-                throwDirection.DecreaseAngle(directionIncrease);
-            }
-            if (inputHelper.IsKeyDown(Keys.P))
-            {
-                throwDirection.IncreaseAngle(directionIncrease);
-            }
-            if (inputHelper.IsKeyDown(Keys.X))
-            {
-                throwDirection.ThrowPlayer();
             }
 
-        }
+            if (stand)
+            {
+                if (inputHelper.KeyPressed(ButtonManager.Jump_BigPlayer))
+                {
+                    stand = false;
+                    jump = true;
+                }
+                if (inputHelper.IsKeyDown(Keys.Z))
+                {
+                    zPressed = true;
+                }
+            }
 
+            if (inputHelper.KeyPressed(ButtonManager.Interact_Bigplayer))
+            {
+                holdingPlayer = false;
+                //smallPlayer.stand = false;
+                if (smallPlayer.CollidesWith(this))
+                {
+                    holdingPlayer = true;
+                }
+            }
 
-        if (stand)
-        {
-            playJump = true;
-            if (inputHelper.KeyPressed(Keys.W))
+            if (inputHelper.IsKeyDown(ButtonManager.Left_BigPlayer))
+            {
+                left = true;
+                Mirror = true;
+            }
+            if (inputHelper.IsKeyDown(ButtonManager.Right_BigPlayer))
             {
                 stand = false;
                 jump = true;
