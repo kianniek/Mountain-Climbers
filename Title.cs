@@ -5,12 +5,11 @@ using Microsoft.Xna.Framework;
 
 namespace BaseProject
 {
-    class Title : TextGameObject
+    class Title : SpriteGameObject
     {
-        public Title() : base("GameFont")
+        public Title(Vector2 titlePosition, string assetName) : base(assetName)
         {
-            color = Color.Black;
-            Text = "Climbing Heroes";
+            position = titlePosition;//new Vector2(-100, 600);
         }
     }
 }

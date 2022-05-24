@@ -12,7 +12,7 @@ namespace BaseProject
     {
         public bool isDead;
         public float gravity = 20f;
-        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight, climb, hitRock, hitWaterfall, hitRope, playJump, playWalk;
+        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight, climb, hitRock, hitWaterfall, hitRope, playJump, playWalk, throwToWaterfall;
 
         public static float JumpForce = 500;
         public float horizontalSpeed = 175;
@@ -54,6 +54,7 @@ namespace BaseProject
                 jump = false;
                 stand = false;
                 velocity.Y = -JumpForce;
+                throwToWaterfall = false;
             }
 
             if (left)
