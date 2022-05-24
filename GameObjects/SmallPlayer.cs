@@ -4,34 +4,31 @@ using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Linq;
-using System.Collections.Generic;
+using BaseProject.GameStates;
 
-namespace BaseProject
+//Dion
+public class SmallPlayer : HeadPlayer
 {
-    public class SmallPlayer : HeadPlayer
-    {
-        public bool canMove, beingHeld, hitLeftWall, hitRightWall;
+    PlayingState state;
+    public bool canMove, beingHeld, hitLeftWall, hitRightWall, beingThrown;
 
     public Lives[] livesSmall;
     public Lives[] noLives;
     public int livesPlayer;
 
-        public Vector2 buttonIndicatorPos;
+    public SmallPlayer(PlayingState playingState) : base("Player")
+    {
+        state = playingState;
+        origin = new Vector2(Center.X, Center.Y - Center.Y / 2);
 
-        public SmallPlayer(Tile[,] worldTiles) : base("Player", worldTiles)
-        {
+        livesPlayer = 2;
+        noLives = new Lives[livesPlayer * 2];
+        livesSmall = new Lives[livesPlayer];
+    }
 
-            origin = new Vector2(Center.X, Center.Y - Center.Y / 2);
-            livesPlayer = 2;
-            noLives = new Lives[livesPlayer * 2];
-            livesSmall = new Lives[livesPlayer];
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            buttonIndicatorPos = position + new Vector2(0, Height / 2);
-            mPressed = false;
+    public override void Update(GameTime gameTime)
+    {
+        mPressed = false;
 
         if (stand)
         {
@@ -134,38 +131,33 @@ namespace BaseProject
                         }
 
                     }
-
-                    if (tileType == typeof(ClimbWall))
-                    {
-
-                    }
-
                 }
-
             }
+
         }
-        public bool CollisonWithRope()
+    }
+    public bool CollisonWithRope()
+    {
+        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
-            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+            var tileType = obj.GetType();
+            if (tileType == typeof(Rope))
             {
-                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
-                var tileType = obj.GetType();
-                if (tileType == typeof(Rope))
+                if (CollidesWith(obj))
                 {
-                    if (CollidesWith(obj))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
-            return false;
         }
-        public void CollisonWithLevelObjecs()
+        return false;
+    }
+    public void CollisonWithLevelObjecs()
+    {
+        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
-            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
-            {
-                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
-                var tileType = obj.GetType();
+            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+            var tileType = obj.GetType();
 
             if (tileType == typeof(Rope))
             {
@@ -186,9 +178,9 @@ namespace BaseProject
     }
     public override void HandleInput(InputHelper inputHelper)
     {
- 
+
         base.HandleInput(inputHelper);
-        if(!beingThrown)
+        if (!beingThrown)
         {
             velocity.X = 0;
         }
@@ -220,66 +212,61 @@ namespace BaseProject
         }
         if (!state.bigPlayer.holdingPlayer)
         {
-            base.HandleInput(inputHelper);
-            if (inputHelper.IsKeyDown(ButtonManager.Sprint_SmallPlayer))
-            {
-                horizontalSpeed = sprintingSpeed;
-            }
-            else
-            {
-                horizontalSpeed = walkingSpeed;
-            }
-
-            //Small Player is climbing a wall
-            if (hitClimbWall)
-            {
-                Climb();
-
-
-                if (inputHelper.IsKeyDown(ButtonManager.Jump_SmallPlayer))
-                {
-                    velocity.Y = -100;
-                }
-                if (inputHelper.IsKeyDown(ButtonManager.Down_SmallPlayer))
-                {
-                    velocity.Y = 100;
-                }
-            }
-            else
-            {
-                NotClimbing();
-            }
-
-            if (stand)
-            {
-                if (inputHelper.KeyPressed(ButtonManager.Jump_SmallPlayer))
-                {
-                    //stand = false;
-                    jump = true;
-                }
-                if (inputHelper.IsKeyDown(Keys.M))
-                {
-                    mPressed = true;
-                }
-            }
-
-            if (inputHelper.IsKeyDown(ButtonManager.Left_SmallPlayer))
-            {
-                left = true;
-                Mirror = true;
-            }
-            if (inputHelper.IsKeyDown(ButtonManager.Right_SmallPlayer))
-            {
-                right = true;
-                Mirror = false;
-            }
+            beingHeld = false;
         }
-        internal void PickedUp(Vector2 grabPosition)
+        if (inputHelper.IsKeyDown(Keys.RightShift))
         {
-            velocity = Vector2.Zero;
-            position = grabPosition;
-            canMove = false;
-            beingHeld = true;
+            horizontalSpeed = sprintingSpeed;
         }
+        else
+        {
+            horizontalSpeed = walkingSpeed;
+        }
+        //Small Player is climbing a wall
+        if (hitClimbWall)
+        {
+            Climb();
+
+            if (inputHelper.IsKeyDown(Keys.Up))
+            {
+                velocity.Y = -100;
+            }
+            if (inputHelper.IsKeyDown(Keys.Down))
+            {
+                velocity.Y = 100;
+            }
+        }
+        else
+        {
+            NotClimbing();
+        }
+
+        if (stand)
+        {
+            playJump = false;
+            if (inputHelper.KeyPressed(Keys.Up))
+            {
+                //stand = false;
+                jump = true;
+            }
+            if (inputHelper.IsKeyDown(Keys.M))
+            {
+                mPressed = true;
+            }
+        }
+    }
+    internal void PickedUp(Vector2 grabPosition)
+    {
+        velocity = Vector2.Zero;
+        position = grabPosition;
+        canMove = false;
+        beingHeld = true;
+
+        //stand = false;
+    }
+
+    public void SetVelocity(Vector2 velocity)
+    {
+        this.velocity = velocity;
     }
 }
