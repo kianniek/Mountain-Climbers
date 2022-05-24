@@ -7,10 +7,24 @@ namespace BaseProject.GameStates
 {
     internal class ControlsMenu : GameObjectList
     {
+        backgroundMenu background;
+        ControlsMenu controls;
+       
+
+        
+
         public ControlsMenu() : base()
         {
-            Add(new SpriteGameObject("MainMenu"));
-            
+            background = new backgroundMenu();
+            Add(background);
+
+           
+
+
+
+
+
+
         }
 
 

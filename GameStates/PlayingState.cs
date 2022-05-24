@@ -297,15 +297,10 @@ namespace BaseProject.GameStates
         {
             base.HandleInput(inputHelper);
 
-            if ((smallPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Keys.Space))
+            if (inputHelper.IsKeyDown(Keys.Enter))
             {
-                Console.WriteLine("lets go");
+                GameEnvironment.GameStateManager.SwitchTo("ControlsMenu");
 
-            }
-
-            if ((bigPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Keys.Enter))
-            {
-                Console.WriteLine("alleen voor de grote spelers");
             }
 
             //Player with Rope Collision test
