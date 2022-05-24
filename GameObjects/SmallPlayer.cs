@@ -186,14 +186,14 @@ public class SmallPlayer : HeadPlayer
         }
         if (!beingHeld)
         {
-            if (inputHelper.IsKeyDown(Keys.Left))
+            if (inputHelper.IsKeyDown(ButtonManager.Left_SmallPlayer))
             {
                 left = true;
                 Mirror = true;
                 right = false;
                 velocity.X = -100;
             }
-            if (inputHelper.IsKeyDown(Keys.Right))
+            if (inputHelper.IsKeyDown(ButtonManager.Right_SmallPlayer))
             {
                 right = true;
                 Mirror = false;
@@ -204,7 +204,7 @@ public class SmallPlayer : HeadPlayer
         if (!beingHeld && stand)
         {
             playJump = true;
-            if (inputHelper.KeyPressed(Keys.Up))
+            if (inputHelper.KeyPressed(ButtonManager.Jump_SmallPlayer))
             {
                 //stand = false;
                 jump = true;
@@ -214,7 +214,7 @@ public class SmallPlayer : HeadPlayer
         {
             beingHeld = false;
         }
-        if (inputHelper.IsKeyDown(Keys.RightShift))
+        if (inputHelper.IsKeyDown(ButtonManager.Sprint_SmallPlayer))
         {
             horizontalSpeed = sprintingSpeed;
         }
@@ -227,11 +227,11 @@ public class SmallPlayer : HeadPlayer
         {
             Climb();
 
-            if (inputHelper.IsKeyDown(Keys.Up))
+            if (inputHelper.IsKeyDown(ButtonManager.Jump_SmallPlayer))
             {
                 velocity.Y = -100;
             }
-            if (inputHelper.IsKeyDown(Keys.Down))
+            if (inputHelper.IsKeyDown(ButtonManager.Down_SmallPlayer))
             {
                 velocity.Y = 100;
             }
@@ -244,7 +244,7 @@ public class SmallPlayer : HeadPlayer
         if (stand)
         {
             playJump = false;
-            if (inputHelper.KeyPressed(Keys.Up))
+            if (inputHelper.KeyPressed(ButtonManager.Jump_SmallPlayer))
             {
                 //stand = false;
                 jump = true;

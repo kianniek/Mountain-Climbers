@@ -187,7 +187,7 @@ public class BigPlayer : HeadPlayer
     {
         base.HandleInput(inputHelper);
         velocity.X = 0;
-        if (inputHelper.IsKeyDown(Keys.A))
+        if (inputHelper.IsKeyDown(ButtonManager.Left_BigPlayer))
         {
             left = true;
             right = false;
@@ -195,7 +195,7 @@ public class BigPlayer : HeadPlayer
             Mirror = true;
             velocity.X = -100;
         }
-        if (inputHelper.IsKeyDown(Keys.D))
+        if (inputHelper.IsKeyDown(ButtonManager.Right_BigPlayer))
         {
             right = true;
             left = false;
@@ -203,7 +203,7 @@ public class BigPlayer : HeadPlayer
             Mirror = false;
             velocity.X = 100;
         }
-        if (inputHelper.IsKeyDown(Keys.LeftShift))
+        if (inputHelper.IsKeyDown(ButtonManager.Sprint_Bigplayer))
         {
             horizontalSpeed = sprintingSpeed;
         }
@@ -217,11 +217,11 @@ public class BigPlayer : HeadPlayer
         {
             Climb();
 
-            if (inputHelper.IsKeyDown(Keys.W))
+            if (inputHelper.IsKeyDown(ButtonManager.Jump_BigPlayer))
             {
                 velocity.Y = -100;
             }
-            if (inputHelper.IsKeyDown(Keys.S))
+            if (inputHelper.IsKeyDown(ButtonManager.Down_BigPlayer))
             {
                 velocity.Y = 100;
             }
@@ -230,7 +230,7 @@ public class BigPlayer : HeadPlayer
         {
             NotClimbing();
         }
-        if (inputHelper.KeyPressed(Keys.E))
+        if (inputHelper.KeyPressed(ButtonManager.Interact_Bigplayer))
         {
             holdingPlayer = false;
             //smallPlayer.stand = false;
@@ -243,15 +243,15 @@ public class BigPlayer : HeadPlayer
 
         if (holdingPlayer)
         {
-            if (inputHelper.IsKeyDown(Keys.O))
+            if (inputHelper.IsKeyDown(ButtonManager.AimL_BigPlayer))
             {
                 throwDirection.DecreaseAngle(directionIncrease);
             }
-            if (inputHelper.IsKeyDown(Keys.P))
+            if (inputHelper.IsKeyDown(ButtonManager.AimR_BigPlayer))
             {
                 throwDirection.IncreaseAngle(directionIncrease);
             }
-            if (inputHelper.IsKeyDown(Keys.X))
+            if (inputHelper.IsKeyDown(ButtonManager.Throw_BigPlayer))
             {
                 throwDirection.ThrowPlayer();
             }
@@ -262,7 +262,7 @@ public class BigPlayer : HeadPlayer
         if (stand)
         {
             playJump = true;
-            if (inputHelper.KeyPressed(Keys.W))
+            if (inputHelper.KeyPressed(ButtonManager.Jump_BigPlayer))
             {
                 stand = false;
                 jump = true;
