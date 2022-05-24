@@ -13,12 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../../../OneDrive/Documents/Visual Studio programmeerwerk/Music Climbing Heroes/Sound_effects/walk.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:../../../../OneDrive/Documents/Visual Studio programmeerwerk/Music Climbing Heroes/Sound_effects/walk.wav;walk.wav
-
 #begin aimlijn.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -925,6 +919,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tile_RightverticalBlock.png
+
+#begin walk.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:walk.wav
+
+#begin walk.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:walk.wav
 
 #begin walk.wav
 /importer:WavImporter
