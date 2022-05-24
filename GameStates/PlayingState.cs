@@ -238,7 +238,7 @@ namespace BaseProject.GameStates
             if (inputHelper.IsKeyDown(Keys.Space))
             {
 
-                GameEnvironment.GameStateManager.SwitchTo("ControlsState");
+                GameEnvironment.GameStateManager.SwitchTo("ControlsMenu");
             }
 
             //Player with Rope Collision test

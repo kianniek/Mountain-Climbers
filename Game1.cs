@@ -18,7 +18,7 @@ namespace BaseProject
             GameStateManager.AddGameState("Credits", new CreditState());
             GameStateManager.AddGameState("LoadingState", new LoadingState());
             GameStateManager.AddGameState("PlayingState", new PlayingState(Camera));
-            GameStateManager.AddGameState("ControlsState", new ControlsState());
+            GameStateManager.AddGameState("ControlsMenu", new ControlsMenu());
             GameStateManager.SwitchTo("PlayingState");
             GameStateManager.SwitchTo("MainMenu");
             

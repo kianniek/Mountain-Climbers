@@ -5,9 +5,9 @@ using System.Text;
 
 namespace BaseProject.GameStates
 {
-    internal class ControlsState : GameObjectList
+    internal class ControlsMenu : GameObjectList
     {
-        public ControlsState() : base()
+        public ControlsMenu() : base()
         {
             Add(new SpriteGameObject("MainMenu"));
             
