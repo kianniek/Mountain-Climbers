@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BaseProject
 {
-    class FallingRock : SpriteGameObject
+    class FallingRock : RotatingSpriteGameObject
     {
         public bool fall, playFallMusic, closeByRock;
         public int fallingRockCount;
@@ -21,11 +21,14 @@ namespace BaseProject
             closeByRock = false;
             fallingRockCount = 240;
             gravity = 1.5f;
+            Origin = Center;
         }
 
         public override void Update(GameTime gameTime)
         {
             velocity.Y += gravity;
+
+            Angle += 0.1f;
 
             if (fall)
             {

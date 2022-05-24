@@ -42,6 +42,10 @@ namespace BaseProject.GameObjects
                     changeSprite = true;
                     Sprite = new SpriteSheet("RopeAnchorRight");
                 }
+                else
+                {
+                    Sprite = new SpriteSheet("RopeAnchorRight");
+                }
             }
         }
 
