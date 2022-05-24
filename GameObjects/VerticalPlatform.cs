@@ -19,20 +19,25 @@ namespace BaseProject.GameObjects
         {
             position = new Vector2(0, 300);
             this.moveDistance = moveDistance;
-            this.moveSpeed = moveSpeed;
+            this.moveSpeed = 100;// moveSpeed;
+            origin = new Vector2(Width/2, Height/2);
         }
 
         public override void Update(GameTime gameTime)
         {
+
+            base.Update(gameTime);
             if (positionDiff == 0)
             {
                 movingLeft = false;
                 movingRight = true;
+                velocity = new Vector2(moveSpeed, 0);
             }
             if (positionDiff == moveDistance)
             {
                 movingLeft = true;
                 movingRight = false;
+                velocity = new Vector2(-moveSpeed, 0);
             }
             MoveLeft();
             MoveRight();
@@ -42,8 +47,7 @@ namespace BaseProject.GameObjects
         {
             if (movingLeft)
             {
-                position.X -= moveSpeed;
-                positionDiff -= moveSpeed;
+                positionDiff--;
             }
         }
 
@@ -51,8 +55,7 @@ namespace BaseProject.GameObjects
         {
             if (movingRight)
             {
-                position.X += moveSpeed;
-                positionDiff += moveSpeed;
+                positionDiff++;
             }
         }
     }

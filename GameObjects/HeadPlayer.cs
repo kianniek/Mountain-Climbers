@@ -29,6 +29,7 @@ namespace BaseProject
 
         public LevelManager levelManager;
         VerticalPlatform verticalPlatform;
+        bool bVerticalPlatformTouchingPlayer = false;
         protected PlayingState state;
 
         protected Tile[,] WorldTiles { get; private set; }
@@ -70,43 +71,83 @@ namespace BaseProject
                 right = false;
             }
 
+            //var playerOrigin = Origin;
+            //Origin = Center;
+
+            if (bVerticalPlatformTouchingPlayer)
+            {
+                var mx = (Position.X - verticalPlatform.Position.X);
+                var my = (Position.Y - verticalPlatform.Position.Y);
+                if (Math.Abs(mx) > Math.Abs(my))
+                {
+                    if (mx > 0)
+                    {
+                        position += (velocity + verticalPlatform.Velocity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    }
+
+                    if (mx < 0)
+                    {
+                        position += (velocity + verticalPlatform.Velocity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    }
+                }
+                else 
+                {
+                    if (my > 0)
+                    {
+                        //komt van onder
+                        velocity.Y = 0;
+                        position.Y += 1;
+                    }
+
+                    if (my < 0)
+                    {
+                        //komt van boven
+                        velocity.Y = 0;
+                        //position.Y -= (verticalPlatform.Height/2);
+                        position.Y = (verticalPlatform.Position.Y - verticalPlatform.Height / 2) - Origin.Y;
+                    }
+                }  
+            }
+            else
+            {
+                base.Update(gameTime);
+            }
+            //Origin = playerOrigin;
 
 
-            base.Update(gameTime);
+
             velocity.Y += gravity;
             if (stand)
             {
                 velocity.X = 0;
             }
-           
+
+            bVerticalPlatformTouchingPlayer = false;
+
             CheckVerticalPlatformCollision();
         }
 
         public void CheckVerticalPlatformCollision()
         {
-            var playerOrigin = Origin;
-            Origin = Center;
+            //var playerOrigin = Origin;
+            //Origin = Center;
 
-            bool collidePlatformLeft = position.X + Width / 2 > verticalPlatform.Position.X - verticalPlatform.Width / 2;
+            bVerticalPlatformTouchingPlayer = CollidesWith(verticalPlatform);
+
+            /*bool collidePlatformLeft = position.X + Width / 2 > verticalPlatform.Position.X - verticalPlatform.Width / 2;
             bool collidePlatformRight = position.X - Width / 2 < verticalPlatform.Position.X + verticalPlatform.Width / 2;
-            bool collidePlatformTop = position.Y + Height/2 > verticalPlatform.Position.Y - verticalPlatform.Height/2;
+            bool collidePlatformTop = position.Y + Height / 2 > verticalPlatform.Position.Y - verticalPlatform.Height / 2;
             bool collidePlatformBottom = position.Y - Height / 2 < verticalPlatform.Position.Y + verticalPlatform.Height / 2;
 
-           
+
 
             if (collidePlatformLeft && collidePlatformRight && collidePlatformTop && collidePlatformBottom)
             {
-                if (position.X + Width/2 == verticalPlatform.Position.X - verticalPlatform.Width/2 && verticalPlatform.movingLeft)
-                {
-                    position.X = (verticalPlatform.Position.X - verticalPlatform.Width / 2 + Width / 2) -1;
-                }
-            }
+                bVerticalPlatformTouchingPlayer = true;
+                Console.WriteLine("Collide");
+            }*/
 
-
-
-
-
-            Origin = playerOrigin;
+           //Origin = playerOrigin;
         }
 
         //Roep deze functie aan als de speler normaal springt en de waterval raakt,
