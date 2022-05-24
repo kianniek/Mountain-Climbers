@@ -30,21 +30,16 @@ namespace BaseProject.GameObjects
 
             if (isOut && !changeSprite)
             {
-                changeSprite = true;
-                if (level.TileOnLocation(x - 1, y + 1))
+                if(level.TileOnLocation(x-1, y+1))
                 {
                     //left
                     changeSprite = true;
                     Sprite = new SpriteSheet("RopeAnchorLeft");
                 }
-                else if (level.TileOnLocation(x + 1, y + 1))
+                else if(level.TileOnLocation(x + 1, y + 1))
                 {
                     //right
                     changeSprite = true;
-                    Sprite = new SpriteSheet("RopeAnchorRight");
-                }
-                else
-                {
                     Sprite = new SpriteSheet("RopeAnchorRight");
                 }
             }

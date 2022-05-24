@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 public class BigPlayer : HeadPlayer
@@ -20,8 +19,6 @@ public class BigPlayer : HeadPlayer
     public Lives[] livesBig;
     public Lives[] noLives;
     public int livesPlayer;
-
-        public Vector2 buttonIndicatorPos;
 
         public bool holdingPlayer;
         public BigPlayer(Tile[,] worldTiles, SmallPlayer smallPlayer) : base("player2", worldTiles)
@@ -37,13 +34,17 @@ public class BigPlayer : HeadPlayer
 
         public override void Update(GameTime gameTime)
         {
-            buttonIndicatorPos = position + new Vector2(0, Height / 2);
-
             zPressed = false;
 
             if (stand)
             {
                 hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
+            }
+
+
+            if (CollisonWith(Tags.Lava))
+            {
+                position = LastSavedPos;
             }
 
             if (holdingPlayer)
@@ -204,7 +205,7 @@ public class BigPlayer : HeadPlayer
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            if (inputHelper.IsKeyDown(ButtonManager.Sprint_Bigplayer))
+            if (inputHelper.IsKeyDown(Keys.LeftShift))
             {
                 horizontalSpeed = sprintingSpeed;
             }
@@ -218,11 +219,11 @@ public class BigPlayer : HeadPlayer
         {
             Climb();
 
-                if (inputHelper.IsKeyDown(ButtonManager.Jump_BigPlayer))
+                if (inputHelper.IsKeyDown(Keys.W))
                 {
                     velocity.Y = -100;
                 }
-                if (inputHelper.IsKeyDown(ButtonManager.Down_BigPlayer))
+                if (inputHelper.IsKeyDown(Keys.S))
                 {
                     velocity.Y = 100;
                 }
@@ -235,7 +236,7 @@ public class BigPlayer : HeadPlayer
 
             if (stand)
             {
-                if (inputHelper.KeyPressed(ButtonManager.Jump_BigPlayer))
+                if (inputHelper.KeyPressed(Keys.W))
                 {
                     stand = false;
                     jump = true;
@@ -246,7 +247,7 @@ public class BigPlayer : HeadPlayer
                 }
             }
 
-            if (inputHelper.KeyPressed(ButtonManager.Interact_Bigplayer))
+            if (inputHelper.KeyPressed(Keys.E))
             {
                 holdingPlayer = false;
                 //smallPlayer.stand = false;
@@ -256,12 +257,12 @@ public class BigPlayer : HeadPlayer
                 }
             }
 
-            if (inputHelper.IsKeyDown(ButtonManager.Left_BigPlayer))
+            if (inputHelper.IsKeyDown(Keys.A))
             {
                 left = true;
                 Mirror = true;
             }
-            if (inputHelper.IsKeyDown(ButtonManager.Right_BigPlayer))
+            if (inputHelper.IsKeyDown(Keys.D))
             {
                 stand = false;
                 jump = true;
