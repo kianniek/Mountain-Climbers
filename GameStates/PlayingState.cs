@@ -22,13 +22,14 @@ namespace BaseProject.GameStates
         Checkpoint cp;
 
         Camera cam;
+
+        bool playBackgroundMusic = true;
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
 
         private LevelManager levelManager;
 
         public PlayingState(Camera camera)
         {
-            GameEnvironment.AssetManager.PlaySound("MusicWaterfall");
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
             
@@ -51,10 +52,6 @@ namespace BaseProject.GameStates
 
             rocks.Add(new FallingRock("stone300", new Vector2(280, GameEnvironment.Screen.Y / 2 - 200)));
             rocks.Add(new FallingRock("stone300", new Vector2(800, 300)));
-
-
-
-
 
             //Test
             waterfalls.Add(new Waterfall(new Vector2(1100, 550)));
@@ -107,6 +104,11 @@ namespace BaseProject.GameStates
         }
         public override void Update(GameTime gameTime)
         {
+            if (playBackgroundMusic)
+            {
+                playBackgroundMusic = false;
+                GameEnvironment.AssetManager.PlaySound("MusicWaterfall");
+            }
             
             if (smallPlayer.CollidesWith(wall) && (!smallPlayer.Mirror))
             {
@@ -131,6 +133,19 @@ namespace BaseProject.GameStates
             //Falling Rocks
             foreach (FallingRock rock in rocks.Children)
             {
+                Vector2 rockSmallPlayer = rock.Position - smallPlayer.Position;
+                Vector2 rockBigPlayer = rock.Position - bigPlayer.Position;
+
+                //Music is playing when both player distances < 30
+                if (rockSmallPlayer.X < 30 || rockBigPlayer.X < 30)
+                {
+                    rock.closeByRock = true;
+                }
+                else
+                {
+                    rock.closeByRock = false;
+                }
+
                 //Resets rock if rock is off screen
                 if (rock.Position.Y > GameEnvironment.Screen.Y - cam._transform.M42)
                 {
@@ -140,17 +155,11 @@ namespace BaseProject.GameStates
                 //Rock hits one of the players and that causes knockback
                 if (rock.CollidesWith(smallPlayer))
                 {
-                    //smallPlayer.hitRock = true;
                     smallPlayer.knockback = true;
                 }
-                //else
-                //{
-                    //smallPlayer.hitRock = false;
-                //}
 
                 if (rock.CollidesWith(bigPlayer))
                 {
-                    //bigPlayer.hitRock = true;
                     bigPlayer.knockback = true;
                 }
                 else

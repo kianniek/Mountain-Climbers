@@ -31,6 +31,12 @@
 /processorParam:TextureFormat=Color
 /build:aimlijn.png
 
+#begin clap.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:clap.wav
+
 #begin CP.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -42,6 +48,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:CP.png
+
+#begin cr.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:cr.png
 
 #begin CrumbelingBlock.png
 /importer:TextureImporter
@@ -78,6 +96,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:DarkForestBackground.png
+
+#begin falling.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:falling.wav
 
 #begin FirstMapTest.png
 /importer:TextureImporter
@@ -133,6 +157,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Hartje_oranje.png
+
+#begin intro.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:intro.wav
 
 #begin jump.wav
 /importer:WavImporter
@@ -271,6 +301,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MainMenu.png
+
+#begin mountains.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:mountains.png
+
+#begin mountains_juiste.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:mountains_juiste.png
 
 #begin MusicWaterfall.wav
 /importer:WavImporter
@@ -530,6 +584,18 @@
 /processorParam:TextureFormat=Color
 /build:SNES_Start.png
 
+#begin start.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:start.png
+
 #begin step.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -583,6 +649,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Switch_Y.png
+
+#begin teststart.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:teststart.png
 
 #begin testWall.png
 /importer:TextureImporter

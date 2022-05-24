@@ -7,7 +7,7 @@ namespace BaseProject
 {
     class FallingRock : SpriteGameObject
     {
-        public bool fall;
+        public bool fall, playFallMusic, closeByRock;
         public int fallingRockCount;
         float gravity;
         Vector2 resetPosition;
@@ -18,6 +18,7 @@ namespace BaseProject
             Reset();
             velocity.Y = 100;
             fall = false;
+            closeByRock = false;
             fallingRockCount = 240;
             gravity = 1.5f;
         }
@@ -37,6 +38,12 @@ namespace BaseProject
                 fall = false;
             }
 
+            if (playFallMusic && closeByRock)
+            {
+                playFallMusic = false;
+                GameEnvironment.AssetManager.PlaySound("falling");
+            }
+
             base.Update(gameTime);
         }
 
@@ -46,6 +53,7 @@ namespace BaseProject
             velocity.Y = 100;
             position = resetPosition;
             visible = true;
+            playFallMusic = true;
             base.Reset();
         }
     }
