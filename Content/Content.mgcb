@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:aimlijn.png
 
+#begin backbutton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:backbutton.png
+
 #begin ButtonPrompts/SNES_A.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -439,6 +451,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:LevelLayout.png
+
+#begin madeBy.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:madeBy.png
 
 #begin MainMenu.png
 /importer:TextureImporter
@@ -943,6 +967,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tile_RightverticalBlock.png
+
+#begin titleGame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:titleGame.png
 
 #begin walk.wav
 /importer:WavImporter

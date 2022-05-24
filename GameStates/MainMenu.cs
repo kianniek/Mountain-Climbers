@@ -19,10 +19,10 @@ namespace BaseProject.GameStates
             background = new backgroundMenu();
             Add(background);
 
-            title = new Title();
+            title = new Title(new Vector2(-100, 600), "titleGame");
             Add(title);
 
-            startButton = new MenuButton("teststart", new Vector2(-1400, 100));
+            startButton = new MenuButton("teststart", new Vector2(-1100, 825));
             Add(startButton);
 
             creditsButton = new CreditsButton();
@@ -36,11 +36,11 @@ namespace BaseProject.GameStates
         {
             base.HandleInput(inputHelper);
 
-            if (select.Position.X == -700 && select.Position.Y == 530 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
+            if (select.Position.X == -400 && select.Position.Y == 1250 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
             {
                 GameEnvironment.GameStateManager.SwitchTo("LoadingState");
             }
-            if (select.Position.X == 380 && select.Position.Y == 530 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
+            if (select.Position.X == 700 && select.Position.Y == 1250 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
             {
                 GameEnvironment.GameStateManager.SwitchTo("Credits");
             }
