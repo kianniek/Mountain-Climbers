@@ -1,5 +1,6 @@
 ﻿using System;
 using BaseProject.Engine;
+using BaseProject.GameObjects;
 
 namespace BaseProject.GameStates
 {
@@ -8,7 +9,7 @@ namespace BaseProject.GameStates
         
         public Level1(string levelSprite, BigPlayer bigPlayer, SmallPlayer smallPlayer) : base(levelSprite, bigPlayer, smallPlayer)
         {
-            
+
         }
 
         protected override void SetupLevel()

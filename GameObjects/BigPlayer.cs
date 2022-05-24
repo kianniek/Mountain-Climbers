@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BaseProject
@@ -15,6 +16,8 @@ namespace BaseProject
         public Lives[] livesBig;
         public Lives[] noLives;
         public int livesPlayer;
+
+        public Vector2 buttonIndicatorPos;
 
         public bool holdingPlayer;
         public BigPlayer(Tile[,] worldTiles, SmallPlayer smallPlayer) : base("player2", worldTiles)
@@ -29,17 +32,13 @@ namespace BaseProject
 
         public override void Update(GameTime gameTime)
         {
+            buttonIndicatorPos = position + new Vector2(0, Height / 2);
+
             zPressed = false;
 
             if (stand)
             {
                 hitClimbWall = CollisonWithRope() || CollisonWith(Tags.ClimebleWall);
-            }
-
-
-            if (CollisonWith(Tags.Lava))
-            {
-                position = LastSavedPos;
             }
 
             if (holdingPlayer)
@@ -177,7 +176,7 @@ namespace BaseProject
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            if (inputHelper.IsKeyDown(Keys.LeftShift))
+            if (inputHelper.IsKeyDown(ButtonManager.Sprint_Bigplayer))
             {
                 horizontalSpeed = sprintingSpeed;
             }
@@ -191,11 +190,11 @@ namespace BaseProject
             {
                 Climb();
 
-                if (inputHelper.IsKeyDown(Keys.W))
+                if (inputHelper.IsKeyDown(ButtonManager.Jump_BigPlayer))
                 {
                     velocity.Y = -100;
                 }
-                if (inputHelper.IsKeyDown(Keys.S))
+                if (inputHelper.IsKeyDown(ButtonManager.Down_BigPlayer))
                 {
                     velocity.Y = 100;
                 }
@@ -208,7 +207,7 @@ namespace BaseProject
 
             if (stand)
             {
-                if (inputHelper.KeyPressed(Keys.W))
+                if (inputHelper.KeyPressed(ButtonManager.Jump_BigPlayer))
                 {
                     stand = false;
                     jump = true;
@@ -219,7 +218,7 @@ namespace BaseProject
                 }
             }
 
-            if (inputHelper.KeyPressed(Keys.E))
+            if (inputHelper.KeyPressed(ButtonManager.Interact_Bigplayer))
             {
                 holdingPlayer = false;
                 //smallPlayer.stand = false;
@@ -229,12 +228,12 @@ namespace BaseProject
                 }
             }
 
-            if (inputHelper.IsKeyDown(Keys.A))
+            if (inputHelper.IsKeyDown(ButtonManager.Left_BigPlayer))
             {
                 left = true;
                 Mirror = true;
             }
-            if (inputHelper.IsKeyDown(Keys.D))
+            if (inputHelper.IsKeyDown(ButtonManager.Right_BigPlayer))
             {
                 right = true;
                 Mirror = false;
