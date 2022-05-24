@@ -3,7 +3,9 @@ using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
+using System.Linq;
 
 namespace BaseProject.GameStates
 {
@@ -19,10 +21,10 @@ namespace BaseProject.GameStates
         Button button;
         ButtonWall wall;
         Checkpoint cp;
-
         Camera cam;
-        Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
 
+        bool playBackgroundMusic = true;
+        Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
 
         private LevelManager levelManager;
 
@@ -36,6 +38,7 @@ namespace BaseProject.GameStates
 
             Add(bigPlayer.throwDirection);
 
+
             waterfalls = new GameObjectList();
             climbWall = new GameObjectList();
 
@@ -47,15 +50,9 @@ namespace BaseProject.GameStates
 
             cp = new Checkpoint(smallPlayer, bigPlayer);
 
-            this.cam = camera;
-
 
             rocks.Add(new FallingRock("stone300", new Vector2(280, GameEnvironment.Screen.Y / 2 - 200)));
             rocks.Add(new FallingRock("stone300", new Vector2(800, 300)));
-
-
-
-
 
             //Test
             waterfalls.Add(new Waterfall(new Vector2(1100, 550)));
@@ -64,14 +61,16 @@ namespace BaseProject.GameStates
             //rocks.Add(new FallingRock("stone300", new Vector2(800, 0 - 300)));
             //climbWall.Add(new ClimbWall("Waterfall200", new Vector2(200, 500)));
 
-            this.Add(waterfalls);
-            this.Add(bigPlayer);
-            this.Add(smallPlayer);
-            this.Add(button);
-            this.Add(wall);
-            this.Add(cp);
-            this.Add(rocks);
-            this.Add(climbWall);
+            Add(waterfalls);
+            Add(bigPlayer);
+            Add(smallPlayer);
+            Add(bigPlayer.inputIndicator);
+            Add(smallPlayer.inputIndicator);
+            Add(button);
+            Add(wall);
+            Add(cp);
+            Add(rocks);
+            Add(climbWall);
 
             //Small health
             for (int i = 0; i < smallPlayer.livesPlayer; i++)
@@ -79,10 +78,9 @@ namespace BaseProject.GameStates
                 Lives liveOrange = new Lives("Hartje_oranje", new Vector2(40 * i - cameraUI_offset.X, 0));
                 smallPlayer.livesSmall[i] = liveOrange;
                 smallPlayer.noLives[i] = (new Lives("Hartje_leeg", new Vector2(40 * i - cameraUI_offset.X, 0)));
-                this.Add(smallPlayer.noLives[i]);
-                this.Add(smallPlayer.livesSmall[i]);
+                Add(smallPlayer.noLives[i]);
+                Add(smallPlayer.livesSmall[i]);
             }
-
 
             //Big health
             for (int i = 0; i < bigPlayer.livesPlayer; i++)
@@ -90,11 +88,9 @@ namespace BaseProject.GameStates
                 Lives liveGreen = new Lives("Hartje_groen", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
                 bigPlayer.livesBig[i] = liveGreen;
                 bigPlayer.noLives[i + bigPlayer.livesPlayer] = new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
-                this.Add(bigPlayer.noLives[i + bigPlayer.livesPlayer]);
-                this.Add(bigPlayer.livesBig[i]);
+                Add(bigPlayer.noLives[i + bigPlayer.livesPlayer]);
+                Add(bigPlayer.livesBig[i]);
             }
-
-
 
 
             levelManager = new LevelManager(bigPlayer, smallPlayer);
@@ -102,18 +98,20 @@ namespace BaseProject.GameStates
             smallPlayer.levelManager = levelManager;
             bigPlayer.levelManager = levelManager;
             Add(levelManager);
-
             cam = camera;
             cam.Pos = bigPlayer.Position;
         }
         public override void Update(GameTime gameTime)
         {
+            if (playBackgroundMusic)
+            {
+                playBackgroundMusic = false;
+                GameEnvironment.AssetManager.PlaySound("MusicWaterfall");
+            }
+            
             if (smallPlayer.CollidesWith(wall) && (!smallPlayer.Mirror))
             {
-
-
                 smallPlayer.right = false;
-
             }
             else
                 smallPlayer.noRight = false;
@@ -138,6 +136,19 @@ namespace BaseProject.GameStates
             //Falling Rocks
             foreach (FallingRock rock in rocks.Children)
             {
+                Vector2 rockSmallPlayer = rock.Position - smallPlayer.Position;
+                Vector2 rockBigPlayer = rock.Position - bigPlayer.Position;
+
+                //Music is playing when both player distances < 30
+                if (rockSmallPlayer.X < 30 || rockBigPlayer.X < 30)
+                {
+                    rock.closeByRock = true;
+                }
+                else
+                {
+                    rock.closeByRock = false;
+                }
+
                 //Resets rock if rock is off screen
                 if (rock.Position.Y > GameEnvironment.Screen.Y - cam._transform.M42)
                 {
@@ -147,18 +158,12 @@ namespace BaseProject.GameStates
                 //Rock hits one of the players and that causes knockback
                 if (rock.CollidesWith(smallPlayer))
                 {
-                    smallPlayer.hitRock = true;
-                    smallPlayer.Knockback();
-                }
-                else
-                {
-                    smallPlayer.hitRock = false;
+                    smallPlayer.knockback = true;
                 }
 
                 if (rock.CollidesWith(bigPlayer))
                 {
-                    bigPlayer.hitRock = true;
-                    bigPlayer.Knockback();
+                    bigPlayer.knockback = true;
                 }
                 else
                 {
@@ -183,6 +188,7 @@ namespace BaseProject.GameStates
 
             CheckGameOver();
         }
+
         private void CheckGameOver()
         {
             if (smallPlayer.Position.Y > GameEnvironment.Screen.Y - cam._transform.M42)
@@ -214,78 +220,19 @@ namespace BaseProject.GameStates
                 
             }
         }
-        public void DropDownRope(CuttebleRope cuttebleRope)
-        {
-            if (!cuttebleRope.isOut)
-            {
-                int x = cuttebleRope.x;
-                int y = cuttebleRope.y;
-                Console.WriteLine(cuttebleRope.level.TileOnLocation(x + 1, y + 1) + "  " + cuttebleRope.level.TileOnLocation(x - 1, y + 1));
-                if (cuttebleRope.level.TileOnLocation(x - 1, y + 1))
-                {
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Rope rope;
-                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X + Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
-                        if (i == 0)
-                        {
-                            rope = new Rope("RopeConnectingLeft")
-                            {
-                                Position = ropePos
-                            };
-                            Add(rope);
-                        }
-                        else
-                        {
-                            rope = new Rope()
-                            {
-                                Position = ropePos
-                            };
-                            Add(rope);
-                        }
-                        levelManager.CurrentLevel().LevelObjects.Add(rope);
-                    }
-                }
-                else
-                if (!cuttebleRope.level.TileOnLocation(x + 1, y + 1))
-                {
 
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Rope rope;
-                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X - Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
-                        if (i == 0)
-                        {
-                            rope = new Rope("RopeConnectingRight")
-                            {
-                                Position = ropePos
-                            };
-                            Add(rope);
-                        }
-                        else
-                        {
-                            rope = new Rope()
-                            {
-                                Position = ropePos
-                            };
-                            Add(rope);
-                        }
-                        levelManager.CurrentLevel().LevelObjects.Add(rope);
-                    }
-                }
-                cuttebleRope.isOut = true;
-            }
-        }
 
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
 
-            
-
-            if ((bigPlayer.CollidesWith(button)) && inputHelper.IsKeyDown(Keys.Enter))
+            if (smallPlayer.CollidesWith(button))
             {
-                Console.WriteLine("alleen voor de grote spelers");
+                if (inputHelper.IsKeyDown(ButtonManager.Interact_SmallPlayer))
+                {
+                    Console.WriteLine("lets go");
+                }
+
             }
 
             if (inputHelper.IsKeyDown(Keys.Space))
@@ -311,7 +258,6 @@ namespace BaseProject.GameStates
                     }
                 }
             }
-
         }
         void KeepPlayersCenterd()
         {

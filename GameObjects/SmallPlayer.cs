@@ -4,31 +4,34 @@ using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using BaseProject.GameStates;
+using System.Linq;
+using System.Collections.Generic;
 
-//Dion
-public class SmallPlayer : HeadPlayer
+namespace BaseProject
 {
-    PlayingState state;
-    public bool canMove, beingHeld, hitLeftWall, hitRightWall, beingThrown;
+    public class SmallPlayer : HeadPlayer
+    {
+        public bool canMove, beingHeld, hitLeftWall, hitRightWall;
 
     public Lives[] livesSmall;
     public Lives[] noLives;
     public int livesPlayer;
 
-    public SmallPlayer(PlayingState playingState) : base("Player")
-    {
-        state = playingState;
-        origin = new Vector2(Center.X, Center.Y - Center.Y / 2);
+        public Vector2 buttonIndicatorPos;
 
-        livesPlayer = 2;
-        noLives = new Lives[livesPlayer * 2];
-        livesSmall = new Lives[livesPlayer];
-    }
+        public SmallPlayer(Tile[,] worldTiles) : base("Player", worldTiles)
+        {
 
-    public override void Update(GameTime gameTime)
-    {
-        mPressed = false;
+            origin = new Vector2(Center.X, Center.Y - Center.Y / 2);
+            livesPlayer = 2;
+            noLives = new Lives[livesPlayer * 2];
+            livesSmall = new Lives[livesPlayer];
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            buttonIndicatorPos = position + new Vector2(0, Height / 2);
+            mPressed = false;
 
         if (stand)
         {
@@ -36,9 +39,22 @@ public class SmallPlayer : HeadPlayer
             velocity.X = 0;
         }
 
-        if(beingThrown && stand)
+        //Music jump
+        if (jump)
         {
-            beingThrown = false;
+            playJump = false;
+            GameEnvironment.AssetManager.PlaySound("jump");
+        }
+
+        //Music walk
+        if (left && !jump && musicCounter == 30 && !right)
+        {
+            playWalk = false;
+            GameEnvironment.AssetManager.PlaySound("step");
+        }
+        if (right && !jump && musicCounter == 30 && !left)
+        {
+            GameEnvironment.AssetManager.PlaySound("step");
         }
 
         CollisonWithLevelObjecs();
@@ -118,33 +134,38 @@ public class SmallPlayer : HeadPlayer
                         }
 
                     }
-                }
-            }
 
-        }
-    }
-    public bool CollisonWithRope()
-    {
-        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
-        {
-            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
-            var tileType = obj.GetType();
-            if (tileType == typeof(Rope))
-            {
-                if (CollidesWith(obj))
-                {
-                    return true;
+                    if (tileType == typeof(ClimbWall))
+                    {
+
+                    }
+
                 }
+
             }
         }
-        return false;
-    }
-    public void CollisonWithLevelObjecs()
-    {
-        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+        public bool CollisonWithRope()
         {
-            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
-            var tileType = obj.GetType();
+            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            {
+                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+                var tileType = obj.GetType();
+                if (tileType == typeof(Rope))
+                {
+                    if (CollidesWith(obj))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        public void CollisonWithLevelObjecs()
+        {
+            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            {
+                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+                var tileType = obj.GetType();
 
             if (tileType == typeof(Rope))
             {
@@ -190,6 +211,7 @@ public class SmallPlayer : HeadPlayer
         }
         if (!beingHeld && stand)
         {
+            playJump = true;
             if (inputHelper.KeyPressed(Keys.Up))
             {
                 //stand = false;
@@ -198,60 +220,66 @@ public class SmallPlayer : HeadPlayer
         }
         if (!state.bigPlayer.holdingPlayer)
         {
-            beingHeld = false;
-        }
-        if (inputHelper.IsKeyDown(Keys.RightShift))
-        {
-            horizontalSpeed = sprintingSpeed;
-        }
-        else
-        {
-            horizontalSpeed = walkingSpeed;
-        }
-        //Small Player is climbing a wall
-        if (hitClimbWall)
-        {
-            Climb();
-
-            if (inputHelper.IsKeyDown(Keys.Up))
+            base.HandleInput(inputHelper);
+            if (inputHelper.IsKeyDown(ButtonManager.Sprint_SmallPlayer))
             {
-                velocity.Y = -100;
+                horizontalSpeed = sprintingSpeed;
             }
-            if (inputHelper.IsKeyDown(Keys.Down))
+            else
             {
-                velocity.Y = 100;
+                horizontalSpeed = walkingSpeed;
+            }
+
+            //Small Player is climbing a wall
+            if (hitClimbWall)
+            {
+                Climb();
+
+
+                if (inputHelper.IsKeyDown(ButtonManager.Jump_SmallPlayer))
+                {
+                    velocity.Y = -100;
+                }
+                if (inputHelper.IsKeyDown(ButtonManager.Down_SmallPlayer))
+                {
+                    velocity.Y = 100;
+                }
+            }
+            else
+            {
+                NotClimbing();
+            }
+
+            if (stand)
+            {
+                if (inputHelper.KeyPressed(ButtonManager.Jump_SmallPlayer))
+                {
+                    //stand = false;
+                    jump = true;
+                }
+                if (inputHelper.IsKeyDown(Keys.M))
+                {
+                    mPressed = true;
+                }
+            }
+
+            if (inputHelper.IsKeyDown(ButtonManager.Left_SmallPlayer))
+            {
+                left = true;
+                Mirror = true;
+            }
+            if (inputHelper.IsKeyDown(ButtonManager.Right_SmallPlayer))
+            {
+                right = true;
+                Mirror = false;
             }
         }
-        else
+        internal void PickedUp(Vector2 grabPosition)
         {
-            NotClimbing();
+            velocity = Vector2.Zero;
+            position = grabPosition;
+            canMove = false;
+            beingHeld = true;
         }
-
-        if (stand)
-        {
-            if (inputHelper.KeyPressed(Keys.Up))
-            {
-                //stand = false;
-                jump = true;
-            }
-            if (inputHelper.IsKeyDown(Keys.M))
-            {
-                mPressed = true;
-            }
-        }
-    }
-    internal void PickedUp(Vector2 grabPosition)
-    {
-        velocity = Vector2.Zero;
-        position = grabPosition;
-        canMove = false;
-        beingHeld = true;
-
-        //stand = false;
-    }
-
-    public void SetVelocity(Vector2 velocity)
-    {
-        this.velocity = velocity;
     }
 }
