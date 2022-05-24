@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using BaseProject.GameStates;
 using Microsoft.Xna.Framework.Audio;
+using BaseProject.GameObjects;
 
 namespace BaseProject
 {
@@ -27,6 +28,8 @@ namespace BaseProject
         public int musicCounter = 30;
 
         public LevelManager levelManager;
+
+        public SpriteGameObject InputIndicator { get; protected set; } = new SpriteGameObject("");
 
         protected Tile[,] WorldTiles { get; private set; }
         protected Level level;
@@ -100,6 +103,94 @@ namespace BaseProject
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
+            InputIndicator.Visible = false;
+            InputIndicator.Position = this.Position;
+            //Player with Rope Collision test
+            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            {
+                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+                var tileType = obj.GetType();
+                if (tileType == typeof(CuttebleRope))
+                {
+                    CuttebleRope cuttebleRope = (CuttebleRope)levelManager.CurrentLevel().LevelObjects.Children[x];
+                    if (CollidesWith(obj) && !cuttebleRope.isOut)
+                    {
+                        InputIndicator.Sprite = new SpriteSheet(ButtonManager.interract_Button);
+                        InputIndicator.Origin = InputIndicator.Center;
+                        InputIndicator.Scale = 0.5f;
+                        InputIndicator.Position = obj.Position - new Vector2(obj.Width / 2, obj.Height);
+                        InputIndicator.Visible = true;
+
+                        if (inputHelper.KeyPressed(ButtonManager.Interact_Bigplayer) || inputHelper.KeyPressed(ButtonManager.Interact_SmallPlayer))
+                        {
+                            DropDownRope(cuttebleRope);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void DropDownRope(CuttebleRope cuttebleRope)
+        {
+            if (!cuttebleRope.isOut)
+            {
+                int x = cuttebleRope.x;
+                int y = cuttebleRope.y;
+                Console.WriteLine(cuttebleRope.level.TileOnLocation(x + 1, y + 1) + "  " + cuttebleRope.level.TileOnLocation(x - 1, y + 1));
+                if (cuttebleRope.level.TileOnLocation(x - 1, y + 1))
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Rope rope;
+                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X + Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
+                        if (i == 0)
+                        {
+                            rope = new Rope("RopeConnectingLeft")
+                            {
+                                Position = ropePos
+                            };
+                            levelManager.CurrentLevel().Add(rope);
+                        }
+                        else
+                        {
+                            rope = new Rope()
+                            {
+                                Position = ropePos
+                            };
+                            levelManager.CurrentLevel().Add(rope);
+                        }
+                        levelManager.CurrentLevel().LevelObjects.Add(rope);
+                    }
+                }
+                else
+                if (!cuttebleRope.level.TileOnLocation(x + 1, y + 1))
+                {
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Rope rope;
+                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X - Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
+                        if (i == 0)
+                        {
+                            rope = new Rope("RopeConnectingRight")
+                            {
+                                Position = ropePos
+                            };
+                            levelManager.CurrentLevel().Add(rope);
+                        }
+                        else
+                        {
+                            rope = new Rope()
+                            {
+                                Position = ropePos
+                            };
+                            levelManager.CurrentLevel().Add(rope);
+                        }
+                        levelManager.CurrentLevel().LevelObjects.Add(rope);
+                    }
+                }
+                cuttebleRope.isOut = true;
+            }
         }
 
 
@@ -111,6 +202,23 @@ namespace BaseProject
             velocity.Y = 0;
             velocity.X = 0;
             climb = true;
+
+            if (velocity.Y < 0)
+            {
+                InputIndicator.Sprite = new SpriteSheet(ButtonManager.Dpad_Down_Button);
+                InputIndicator.Origin = InputIndicator.Center;
+                InputIndicator.Scale = 0.5f;
+                InputIndicator.Position = Position - new Vector2(Width / 2, Height);
+                InputIndicator.Visible = true;
+            }
+            else
+            {
+                InputIndicator.Sprite = new SpriteSheet(ButtonManager.Dpad_Up_Button);
+                InputIndicator.Origin = InputIndicator.Center;
+                InputIndicator.Scale = 0.5f;
+                InputIndicator.Position = Position - new Vector2(Width / 2, Height / 2);
+                InputIndicator.Visible = true;
+            }
         }
 
         public virtual void NotClimbing()
