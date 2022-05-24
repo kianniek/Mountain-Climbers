@@ -14,8 +14,6 @@ namespace BaseProject
         public float gravity = 20f;
         public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight, climb, hitRock, hitWaterfall, hitRope, playJump, playWalk;
 
-
-
         public static float JumpForce = 500;
         public float horizontalSpeed = 175;
         public static float walkingSpeed = 175;
@@ -32,14 +30,15 @@ namespace BaseProject
 
         protected Tile[,] WorldTiles { get; private set; }
         protected Level level;
-        
+
         public HeadPlayer(string assetName) : base(assetName)
         {
             position.Y = GameEnvironment.Screen.Y / 1.4f;
             position.X = 10;
             noLeft = false;
             noRight = false;
-            this.WorldTiles = worldTiles;
+            playJump = true;
+            playWalk = true;
         }
 
         public override void Update(GameTime gameTime)
@@ -71,7 +70,12 @@ namespace BaseProject
                 right = false;
             }
 
-            
+            if (musicCounter < 0)
+            {
+                musicCounter = 30;
+            }
+
+
 
             base.Update(gameTime);
             velocity.Y += gravity;
@@ -90,10 +94,14 @@ namespace BaseProject
             velocity.Y = 520;
         }
 
+
+
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
         }
+
+
         public virtual void Climb()
         {
             left = false;
@@ -114,8 +122,8 @@ namespace BaseProject
             velocity.Y *= -1;
             velocity.X *= -1;
         }
-        
-        public void GoToNewLevel(Tile[,] tiles, Vector2 pos)
+
+        public void GoToNewLevel(Level lvl, Vector2 pos)
         {
             level = lvl;
             position = pos;
