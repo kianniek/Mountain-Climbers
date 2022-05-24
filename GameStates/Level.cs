@@ -51,9 +51,9 @@ namespace BaseProject.GameStates
             colorCodes["Ground"],
             colorCodes["Lava"],
         };
-        
-        
-        public Level(string levelSprite, BigPlayer bigPlayer, SmallPlayer smallPlayer)
+
+
+        protected Level(string levelSprite, BigPlayer bigPlayer, SmallPlayer smallPlayer)
         {
             this.levelSprite = GameEnvironment.AssetManager.Content.Load<Texture2D>(levelSprite);
             this.bigPlayer = bigPlayer;
@@ -192,6 +192,19 @@ namespace BaseProject.GameStates
 
             if (tileColor == colorCodes["Ground"])
             {
+                if (TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1) &&
+                    TileOnLocation(x, y + 1) && !TileOnLocation(x - 1, y - 1))
+                    return "Tile_Grasstopleftknob";
+                if (TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1) &&
+                    TileOnLocation(x, y + 1) && !TileOnLocation(x - 1, y + 1))
+                    return "Tile_Grassbottomleftknob";
+                if (TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1) &&
+                    TileOnLocation(x, y + 1) && !TileOnLocation(x + 1, y - 1))
+                    return "Tile_Grasstoprightknob";
+                if (TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1) &&
+                    TileOnLocation(x, y + 1) && !TileOnLocation(x + 1, y + 1))
+                    return "Tile_Grassbottomrightknob";
+                
                 if (TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1) && TileOnLocation(x, y + 1)) // Surrounded
                     return "Tile_dirt";
                 if (TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1)) // No tile under
@@ -212,6 +225,28 @@ namespace BaseProject.GameStates
                     return "Tile_GrassRightCorner";
                 if (TileOnLocation(x - 1, y) && TileOnLocation(x, y - 1)) // No tile right and under
                     return "Tile_GrassRightCornerDown";
+                
+                
+                
+                // grass bars
+                if (TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && !TileOnLocation(x, y - 1) && !TileOnLocation(x, y + 1))
+                    return "Tile_Grasstopandbottom";
+                if (!TileOnLocation(x - 1, y) && !TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1) && TileOnLocation(x, y + 1))
+                    return "Tile_Grassleftandright";
+                
+                if (!TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && !TileOnLocation(x, y - 1) && !TileOnLocation(x, y + 1)) // Left grass end
+                    return "Tile_Grassleftend";
+                if (TileOnLocation(x - 1, y) && !TileOnLocation(x + 1, y) && !TileOnLocation(x, y - 1) && !TileOnLocation(x, y + 1)) // Right grass end
+                    return "Tile_Grassrightend";
+                if (!TileOnLocation(x - 1, y) && !TileOnLocation(x + 1, y) && !TileOnLocation(x, y - 1) && TileOnLocation(x, y + 1)) // Top grass end
+                    return "Tile_Grasstopend";
+                if (!TileOnLocation(x - 1, y) && !TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1) && !TileOnLocation(x, y + 1)) // Bottom grass end
+                    return "Tile_Grassbottomend";
+                
+                
+                if (!TileOnLocation(x - 1, y) && !TileOnLocation(x + 1, y) && !TileOnLocation(x, y - 1) && !TileOnLocation(x, y + 1))
+                    return "Tile_Grassgrass";
+                
             }
 
             return string.Empty;

@@ -6,7 +6,7 @@ using BaseProject.GameStates;
 
 namespace BaseProject.GameObjects
 {
-    class ThrowDirection : RotatingSpriteGameObject
+    public class ThrowDirection : RotatingSpriteGameObject
     {
         private float throwAngle;
         BigPlayer bigPlayer;
@@ -24,11 +24,11 @@ namespace BaseProject.GameObjects
         {
             cosVel = MathF.Cos(throwAngle);
             sinVel = MathF.Sin(throwAngle);
-            Console.WriteLine(smallPlayer.stand);
+
             base.Update(gameTime);
             if (smallPlayer.beingHeld)
             {
-                position = smallPlayer.Position - new Vector2(10, 10);
+                position = smallPlayer.Position - new Vector2(10, 0);
                 visible = true;
             }
 
@@ -54,10 +54,10 @@ namespace BaseProject.GameObjects
         {
             smallPlayer.beingHeld = false;
             bigPlayer.holdingPlayer = false;
-            float throwVelX = cosVel * 500;
-            float throwVelY = sinVel * 500;
+            float throwVelX = cosVel * 800;
+            float throwVelY = sinVel * 800;
             smallPlayer.SetVelocity(new Vector2(throwVelX, throwVelY));
-            
+            smallPlayer.beingThrown = true;
         }
     }
 

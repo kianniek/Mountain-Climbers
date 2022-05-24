@@ -10,7 +10,7 @@ using BaseProject.GameStates;
 public class SmallPlayer : HeadPlayer
 {
     PlayingState state;
-    public bool canMove, beingHeld, hitLeftWall, hitRightWall;
+    public bool canMove, beingHeld, hitLeftWall, hitRightWall, beingThrown;
 
     public Lives[] livesSmall;
     public Lives[] noLives;
@@ -68,7 +68,7 @@ public class SmallPlayer : HeadPlayer
         {
             for (var y = 0; y < Chunk.Height; y++)
             {
-                for (var x = 0; x < Chunk.Height; x++)
+                for (var x = 0; x < Chunk.Width; x++)
                 {
                     var tile = chunk.TilesInChunk[x, y];
                     if (tile == null)
@@ -178,23 +178,30 @@ public class SmallPlayer : HeadPlayer
     }
     public override void HandleInput(InputHelper inputHelper)
     {
+ 
         base.HandleInput(inputHelper);
-        if (!beingHeld && stand)
+        if(!beingThrown)
+        {
+            velocity.X = 0;
+        }
+        if (!beingHeld)
         {
             if (inputHelper.IsKeyDown(Keys.Left))
             {
                 left = true;
                 Mirror = true;
+                right = false;
                 velocity.X = -100;
             }
             if (inputHelper.IsKeyDown(Keys.Right))
             {
                 right = true;
                 Mirror = false;
+                left = false;
                 velocity.X = 100;
             }
         }
-        if (stand)
+        if (!beingHeld && stand)
         {
             playJump = true;
             if (inputHelper.KeyPressed(Keys.Up))
@@ -247,17 +254,6 @@ public class SmallPlayer : HeadPlayer
                 mPressed = true;
             }
         }
-
-        if (inputHelper.IsKeyDown(Keys.Left))
-        {
-            left = true;
-            Mirror = true;
-        }
-        if (inputHelper.IsKeyDown(Keys.Right))
-        {
-            right = true;
-            Mirror = false;
-        }
     }
     internal void PickedUp(Vector2 grabPosition)
     {
@@ -273,5 +269,4 @@ public class SmallPlayer : HeadPlayer
     {
         this.velocity = velocity;
     }
-
 }

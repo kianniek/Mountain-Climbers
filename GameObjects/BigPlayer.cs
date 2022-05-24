@@ -10,7 +10,7 @@ public class BigPlayer : HeadPlayer
 {
     readonly LevelGenerator levelGen;
     readonly SmallPlayer smallPlayer;
-    readonly ThrowDirection throwDirection;
+    readonly public ThrowDirection throwDirection;
 
     private float directionIncrease;
 
@@ -92,6 +92,19 @@ public class BigPlayer : HeadPlayer
     public void GrabPlayer()
     {
         smallPlayer.PickedUp(new Vector2(position.X, position.Y - smallPlayer.Height));
+        if (smallPlayer.beingHeld)
+        {
+            if (left)
+            {
+                smallPlayer.left = true;
+                smallPlayer.Mirror = true;
+            }
+            if (right)
+            {
+                smallPlayer.right = true;
+                smallPlayer.Mirror = false;
+            }
+        }
     }
     public void CollisonWithGround()
     {
@@ -99,7 +112,7 @@ public class BigPlayer : HeadPlayer
         {
             for (var y = 0; y < Chunk.Height; y++)
             {
-                for (var x = 0; x < Chunk.Height; x++)
+                for (var x = 0; x < Chunk.Width; x++)
                 {
                     var tile = chunk.TilesInChunk[x, y];
                     if (tile == null)
