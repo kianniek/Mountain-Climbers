@@ -104,7 +104,7 @@ namespace BaseProject
                         //komt van boven
                         velocity.Y = 0;
                         //position.Y -= (verticalPlatform.Height/2);
-                        position.Y = (verticalPlatform.Position.Y - verticalPlatform.Height / 2) - Origin.Y;
+                        position.Y = verticalPlatform.Position.X - verticalPlatform.Height/2 - ((5/8)*Height);
                     }
                 }  
             }
