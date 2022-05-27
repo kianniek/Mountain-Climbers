@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../../../OneDrive/Documents/Visual Studio programmeerwerk/Content Climbing Heroes/controls.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../OneDrive/Documents/Visual Studio programmeerwerk/Content Climbing Heroes/controls.png;controls.png
+
 #begin ../../Downloads/new_checkpoint.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -223,7 +235,7 @@
 /processorParam:TextureFormat=Color
 /build:controls.png
 
-#begin controls.png
+#begin controlsbutton.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -233,7 +245,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:controls.png
+/build:controlsbutton.png
 
 #begin CP.png
 /importer:TextureImporter
