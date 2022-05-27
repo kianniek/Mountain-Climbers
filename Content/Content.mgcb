@@ -13,30 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../../../OneDrive/Documents/Visual Studio programmeerwerk/Content Climbing Heroes/controls.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../../../OneDrive/Documents/Visual Studio programmeerwerk/Content Climbing Heroes/controls.png;controls.png
-
-#begin ../../Downloads/new_checkpoint.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../Downloads/new_checkpoint.png;new_checkpoint.png
-
 #begin aimlijn.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -751,6 +727,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:stoneSpike.png
+
+#begin test_level_waterfall.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:test_level_waterfall.png
 
 #begin teststart.png
 /importer:TextureImporter
