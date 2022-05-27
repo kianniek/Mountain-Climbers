@@ -72,7 +72,7 @@ public class SmallPlayer : HeadPlayer
                 for (var x = 0; x < Chunk.Width; x++)
                 {
                     var tile = chunk.TilesInChunk[x, y];
-                    if (tile == null)
+                    if (tile == null || !tile.Visible)
                         continue;
 
                     var tileType = tile.GetType();

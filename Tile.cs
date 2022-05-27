@@ -4,10 +4,15 @@ namespace BaseProject
 {
     public class Tile : SpriteGameObject
     {
-        public Tile(string assetName, Vector2 position, float scale) : base(assetName, 0, "", 0, scale)
+        protected SmallPlayer smallPlayer;
+        protected BigPlayer bigPlayer;
+        
+        public Tile(string assetName, Vector2 position, float scale, SmallPlayer smallPlayer, BigPlayer bigPlayer) : base(assetName, 0, "", 0, scale)
         {
             Origin = Center;
             Position = position;
+            this.smallPlayer = smallPlayer;
+            this.bigPlayer = bigPlayer;
         }
     }
 }
