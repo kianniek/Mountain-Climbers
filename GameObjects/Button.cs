@@ -24,51 +24,16 @@ namespace BaseProject.GameObjects
             this.bigPlayer = bigPlayer;
 
         }
-
-
-
-        public override void HandleInput(InputHelper inputHelper)
-        {
-            base.HandleInput(inputHelper);
-
-
-            if (ButtonPress)
-            {
-                wall.Position = Vector2.Lerp(wall.Position, wall.EndPosition, 0.5f);
-            }
-
-           
-
-            if (wall.Position.Y < 900)
-            {
-                ButtonPress = false;
-
-            }
-
-           
-
-
-            
-
-
-
-
-
-
-
-        }
-
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-
             int distance = (int)(wall.Position.X - smallPlayer.Position.X);
-
-
+            if (ButtonPress)
+            {
+                wall.Position = Vector2.Lerp(wall.Position, wall.EndPosition, wall.WallSpeed);
+            }
 
         }
-
-
     }
 }

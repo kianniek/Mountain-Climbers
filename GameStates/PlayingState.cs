@@ -18,7 +18,7 @@ namespace BaseProject.GameStates
         public BigPlayer bigPlayer;
         //Button button;
         //ButtonWall wall;
-        
+
 
         Camera cam;
 
@@ -45,7 +45,7 @@ namespace BaseProject.GameStates
             //wall = new ButtonWall(new Vector2(1000, 1010), new Vector2(1000, 950));
             //button = new Button(smallPlayer, bigPlayer, wall);
 
-           
+
 
             this.cam = camera;
 
@@ -53,7 +53,7 @@ namespace BaseProject.GameStates
             this.Add(smallPlayer.InputIndicator);
             //this.Add(button);
             //this.Add(wall);
-            
+
             this.Add(rocks);
             this.Add(climbWall);
 
@@ -95,10 +95,10 @@ namespace BaseProject.GameStates
         public override void Update(GameTime gameTime)
         {
             PlayMusic();
+            CollisionLevelObejcts();
             base.Update(gameTime);
             KeepPlayersCenterd();
             UI_ElementUpdate();
-            CollisionLevelObejcts();
             CheckGameOver();
         }
         private void PlayMusic()
@@ -111,31 +111,6 @@ namespace BaseProject.GameStates
         }
         private void CollisionLevelObejcts()
         {
-            for (int i = 0; i < levelManager.CurrentLevel().LevelObjects.Children.Count; i++)
-            {
-                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[i];
-                var tileType = obj.GetType();
-                if (tileType == typeof(ButtonWall))
-                {
-                    if (smallPlayer.CollidesWith(obj) && (!smallPlayer.Mirror))
-                    {
-                        smallPlayer.right = false;
-                    }
-                    else
-                        smallPlayer.noRight = false;
-                    if (smallPlayer.CollidesWith(obj) && (smallPlayer.Mirror))
-                    {
-                        smallPlayer.left = false;
-                    }
-                    else
-                        smallPlayer.noLeft = false;
-                }
-
-
-                
-
-            }
-
             //Falling Rocks
             foreach (FallingRock rock in rocks.Children)
             {
@@ -281,13 +256,11 @@ namespace BaseProject.GameStates
                     Button button = (Button)obj;
                     if (bigPlayer.CollidesWith(button) && inputHelper.IsKeyDown(Keys.Space))
                     {
-                        Console.WriteLine("Button Pressed");
                         button.ButtonPress = true;
                     }
 
                     if (smallPlayer.CollidesWith(button) && inputHelper.IsKeyDown(Keys.Space))
                     {
-                        Console.WriteLine("Button Pressed");
                         button.ButtonPress = true;
                     }
                 }

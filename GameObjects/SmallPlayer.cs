@@ -176,6 +176,49 @@ public class SmallPlayer : HeadPlayer
                     isDead = true;
                 }
             }
+            if (tileType == typeof(ButtonWall))
+            {
+                if (CollidesWith(obj))
+                {
+                    if (this.Position.X + this.Width / 2 > obj.Position.X &&
+                    this.Position.X < obj.Position.X + obj.Width / 2 &&
+                    this.Position.Y + this.Height > obj.Position.Y &&
+                    this.Position.Y < obj.Position.Y + obj.Height)
+                    {
+                        var mx = (this.Position.X - obj.Position.X);
+                        var my = (this.Position.Y - obj.Position.Y);
+                        if (Math.Abs(mx) > Math.Abs(my))
+                        {
+                            if (mx > 0)
+                            {
+                                this.velocity.X = 0;
+                                this.position.X = obj.Position.X + this.Width / 4;
+                            }
+
+                            if (mx < 0)
+                            {
+                                this.position.X = obj.Position.X - this.Width / 2;
+                                this.velocity.X = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (my > 0)
+                            {
+                                this.velocity.Y = 0;
+                                this.position.Y = obj.Position.Y + obj.Height;
+                            }
+
+                            if (my < 0)
+                            {
+                                this.velocity.Y = 0;
+                                this.position.Y = obj.Position.Y - this.Height;
+                                this.stand = true;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     public override void HandleInput(InputHelper inputHelper)
