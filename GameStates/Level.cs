@@ -168,6 +168,9 @@ namespace BaseProject.GameStates
             if (color == colorCodes["Lava"])
                 LevelObjects.Add(new Lava(this, (int)objPos.X, (int)objPos.Y));
 
+            if (color == colorCodes["Waterfall"])
+                LevelObjects.Add(new Waterfall(new Vector2((int)objPos.X, (int)objPos.Y)));
+
             if (environmentalTiles.Any(c => c == color))
             {
                 var sprite = FetchTileSprite(color, (int)gridPos.X, (int)gridPos.Y);
@@ -295,8 +298,6 @@ namespace BaseProject.GameStates
                 chunks.Add(chunk);
                 chunks.AddRange(chunk.SurroundingChunks());
             }
-            
-            Console.WriteLine(chunks.Count);
             
             return chunks.ToArray();
         }

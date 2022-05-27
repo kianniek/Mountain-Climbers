@@ -8,7 +8,7 @@ namespace BaseProject
     {
         public CreditsButton() : base("cr")
         {
-            position = new Microsoft.Xna.Framework.Vector2(400, 1000);
+
         }
     }
 }

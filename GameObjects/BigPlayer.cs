@@ -87,7 +87,7 @@ public class BigPlayer : HeadPlayer
         base.Update(gameTime);
         throwDirection.Update(gameTime);
 
-        CollisonWithGround();
+        CollisonWithGround();        
     }
     public void GrabPlayer()
     {
@@ -182,6 +182,7 @@ public class BigPlayer : HeadPlayer
         }
         return false;
     }
+    
 
     public override void HandleInput(InputHelper inputHelper)
     {
