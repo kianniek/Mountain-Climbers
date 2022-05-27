@@ -40,7 +40,7 @@ namespace BaseProject.GameStates
             {"Boulder", Color.Gainsboro},
             {"ClimbWall", Color.Orange},
             {"Lava", Color.Red},
-            {"Platform", Color.Purple},
+            {"BreakablePlatform", Color.Purple},
             {"Start", Color.Aqua},
             {"End", Color.Yellow}
         };
@@ -50,6 +50,7 @@ namespace BaseProject.GameStates
         {
             colorCodes["Ground"],
             colorCodes["Lava"],
+            colorCodes["BreakablePlatform"]
         };
 
 
@@ -119,7 +120,7 @@ namespace BaseProject.GameStates
                     if (obj == null)
                         continue;
 
-                    if (obj.GetType() == typeof(Tile))
+                    if (obj.GetType() == typeof(Tile) || obj.GetType().IsSubclassOf(typeof(Tile)))
                         tiles[x,y] = (Tile)obj;
                     Add(obj);
                 }
@@ -174,9 +175,12 @@ namespace BaseProject.GameStates
                 if (sprite == string.Empty)
                     return null;
 
-                var t = new Tile(sprite, objPos, tileScale);
+                Tile t;
                 
-                //ActiveTiles[(int)gridPos.X, (int)gridPos.Y] = t;
+                if (color == colorCodes["BreakablePlatform"])
+                    t = new BreakablePlatform(objPos, tileScale, smallPlayer, bigPlayer);
+                else
+                    t = new Tile(sprite, objPos, tileScale, smallPlayer, bigPlayer);
 
                 obj = t;
             }
@@ -189,6 +193,9 @@ namespace BaseProject.GameStates
         {
             if (tileColor == Color.Transparent)
                 return string.Empty;
+
+            if (tileColor == colorCodes["BreakablePlatform"])
+                return "Tile_ClimebleLeftverticalBlock";
 
             if (tileColor == colorCodes["Ground"])
             {
@@ -294,8 +301,6 @@ namespace BaseProject.GameStates
                 chunks.Add(chunk);
                 chunks.AddRange(chunk.SurroundingChunks());
             }
-            
-            Console.WriteLine(chunks.Count);
             
             return chunks.ToArray();
         }

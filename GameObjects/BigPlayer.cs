@@ -8,7 +8,6 @@ using BaseProject.GameStates;
 
 public class BigPlayer : HeadPlayer
 {
-    readonly LevelGenerator levelGen;
     readonly SmallPlayer smallPlayer;
     readonly public ThrowDirection throwDirection;
 
@@ -97,7 +96,7 @@ public class BigPlayer : HeadPlayer
                 for (var x = 0; x < Chunk.Width; x++)
                 {
                     var tile = chunk.TilesInChunk[x, y];
-                    if (tile == null)
+                    if (tile == null || !tile.Visible)
                         continue;
 
                     var tileType = tile.GetType();

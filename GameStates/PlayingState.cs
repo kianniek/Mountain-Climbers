@@ -50,7 +50,7 @@ namespace BaseProject.GameStates
             this.cam = camera;
 
 
-            rocks.Add(new FallingRock("stone300", new Vector2(280, GameEnvironment.Screen.Y / 2 - 200)));
+            //rocks.Add(new FallingRock("stone300", new Vector2(280, GameEnvironment.Screen.Y / 2 - 200)));
             rocks.Add(new FallingRock("stone300", new Vector2(800, 300)));
 
 
