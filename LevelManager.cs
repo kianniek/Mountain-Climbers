@@ -40,7 +40,7 @@ namespace BaseProject
             this.bigPlayer = bigPlayer;
             this.smallPlayer = smallPlayer;
             
-            Levels.Add(new Level1("level2", this.bigPlayer, this.smallPlayer));
+            Levels.Add(new Level1("level1", this.bigPlayer, this.smallPlayer));
             Levels.Add(new Level2("level2", this.bigPlayer, this.smallPlayer));
             Levels.Add(new Level3("level3", this.bigPlayer, this.smallPlayer));
             Levels.Add(new Level4("level4", this.bigPlayer, this.smallPlayer));

@@ -23,6 +23,8 @@ namespace BaseProject.GameStates
         Camera cam;
 
         bool playBackgroundMusic = true;
+        int musicCount = 14580;
+
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
 
         private LevelManager levelManager;
@@ -107,6 +109,14 @@ namespace BaseProject.GameStates
             {
                 playBackgroundMusic = false;
                 GameEnvironment.AssetManager.PlaySound("MusicWaterfall");
+            }
+
+            musicCount--;
+
+            if (musicCount < 0)
+            {
+                playBackgroundMusic = true;
+                musicCount = 14580;
             }
         }
         private void CollisionLevelObejcts()
