@@ -40,12 +40,13 @@ namespace BaseProject
             LevelManager.bigPlayer = bigPlayer;
             LevelManager.smallPlayer = smallPlayer;
             
-            Levels.Add(new Level1("level1test", LevelManager.bigPlayer, LevelManager.smallPlayer));
-            Levels.Add(new Level2("level2test", LevelManager.bigPlayer, LevelManager.smallPlayer));
-            Levels.Add(new Level3("level3test", LevelManager.bigPlayer, LevelManager.smallPlayer));
-            Levels.Add(new Level4("level4test", LevelManager.bigPlayer, LevelManager.smallPlayer));
-            Levels.Add(new Level5("level5test", LevelManager.bigPlayer, LevelManager.smallPlayer));
-            Levels.Add(new Level6("level6", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level1("Levels/level1test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level2("Levels/level2test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level3("Levels/level3test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level4("Levels/level4test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level5("Levels/level5test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level6("Levels/level6", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level7("Levels/Level7", LevelManager.bigPlayer, LevelManager.smallPlayer));
             GoToLevel(0);
         }
 
