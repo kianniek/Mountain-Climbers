@@ -25,8 +25,6 @@ namespace BaseProject.GameStates
         bool playBackgroundMusic = true;
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
 
-        private LevelManager levelManager;
-
         public PlayingState(Camera camera)
         {
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
@@ -81,11 +79,7 @@ namespace BaseProject.GameStates
 
 
 
-            levelManager = new LevelManager(bigPlayer, smallPlayer);
-
-            smallPlayer.levelManager = levelManager;
-            bigPlayer.levelManager = levelManager;
-            Add(levelManager);
+            this.Add(new LevelManager(bigPlayer, smallPlayer));
             this.Add(bigPlayer);
             this.Add(smallPlayer);
 
@@ -205,7 +199,7 @@ namespace BaseProject.GameStates
                             };
                             Add(rope);
                         }
-                        levelManager.CurrentLevel().LevelObjects.Add(rope);
+                        LevelManager.CurrentLevel().LevelObjects.Add(rope);
                     }
                 }
                 else
@@ -232,7 +226,7 @@ namespace BaseProject.GameStates
                             };
                             Add(rope);
                         }
-                        levelManager.CurrentLevel().LevelObjects.Add(rope);
+                        LevelManager.CurrentLevel().LevelObjects.Add(rope);
                     }
                 }
                 cuttebleRope.isOut = true;
@@ -247,9 +241,9 @@ namespace BaseProject.GameStates
                 GameEnvironment.GameStateManager.SwitchTo("ControlsMenu");
             }
 
-            for (int i = 0; i < levelManager.CurrentLevel().LevelObjects.Children.Count; i++)
+            for (int i = 0; i < LevelManager.CurrentLevel().LevelObjects.Children.Count; i++)
             {
-                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[i];
+                var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[i];
                 var tileType = obj.GetType();
                 if (tileType == typeof(Button))
                 {

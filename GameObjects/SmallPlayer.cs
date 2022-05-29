@@ -139,9 +139,9 @@ public class SmallPlayer : HeadPlayer
     }
     public bool CollisonWithRope()
     {
-        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+        for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
-            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+            var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
             var tileType = obj.GetType();
             if (tileType == typeof(Rope))
             {
@@ -156,9 +156,9 @@ public class SmallPlayer : HeadPlayer
     }
     public void CollisonWithLevelObjecs()
     {
-        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+        for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
-            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+            var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
             var tileType = obj.GetType();
 
             if (tileType == typeof(Rope))
