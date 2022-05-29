@@ -27,8 +27,6 @@ namespace BaseProject
         public int knockbackForce = 100;
         public int musicCounter = 30;
 
-        public LevelManager levelManager;
-
         public SpriteGameObject InputIndicator { get; protected set; } = new SpriteGameObject("");
 
         protected Tile[,] WorldTiles { get; private set; }
@@ -102,9 +100,9 @@ namespace BaseProject
 
         public bool CollisonWithWaterfall()
         {
-            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
             {
-                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+                var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
                 var tileType = obj.GetType();
                 if (tileType == typeof(Waterfall))
                 {
@@ -131,13 +129,13 @@ namespace BaseProject
             InputIndicator.Visible = false;
             InputIndicator.Position = this.Position;
             //Player with Rope Collision test
-            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
             {
-                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+                var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
                 var tileType = obj.GetType();
                 if (tileType == typeof(CuttebleRope))
                 {
-                    CuttebleRope cuttebleRope = (CuttebleRope)levelManager.CurrentLevel().LevelObjects.Children[x];
+                    CuttebleRope cuttebleRope = (CuttebleRope)LevelManager.CurrentLevel().LevelObjects.Children[x];
                     if (CollidesWith(obj) && !cuttebleRope.isOut)
                     {
                         InputIndicator.Sprite = new SpriteSheet(ButtonManager.interract_Button);
@@ -173,7 +171,7 @@ namespace BaseProject
                             {
                                 Position = ropePos
                             };
-                            levelManager.CurrentLevel().Add(rope);
+                            LevelManager.CurrentLevel().Add(rope);
                         }
                         else
                         {
@@ -181,9 +179,9 @@ namespace BaseProject
                             {
                                 Position = ropePos
                             };
-                            levelManager.CurrentLevel().Add(rope);
+                            LevelManager.CurrentLevel().Add(rope);
                         }
-                        levelManager.CurrentLevel().LevelObjects.Add(rope);
+                        LevelManager.CurrentLevel().LevelObjects.Add(rope);
                     }
                 }
                 else
@@ -200,7 +198,7 @@ namespace BaseProject
                             {
                                 Position = ropePos
                             };
-                            levelManager.CurrentLevel().Add(rope);
+                            LevelManager.CurrentLevel().Add(rope);
                         }
                         else
                         {
@@ -208,9 +206,9 @@ namespace BaseProject
                             {
                                 Position = ropePos
                             };
-                            levelManager.CurrentLevel().Add(rope);
+                            LevelManager.CurrentLevel().Add(rope);
                         }
-                        levelManager.CurrentLevel().LevelObjects.Add(rope);
+                        LevelManager.CurrentLevel().LevelObjects.Add(rope);
                     }
                 }
             }
