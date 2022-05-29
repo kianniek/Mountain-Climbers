@@ -87,14 +87,18 @@ namespace BaseProject
         {
             if (index < 0 || index >= Levels.Count)
                 return;
-            
+
+            int tempIndex = currentLevelIndex;
             currentLevelIndex = index;
             
             PreviousLevel()?.LoadLevel();
             Levels[currentLevelIndex]?.LoadLevel();
             NextLevel()?.LoadLevel();
-            bigPlayer.GoToNewLevel(LevelManager.CurrentLevel(), LevelManager.CurrentLevel().StartPosition);
-            smallPlayer.GoToNewLevel(LevelManager.CurrentLevel(), LevelManager.CurrentLevel().StartPosition);
+            Vector2 pos = currentLevelIndex >= tempIndex ? LevelManager.CurrentLevel().StartPosition : LevelManager.CurrentLevel().EndPosition;
+            bigPlayer.GoToNewLevel(LevelManager.CurrentLevel(), pos);
+            smallPlayer.GoToNewLevel(LevelManager.CurrentLevel(), pos);
+
+            smallPlayer.state.cam.Pos = pos;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace BaseProject.GameStates
         //ButtonWall wall;
 
 
-        Camera cam;
+        public Camera cam { get; private set; }
 
         bool playBackgroundMusic = true;
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
