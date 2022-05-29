@@ -47,7 +47,9 @@ namespace BaseProject
             Levels.Add(new Level5("Levels/level5test", LevelManager.bigPlayer, LevelManager.smallPlayer));
             Levels.Add(new Level6("Levels/level6", LevelManager.bigPlayer, LevelManager.smallPlayer));
             Levels.Add(new Level7("Levels/Level7", LevelManager.bigPlayer, LevelManager.smallPlayer));
-            GoToLevel(0);
+            Levels.Add(new Level8("Levels/level8", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level9("Levels/level9", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            GoToLevel(4);
         }
 
         public override void Update(GameTime gameTime)
