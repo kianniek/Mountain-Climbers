@@ -296,7 +296,7 @@ namespace BaseProject.GameStates
                 chunks.AddRange(chunk.SurroundingChunks());
             }
             
-            Console.WriteLine(chunks.Count);
+            //Console.WriteLine(chunks.Count);
             
             return chunks.ToArray();
         }

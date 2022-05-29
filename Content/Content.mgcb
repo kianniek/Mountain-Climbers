@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:../../Downloads/new_checkpoint.png;new_checkpoint.png
 
+#begin A_Button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:A_Button.png
+
 #begin aimlijn.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -210,18 +222,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:clap.wav
-
-#begin controls.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:controls.png
 
 #begin controls.png
 /importer:TextureImporter

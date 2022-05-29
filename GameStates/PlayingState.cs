@@ -255,7 +255,7 @@ namespace BaseProject.GameStates
             {
                 int x = cuttebleRope.x;
                 int y = cuttebleRope.y;
-                Console.WriteLine(cuttebleRope.level.TileOnLocation(x + 1, y + 1) + "  " + cuttebleRope.level.TileOnLocation(x - 1, y + 1));
+               //Console.Wr iteLine(cuttebleRope.level.TileOnLocation(x + 1, y + 1) + "  " + cuttebleRope.level.TileOnLocation(x - 1, y + 1));
                 if (cuttebleRope.level.TileOnLocation(x - 1, y + 1))
                 {
                     for (int i = 0; i < 10; i++)
@@ -318,6 +318,8 @@ namespace BaseProject.GameStates
 
             if (inputHelper.IsKeyDown(Keys.Enter))
             {
+
+                cam.Pos = new Vector2(GameEnvironment.Screen.X/2,GameEnvironment.Screen.Y/2);
                 GameEnvironment.GameStateManager.SwitchTo("ControlsMenu");
 
             }

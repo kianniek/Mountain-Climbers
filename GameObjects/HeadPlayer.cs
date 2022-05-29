@@ -94,7 +94,7 @@ namespace BaseProject
                 velocity.X = 0;
             }
 
-            Console.WriteLine(musicCounter);
+           // Console.WriteLine(musicCounter);
         }
 
         //Roep deze functie aan als de speler normaal springt en de waterval raakt,
@@ -142,7 +142,7 @@ namespace BaseProject
             {
                 int x = cuttebleRope.x;
                 int y = cuttebleRope.y;
-                Console.WriteLine(cuttebleRope.level.TileOnLocation(x + 1, y + 1) + "  " + cuttebleRope.level.TileOnLocation(x - 1, y + 1));
+                //Console.WriteLine(cuttebleRope.level.TileOnLocation(x + 1, y + 1) + "  " + cuttebleRope.level.TileOnLocation(x - 1, y + 1));
                 if (cuttebleRope.level.TileOnLocation(x - 1, y + 1))
                 {
                     for (int i = 0; i < 10; i++)
