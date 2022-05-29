@@ -34,7 +34,7 @@ public class SmallPlayer : HeadPlayer
         {
             hitClimbWall = CollisonWithRope();// || CollisonWith(Tags.ClimebleWall);
             velocity.X = 0;
-            throwToWaterfall = false;
+            thrown = false;
         }
 
         //Music jump
@@ -72,7 +72,7 @@ public class SmallPlayer : HeadPlayer
                 for (var x = 0; x < Chunk.Width; x++)
                 {
                     var tile = chunk.TilesInChunk[x, y];
-                    if (tile == null)
+                    if (tile == null || !tile.Visible)
                         continue;
 
                     var tileType = tile.GetType();
@@ -139,19 +139,14 @@ public class SmallPlayer : HeadPlayer
     }
     public bool CollisonWithRope()
     {
-        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+        for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
-            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+            var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
             var tileType = obj.GetType();
             if (tileType == typeof(Rope))
             {
                 if (CollidesWith(obj))
                 {
-                    InputIndicator.Sprite = new SpriteSheet(ButtonManager.interract_Button);
-                    InputIndicator.Origin = InputIndicator.Center;
-                    InputIndicator.Scale = 0.5f;
-                    InputIndicator.Position = obj.Position - new Vector2(obj.Width / 2, obj.Height);
-                    InputIndicator.Visible = true;
 
                     return true;
                 }
@@ -161,9 +156,9 @@ public class SmallPlayer : HeadPlayer
     }
     public void CollisonWithLevelObjecs()
     {
-        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+        for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
-            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+            var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
             var tileType = obj.GetType();
 
             if (tileType == typeof(Rope))
@@ -179,6 +174,49 @@ public class SmallPlayer : HeadPlayer
                 if (CollidesWith(obj))
                 {
                     isDead = true;
+                }
+            }
+            if (tileType == typeof(ButtonWall))
+            {
+                if (CollidesWith(obj))
+                {
+                    if (this.Position.X + this.Width / 2 > obj.Position.X &&
+                    this.Position.X < obj.Position.X + obj.Width / 2 &&
+                    this.Position.Y + this.Height > obj.Position.Y &&
+                    this.Position.Y < obj.Position.Y + obj.Height)
+                    {
+                        var mx = (this.Position.X - obj.Position.X);
+                        var my = (this.Position.Y - obj.Position.Y);
+                        if (Math.Abs(mx) > Math.Abs(my))
+                        {
+                            if (mx > 0)
+                            {
+                                this.velocity.X = 0;
+                                this.position.X = obj.Position.X + this.Width / 4;
+                            }
+
+                            if (mx < 0)
+                            {
+                                this.position.X = obj.Position.X - this.Width / 2;
+                                this.velocity.X = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (my > 0)
+                            {
+                                this.velocity.Y = 0;
+                                this.position.Y = obj.Position.Y + obj.Height;
+                            }
+
+                            if (my < 0)
+                            {
+                                this.velocity.Y = 0;
+                                this.position.Y = obj.Position.Y - this.Height;
+                                this.stand = true;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -268,7 +306,7 @@ public class SmallPlayer : HeadPlayer
         position = grabPosition;
         canMove = false;
         beingHeld = true;
-        throwToWaterfall = true;
+        thrown = true;
         //stand = false;
     }
 

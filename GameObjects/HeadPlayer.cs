@@ -13,7 +13,7 @@ namespace BaseProject
     {
         public bool isDead;
         public float gravity = 20f;
-        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight, climb, hitRock, hitWaterfall, hitRope, playJump, playWalk, throwToWaterfall;
+        public bool left, right, jump, stand, hitClimbWall, zPressed, mPressed, noLeft, noRight, climb, hitRock, hitWaterfall, hitRope, playJump, playWalk, thrown;
 
         public static float JumpForce = 500;
         public float horizontalSpeed = 175;
@@ -26,8 +26,6 @@ namespace BaseProject
         public bool knockback;
         public int knockbackForce = 100;
         public int musicCounter = 30;
-
-        public LevelManager levelManager;
 
         public SpriteGameObject InputIndicator { get; protected set; } = new SpriteGameObject("");
 
@@ -57,7 +55,7 @@ namespace BaseProject
                 jump = false;
                 stand = false;
                 velocity.Y = -JumpForce;
-                throwToWaterfall = false;
+                thrown = false;
             }
 
             if (left)
@@ -94,9 +92,28 @@ namespace BaseProject
                 velocity.X = 0;
             }
 
-           // Console.WriteLine(musicCounter);
+            if (CollisonWithWaterfall() && !thrown)
+            {
+                HitWaterfall();
+            }
         }
 
+        public bool CollisonWithWaterfall()
+        {
+            for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            {
+                var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
+                var tileType = obj.GetType();
+                if (tileType == typeof(Waterfall))
+                {
+                    if (CollidesWith(obj))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         //Roep deze functie aan als de speler normaal springt en de waterval raakt,
         //maar zodra je de pickup gebruikt, roep deze niet aan.
         public virtual void HitWaterfall()
@@ -112,13 +129,13 @@ namespace BaseProject
             InputIndicator.Visible = false;
             InputIndicator.Position = this.Position;
             //Player with Rope Collision test
-            for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
             {
-                var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+                var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
                 var tileType = obj.GetType();
                 if (tileType == typeof(CuttebleRope))
                 {
-                    CuttebleRope cuttebleRope = (CuttebleRope)levelManager.CurrentLevel().LevelObjects.Children[x];
+                    CuttebleRope cuttebleRope = (CuttebleRope)LevelManager.CurrentLevel().LevelObjects.Children[x];
                     if (CollidesWith(obj) && !cuttebleRope.isOut)
                     {
                         InputIndicator.Sprite = new SpriteSheet(ButtonManager.interract_Button);
@@ -142,10 +159,9 @@ namespace BaseProject
             {
                 int x = cuttebleRope.x;
                 int y = cuttebleRope.y;
-                //Console.WriteLine(cuttebleRope.level.TileOnLocation(x + 1, y + 1) + "  " + cuttebleRope.level.TileOnLocation(x - 1, y + 1));
                 if (cuttebleRope.level.TileOnLocation(x - 1, y + 1))
                 {
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 60; i++)
                     {
                         Rope rope;
                         Vector2 ropePos = new Vector2(cuttebleRope.Position.X + Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
@@ -155,7 +171,7 @@ namespace BaseProject
                             {
                                 Position = ropePos
                             };
-                            levelManager.CurrentLevel().Add(rope);
+                            LevelManager.CurrentLevel().Add(rope);
                         }
                         else
                         {
@@ -163,16 +179,16 @@ namespace BaseProject
                             {
                                 Position = ropePos
                             };
-                            levelManager.CurrentLevel().Add(rope);
+                            LevelManager.CurrentLevel().Add(rope);
                         }
-                        levelManager.CurrentLevel().LevelObjects.Add(rope);
+                        LevelManager.CurrentLevel().LevelObjects.Add(rope);
                     }
                 }
                 else
                 if (!cuttebleRope.level.TileOnLocation(x + 1, y + 1))
                 {
 
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 60; i++)
                     {
                         Rope rope;
                         Vector2 ropePos = new Vector2(cuttebleRope.Position.X - Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
@@ -182,7 +198,7 @@ namespace BaseProject
                             {
                                 Position = ropePos
                             };
-                            levelManager.CurrentLevel().Add(rope);
+                            LevelManager.CurrentLevel().Add(rope);
                         }
                         else
                         {
@@ -190,20 +206,20 @@ namespace BaseProject
                             {
                                 Position = ropePos
                             };
-                            levelManager.CurrentLevel().Add(rope);
+                            LevelManager.CurrentLevel().Add(rope);
                         }
-                        levelManager.CurrentLevel().LevelObjects.Add(rope);
+                        LevelManager.CurrentLevel().LevelObjects.Add(rope);
                     }
                 }
-                cuttebleRope.isOut = true;
             }
+                cuttebleRope.isOut = true;
         }
 
 
         public virtual void Climb()
         {
-            left = false;
-            right = false;
+            //left = false;
+           // right = false;
             stand = true;
             velocity.Y = 0;
             velocity.X = 0;

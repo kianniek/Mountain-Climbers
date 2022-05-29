@@ -15,9 +15,9 @@ namespace BaseProject.Engine
 
         public Camera()
         {
-            _zoom = 1.0f;
+            _zoom = 1f;
             _rotation = 0.0f;
-            _pos = Vector2.Zero;
+            _pos = new Vector2(GameEnvironment.Screen.X/2, GameEnvironment.Screen.Y/2);
         }
 
         // Sets and gets zoom

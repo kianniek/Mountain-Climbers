@@ -8,7 +8,6 @@ using BaseProject.GameStates;
 
 public class BigPlayer : HeadPlayer
 {
-    readonly LevelGenerator levelGen;
     readonly SmallPlayer smallPlayer;
     readonly public ThrowDirection throwDirection;
 
@@ -87,7 +86,7 @@ public class BigPlayer : HeadPlayer
         base.Update(gameTime);
         throwDirection.Update(gameTime);
 
-        CollisonWithGround();
+        CollisonWithGround();        
     }
     public void GrabPlayer()
     {
@@ -115,7 +114,7 @@ public class BigPlayer : HeadPlayer
                 for (var x = 0; x < Chunk.Width; x++)
                 {
                     var tile = chunk.TilesInChunk[x, y];
-                    if (tile == null)
+                    if (tile == null || !tile.Visible)
                         continue;
 
                     var tileType = tile.GetType();
@@ -168,9 +167,9 @@ public class BigPlayer : HeadPlayer
     }
     public bool CollisonWithRope()
     {
-        for (int x = 0; x < levelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+        for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
-            var obj = (SpriteGameObject)levelManager.CurrentLevel().LevelObjects.Children[x];
+            var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
             var tileType = obj.GetType();
             if (tileType == typeof(Rope))
             {
@@ -182,6 +181,7 @@ public class BigPlayer : HeadPlayer
         }
         return false;
     }
+    
 
     public override void HandleInput(InputHelper inputHelper)
     {

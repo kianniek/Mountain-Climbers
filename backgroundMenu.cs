@@ -9,7 +9,7 @@ namespace BaseProject
     {
         public backgroundMenu() : base("mountains_juiste")
         {
-            position = new Vector2(-400, 500);   
+            position = Vector2.Zero;   
         }
     }
 }

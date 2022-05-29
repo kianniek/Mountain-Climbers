@@ -18,7 +18,7 @@ public class LevelGenerator : SpriteGameObject
     // Use this for initialization
     public LevelGenerator() : base("")
     {
-        map = GameEnvironment.AssetManager.Content.Load<Texture2D>("FirstMapTest");
+        map = GameEnvironment.AssetManager.Content.Load<Texture2D>("test_level_waterfall");
         tiles = new SpriteGameObject[map.Width, map.Height];
         colors = TextureTo2DArray(map);
         Start();
@@ -81,10 +81,10 @@ public class LevelGenerator : SpriteGameObject
                 //{
                 //    tiles[x, y] = new Lava(this, x,y) { Position = posBlock };
                 //}
-                else if (colors[x, y] == Color.DarkOrange)
+                /*else if (colors[x, y] == Color.DarkOrange)
                 {
                     tiles[x, y] = new BreakeblePlatform() { Position = posBlock };
-                }
+                }*/
             }
         }
     }

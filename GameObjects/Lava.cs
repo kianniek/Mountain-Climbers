@@ -10,7 +10,6 @@ namespace BaseProject.GameObjects
     {
         public int x;
         public int y;
-        public LevelGenerator levelGen;
         private bool changeSprite;
         Level level;
 

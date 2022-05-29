@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BaseProject.Engine;
 using Microsoft.Xna.Framework;
 
 namespace BaseProject.GameStates
@@ -12,20 +13,22 @@ namespace BaseProject.GameStates
         MenuButton startButton;
         CreditsButton creditsButton;
         SelectSprite select;
-        public MainMenu() 
+        public MainMenu(Camera camera) 
         {
             GameEnvironment.AssetManager.PlaySound("intro");
 
             background = new backgroundMenu();
+            background.Position = new Vector2(-background.Width/2, 80);
             Add(background);
 
-            title = new Title(new Vector2(-100, 600), "titleGame");
+            title = new Title(new Vector2(-GameEnvironment.Screen.X/3,100), "titleGame");
             Add(title);
 
-            startButton = new MenuButton("teststart", new Vector2(-1100, 825));
+            startButton = new MenuButton("teststart", new Vector2(-GameEnvironment.Screen.X / 3, 300));
             Add(startButton);
 
             creditsButton = new CreditsButton();
+            creditsButton.Position = new Vector2(-GameEnvironment.Screen.X/2, 480);
             Add(creditsButton);
 
             select = new SelectSprite();

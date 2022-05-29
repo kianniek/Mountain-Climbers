@@ -28,7 +28,6 @@ namespace BaseProject.GameStates
         public bool Loaded { get; private set; }
 
         public Vector2 StartPosition { get; private set; }
-        public Vector2 EndPosition { get; private set; }
 
         // Color codes for all the objects
         private static readonly Dictionary<string, Color> colorCodes = new Dictionary<string, Color>
@@ -40,10 +39,10 @@ namespace BaseProject.GameStates
             {"Boulder", Color.Gainsboro},
             {"ClimbWall", Color.Orange},
             {"Lava", Color.Red},
-            {"Platform", Color.Purple},
+            {"BreakablePlatform", Color.Purple},
             {"Start", Color.Aqua},
-            {"End", Color.Yellow}
-            
+            {"EndLevel", Color.Yellow},
+            {"StartLevel", Color.Brown}
         };
 
         // All color codes that represent level tiles
@@ -51,6 +50,8 @@ namespace BaseProject.GameStates
         {
             colorCodes["Ground"],
             colorCodes["Lava"],
+            colorCodes["BreakablePlatform"],
+            colorCodes["EndLevel"]
         };
 
 
@@ -120,7 +121,7 @@ namespace BaseProject.GameStates
                     if (obj == null)
                         continue;
 
-                    if (obj.GetType() == typeof(Tile))
+                    if (obj.GetType() == typeof(Tile) || obj.GetType().IsSubclassOf(typeof(Tile)))
                         tiles[x,y] = (Tile)obj;
                     Add(obj);
                 }
@@ -159,14 +160,20 @@ namespace BaseProject.GameStates
             if (color == colorCodes["Start"])
                 StartPosition = objPos;
             
-            if (color == colorCodes["End"])
-                EndPosition = objPos;
+            if (color == colorCodes["EndLevel"])
+                LevelObjects.Add(new LoadNextLevelTrigger("TransitionTile", objPos, tileScale, smallPlayer, bigPlayer));
+
+            if (color == colorCodes["StartLevel"])
+                LevelObjects.Add(new LoadNextLevelTrigger("TransitionTile", objPos, tileScale, smallPlayer, bigPlayer));
 
             if (color == colorCodes["Rope"])
                 LevelObjects.Add(new CuttebleRope(this, (int)objPos.X, (int)objPos.Y));
 
             if (color == colorCodes["Lava"])
                 LevelObjects.Add(new Lava(this, (int)objPos.X, (int)objPos.Y));
+
+            if (color == colorCodes["Waterfall"])
+                LevelObjects.Add(new Waterfall(new Vector2((int)objPos.X, (int)objPos.Y)));
 
             if (environmentalTiles.Any(c => c == color))
             {
@@ -175,9 +182,12 @@ namespace BaseProject.GameStates
                 if (sprite == string.Empty)
                     return null;
 
-                var t = new Tile(sprite, objPos, tileScale);
+                Tile t;
                 
-                //ActiveTiles[(int)gridPos.X, (int)gridPos.Y] = t;
+                if (color == colorCodes["BreakablePlatform"])
+                    t = new BreakablePlatform(objPos, tileScale, smallPlayer, bigPlayer);
+                else
+                    t = new Tile(sprite, objPos, tileScale, smallPlayer, bigPlayer);
 
                 obj = t;
             }
@@ -190,6 +200,9 @@ namespace BaseProject.GameStates
         {
             if (tileColor == Color.Transparent)
                 return string.Empty;
+
+            if (tileColor == colorCodes["BreakablePlatform"])
+                return "Tile_ClimebleLeftverticalBlock";
 
             if (tileColor == colorCodes["Ground"])
             {
@@ -295,8 +308,6 @@ namespace BaseProject.GameStates
                 chunks.Add(chunk);
                 chunks.AddRange(chunk.SurroundingChunks());
             }
-            
-            //Console.WriteLine(chunks.Count);
             
             return chunks.ToArray();
         }

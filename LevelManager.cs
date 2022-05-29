@@ -11,13 +11,13 @@ namespace BaseProject
 {
     public class LevelManager : GameObject
     {
-        public List<Level> Levels { get; } = new List<Level>();
-        private int currentLevelIndex = 0;
+        public static List<Level> Levels { get; } = new List<Level>();
+        private static int currentLevelIndex = 0;
 
-        private SmallPlayer smallPlayer;
-        private BigPlayer bigPlayer;
+        private static SmallPlayer smallPlayer;
+        private static BigPlayer bigPlayer;
 
-        private Level PreviousLevel()
+        private static Level PreviousLevel()
         {
             var index = currentLevelIndex - 1;
             if (index < 0)
@@ -25,9 +25,9 @@ namespace BaseProject
             return Levels[index];
         }
 
-        public Level CurrentLevel() => Levels[currentLevelIndex];
+        public static Level CurrentLevel() => Levels[currentLevelIndex];
         
-        private Level NextLevel()
+        private static Level NextLevel()
         {
             var index = currentLevelIndex + 1;
             if (index >= Levels.Count)
@@ -37,15 +37,15 @@ namespace BaseProject
 
         public LevelManager(BigPlayer bigPlayer, SmallPlayer smallPlayer)
         {
-            this.bigPlayer = bigPlayer;
-            this.smallPlayer = smallPlayer;
+            LevelManager.bigPlayer = bigPlayer;
+            LevelManager.smallPlayer = smallPlayer;
             
-            Levels.Add(new Level1("level1", this.bigPlayer, this.smallPlayer));
-            Levels.Add(new Level2("level2", this.bigPlayer, this.smallPlayer));
-            Levels.Add(new Level3("level3", this.bigPlayer, this.smallPlayer));
-            Levels.Add(new Level4("level4", this.bigPlayer, this.smallPlayer));
-            Levels.Add(new Level5("level5", this.bigPlayer, this.smallPlayer));
-            Levels.Add(new Level6("level6", this.bigPlayer, this.smallPlayer));
+            Levels.Add(new Level1("level1test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level2("level2test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level3("level3test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level4("level4test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level5("level5test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level6("level6", LevelManager.bigPlayer, LevelManager.smallPlayer));
             GoToLevel(0);
         }
 
@@ -68,7 +68,7 @@ namespace BaseProject
                 GoToNextLevel();
         }
 
-        public void GoToNextLevel()
+        public static void GoToNextLevel()
         {
             if (NextLevel() == null)
                 return;
@@ -76,14 +76,14 @@ namespace BaseProject
             
         }
 
-        public void GoToPreviousLevel()
+        public static void GoToPreviousLevel()
         {
             if (PreviousLevel() == null)
                 return;
             GoToLevel(currentLevelIndex - 1);
         }
 
-        public void GoToLevel(int index)
+        public static void GoToLevel(int index)
         {
             if (index < 0 || index >= Levels.Count)
                 return;
@@ -93,8 +93,8 @@ namespace BaseProject
             PreviousLevel()?.LoadLevel();
             Levels[currentLevelIndex]?.LoadLevel();
             NextLevel()?.LoadLevel();
-            bigPlayer.GoToNewLevel(CurrentLevel(), CurrentLevel().StartPosition);
-            smallPlayer.GoToNewLevel(CurrentLevel(), CurrentLevel().StartPosition);
+            bigPlayer.GoToNewLevel(LevelManager.CurrentLevel(), LevelManager.CurrentLevel().StartPosition);
+            smallPlayer.GoToNewLevel(LevelManager.CurrentLevel(), LevelManager.CurrentLevel().StartPosition);
         }
     }
 }
