@@ -19,7 +19,7 @@ namespace BaseProject.GameObjects
         {
             position = new Vector2(0, 300);
             this.moveDistance = moveDistance;
-            this.moveSpeed = 100;// moveSpeed;
+            this.moveSpeed = 100;
             origin = new Vector2(Width/2, Height/2);
         }
 

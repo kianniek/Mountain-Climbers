@@ -102,9 +102,12 @@ namespace BaseProject
                     if (my < 0)
                     {
                         //komt van boven
-                        velocity.Y = 0;
-                        //position.Y -= (verticalPlatform.Height/2);
-                        position.Y = verticalPlatform.Position.X - verticalPlatform.Height/2 - ((5/8)*Height);
+                        stand = true;
+                        if (velocity.Y > 0)
+                        {
+                            velocity.Y = 0;
+                        }
+                        position.X += (velocity.X + verticalPlatform.Velocity.X) * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     }
                 }  
             }
@@ -113,8 +116,6 @@ namespace BaseProject
                 base.Update(gameTime);
             }
             //Origin = playerOrigin;
-
-
 
             velocity.Y += gravity;
             if (stand)
@@ -131,6 +132,7 @@ namespace BaseProject
         {
             //var playerOrigin = Origin;
             //Origin = Center;
+            Console.WriteLine(stand);
 
             bVerticalPlatformTouchingPlayer = CollidesWith(verticalPlatform);
 
