@@ -15,20 +15,23 @@ namespace BaseProject.GameStates
         SelectSprite select;
         public MainMenu(Camera camera) 
         {
+            camera.Pos = new Vector2(GameEnvironment.Screen.X/2, GameEnvironment.Screen.Y / 2);
             GameEnvironment.AssetManager.PlaySound("intro");
 
             background = new backgroundMenu();
-            background.Position = new Vector2(-background.Width/2, 80);
+            background.Position = new Vector2(0,0);
             Add(background);
 
-            title = new Title(new Vector2(-GameEnvironment.Screen.X/3,100), "titleGame");
+            title = new Title(new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 4), "titleGame");
+            title.Origin = title.Center;
             Add(title);
 
-            startButton = new MenuButton("teststart", new Vector2(-GameEnvironment.Screen.X / 3, 300));
+            startButton = new MenuButton("teststart", Vector2.Zero);
+            startButton.Position = new Vector2(0, GameEnvironment.Screen.Y / 1.5f);
             Add(startButton);
 
             creditsButton = new CreditsButton();
-            creditsButton.Position = new Vector2(-GameEnvironment.Screen.X/2, 480);
+            creditsButton.Position = new Vector2(GameEnvironment.Screen.X - creditsButton.Width, GameEnvironment.Screen.Y / 1.5f);
             Add(creditsButton);
 
             select = new SelectSprite();

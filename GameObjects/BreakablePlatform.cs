@@ -7,8 +7,8 @@ namespace BaseProject.GameObjects
     public class BreakablePlatform : Tile
     {
 
-        private const float secondsBeforeBreak = 1f;
-        private const float secondsUntilRespawn = 5f;
+        private const float secondsBeforeBreak = 0.5f;
+        private const float secondsUntilRespawn = 2f;
         
         private readonly SpriteSheet[] sprites =
         {

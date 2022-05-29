@@ -20,7 +20,7 @@ namespace BaseProject.GameStates
         //ButtonWall wall;
 
 
-        Camera cam;
+        public Camera cam { get; private set; }
 
         bool playBackgroundMusic = true;
         int musicCount = 14580;

@@ -15,7 +15,7 @@ namespace BaseProject.GameObjects
             Position = position;
             this.smallPlayer = smallPlayer;
             this.bigPlayer = bigPlayer;
-
+            Mirror = true;
         }
 
         public override void Update(GameTime gameTime)

@@ -28,6 +28,7 @@ namespace BaseProject.GameStates
         public bool Loaded { get; private set; }
 
         public Vector2 StartPosition { get; private set; }
+        public Vector2 EndPosition { get; private set; }
 
         // Color codes for all the objects
         private static readonly Dictionary<string, Color> colorCodes = new Dictionary<string, Color>
@@ -41,6 +42,7 @@ namespace BaseProject.GameStates
             {"Lava", Color.Red},
             {"BreakablePlatform", Color.Purple},
             {"Start", Color.Aqua},
+            {"End", Color.Lime},
             {"EndLevel", Color.Yellow},
             {"StartLevel", Color.Brown}
         };
@@ -51,7 +53,8 @@ namespace BaseProject.GameStates
             colorCodes["Ground"],
             colorCodes["Lava"],
             colorCodes["BreakablePlatform"],
-            colorCodes["EndLevel"]
+            colorCodes["EndLevel"],
+            colorCodes["StartLevel"]
         };
 
 
@@ -159,12 +162,15 @@ namespace BaseProject.GameStates
 
             if (color == colorCodes["Start"])
                 StartPosition = objPos;
-            
+
+            if (color == colorCodes["End"])
+                EndPosition = objPos;
+
             if (color == colorCodes["EndLevel"])
                 LevelObjects.Add(new LoadNextLevelTrigger("TransitionTile", objPos, tileScale, smallPlayer, bigPlayer));
 
             if (color == colorCodes["StartLevel"])
-                LevelObjects.Add(new LoadNextLevelTrigger("TransitionTile", objPos, tileScale, smallPlayer, bigPlayer));
+                LevelObjects.Add(new PreviousLevelTrigger("TransitionTile", objPos, tileScale, smallPlayer, bigPlayer));
 
             if (color == colorCodes["Rope"])
                 LevelObjects.Add(new CuttebleRope(this, (int)objPos.X, (int)objPos.Y));

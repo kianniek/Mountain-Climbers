@@ -9,7 +9,7 @@ using BaseProject.GameStates;
 //Dion
 public class SmallPlayer : HeadPlayer
 {
-    PlayingState state;
+    public PlayingState state;
     public bool canMove, beingHeld, hitLeftWall, hitRightWall, beingThrown;
 
     public Lives[] livesSmall;
