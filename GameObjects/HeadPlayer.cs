@@ -19,7 +19,7 @@ namespace BaseProject
         public int savePosTimer;
 
         public bool knockback;
-        public int knockbackForce = 100;
+        public int knockbackForce = 5;
         public int musicCounter = 30;
 
         public SpriteGameObject InputIndicator { get; protected set; } = new SpriteGameObject("");
@@ -41,8 +41,8 @@ namespace BaseProject
         {
             if (knockback)
             {
-                velocity.X = -1 * knockbackForce;
-                jump = true;
+                velocity.X *= -1 * knockbackForce;
+                jump = false;
                 knockback = false;
             }
             if (jump)

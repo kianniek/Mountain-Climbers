@@ -43,7 +43,7 @@ namespace BaseProject.GameStates
         {
             base.HandleInput(inputHelper);
 
-            if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
+            if (inputHelper.KeyPressed(ButtonManager.Select) || inputHelper.KeyPressed(ButtonManager.Start))
             {
                 GameEnvironment.GameStateManager.SwitchTo("MainMenu");
             }

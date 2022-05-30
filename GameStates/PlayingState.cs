@@ -12,12 +12,9 @@ namespace BaseProject.GameStates
     public class PlayingState : GameObjectList
     {
         SpriteGameObject background;
-        GameObjectList rocks;
         GameObjectList climbWall;
         public SmallPlayer smallPlayer;
         public BigPlayer bigPlayer;
-        //Button button;
-        //ButtonWall wall;
 
         public static Checkpoint activeCheckpoint;
 
@@ -30,6 +27,7 @@ namespace BaseProject.GameStates
 
         public PlayingState(Camera camera)
         {
+            cam = camera;
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
 
@@ -40,22 +38,8 @@ namespace BaseProject.GameStates
 
             climbWall = new GameObjectList();
 
-
-            rocks = new GameObjectList();
-
-            //wall = new ButtonWall(new Vector2(1000, 1010), new Vector2(1000, 950));
-            //button = new Button(smallPlayer, bigPlayer, wall);
-
-
-
-            this.cam = camera;
-
             this.Add(bigPlayer.InputIndicator);
             this.Add(smallPlayer.InputIndicator);
-            //this.Add(button);
-            //this.Add(wall);
-
-            this.Add(rocks);
             this.Add(climbWall);
 
             ////Small health
@@ -83,13 +67,11 @@ namespace BaseProject.GameStates
             this.Add(bigPlayer);
             this.Add(smallPlayer);
 
-            cam = camera;
             cam.Pos = bigPlayer.Position;
         }
         public override void Update(GameTime gameTime)
         {
             PlayMusic();
-            CollisionLevelObejcts();
             base.Update(gameTime);
             KeepPlayersCenterd();
             UI_ElementUpdate();
@@ -109,48 +91,6 @@ namespace BaseProject.GameStates
             {
                 playBackgroundMusic = true;
                 musicCount = 14580;
-            }
-        }
-        private void CollisionLevelObejcts()
-        {
-            //Falling Rocks
-            foreach (FallingRock rock in rocks.Children)
-            {
-                Vector2 rockSmallPlayer = rock.Position - smallPlayer.Position;
-                Vector2 rockBigPlayer = rock.Position - bigPlayer.Position;
-
-                //Music is playing when both player distances < 30
-                if (rockSmallPlayer.X < 30 || rockBigPlayer.X < 30)
-                {
-                    rock.closeByRock = true;
-                }
-                else
-                {
-                    rock.closeByRock = false;
-                }
-
-                //Resets rock if rock is off screen
-                if (rock.Position.Y > GameEnvironment.Screen.Y - cam._transform.M42)
-                {
-                    rock.Reset();
-                }
-
-                //Rock hits one of the players and that causes knockback
-                if (rock.CollidesWith(smallPlayer))
-                {
-                    smallPlayer.knockback = true;
-                }
-
-                if (rock.CollidesWith(bigPlayer))
-                {
-                    bigPlayer.knockback = true;
-                }
-                else
-                {
-                    bigPlayer.hitRock = false;
-                }
-
-                Console.WriteLine(rock.Position.Y);
             }
         }
         private void CheckGameOver()
