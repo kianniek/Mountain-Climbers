@@ -9,7 +9,7 @@ namespace BaseProject
     {
         public SelectSprite() : base("Player")
         {
-            position = new Vector2(-400, 1250);
+            position = new Vector2(0, 725);
             scale = 2;
         }
 
@@ -19,12 +19,17 @@ namespace BaseProject
 
             if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Left))
             {
-                position = new Vector2(-400, 1250);
+                position = new Vector2(0, 725);
             }
 
             if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Right))
             {
-                position = new Vector2(700, 1250);
+                position = new Vector2(1150, 725);
+            }
+            
+            if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Down))
+            {
+                position = new Vector2(630, 875);
             }
         }
     }

@@ -13,6 +13,7 @@ namespace BaseProject.GameStates
         MenuButton startButton;
         CreditsButton creditsButton;
         SelectSprite select;
+        SpriteGameObject controls;
         public MainMenu(Camera camera) 
         {
             camera.Pos = new Vector2(GameEnvironment.Screen.X/2, GameEnvironment.Screen.Y / 2);
@@ -27,12 +28,16 @@ namespace BaseProject.GameStates
             Add(title);
 
             startButton = new MenuButton("teststart", Vector2.Zero);
-            startButton.Position = new Vector2(0, GameEnvironment.Screen.Y / 1.5f);
+            startButton.Position = new Vector2(150, GameEnvironment.Screen.Y / 1.5f);
             Add(startButton);
 
             creditsButton = new CreditsButton();
-            creditsButton.Position = new Vector2(GameEnvironment.Screen.X - creditsButton.Width, GameEnvironment.Screen.Y / 1.5f);
+            creditsButton.Position = new Vector2(GameEnvironment.Screen.X - creditsButton.Width - 150, GameEnvironment.Screen.Y / 1.5f);
             Add(creditsButton);
+
+            controls = new SpriteGameObject("controlsbutton");
+            controls.Position = new Vector2(GameEnvironment.Screen.X / 2 - 200, GameEnvironment.Screen.Y / 1.3f);
+            Add(controls);
 
             select = new SelectSprite();
             Add(select);
@@ -42,13 +47,17 @@ namespace BaseProject.GameStates
         {
             base.HandleInput(inputHelper);
 
-            if (select.Position.X == -400 && select.Position.Y == 1250 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
+            if (select.Position.X == 0 && select.Position.Y == 725 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
             {
                 GameEnvironment.GameStateManager.SwitchTo("LoadingState");
             }
-            if (select.Position.X == 700 && select.Position.Y == 1250 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
+            if (select.Position.X == 1150 && select.Position.Y == 725 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
             {
                 GameEnvironment.GameStateManager.SwitchTo("Credits");
+            }
+            if (select.Position.X == 630 && select.Position.Y == 875 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
+            {
+                GameEnvironment.GameStateManager.SwitchTo("ControlsMenu");
             }
         }
     }

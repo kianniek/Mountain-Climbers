@@ -13,7 +13,6 @@ namespace BaseProject.GameStates
 
 
 
-
         public ControlsMenu() 
         {
             background = new backgroundMenu();
@@ -22,19 +21,20 @@ namespace BaseProject.GameStates
             controls = new Controls();
             Add(controls);
 
-            button = new MenuButton("backbutton", new Vector2(-600, 450));
-            button.Scale = 0.5f;
-           ;
+            button = new MenuButton("backbutton", new Vector2(300, 500));
+            //button.Scale = 0.5f;
             Add(button);
-
-
-
-
-
 
         }
 
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            base.HandleInput(inputHelper);
 
-
+            if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
+            {
+                GameEnvironment.GameStateManager.SwitchTo("MainMenu");
+            }
+        }
     }
 }

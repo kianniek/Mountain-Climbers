@@ -27,10 +27,10 @@ namespace BaseProject.GameStates
             text.Add(new Names(new Vector2(50, 350), "Unknownymous"));
             Add(text);*/
 
-            credit = new Title(new Vector2(-100, 600), "madeBy");
+            credit = new Title(new Vector2(300, 50), "madeBy");
             Add(credit);
 
-            button = new MenuButton("backbutton", new Vector2(-100, 1000));
+            button = new MenuButton("backbutton", new Vector2(300, 500));
             Add(button);
         }
         public override void Update(GameTime gameTime)
