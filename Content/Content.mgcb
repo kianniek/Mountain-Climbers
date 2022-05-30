@@ -259,7 +259,7 @@
 /processorParam:TextureFormat=Color
 /build:CP.png
 
-#begin cr.png
+#begin CreditsButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -269,7 +269,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:cr.png
+/build:CreditsButton.png
 
 #begin CrumbelingBlock.png
 /importer:TextureImporter
@@ -794,6 +794,18 @@
 /processorParam:TextureFormat=Color
 /build:start.png
 
+#begin StartButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:StartButton.png
+
 #begin step.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -847,18 +859,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:test_level_waterfall.png
-
-#begin teststart.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:teststart.png
 
 #begin testWall.png
 /importer:TextureImporter

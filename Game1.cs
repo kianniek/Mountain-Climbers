@@ -22,7 +22,6 @@ namespace BaseProject
             GameStateManager.AddGameState("GameOverMenu", new GameOverMenu());
             GameStateManager.SwitchTo("PlayingState");
             GameStateManager.AddGameState("MainMenu", new MainMenu(Camera));
-            Console.WriteLine(cam.Pos);
             GameStateManager.SwitchTo("MainMenu");
             
             
