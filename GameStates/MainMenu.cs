@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using BaseProject.Engine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject.GameStates
 {
@@ -13,23 +14,31 @@ namespace BaseProject.GameStates
         MenuButton startButton;
         CreditsButton creditsButton;
         SelectSprite select;
+        SpriteGameObject controls;
         public MainMenu(Camera camera) 
         {
+            camera.Pos = new Vector2(GameEnvironment.Screen.X/2, GameEnvironment.Screen.Y / 2);
             GameEnvironment.AssetManager.PlaySound("intro");
 
             background = new backgroundMenu();
-            background.Position = new Vector2(-background.Width/2, 80);
+            background.Position = new Vector2(0,0);
             Add(background);
 
-            title = new Title(new Vector2(-GameEnvironment.Screen.X/3,100), "titleGame");
+            title = new Title(new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 4), "titleGame");
+            title.Origin = title.Center;
             Add(title);
 
-            startButton = new MenuButton("teststart", new Vector2(-GameEnvironment.Screen.X / 3, 300));
+            startButton = new MenuButton("teststart", Vector2.Zero);
+            startButton.Position = new Vector2(150, GameEnvironment.Screen.Y / 1.5f);
             Add(startButton);
 
             creditsButton = new CreditsButton();
-            creditsButton.Position = new Vector2(-GameEnvironment.Screen.X/2, 480);
+            creditsButton.Position = new Vector2(GameEnvironment.Screen.X - creditsButton.Width - 150, GameEnvironment.Screen.Y / 1.5f);
             Add(creditsButton);
+
+            controls = new SpriteGameObject("controlsbutton");
+            controls.Position = new Vector2(GameEnvironment.Screen.X / 2 - 200, GameEnvironment.Screen.Y / 1.3f);
+            Add(controls);
 
             select = new SelectSprite();
             Add(select);
@@ -39,11 +48,15 @@ namespace BaseProject.GameStates
         {
             base.HandleInput(inputHelper);
 
-            if (select.Position.X == -400 && select.Position.Y == 1250 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
+            if (select.Position.X == 630 && select.Position.Y == 875 && inputHelper.IsKeyDown(ButtonManager.Start) && inputHelper.IsKeyDown(ButtonManager.Select))
+            {
+                GameEnvironment.GameStateManager.SwitchTo("ControlsMenu");
+            }else
+            if (select.Position.X == 0 && select.Position.Y == 725 && inputHelper.KeyPressed(ButtonManager.Start))
             {
                 GameEnvironment.GameStateManager.SwitchTo("LoadingState");
-            }
-            if (select.Position.X == 700 && select.Position.Y == 1250 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
+            }else
+            if (select.Position.X == 1150 && select.Position.Y == 725 && inputHelper.KeyPressed(ButtonManager.Select))
             {
                 GameEnvironment.GameStateManager.SwitchTo("Credits");
             }

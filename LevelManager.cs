@@ -40,12 +40,15 @@ namespace BaseProject
             LevelManager.bigPlayer = bigPlayer;
             LevelManager.smallPlayer = smallPlayer;
             
-            Levels.Add(new Level1("level1test", LevelManager.bigPlayer, LevelManager.smallPlayer));
-            Levels.Add(new Level2("level2test", LevelManager.bigPlayer, LevelManager.smallPlayer));
-            Levels.Add(new Level3("level3test", LevelManager.bigPlayer, LevelManager.smallPlayer));
-            Levels.Add(new Level4("level4test", LevelManager.bigPlayer, LevelManager.smallPlayer));
-            Levels.Add(new Level5("level5test", LevelManager.bigPlayer, LevelManager.smallPlayer));
-            Levels.Add(new Level6("level6", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level1("Levels/level1test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level2("Levels/level2test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level3("Levels/level3test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level4("Levels/level4test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level5("Levels/level5test", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level6("Levels/level6", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level7("Levels/Level7", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level8("Levels/level8", LevelManager.bigPlayer, LevelManager.smallPlayer));
+            Levels.Add(new Level9("Levels/level9", LevelManager.bigPlayer, LevelManager.smallPlayer));
             GoToLevel(0);
         }
 
@@ -87,14 +90,18 @@ namespace BaseProject
         {
             if (index < 0 || index >= Levels.Count)
                 return;
-            
+
+            int tempIndex = currentLevelIndex;
             currentLevelIndex = index;
             
             PreviousLevel()?.LoadLevel();
             Levels[currentLevelIndex]?.LoadLevel();
             NextLevel()?.LoadLevel();
-            bigPlayer.GoToNewLevel(LevelManager.CurrentLevel(), LevelManager.CurrentLevel().StartPosition);
-            smallPlayer.GoToNewLevel(LevelManager.CurrentLevel(), LevelManager.CurrentLevel().StartPosition);
+            Vector2 pos = currentLevelIndex >= tempIndex ? LevelManager.CurrentLevel().StartPosition : LevelManager.CurrentLevel().EndPosition;
+            bigPlayer.GoToNewLevel(LevelManager.CurrentLevel(), pos);
+            smallPlayer.GoToNewLevel(LevelManager.CurrentLevel(), pos);
+
+            smallPlayer.state.cam.Pos = pos;
         }
 
         public static void GoToLevel(Level level)

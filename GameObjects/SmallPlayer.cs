@@ -9,12 +9,16 @@ using BaseProject.GameStates;
 //Dion
 public class SmallPlayer : HeadPlayer
 {
-    PlayingState state;
+    public PlayingState state;
     public bool canMove, beingHeld, hitLeftWall, hitRightWall, beingThrown;
 
     public Lives[] livesSmall;
     public Lives[] noLives;
     public int livesPlayer;
+
+    private DateTime breakStartTime;
+    private DateTime breakTime;
+    private bool breaking = false;
 
     public SmallPlayer(PlayingState playingState) : base("Player")
     {
@@ -249,10 +253,26 @@ public class SmallPlayer : HeadPlayer
         if (!beingHeld && stand)
         {
             playJump = true;
-            if (inputHelper.KeyPressed(ButtonManager.Jump_SmallPlayer))
+            if (inputHelper.KeyPressed(ButtonManager.Up_SmallPlayer))
             {
                 //stand = false;
                 jump = true;
+            }
+            TimeSpan timeBetweenNowAndStart = DateTime.Now - breakStartTime;
+            var secondsPassed = timeBetweenNowAndStart.Seconds + timeBetweenNowAndStart.Milliseconds / 1000f;
+            Console.WriteLine(secondsPassed);
+            if (secondsPassed > 3)
+            {
+                if (inputHelper.KeyPressed(ButtonManager.DogeL_SmallPlayer))
+                {
+                    velocity.X = -1000;
+                    breakStartTime = DateTime.Now;
+                }
+                if (inputHelper.KeyPressed(ButtonManager.DogeR_SmallPlayer))
+                {
+                    velocity.X = -1000;
+                    breakStartTime = DateTime.Now;
+                }
             }
         }
         if (!state.bigPlayer.holdingPlayer)
@@ -272,7 +292,7 @@ public class SmallPlayer : HeadPlayer
         {
             Climb();
 
-            if (inputHelper.IsKeyDown(ButtonManager.Jump_SmallPlayer))
+            if (inputHelper.IsKeyDown(ButtonManager.Up_SmallPlayer))
             {
                 velocity.Y = -100;
             }
@@ -289,7 +309,7 @@ public class SmallPlayer : HeadPlayer
         if (stand)
         {
             playJump = false;
-            if (inputHelper.KeyPressed(ButtonManager.Jump_SmallPlayer))
+            if (inputHelper.KeyPressed(ButtonManager.Up_SmallPlayer))
             {
                 //stand = false;
                 jump = true;

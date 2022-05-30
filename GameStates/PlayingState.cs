@@ -21,9 +21,11 @@ namespace BaseProject.GameStates
 
         public static Checkpoint activeCheckpoint;
 
-        Camera cam;
+        public Camera cam { get; private set; }
 
         bool playBackgroundMusic = true;
+        int musicCount = 14580;
+
         Vector2 cameraUI_offset; // use this to negate the camera movement for UI objects
 
         public PlayingState(Camera camera)
@@ -77,9 +79,6 @@ namespace BaseProject.GameStates
             //    this.Add(bigPlayer.livesBig[i]);
             //}
 
-            //LevelManager.GoToLevel(activeCheckpoint.Level);
-
-
             this.Add(new LevelManager(bigPlayer, smallPlayer));
             this.Add(bigPlayer);
             this.Add(smallPlayer);
@@ -102,6 +101,14 @@ namespace BaseProject.GameStates
             {
                 playBackgroundMusic = false;
                 GameEnvironment.AssetManager.PlaySound("MusicWaterfall");
+            }
+
+            musicCount--;
+
+            if (musicCount < 0)
+            {
+                playBackgroundMusic = true;
+                musicCount = 14580;
             }
         }
         private void CollisionLevelObejcts()
@@ -142,6 +149,8 @@ namespace BaseProject.GameStates
                 {
                     bigPlayer.hitRock = false;
                 }
+
+                Console.WriteLine(rock.Position.Y);
             }
         }
         private void CheckGameOver()
