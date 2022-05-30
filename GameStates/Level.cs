@@ -181,6 +181,9 @@ namespace BaseProject.GameStates
             if (color == colorCodes["Waterfall"])
                 LevelObjects.Add(new Waterfall(new Vector2((int)objPos.X, (int)objPos.Y)));
 
+            if (color == colorCodes["Boulder"])
+                LevelObjects.Add(new FallingRock("stone100", new Vector2((int)objPos.X, (int)objPos.Y)));
+
             if (environmentalTiles.Any(c => c == color))
             {
                 var sprite = FetchTileSprite(color, (int)gridPos.X, (int)gridPos.Y);

@@ -151,6 +151,8 @@ namespace BaseProject.GameStates
                 {
                     bigPlayer.hitRock = false;
                 }
+
+                Console.WriteLine(rock.Position.Y);
             }
         }
         private void CheckGameOver()
