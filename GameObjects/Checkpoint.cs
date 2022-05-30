@@ -56,33 +56,23 @@ namespace BaseProject.GameObjects
             }
 
             
-            if (bigplayer.isDead)
+            if (bigplayer.isDead && PlayingState.activeCheckpoint == this)
             {
                 bigplayer.Position = this.position;
                 bigplayer.isDead=false;
                 Console.WriteLine("big is dead");
             }
-            if (smallplayer.isDead)
+            if (smallplayer.isDead && PlayingState.activeCheckpoint == this)
             {
                 smallplayer.Position = this.position;
                 smallplayer.isDead = false;
                 Console.WriteLine("small is dead");
             }
 
-            if (CheckPointAchS && smallplayer.isDead)
-            {
-
-                smallplayer.Position = position;
-                smallplayer.isDead = false;
-
-            }
+           
 
             //checkpoint respawn big player
-            if (CheckpointAchB && bigplayer.isDead)
-            {
-                bigplayer.Position = position;
-                bigplayer.isDead = false;
-            }
+           
         }
     }
 }

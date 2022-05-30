@@ -49,7 +49,7 @@ namespace BaseProject.GameStates
             }
         }
 
-        public override void HandleInput(InputHelper inputHelper)
+       /* public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
 
@@ -58,7 +58,7 @@ namespace BaseProject.GameStates
 
                 GameEnvironment.GameStateManager.SwitchTo("GameOverMenu");
             }
-        }
+        }*/
 
 
     }
