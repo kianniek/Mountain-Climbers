@@ -28,11 +28,11 @@ namespace BaseProject.GameStates
             title.Origin = title.Center;
             Add(title);
 
-            startButton = new MenuButton("teststart", Vector2.Zero);
+            startButton = new MenuButton("StartButton", Vector2.Zero);
             startButton.Position = new Vector2(150, GameEnvironment.Screen.Y / 1.5f);
             Add(startButton);
 
-            creditsButton = new CreditsButton();
+            creditsButton = new CreditsButton("CreditsButton", Vector2.Zero);
             creditsButton.Position = new Vector2(GameEnvironment.Screen.X - creditsButton.Width - 150, GameEnvironment.Screen.Y / 1.5f);
             Add(creditsButton);
 
@@ -48,14 +48,16 @@ namespace BaseProject.GameStates
         {
             base.HandleInput(inputHelper);
 
-            if (select.Position.X == 630 && select.Position.Y == 875 && inputHelper.IsKeyDown(ButtonManager.Start) && inputHelper.IsKeyDown(ButtonManager.Select))
+            if (select.Position.X == 630 && select.Position.Y == 875 && inputHelper.IsKeyDown(ButtonManager.Select))
             {
                 GameEnvironment.GameStateManager.SwitchTo("ControlsMenu");
-            }else
-            if (select.Position.X == 0 && select.Position.Y == 725 && inputHelper.KeyPressed(ButtonManager.Start))
+            }
+            else
+            if (select.Position.X == 0 && select.Position.Y == 725 && inputHelper.KeyPressed(ButtonManager.Start) && inputHelper.KeyPressed(ButtonManager.Select))
             {
                 GameEnvironment.GameStateManager.SwitchTo("LoadingState");
-            }else
+            }
+            else
             if (select.Position.X == 1150 && select.Position.Y == 725 && inputHelper.KeyPressed(ButtonManager.Select))
             {
                 GameEnvironment.GameStateManager.SwitchTo("Credits");

@@ -4,7 +4,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-
+/*
+ * 
+//class was for early development. now improved in other classes such as Level-Manager, Level and Chunk 
+ *
+*/
 public class LevelGenerator : SpriteGameObject
 {
     public SpriteGameObject[,] tiles;
@@ -64,7 +68,7 @@ public class LevelGenerator : SpriteGameObject
                 }
                 else if (colors[x, y] == Color.Magenta)
                 {
-                    tiles[x, y] = new FallingRock("stone100", posBlock);
+                    //tiles[x, y] = new FallingRock("stone100", posBlock);
                 }
                 //else if (colors[x, y] == Color.Lime)
                 //{

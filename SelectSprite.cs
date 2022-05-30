@@ -17,17 +17,17 @@ namespace BaseProject
         {
             base.HandleInput(inputHelper);
 
-            if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Left))
+            if (inputHelper.KeyPressed(ButtonManager.Left_BigPlayer) || inputHelper.KeyPressed(ButtonManager.Left_SmallPlayer))
             {
                 position = new Vector2(0, 725);
             }
 
-            if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Right))
+            if (inputHelper.KeyPressed(ButtonManager.Right_BigPlayer) || inputHelper.KeyPressed(ButtonManager.Right_SmallPlayer))
             {
                 position = new Vector2(1150, 725);
             }
             
-            if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Down))
+            if (inputHelper.KeyPressed(ButtonManager.Down_BigPlayer) || inputHelper.KeyPressed(ButtonManager.Down_SmallPlayer))
             {
                 position = new Vector2(630, 875);
             }

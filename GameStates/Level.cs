@@ -182,7 +182,7 @@ namespace BaseProject.GameStates
                 LevelObjects.Add(new Waterfall(new Vector2((int)objPos.X, (int)objPos.Y)));
 
             if (color == colorCodes["Boulder"])
-                LevelObjects.Add(new FallingRock("stone100", new Vector2((int)objPos.X, (int)objPos.Y)));
+                LevelObjects.Add(new FallingRock("stone100", new Vector2((int)objPos.X, (int)objPos.Y), smallPlayer, bigPlayer));
 
             if (environmentalTiles.Any(c => c == color))
             {
