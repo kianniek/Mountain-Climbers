@@ -10,16 +10,26 @@ namespace BaseProject.GameStates
     {
 
         backgroundMenu background;
-        SelectSprite select;
+        SpriteGameObject gameOver;
+        SpriteGameObject menu;
+        //SelectSprite select;
         public GameOverMenu()
         {
             background = new backgroundMenu();
-            background.Position = Vector2.Zero;
+            background.Position = new Vector2(0, 0);
             Add(background);
 
-            select = new SelectSprite();
-            select.Position = new Vector2(GameEnvironment.Screen.X/3, 500); 
-            Add(select);
+            gameOver = new SpriteGameObject("over");
+            gameOver.Position = new Vector2(GameEnvironment.Screen.X / 2, 100);
+            Add(gameOver);
+
+            menu = new SpriteGameObject("goToMenu");
+            menu.Position = new Vector2(GameEnvironment.Screen.X / 2, 500);
+            Add(menu);
+
+            //select = new SelectSprite();
+            //select.Position = new Vector2(GameEnvironment.Screen.X/3, 500); 
+            //Add(select);
 
 
         }
@@ -28,7 +38,12 @@ namespace BaseProject.GameStates
         {
             base.HandleInput(inputHelper);
 
-            if (inputHelper.IsKeyDown(Keys.Up))
+            if (inputHelper.IsKeyDown(ButtonManager.Start))
+            {
+                GameEnvironment.GameStateManager.SwitchTo("MainMenu");
+            }
+
+            /*if (inputHelper.IsKeyDown(Keys.Up))
             {
                 select.Position = new Vector2(GameEnvironment.Screen.X / 3, 500);
             } 
@@ -43,10 +58,7 @@ namespace BaseProject.GameStates
             if (inputHelper.IsKeyDown(Keys.Space) && select.Position.Y == 700)
             {
                 GameEnvironment.GameStateManager.SwitchTo("MainMenu");
-            }
-
-
-
+            }*/
         }
     }
 }

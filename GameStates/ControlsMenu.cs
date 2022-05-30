@@ -43,23 +43,10 @@ namespace BaseProject.GameStates
         {
             base.HandleInput(inputHelper);
 
-            if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
+            if (inputHelper.IsKeyDown(ButtonManager.Start))
             {
                 GameEnvironment.GameStateManager.SwitchTo("MainMenu");
             }
         }
-
-        public override void HandleInput(InputHelper inputHelper)
-        {
-            base.HandleInput(inputHelper);
-
-            if (inputHelper.IsKeyDown(Keys.A))
-            {
-
-                GameEnvironment.GameStateManager.SwitchTo("GameOverMenu");
-            }
-        }
-
-
     }
 }

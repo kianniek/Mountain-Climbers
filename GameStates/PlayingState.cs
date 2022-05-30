@@ -191,7 +191,7 @@ namespace BaseProject.GameStates
             //GameOver
             if (smallPlayer.livesPlayer == 0)
             {
-
+                GameEnvironment.GameStateManager.SwitchTo("GameOverMenu");
             }
 
             if (bigPlayer.livesPlayer > 0)
@@ -208,6 +208,7 @@ namespace BaseProject.GameStates
             //GameOver
             if (bigPlayer.livesPlayer == 0)
             {
+                GameEnvironment.GameStateManager.SwitchTo("GameOverMenu");
                 //bigPlayer.livesPlayer = 0;
             }
         }
