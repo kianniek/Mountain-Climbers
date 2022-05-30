@@ -57,28 +57,10 @@ namespace BaseProject.GameStates
             this.Add(rocks);
             this.Add(climbWall);
 
-            ////Small health
-            //for (int i = 0; i < smallPlayer.livesPlayer; i++)
-            //{
-            //    Lives liveOrange = new Lives("Hartje_oranje", new Vector2(40 * i - cameraUI_offset.X, 0));
-            //    smallPlayer.livesSmall[i] = liveOrange;
-            //    smallPlayer.noLives[i] = (new Lives("Hartje_leeg", new Vector2(40 * i - cameraUI_offset.X, 0)));
-            //    this.Add(smallPlayer.noLives[i]);
-            //    this.Add(smallPlayer.livesSmall[i]);
-            //}
-
-
-            ////Big health
-            //for (int i = 0; i < bigPlayer.livesPlayer; i++)
-            //{
-            //    Lives liveGreen = new Lives("Hartje_groen", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
-            //    bigPlayer.livesBig[i] = liveGreen;
-            //    bigPlayer.noLives[i + bigPlayer.livesPlayer] = new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
-            //    this.Add(bigPlayer.noLives[i + bigPlayer.livesPlayer]);
-            //    this.Add(bigPlayer.livesBig[i]);
-            //}
-
             this.Add(new LevelManager(bigPlayer, smallPlayer));
+
+            InitialzeHealth();
+
             this.Add(bigPlayer);
             this.Add(smallPlayer);
 
@@ -93,6 +75,30 @@ namespace BaseProject.GameStates
             KeepPlayersCenterd();
             UI_ElementUpdate();
             CheckGameOver();
+        }
+
+        private void InitialzeHealth()
+        {
+            ////Small health
+            for (int i = 0; i < smallPlayer.livesPlayer; i++)
+            {
+                Lives liveOrange = new Lives("Hartje_oranje", new Vector2(40 * i - cameraUI_offset.X, 0));
+                smallPlayer.livesSmall[i] = liveOrange;
+                smallPlayer.noLives[i] = (new Lives("Hartje_leeg", new Vector2(40 * i - cameraUI_offset.X, 0)));
+                this.Add(smallPlayer.noLives[i]);
+                this.Add(smallPlayer.livesSmall[i]);
+            }
+
+
+            ////Big health
+            for (int i = 0; i < bigPlayer.livesPlayer; i++)
+            {
+                Lives liveGreen = new Lives("Hartje_groen", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
+                bigPlayer.livesBig[i] = liveGreen;
+                bigPlayer.noLives[i + bigPlayer.livesPlayer] = new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
+                this.Add(bigPlayer.noLives[i + bigPlayer.livesPlayer]);
+                this.Add(bigPlayer.livesBig[i]);
+            }
         }
         private void PlayMusic()
         {
@@ -168,16 +174,40 @@ namespace BaseProject.GameStates
                 smallPlayer.Reset();
             }
 
-            //Losing live
-            if (smallPlayer.isDead)
+
+
+            if (smallPlayer.livesPlayer > 0)
             {
-                smallPlayer.livesPlayer--;
-                //smallPlayer.livesSmall[smallPlayer.livesPlayer].Visible = false; 
+                //Losing live
+                if (smallPlayer.isDead)
+                {
+                    smallPlayer.isDead = false;
+                    smallPlayer.livesPlayer--;
+                    smallPlayer.livesSmall[smallPlayer.livesPlayer].Visible = false;
+                }
             }
-            if (bigPlayer.isDead)
+
+            //GameOver
+            if (smallPlayer.livesPlayer == 0)
             {
-                bigPlayer.livesPlayer--;
-                //bigPlayer.livesBig[bigPlayer.livesPlayer].Visible = false;
+
+            }
+
+            if (bigPlayer.livesPlayer > 0)
+            {
+                //Losing live
+                if (bigPlayer.isDead)
+                {
+                    bigPlayer.isDead = false;
+                    bigPlayer.livesPlayer--;
+                    bigPlayer.livesBig[bigPlayer.livesPlayer].Visible = false;
+                }
+            }
+
+            //GameOver
+            if (bigPlayer.livesPlayer == 0)
+            {
+                //bigPlayer.livesPlayer = 0;
             }
         }
         public void DropDownRope(CuttebleRope cuttebleRope)
@@ -315,19 +345,19 @@ namespace BaseProject.GameStates
             cameraUI_offset = new Vector2(cam._transform.M41, cam._transform.M42);
 
             ////orange health
-            //for (int i = 0; i < smallPlayer.livesPlayer; i++)
-            //{
-            //    smallPlayer.livesSmall[i].Position = new Vector2(40 * i - cameraUI_offset.X, 0 - cameraUI_offset.Y);
-            //    smallPlayer.noLives[i].Position = new Vector2(40 * i - cameraUI_offset.X, 0 - cameraUI_offset.Y);
-            //}
+            for (int i = 0; i < smallPlayer.livesPlayer; i++)
+            {
+                smallPlayer.livesSmall[i].Position = new Vector2(40 * i - cameraUI_offset.X, 0 - cameraUI_offset.Y);
+                smallPlayer.noLives[i].Position = new Vector2(40 * i - cameraUI_offset.X, 0 - cameraUI_offset.Y);
+            }
 
 
-            ////Green health
-            //for (int i = 0; i < bigPlayer.livesPlayer; i++)
-            //{
-            //    bigPlayer.livesBig[i].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y);
-            //    bigPlayer.noLives[i + bigPlayer.livesPlayer].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y);
-            //}
+            //Green health
+            for (int i = 0; i < bigPlayer.livesPlayer; i++)
+            {
+                bigPlayer.livesBig[i].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y);
+                bigPlayer.noLives[i + bigPlayer.livesPlayer].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y); 
+            }
 
             //for background
             background.Position = -cameraUI_offset;
