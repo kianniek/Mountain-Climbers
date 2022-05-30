@@ -53,7 +53,7 @@ namespace BaseProject.GameStates
                 GameEnvironment.GameStateManager.SwitchTo("ControlsMenu");
             }
             else
-            if (select.Position.X == 0 && select.Position.Y == 725 && inputHelper.KeyPressed(ButtonManager.Start) && inputHelper.KeyPressed(ButtonManager.Select))
+            if (select.Position.X == 0 && select.Position.Y == 725 && inputHelper.KeyPressed(ButtonManager.Select))//&& inputHelper.KeyPressed(ButtonManager.Start)
             {
                 GameEnvironment.GameStateManager.SwitchTo("LoadingState");
             }
