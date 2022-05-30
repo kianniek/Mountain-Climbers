@@ -8,26 +8,32 @@ namespace BaseProject
     public class ButtonManager
     {
         //Big Player Buttons
-        public static Keys Left_BigPlayer = Keys.A;
-        public static Keys Right_BigPlayer = Keys.D;
-        public static Keys Jump_BigPlayer = Keys.W;
-        public static Keys Down_BigPlayer = Keys.S;
+        public static Keys Left_BigPlayer = Keys.A; // Dpad-Left
+        public static Keys Right_BigPlayer = Keys.D; //Dpad-Right
+        public static Keys Up_BigPlayer = Keys.W; //Dpad-Up And X-BLUE button BigPlayer
+        public static Keys Down_BigPlayer = Keys.S; //Dpad-Down
 
-        public static Keys AimL_BigPlayer = Keys.O;   
-        public static Keys AimR_BigPlayer = Keys.P;
-        public static Keys Throw_BigPlayer = Keys.X;
+        public static Keys AimL_BigPlayer = Keys.O; // LB_Button
+        public static Keys AimR_BigPlayer = Keys.P; // RB_Button
+        public static Keys Throw_BigPlayer = Keys.X; // Y-Green button Bigplayer
 
-        public static Keys Interact_Bigplayer = Keys.E;
-        public static Keys Sprint_Bigplayer = Keys.LeftShift;
+        public static Keys Interact_Bigplayer = Keys.E; // A-RED button on controller BigPlayer
+        public static Keys Sprint_Bigplayer = Keys.LeftShift; // B-Yellow button on controller BigPlayer
 
         //Small Player Button
-        public static Keys Left_SmallPlayer = Keys.Left;
-        public static Keys Right_SmallPlayer = Keys.Right;
-        public static Keys Jump_SmallPlayer = Keys.Up;
-        public static Keys Down_SmallPlayer = Keys.Down;
+        public static Keys Left_SmallPlayer = Keys.Left; //Dpad-Left
+        public static Keys Right_SmallPlayer = Keys.Right;//Dpad-Right
+        public static Keys Up_SmallPlayer = Keys.Up; //Dpad-Up And X-BLUE button BigPlayer
+        public static Keys Down_SmallPlayer = Keys.Down; //Dpad-Down
+        public static Keys SelfEject_SmallPlayer = Keys.X; //Y-Green button Smallplayer
 
-        public static Keys Interact_SmallPlayer = Keys.E;
-        public static Keys Sprint_SmallPlayer = Keys.RightShift;
+        public static Keys DogeL_SmallPlayer = Keys.OemComma; // LB_Button
+        public static Keys DogeR_SmallPlayer = Keys.OemPeriod; // RB_Button
+        public static Keys Interact_SmallPlayer = Keys.M; // A-RED button on controller SmallPlayer
+        public static Keys Sprint_SmallPlayer = Keys.RightShift; // B-Yellow button on controller SmallPlayer
+
+        public static Keys Start = Keys.G; //Start button on both controlers
+        public static Keys Select = Keys.H; //Select button on both controlers
 
 
 

@@ -217,7 +217,7 @@ public class BigPlayer : HeadPlayer
         {
             Climb();
 
-            if (inputHelper.IsKeyDown(ButtonManager.Jump_BigPlayer))
+            if (inputHelper.IsKeyDown(ButtonManager.Up_BigPlayer))
             {
                 velocity.Y = -100;
             }
@@ -262,7 +262,7 @@ public class BigPlayer : HeadPlayer
         if (stand)
         {
             playJump = true;
-            if (inputHelper.KeyPressed(ButtonManager.Jump_BigPlayer))
+            if (inputHelper.KeyPressed(ButtonManager.Up_BigPlayer))
             {
                 stand = false;
                 jump = true;

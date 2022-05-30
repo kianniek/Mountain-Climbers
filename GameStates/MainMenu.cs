@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using BaseProject.Engine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject.GameStates
 {
@@ -47,17 +48,17 @@ namespace BaseProject.GameStates
         {
             base.HandleInput(inputHelper);
 
-            if (select.Position.X == 0 && select.Position.Y == 725 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
-            {
-                GameEnvironment.GameStateManager.SwitchTo("LoadingState");
-            }
-            if (select.Position.X == 1150 && select.Position.Y == 725 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
-            {
-                GameEnvironment.GameStateManager.SwitchTo("Credits");
-            }
-            if (select.Position.X == 630 && select.Position.Y == 875 && inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Space))
+            if (select.Position.X == 630 && select.Position.Y == 875 && inputHelper.IsKeyDown(ButtonManager.Start) && inputHelper.IsKeyDown(ButtonManager.Select))
             {
                 GameEnvironment.GameStateManager.SwitchTo("ControlsMenu");
+            }else
+            if (select.Position.X == 0 && select.Position.Y == 725 && inputHelper.KeyPressed(ButtonManager.Start))
+            {
+                GameEnvironment.GameStateManager.SwitchTo("LoadingState");
+            }else
+            if (select.Position.X == 1150 && select.Position.Y == 725 && inputHelper.KeyPressed(ButtonManager.Select))
+            {
+                GameEnvironment.GameStateManager.SwitchTo("Credits");
             }
         }
     }

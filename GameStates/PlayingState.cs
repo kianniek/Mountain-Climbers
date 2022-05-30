@@ -78,9 +78,6 @@ namespace BaseProject.GameStates
             //    this.Add(bigPlayer.livesBig[i]);
             //}
 
-
-
-
             this.Add(new LevelManager(bigPlayer, smallPlayer));
             this.Add(bigPlayer);
             this.Add(smallPlayer);
