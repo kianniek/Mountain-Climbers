@@ -19,6 +19,7 @@ namespace BaseProject.GameStates
         //Button button;
         //ButtonWall wall;
 
+        public static Checkpoint activeCheckpoint;
 
         Camera cam;
 
@@ -76,7 +77,7 @@ namespace BaseProject.GameStates
             //    this.Add(bigPlayer.livesBig[i]);
             //}
 
-
+            //LevelManager.GoToLevel(activeCheckpoint.Level);
 
 
             this.Add(new LevelManager(bigPlayer, smallPlayer));

@@ -96,5 +96,21 @@ namespace BaseProject
             bigPlayer.GoToNewLevel(LevelManager.CurrentLevel(), LevelManager.CurrentLevel().StartPosition);
             smallPlayer.GoToNewLevel(LevelManager.CurrentLevel(), LevelManager.CurrentLevel().StartPosition);
         }
+
+        public static void GoToLevel(Level level)
+        {
+            int index = 0;
+
+            for(int i = 0; i < Levels.Count; i++)
+            {
+                if(Levels[i] == level)
+                {
+                    index = i;
+                    break;
+                }  
+                      
+            }
+            GoToLevel(index);
+        }
     }
 }

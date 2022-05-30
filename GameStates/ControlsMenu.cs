@@ -50,7 +50,16 @@ namespace BaseProject.GameStates
 
         }
 
-       
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            base.HandleInput(inputHelper);
+
+            if (inputHelper.IsKeyDown(Keys.A))
+            {
+
+                GameEnvironment.GameStateManager.SwitchTo("GameOverMenu");
+            }
+        }
 
 
     }
