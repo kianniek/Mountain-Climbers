@@ -1,11 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BaseProject.GameObjects;
 using BaseProject.GameStates;
-using Microsoft.Xna.Framework.Audio;
-using BaseProject.GameObjects;
+using Microsoft.Xna.Framework;
 
 namespace BaseProject
 {

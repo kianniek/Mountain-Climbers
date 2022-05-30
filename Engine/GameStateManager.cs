@@ -33,7 +33,7 @@ public class GameStateManager : IGameLoopObject
         {
             throw new KeyNotFoundException("Could not find game state: " + name);
         }
-    }
+    }      
 
     public IGameLoopObject CurrentGameState
     {

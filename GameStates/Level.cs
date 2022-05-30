@@ -38,13 +38,14 @@ namespace BaseProject.GameStates
             {"Spike", Color.Brown},
             {"Rope", Color.Honeydew},
             {"Boulder", Color.Gainsboro},
-            {"ClimbWall", Color.Orange},
+            //{"ClimbWall", Color.Orange},
             {"Lava", Color.Red},
             {"BreakablePlatform", Color.Purple},
             {"Start", Color.Aqua},
             {"End", Color.Lime},
             {"EndLevel", Color.Yellow},
-            {"StartLevel", Color.Brown}
+            {"StartLevel", Color.Brown},
+            {"Checkpoint", Color.Orange}
         };
 
         // All color codes that represent level tiles
@@ -180,6 +181,12 @@ namespace BaseProject.GameStates
 
             if (color == colorCodes["Waterfall"])
                 LevelObjects.Add(new Waterfall(new Vector2((int)objPos.X, (int)objPos.Y)));
+
+            if (color == colorCodes["Checkpoint"])
+                LevelObjects.Add(new Checkpoint(smallPlayer, bigPlayer, objPos, this));
+
+
+
 
             if (color == colorCodes["Boulder"])
                 LevelObjects.Add(new FallingRock("stone100", new Vector2((int)objPos.X, (int)objPos.Y), smallPlayer, bigPlayer));

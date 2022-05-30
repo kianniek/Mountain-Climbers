@@ -16,6 +16,8 @@ namespace BaseProject.GameStates
         public SmallPlayer smallPlayer;
         public BigPlayer bigPlayer;
 
+        public static Checkpoint activeCheckpoint;
+
         public Camera cam { get; private set; }
 
         bool playBackgroundMusic = true;
@@ -186,6 +188,8 @@ namespace BaseProject.GameStates
 
             if (inputHelper.IsKeyDown(Keys.Enter))
             {
+
+                cam.Pos = new Vector2(GameEnvironment.Screen.X/2,GameEnvironment.Screen.Y/2);
                 GameEnvironment.GameStateManager.SwitchTo("ControlsMenu");
             }
 

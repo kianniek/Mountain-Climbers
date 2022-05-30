@@ -103,5 +103,21 @@ namespace BaseProject
 
             smallPlayer.state.cam.Pos = pos;
         }
+
+        public static void GoToLevel(Level level)
+        {
+            int index = 0;
+
+            for(int i = 0; i < Levels.Count; i++)
+            {
+                if(Levels[i] == level)
+                {
+                    index = i;
+                    break;
+                }  
+                      
+            }
+            GoToLevel(index);
+        }
     }
 }

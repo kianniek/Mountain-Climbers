@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BaseProject.GameStates;
 using Microsoft.Xna.Framework;
 
 namespace BaseProject.GameObjects
@@ -10,27 +11,64 @@ namespace BaseProject.GameObjects
 
         bool CheckPointAchS = false;
         bool CheckpointAchB = false;
+        public Level Level { get; private set; }
+
+       
 
         private SmallPlayer smallplayer;
         private BigPlayer bigplayer;
 
+        private const float yOffset = -10f;
 
-        public Checkpoint(SmallPlayer smallPlayer, BigPlayer bigPlayer, Vector2 pos) : base("new_checkpoint")
+        private readonly SpriteSheet openSprite = new SpriteSheet("openFlag", 0);
+        private readonly SpriteSheet closedSprite = new SpriteSheet("closedFlag", 0);
+
+
+
+        public Checkpoint(SmallPlayer smallPlayer, BigPlayer bigPlayer, Vector2 pos, Level level) : base("closedFlag")
         {
             position = pos;
+            Level = level;
 
-            Origin = Center;
+            Origin = new Vector2(Center.X, Height - Level.TileHeight/2) + Vector2.UnitY * yOffset ;
             scale = 0.75f;
 
             this.smallplayer = smallPlayer;
             this.bigplayer = bigPlayer;
         }
 
-        public override void HandleInput(InputHelper inputHelper)
+       
+        public override void Update(GameTime gameTime)
         {
-            base.HandleInput(inputHelper);
+            base.Update(gameTime);
 
-            //checkpoint respawn small player
+            if (PlayingState.activeCheckpoint != this)
+            {
+                Sprite = closedSprite;
+                if (smallplayer.CollidesWith(this) && bigplayer.CollidesWith(this))
+                {
+                    PlayingState.activeCheckpoint = this;
+                }
+            }
+            else
+            {
+                sprite = openSprite;
+            }
+
+            
+            if (bigplayer.isDead)
+            {
+                bigplayer.Position = this.position;
+                bigplayer.isDead=false;
+                Console.WriteLine("big is dead");
+            }
+            if (smallplayer.isDead)
+            {
+                smallplayer.Position = this.position;
+                smallplayer.isDead = false;
+                Console.WriteLine("small is dead");
+            }
+
             if (CheckPointAchS && smallplayer.isDead)
             {
 
@@ -44,34 +82,6 @@ namespace BaseProject.GameObjects
             {
                 bigplayer.Position = position;
                 bigplayer.isDead = false;
-            }
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-
-            if (smallplayer.CollidesWith(this))
-            {
-                CheckPointAchS = true;
-            }
-
-            if (bigplayer.CollidesWith(this))
-            {
-                CheckpointAchB = true;
-            }
-
-            if (bigplayer.isDead)
-            {
-                bigplayer.Position = this.position;
-                bigplayer.isDead=false;
-                Console.WriteLine("big is dead");
-            }
-            if (smallplayer.isDead)
-            {
-                smallplayer.Position = this.position;
-                smallplayer.isDead = false;
-                Console.WriteLine("small is dead");
             }
         }
     }
