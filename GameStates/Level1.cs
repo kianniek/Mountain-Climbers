@@ -15,14 +15,14 @@ namespace BaseProject.GameStates
             wall = new ButtonWall(new Vector2(smallPlayer.Position.X + 100, smallPlayer.Position.Y), new Vector2(smallPlayer.Position.X + 100, smallPlayer.Position.Y -100));
             wall.isHorizontal = true;
             button = new Button(smallPlayer, bigPlayer, wall, new Vector2(smallPlayer.Position.X + 50, smallPlayer.Position.Y + 100));
-            cp = new Checkpoint(smallPlayer, bigPlayer, smallPlayer.Position);
+           // cp = new Checkpoint(smallPlayer, bigPlayer, smallPlayer.Position);
         }
 
         protected override void SetupLevel()
         {
             LevelObjects.Add(button);
             LevelObjects.Add(wall);
-            LevelObjects.Add(cp);
+            //LevelObjects.Add(cp);
         }
     }
 }

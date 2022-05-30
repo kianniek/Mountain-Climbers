@@ -9,7 +9,7 @@ namespace BaseProject
     {
         public Controls() : base("controls")
         {
-            Position = new Vector2(950, 400);
+           // Position = new Vector2(540, 90);
             Origin = Center;
         }
         

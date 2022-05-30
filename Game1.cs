@@ -19,6 +19,7 @@ namespace BaseProject
             GameStateManager.AddGameState("LoadingState", new LoadingState());
             GameStateManager.AddGameState("PlayingState", new PlayingState(Camera));
             GameStateManager.AddGameState("ControlsMenu", new ControlsMenu());
+            GameStateManager.AddGameState("GameOverMenu", new GameOverMenu());
             GameStateManager.SwitchTo("PlayingState");
             GameStateManager.AddGameState("MainMenu", new MainMenu(Camera));
             Console.WriteLine(cam.Pos);
