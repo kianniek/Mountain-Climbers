@@ -192,6 +192,7 @@ public class SmallPlayer : HeadPlayer
             if (inputHelper.KeyPressed(Keys.Up))
             {
                 //stand = false;
+
                 jump = true;
             }
         }

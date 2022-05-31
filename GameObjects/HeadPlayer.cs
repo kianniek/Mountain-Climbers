@@ -106,8 +106,10 @@ namespace BaseProject
                         if (velocity.Y > 0)
                         {
                             velocity.Y = 0;
+                            
                         }
                         position.X += (velocity.X + verticalPlatform.Velocity.X) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        position.Y = verticalPlatform.Position.Y - Height - 1;
                     }
                 }  
             }
@@ -132,7 +134,7 @@ namespace BaseProject
         {
             //var playerOrigin = Origin;
             //Origin = Center;
-            Console.WriteLine(stand);
+           
 
             bVerticalPlatformTouchingPlayer = CollidesWith(verticalPlatform);
 
