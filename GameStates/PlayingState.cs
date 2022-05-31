@@ -47,6 +47,26 @@ namespace BaseProject.GameStates
             this.Add(smallPlayer.InputIndicator);
             this.Add(climbWall);
 
+            this.Add(new LevelManager(bigPlayer, smallPlayer));
+
+            InitialzeHealth();
+
+            this.Add(bigPlayer);
+            this.Add(smallPlayer);
+
+            cam.Pos = bigPlayer.Position;
+        }
+        public override void Update(GameTime gameTime)
+        {
+            PlayMusic();
+            base.Update(gameTime);
+            KeepPlayersCenterd();
+            UI_ElementUpdate();
+            CheckGameOver();
+        }
+
+        private void InitialzeHealth()
+        {
             ////Small health
             for (int i = 0; i < smallPlayer.livesPlayer; i++)
             {
@@ -64,23 +84,9 @@ namespace BaseProject.GameStates
                 Lives liveGreen = new Lives("Hartje_groen", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
                 bigPlayer.livesBig[i] = liveGreen;
                 bigPlayer.noLives[i + bigPlayer.livesPlayer] = new Lives("Hartje_leeg", new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0));
-              this.Add(bigPlayer.noLives[i + bigPlayer.livesPlayer]);
+                this.Add(bigPlayer.noLives[i + bigPlayer.livesPlayer]);
                 this.Add(bigPlayer.livesBig[i]);
             }
-
-            this.Add(new LevelManager(bigPlayer, smallPlayer));
-            this.Add(bigPlayer);
-            this.Add(smallPlayer);
-
-            cam.Pos = bigPlayer.Position;
-        }
-        public override void Update(GameTime gameTime)
-        {
-            PlayMusic();
-            base.Update(gameTime);
-            KeepPlayersCenterd();
-            UI_ElementUpdate();
-            CheckGameOver();
         }
         private void PlayMusic()
         {
@@ -341,7 +347,7 @@ namespace BaseProject.GameStates
         {
             cameraUI_offset = new Vector2(cam._transform.M41, cam._transform.M42);
 
-            //orange health
+            ////orange health
             for (int i = 0; i < smallPlayer.livesPlayer; i++)
             {
                 smallPlayer.livesSmall[i].Position = new Vector2(40 * i - cameraUI_offset.X, 0 - cameraUI_offset.Y);
@@ -349,11 +355,11 @@ namespace BaseProject.GameStates
             }
 
 
-            ////Green health
+            //Green health
             for (int i = 0; i < bigPlayer.livesPlayer; i++)
             {
                 bigPlayer.livesBig[i].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y);
-               // bigPlayer.noLives[i].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y);
+                //bigPlayer.noLives[i + bigPlayer.livesPlayer].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y); 
             }
 
             //for background

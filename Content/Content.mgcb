@@ -13,18 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../Downloads/new_checkpoint.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../Downloads/new_checkpoint.png;new_checkpoint.png
-
 #begin A_Button.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -344,6 +332,18 @@
 /processorParam:TextureFormat=Compressed
 /build:GameFont.spritefont
 
+#begin goToMenu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:goToMenu.png
+
 #begin Hartje_groen.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -661,6 +661,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:openFlag.png
+
+#begin over.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:over.png
 
 #begin PerTes.png
 /importer:TextureImporter

@@ -41,9 +41,12 @@ namespace BaseProject
         {
             if (knockback)
             {
+                Vector2.Normalize(velocity);
                 velocity.X *= -1 * knockbackForce;
-                jump = false;
+                velocity.Y = -JumpForce/4;
                 knockback = false;
+                left = false;
+                right = false;
             }
             if (jump)
             {
@@ -76,9 +79,6 @@ namespace BaseProject
             {
                 isDead = true;
             }
-
-            
-
 
             base.Update(gameTime);
             velocity.Y += gravity;
