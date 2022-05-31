@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using BaseProject.Engine;
 
 namespace BaseProject.GameStates
 {
@@ -12,19 +13,23 @@ namespace BaseProject.GameStates
         backgroundMenu background;
         SpriteGameObject gameOver;
         SpriteGameObject menu;
+        Camera cam;
         //SelectSprite select;
-        public GameOverMenu()
+        public GameOverMenu(Camera camera)
         {
+            cam = camera;
             background = new backgroundMenu();
             background.Position = new Vector2(0, 0);
             Add(background);
 
             gameOver = new SpriteGameObject("over");
-            gameOver.Position = new Vector2(GameEnvironment.Screen.X / 2, 100);
+            gameOver.Origin = gameOver.Center;
+            gameOver.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 4);
             Add(gameOver);
 
             menu = new SpriteGameObject("goToMenu");
-            menu.Position = new Vector2(GameEnvironment.Screen.X / 2, 500);
+            menu.Origin = menu.Center;
+            menu.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.X / 2f);
             Add(menu);
 
             //select = new SelectSprite();
@@ -34,6 +39,11 @@ namespace BaseProject.GameStates
 
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            cam.Pos = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
+        }
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
