@@ -42,7 +42,7 @@ namespace BaseProject
             if (knockback)
             {
                 velocity.X *= -1 * knockbackForce;
-                jump = false;
+                velocity.Y = -JumpForce/4;
                 knockback = false;
             }
             if (jump)
