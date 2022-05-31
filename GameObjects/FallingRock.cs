@@ -58,7 +58,7 @@ namespace BaseProject
             Vector2 rockBigPlayer = Position - bigPlayer.Position;
 
             //Music is playing when both player distances < 30
-            if (rockSmallPlayer.X < 30 || rockBigPlayer.X < 30)
+            if ((rockSmallPlayer.X < 40 && rockSmallPlayer.Y < 50) || (rockBigPlayer.X < 40 && rockBigPlayer.Y < 50))
             {
                 closeByRock = true;
             }
@@ -87,6 +87,8 @@ namespace BaseProject
             {
                 bigPlayer.hitRock = false;
             }
+
+            Console.WriteLine(smallPlayer.knockback);
 
             base.Update(gameTime);
         }
