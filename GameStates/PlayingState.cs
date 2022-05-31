@@ -365,5 +365,12 @@ namespace BaseProject.GameStates
             //for background
             background.Position = -cameraUI_offset;
         }
+
+        public override void Reset()
+        {
+            base.Reset();
+            bigPlayer.livesPlayer = 2;
+            smallPlayer.livesPlayer = 2;
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace BaseProject
             Levels.Add(new Level7("Levels/Level7", LevelManager.bigPlayer, LevelManager.smallPlayer));
             Levels.Add(new Level8("Levels/level8", LevelManager.bigPlayer, LevelManager.smallPlayer));
             Levels.Add(new Level9("Levels/level9", LevelManager.bigPlayer, LevelManager.smallPlayer));
-            GoToLevel(1);
+            GoToLevel(0);
         }
 
         public override void Update(GameTime gameTime)

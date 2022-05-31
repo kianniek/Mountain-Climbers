@@ -54,6 +54,7 @@ namespace BaseProject.GameStates
             if (inputHelper.IsKeyDown(ButtonManager.Start))
             {
                 GameEnvironment.GameStateManager.SwitchTo("MainMenu");
+                GameEnvironment.GameStateManager.GetGameState("PlayingState").Reset();
             }
 
             /*if (inputHelper.IsKeyDown(Keys.Up))
