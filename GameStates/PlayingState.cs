@@ -122,13 +122,27 @@ namespace BaseProject.GameStates
                 if (smallPlayer.isDead && smallInvincibilityFrames <= 0)
                 {
 
-                    if (activeCheckpoint.Level != LevelManager.CurrentLevel())
+                    Vector2 spawnPos = new Vector2();
+                    if (activeCheckpoint == null)
                     {
+
+                        LevelManager.GoToLevel(0);
+                        spawnPos = LevelManager.CurrentLevel().StartPosition;
+                    }
+                    else if (activeCheckpoint.Level != LevelManager.CurrentLevel())
+                    {
+
                         LevelManager.GoToLevel(activeCheckpoint.Level);
+                        spawnPos = activeCheckpoint.Position;
+
+                    }
+                    else
+                    {
+                        spawnPos = activeCheckpoint.Position;
                     }
 
-                    bigPlayer.Position = activeCheckpoint.Position;
-                    smallPlayer.Position = activeCheckpoint.Position;
+                    bigPlayer.Position = spawnPos;
+                    smallPlayer.Position = spawnPos;
 
                     smallPlayer.isDead = false;
                     smallPlayer.livesPlayer--;
