@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseProject.Engine;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,11 @@ namespace BaseProject.GameStates
 
         backgroundMenu background;
         SelectSprite select;
-        public GameOverMenu()
+        public GameOverMenu(Camera camera)
+
         {
+            camera.Pos = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
+
             background = new backgroundMenu();
             background.Position = Vector2.Zero;
             Add(background);

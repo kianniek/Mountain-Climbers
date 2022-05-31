@@ -86,7 +86,8 @@ public class BigPlayer : HeadPlayer
         base.Update(gameTime);
         throwDirection.Update(gameTime);
 
-        CollisonWithGround();        
+        CollisonWithGround();
+        CollisonWithLevelObjecs();
     }
     public void GrabPlayer()
     {
@@ -181,7 +182,27 @@ public class BigPlayer : HeadPlayer
         }
         return false;
     }
-    
+
+    public void CollisonWithLevelObjecs()
+    {
+        for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+        {
+            var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
+            var tileType = obj.GetType();
+
+           
+            
+            if (tileType == typeof(Lava))
+            {
+                if (CollidesWith(obj))
+                {
+                    isDead = true;
+                }
+            }
+          
+        }
+    }
+
 
     public override void HandleInput(InputHelper inputHelper)
     {
