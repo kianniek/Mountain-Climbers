@@ -103,6 +103,7 @@ namespace BaseProject
                     {
                         //komt van boven
                         stand = true;
+                        jump = false;
                         if (velocity.Y > 0)
                         {
                             velocity.Y = 0;
@@ -116,6 +117,7 @@ namespace BaseProject
             else
             {
                 base.Update(gameTime);
+                stand = false;
             }
             //Origin = playerOrigin;
 
@@ -135,7 +137,7 @@ namespace BaseProject
             //var playerOrigin = Origin;
             //Origin = Center;
 
-            Console.WriteLine(velocity.Y);
+            
 
             bVerticalPlatformTouchingPlayer = CollidesWith(verticalPlatform);
 

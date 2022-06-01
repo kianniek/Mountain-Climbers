@@ -33,7 +33,7 @@ public class BigPlayer : HeadPlayer
     public override void Update(GameTime gameTime)
     {
         zPressed = false;
-        //Console.WriteLine(velocity.Y);
+        Console.WriteLine(this.stand);
 
         if (stand)
         {
