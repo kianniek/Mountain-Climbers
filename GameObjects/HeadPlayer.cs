@@ -135,7 +135,7 @@ namespace BaseProject
             //var playerOrigin = Origin;
             //Origin = Center;
 
-            Console.WriteLine(position.Y);
+            Console.WriteLine(velocity.Y);
 
             bVerticalPlatformTouchingPlayer = CollidesWith(verticalPlatform);
 
