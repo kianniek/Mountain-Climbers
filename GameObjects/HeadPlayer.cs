@@ -109,7 +109,7 @@ namespace BaseProject
                             
                         }
                         position.X += (velocity.X + verticalPlatform.Velocity.X) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        position.Y = verticalPlatform.Position.Y - Height - 1;
+                        position.Y = verticalPlatform.Position.Y - Height;
                     }
                 }  
             }
