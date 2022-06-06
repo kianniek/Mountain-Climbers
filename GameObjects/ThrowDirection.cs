@@ -11,8 +11,10 @@ namespace BaseProject.GameObjects
         private float throwAngle;
         BigPlayer bigPlayer;
         SmallPlayer smallPlayer;
-        float cosVel;
-        float sinVel;
+        float throwVelocityMultiplierX;
+        float throwVelocityMultiplierY;
+        int pickupOffsetX;
+        int throwPower = 800;
         public ThrowDirection(BigPlayer bigPlayer, SmallPlayer smallPlayer) : base("aimlijn")
         {
             Origin = Center - Vector2.UnitX * Width / 2f;
@@ -22,13 +24,13 @@ namespace BaseProject.GameObjects
 
         public override void Update(GameTime gameTime)
         {
-            cosVel = MathF.Cos(throwAngle);
-            sinVel = MathF.Sin(throwAngle);
+            throwVelocityMultiplierX = MathF.Cos(throwAngle);
+            throwVelocityMultiplierY = MathF.Sin(throwAngle);
 
             base.Update(gameTime);
             if (smallPlayer.beingHeld)
             {
-                position = smallPlayer.Position - new Vector2(10, 0);
+                position = smallPlayer.Position - new Vector2(pickupOffsetX, 0);
                 visible = true;
             }
 
@@ -54,8 +56,8 @@ namespace BaseProject.GameObjects
         {
             smallPlayer.beingHeld = false;
             bigPlayer.holdingPlayer = false;
-            float throwVelX = cosVel * 800;
-            float throwVelY = sinVel * 800;
+            float throwVelX = throwVelocityMultiplierX * throwPower;
+            float throwVelY = throwVelocityMultiplierY * throwPower;
             smallPlayer.SetVelocity(new Vector2(throwVelX, throwVelY));
             smallPlayer.beingThrown = true;
         }

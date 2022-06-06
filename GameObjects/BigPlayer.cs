@@ -18,6 +18,10 @@ public class BigPlayer : HeadPlayer
     public int livesPlayer;
 
     public bool holdingPlayer;
+    
+    int climbSpeed = 100;
+    int moveSpeed = 100;
+    int sprintSpeed = 200;
     public BigPlayer(SmallPlayer smallPlayer) : base("player2")
     {
         origin = new Vector2(Center.X, Center.Y / 4);
@@ -214,7 +218,7 @@ public class BigPlayer : HeadPlayer
             right = false;
             //effective = SpriteEffects.FlipHorizontally;
             Mirror = true;
-            velocity.X = -100;
+            velocity.X = -moveSpeed;
         }
         if (inputHelper.IsKeyDown(ButtonManager.Right_BigPlayer))
         {
@@ -222,7 +226,7 @@ public class BigPlayer : HeadPlayer
             left = false;
             //effective = SpriteEffects.None;
             Mirror = false;
-            velocity.X = 100;
+            velocity.X = moveSpeed;
         }
         if (inputHelper.IsKeyDown(ButtonManager.Sprint_Bigplayer))
         {
@@ -240,11 +244,11 @@ public class BigPlayer : HeadPlayer
 
             if (inputHelper.IsKeyDown(ButtonManager.Up_BigPlayer))
             {
-                velocity.Y = -100;
+                velocity.Y = -climbSpeed;
             }
             if (inputHelper.IsKeyDown(ButtonManager.Down_BigPlayer))
             {
-                velocity.Y = 100;
+                velocity.Y = climbSpeed;
             }
         }
         else

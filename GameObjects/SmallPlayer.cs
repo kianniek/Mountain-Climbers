@@ -20,6 +20,10 @@ public class SmallPlayer : HeadPlayer
     private DateTime breakTime;
     private bool breaking = false;
 
+    int climbSpeed = 100;
+    int moveSpeed = 100;
+    int sprintSpeed = 200;
+
     public SmallPlayer(PlayingState playingState) : base("Player")
     {
         state = playingState;
@@ -240,14 +244,14 @@ public class SmallPlayer : HeadPlayer
                 left = true;
                 Mirror = true;
                 right = false;
-                velocity.X = -100;
+                velocity.X = -moveSpeed;
             }
             if (inputHelper.IsKeyDown(ButtonManager.Right_SmallPlayer))
             {
                 right = true;
                 Mirror = false;
                 left = false;
-                velocity.X = 100;
+                velocity.X = moveSpeed;
             }
         }
         if (!beingHeld && stand)
@@ -265,12 +269,12 @@ public class SmallPlayer : HeadPlayer
             {
                 if (inputHelper.KeyPressed(ButtonManager.DogeL_SmallPlayer))
                 {
-                    velocity.X = -1000;
+                    velocity.X = -sprintSpeed;
                     breakStartTime = DateTime.Now;
                 }
                 if (inputHelper.KeyPressed(ButtonManager.DogeR_SmallPlayer))
                 {
-                    velocity.X = -1000;
+                    velocity.X = -sprintSpeed;
                     breakStartTime = DateTime.Now;
                 }
             }
@@ -294,11 +298,11 @@ public class SmallPlayer : HeadPlayer
 
             if (inputHelper.IsKeyDown(ButtonManager.Up_SmallPlayer))
             {
-                velocity.Y = -100;
+                velocity.Y = -climbSpeed;
             }
             if (inputHelper.IsKeyDown(ButtonManager.Down_SmallPlayer))
             {
-                velocity.Y = 100;
+                velocity.Y = climbSpeed;
             }
         }
         else

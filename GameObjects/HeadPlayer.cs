@@ -22,6 +22,8 @@ namespace BaseProject
         public int knockbackForce = 5;
         public int musicCounter = 30;
 
+        int mapDeathBorder = 1580;
+
         public SpriteGameObject InputIndicator { get; protected set; } = new SpriteGameObject("");
 
         protected Tile[,] WorldTiles { get; private set; }
@@ -75,7 +77,7 @@ namespace BaseProject
                 musicCounter = 30;
             }
 
-            if (position.Y > 1580)
+            if (position.Y > mapDeathBorder)
             {
                 isDead = true;
             }
