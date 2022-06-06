@@ -21,7 +21,6 @@ public class BigPlayer : HeadPlayer
     
     int climbSpeed = 100;
     int moveSpeed = 100;
-    int sprintSpeed = 200;
     public BigPlayer(SmallPlayer smallPlayer) : base("player2")
     {
         origin = new Vector2(Center.X, Center.Y / 4);

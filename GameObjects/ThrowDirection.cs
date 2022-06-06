@@ -24,6 +24,7 @@ namespace BaseProject.GameObjects
 
         public override void Update(GameTime gameTime)
         {
+            //X EN Y MULTIPLIER BEREKENEN DOOR HOEK TE GEBRUIKEN
             throwVelocityMultiplierX = MathF.Cos(throwAngle);
             throwVelocityMultiplierY = MathF.Sin(throwAngle);
 
