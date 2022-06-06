@@ -210,67 +210,6 @@ namespace BaseProject.GameStates
             smallInvincibilityFrames--;
 
         }
-        public void DropDownRope(CuttebleRope cuttebleRope)
-        {
-            if (!cuttebleRope.isOut)
-            {
-                int x = cuttebleRope.x;
-                int y = cuttebleRope.y;
-                if (cuttebleRope.level.TileOnLocation(x - 1, y + 1))
-                {
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Rope rope;
-                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X + Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
-                        if (i == 0)
-                        {
-                            rope = new Rope("RopeConnectingLeft")
-                            {
-                                Position = ropePos
-                            };
-                            Add(rope);
-                        }
-                        else
-                        {
-                            rope = new Rope()
-                            {
-                                Position = ropePos
-                            };
-                            Add(rope);
-                        }
-                        LevelManager.CurrentLevel().LevelObjects.Add(rope);
-                    }
-                }
-                else
-                if (!cuttebleRope.level.TileOnLocation(x + 1, y + 1))
-                {
-
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Rope rope;
-                        Vector2 ropePos = new Vector2(cuttebleRope.Position.X - Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
-                        if (i == 0)
-                        {
-                            rope = new Rope("RopeConnectingRight")
-                            {
-                                Position = ropePos
-                            };
-                            Add(rope);
-                        }
-                        else
-                        {
-                            rope = new Rope()
-                            {
-                                Position = ropePos
-                            };
-                            Add(rope);
-                        }
-                        LevelManager.CurrentLevel().LevelObjects.Add(rope);
-                    }
-                }
-                cuttebleRope.isOut = true;
-            }
-        }
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);

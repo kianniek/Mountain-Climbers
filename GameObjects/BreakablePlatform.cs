@@ -72,8 +72,6 @@ namespace BaseProject.GameObjects
                 return;
             breakTime = DateTime.Now;
 
-
-            Console.WriteLine($"{breakStartTime}    Break    {DateTime.Now}");
             breaking = false;
             visible = false;
         }

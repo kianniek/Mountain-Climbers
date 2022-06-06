@@ -171,7 +171,6 @@ public class SmallPlayer : HeadPlayer
             }
             TimeSpan timeBetweenNowAndStart = DateTime.Now - breakStartTime;
             var secondsPassed = timeBetweenNowAndStart.Seconds + timeBetweenNowAndStart.Milliseconds / 1000f;
-            Console.WriteLine(secondsPassed);
             if (secondsPassed > 3)
             {
                 if (inputHelper.KeyPressed(ButtonManager.DogeL_SmallPlayer))

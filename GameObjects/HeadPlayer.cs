@@ -220,7 +220,7 @@ namespace BaseProject
                 int y = cuttebleRope.y;
                 if (cuttebleRope.level.TileOnLocation(x - 1, y + 1))
                 {
-                    for (int i = 0; i < 60; i++)
+                    for (int i = 0; i < 11; i++)
                     {
                         Rope rope;
                         Vector2 ropePos = new Vector2(cuttebleRope.Position.X + Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
@@ -246,8 +246,7 @@ namespace BaseProject
                 else
                 if (!cuttebleRope.level.TileOnLocation(x + 1, y + 1))
                 {
-
-                    for (int i = 0; i < 60; i++)
+                    for (int i = 0; i < 11; i++)
                     {
                         Rope rope;
                         Vector2 ropePos = new Vector2(cuttebleRope.Position.X - Level.TileWidth, cuttebleRope.Position.Y + Level.TileWidth * i);
@@ -268,6 +267,7 @@ namespace BaseProject
                             LevelManager.CurrentLevel().Add(rope);
                         }
                         LevelManager.CurrentLevel().LevelObjects.Add(rope);
+
                     }
                 }
             }
