@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 /// <summary>
 /// SpriteGameObject that handles rotated sprites. Overrides Draw method WITHOUT call to base.Draw.
@@ -22,7 +19,7 @@ public class RotatingSpriteGameObject : SpriteGameObject
     /// <param name="id">Reference for finding object in a list.</param>
     /// <param name="sheetIndex">If asset is a spritesheet only use a certain frame.</param>
     public RotatingSpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0, float scale = 1f) :
-        base(assetName, layer,id,sheetIndex,scale)
+        base(assetName, layer, id, sheetIndex, scale)
     {
     }
 

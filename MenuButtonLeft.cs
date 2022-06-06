@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace BaseProject
 {
@@ -9,7 +6,7 @@ namespace BaseProject
     {
         public MenuButton(string assetName, Vector2 newPosition) : base(assetName)
         {
-            position = newPosition; 
+            position = newPosition;
         }
     }
 }

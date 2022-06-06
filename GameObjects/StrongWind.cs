@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace BaseProject.GameObjects
 {
@@ -26,28 +26,28 @@ namespace BaseProject.GameObjects
                 return Vector2.Zero;
 
             var force = new Vector2();
-            
+
             switch (direction)
             {
                 case WindDirection.Left:
-                    force = new Vector2(-(1 - 1/(range + Math.Abs(ObjectOffset(obj).X))*distance), 0) * maxWindForce * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    force = new Vector2(-(1 - 1 / (range + Math.Abs(ObjectOffset(obj).X)) * distance), 0) * maxWindForce * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case WindDirection.Right:
-                    force = new Vector2(1 - 1/(range + Math.Abs(ObjectOffset(obj).X))*distance, 0) * maxWindForce * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    force = new Vector2(1 - 1 / (range + Math.Abs(ObjectOffset(obj).X)) * distance, 0) * maxWindForce * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
             }
-            
+
             return force;
         }
 
         public bool IsObjectUnderInfluence(SpriteGameObject obj)
         {
             var offset = ObjectOffset(obj);
-            var inHeight = obj.Position.Y >= position.Y - height/2 && obj.Position.Y <= position.Y + height/2;
-            
+            var inHeight = obj.Position.Y >= position.Y - height / 2 && obj.Position.Y <= position.Y + height / 2;
+
             if (!inHeight)
                 return false;
-            
+
             switch (direction)
             {
                 case WindDirection.Left:
@@ -67,7 +67,7 @@ namespace BaseProject.GameObjects
                 offset.Y = obj.Origin.Y - obj.Center.Y + obj.Height / 2f;
             else
                 offset.Y = obj.Origin.Y - obj.Center.Y - obj.Height / 2f;
-            
+
             switch (direction)
             {
                 case WindDirection.Left:

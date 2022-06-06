@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 public class SpriteSheet
@@ -28,7 +27,7 @@ public class SpriteSheet
         {
             collisionMask[i] = colorData[i].A != 0;
         }
-        
+
         sheetColumns = 1;
         sheetRows = 1;
 

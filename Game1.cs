@@ -1,11 +1,10 @@
 ﻿using BaseProject.GameStates;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace BaseProject
 {
     public class Game1 : GameEnvironment
-    {      
+    {
         protected override void LoadContent()
         {
             base.LoadContent();
@@ -23,8 +22,8 @@ namespace BaseProject
             GameStateManager.SwitchTo("PlayingState");
             GameStateManager.AddGameState("MainMenu", new MainMenu(Camera));
             GameStateManager.SwitchTo("MainMenu");
-            
-            
+
+
         }
 
     }

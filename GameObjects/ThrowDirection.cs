@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using BaseProject.GameStates;
 
 namespace BaseProject.GameObjects
 {
@@ -32,11 +29,11 @@ namespace BaseProject.GameObjects
                 visible = true;
             }
 
-            if(!smallPlayer.beingHeld)
+            if (!smallPlayer.beingHeld)
             {
                 visible = false;
             }
-            
+
             Angle = throwAngle;
         }
 

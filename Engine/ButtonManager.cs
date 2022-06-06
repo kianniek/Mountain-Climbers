@@ -1,29 +1,26 @@
 ﻿using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BaseProject.Engine
 {
     public class ButtonManager
     {
         //Big Player Buttons
-        protected readonly Keys Left_BigPlayer  = Keys.A;
+        protected readonly Keys Left_BigPlayer = Keys.A;
         protected readonly Keys Right_BigPlayer = Keys.D;
-        protected readonly Keys Up_BigPlayer    = Keys.W;
-        protected readonly Keys Down_BigPlayer  = Keys.S;
+        protected readonly Keys Up_BigPlayer = Keys.W;
+        protected readonly Keys Down_BigPlayer = Keys.S;
 
         protected readonly Keys Interact_Bigplayer = Keys.E;
-        protected readonly Keys Sprint_Bigplayer   = Keys.LeftShift;
+        protected readonly Keys Sprint_Bigplayer = Keys.LeftShift;
 
         //Small Player Button
-        protected readonly Keys Left_SmallPlayer  = Keys.Left;
+        protected readonly Keys Left_SmallPlayer = Keys.Left;
         protected readonly Keys Right_SmallPlayer = Keys.Right;
-        protected readonly Keys Up_SmallPlayer    = Keys.Up;
-        protected readonly Keys Down_SmallPlayer  = Keys.Down;
+        protected readonly Keys Up_SmallPlayer = Keys.Up;
+        protected readonly Keys Down_SmallPlayer = Keys.Down;
 
         protected readonly Keys Interact_SmallPlayer = Keys.E;
-        protected readonly Keys Sprint_SmallPlayer   = Keys.RightShift;
+        protected readonly Keys Sprint_SmallPlayer = Keys.RightShift;
 
 
         protected readonly string A_Button = "ButtonPrompts/SNES_A.png";

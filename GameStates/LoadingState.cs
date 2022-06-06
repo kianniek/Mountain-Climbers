@@ -1,7 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BaseProject.GameStates
 {
@@ -16,7 +13,7 @@ namespace BaseProject.GameStates
                 Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2)
             };
             Add(text);
-            text.Position -= new Vector2(text.Size.X/2, text.Size.Y/2);
+            text.Position -= new Vector2(text.Size.X / 2, text.Size.Y / 2);
         }
         public override void Update(GameTime gameTime)
         {

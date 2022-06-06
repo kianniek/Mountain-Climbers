@@ -1,8 +1,5 @@
 ﻿using BaseProject.GameStates;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BaseProject.GameObjects
 {
@@ -30,13 +27,13 @@ namespace BaseProject.GameObjects
 
             if (isOut && !changeSprite)
             {
-                if(level.TileOnLocation(x-1, y+1))
+                if (level.TileOnLocation(x - 1, y + 1))
                 {
                     //left
                     changeSprite = true;
                     Sprite = new SpriteSheet("RopeAnchorLeft");
                 }
-                else if(level.TileOnLocation(x + 1, y + 1))
+                else if (level.TileOnLocation(x + 1, y + 1))
                 {
                     //right
                     changeSprite = true;

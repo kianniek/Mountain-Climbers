@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 public class GameStateManager : IGameLoopObject
 {
@@ -33,7 +33,7 @@ public class GameStateManager : IGameLoopObject
         {
             throw new KeyNotFoundException("Could not find game state: " + name);
         }
-    }      
+    }
 
     public IGameLoopObject CurrentGameState
     {

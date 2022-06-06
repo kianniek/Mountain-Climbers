@@ -1,20 +1,17 @@
-﻿using System;
-using BaseProject.Engine;
-
-namespace BaseProject.GameStates
+﻿namespace BaseProject.GameStates
 {
-        public class Level7 : Level
+    public class Level7 : Level
+    {
+
+        public Level7(string levelSprite, BigPlayer bigPlayer, SmallPlayer smallPlayer) : base(levelSprite, bigPlayer, smallPlayer)
         {
 
-            public Level7(string levelSprite, BigPlayer bigPlayer, SmallPlayer smallPlayer) : base(levelSprite, bigPlayer, smallPlayer)
-            {
-
-            }
-
-            protected override void SetupLevel()
-            {
-
-            }
         }
-    
+
+        protected override void SetupLevel()
+        {
+
+        }
+    }
+
 }

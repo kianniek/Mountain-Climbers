@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
 
 namespace BaseProject.GameObjects
 {
     public interface IWindObject
     {
         public static readonly List<StrongWind> windAreas = new List<StrongWind>();
-        
+
         protected static bool InWindZone(SpriteGameObject obj, StrongWind wind)
         {
             return wind != null && wind.IsObjectUnderInfluence(obj);
@@ -17,7 +15,7 @@ namespace BaseProject.GameObjects
         {
             foreach (var wind in windAreas)
             {
-                if (!InWindZone(obj, wind)) 
+                if (!InWindZone(obj, wind))
                     continue;
                 return wind;
             }

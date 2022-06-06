@@ -45,7 +45,7 @@ namespace BaseProject
             {
                 Vector2.Normalize(velocity);
                 velocity.X *= -1 * knockbackForce;
-                velocity.Y = -JumpForce/4;
+                velocity.Y = -JumpForce / 4;
                 knockback = false;
                 left = false;
                 right = false;
@@ -271,14 +271,14 @@ namespace BaseProject
                     }
                 }
             }
-                cuttebleRope.isOut = true;
+            cuttebleRope.isOut = true;
         }
 
 
         public virtual void Climb()
         {
             //left = false;
-           // right = false;
+            // right = false;
             stand = true;
             velocity.Y = 0;
             velocity.X = 0;
@@ -312,7 +312,7 @@ namespace BaseProject
             velocity = Vector2.Zero;
         }
 
-        public void InputIndicatorHandler(string assetname, SpriteGameObject obj, Vector2 offset, int index) 
+        public void InputIndicatorHandler(string assetname, SpriteGameObject obj, Vector2 offset, int index)
         {
             switch (index)
             {
@@ -334,7 +334,7 @@ namespace BaseProject
                     Console.WriteLine("index not in range");
                     break;
             }
-            
+
         }
     }
 }

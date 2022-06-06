@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BaseProject.GameStates
 {
@@ -15,7 +12,7 @@ namespace BaseProject.GameStates
 
 
 
-        public ControlsMenu() 
+        public ControlsMenu()
         {
             background = new backgroundMenu();
             background.Position = Vector2.Zero;
@@ -25,7 +22,7 @@ namespace BaseProject.GameStates
             Console.WriteLine(background.Position);
 
             controls = new Controls();
-            controls.Position = new Vector2(GameEnvironment.Screen.X/2, GameEnvironment.Screen.Y/2);
+            controls.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
             Add(controls);
 
             a = new Abutton();

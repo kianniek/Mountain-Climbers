@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using BaseProject.Engine;
-using BaseProject.GameObjects;
-using BaseProject.GameStates;
+﻿using BaseProject.GameStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace BaseProject
 {
@@ -26,7 +23,7 @@ namespace BaseProject
         }
 
         public static Level CurrentLevel() => Levels[currentLevelIndex];
-        
+
         private static Level NextLevel()
         {
             var index = currentLevelIndex + 1;
@@ -39,7 +36,7 @@ namespace BaseProject
         {
             LevelManager.bigPlayer = bigPlayer;
             LevelManager.smallPlayer = smallPlayer;
-            
+
             Levels.Add(new Level1("Levels/level1test", LevelManager.bigPlayer, LevelManager.smallPlayer));
             Levels.Add(new Level2("Levels/level2test", LevelManager.bigPlayer, LevelManager.smallPlayer));
             Levels.Add(new Level3("Levels/level3test", LevelManager.bigPlayer, LevelManager.smallPlayer));
@@ -76,7 +73,7 @@ namespace BaseProject
             if (NextLevel() == null)
                 return;
             GoToLevel(currentLevelIndex + 1);
-            
+
         }
 
         public static void GoToPreviousLevel()
@@ -93,7 +90,7 @@ namespace BaseProject
 
             int tempIndex = currentLevelIndex;
             currentLevelIndex = index;
-            
+
             PreviousLevel()?.LoadLevel();
             Levels[currentLevelIndex]?.LoadLevel();
             NextLevel()?.LoadLevel();
@@ -108,14 +105,14 @@ namespace BaseProject
         {
             int index = 0;
 
-            for(int i = 0; i < Levels.Count; i++)
+            for (int i = 0; i < Levels.Count; i++)
             {
-                if(Levels[i] == level)
+                if (Levels[i] == level)
                 {
                     index = i;
                     break;
-                }  
-                      
+                }
+
             }
             GoToLevel(index);
         }

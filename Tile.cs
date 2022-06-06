@@ -6,7 +6,7 @@ namespace BaseProject
     {
         protected SmallPlayer smallPlayer;
         protected BigPlayer bigPlayer;
-        
+
         public Tile(string assetName, Vector2 position, float scale, SmallPlayer smallPlayer, BigPlayer bigPlayer) : base(assetName, 0, "", 0, scale)
         {
             Origin = Center;

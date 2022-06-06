@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BaseProject.Engine;
+﻿using BaseProject.Engine;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject.GameStates
 {
@@ -15,13 +11,13 @@ namespace BaseProject.GameStates
         CreditsButton creditsButton;
         SelectSprite select;
         SpriteGameObject controls;
-        public MainMenu(Camera camera) 
+        public MainMenu(Camera camera)
         {
-            camera.Pos = new Vector2(GameEnvironment.Screen.X/2, GameEnvironment.Screen.Y / 2);
+            camera.Pos = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
             GameEnvironment.AssetManager.PlaySound("intro");
 
             background = new backgroundMenu();
-            background.Position = new Vector2(0,0);
+            background.Position = new Vector2(0, 0);
             Add(background);
 
             title = new Title(new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 4), "titleGame");

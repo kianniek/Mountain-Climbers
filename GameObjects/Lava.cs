@@ -1,8 +1,5 @@
 ﻿using BaseProject.GameStates;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BaseProject.GameObjects
 {
@@ -25,14 +22,14 @@ namespace BaseProject.GameObjects
         }
         void CheckIfSurfice()
         {
-                if (level.TileOnLocation(x, y - 1))
+            if (level.TileOnLocation(x, y - 1))
+            {
+                if (!changeSprite)
                 {
-                    if (!changeSprite)
-                    {
-                        changeSprite = true;
-                        Sprite = new SpriteSheet("LavaTop");
-                    }
+                    changeSprite = true;
+                    Sprite = new SpriteSheet("LavaTop");
                 }
+            }
         }
     }
 }

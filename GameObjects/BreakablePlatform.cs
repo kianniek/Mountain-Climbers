@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using BaseProject.GameStates;
 
 namespace BaseProject.GameObjects
 {
@@ -9,7 +8,7 @@ namespace BaseProject.GameObjects
 
         private const float secondsBeforeBreak = 0.5f;
         private const float secondsUntilRespawn = 2f;
-        
+
         private readonly SpriteSheet[] sprites =
         {
             new SpriteSheet("Tile_platform1"),
@@ -18,9 +17,9 @@ namespace BaseProject.GameObjects
             new SpriteSheet("Tile_platform4"),
             new SpriteSheet("Tile_platform5")
         };
-        
+
         private readonly float secondsBetweenSprites;
-        
+
         private DateTime breakStartTime;
         private DateTime breakTime;
         private bool breaking = false;
@@ -60,20 +59,20 @@ namespace BaseProject.GameObjects
         {
             TimeSpan timeBetweenNowAndStart = DateTime.Now - breakStartTime;
             var secondsPassed = timeBetweenNowAndStart.Seconds + timeBetweenNowAndStart.Milliseconds / 1000f;
-                
+
             for (var i = 0; i < sprites.Length; i++)
             {
-                if (!(secondsPassed / secondsBetweenSprites < i)) 
+                if (!(secondsPassed / secondsBetweenSprites < i))
                     continue;
                 sprite = sprites[i];
                 break;
             }
-                
+
             if (secondsPassed < secondsBeforeBreak)
                 return;
             breakTime = DateTime.Now;
-                
-                
+
+
             Console.WriteLine($"{breakStartTime}    Break    {DateTime.Now}");
             breaking = false;
             visible = false;
@@ -81,12 +80,12 @@ namespace BaseProject.GameObjects
 
         private bool PlayerOnPlatform(HeadPlayer player)
         {
-            var playerTop = player.Position.Y - Height/2f;
-            var playerBottom = player.Position.Y + Height/2f;
-            var playerLeft = player.Position.X - Width/2f;
-            var playerRight = player.Position.X + Width/2f;
-            
-            return playerTop <= position.Y + Height/2f && playerBottom >= position.Y - Height/2f - player.Height && playerLeft <= position.X + Width/2f && playerRight >= position.X - Width/2f;
+            var playerTop = player.Position.Y - Height / 2f;
+            var playerBottom = player.Position.Y + Height / 2f;
+            var playerLeft = player.Position.X - Width / 2f;
+            var playerRight = player.Position.X + Width / 2f;
+
+            return playerTop <= position.Y + Height / 2f && playerBottom >= position.Y - Height / 2f - player.Height && playerLeft <= position.X + Width / 2f && playerRight >= position.X - Width / 2f;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace BaseProject.GameObjects
 {
@@ -15,7 +14,7 @@ namespace BaseProject.GameObjects
         {
             base.Update(gameTime);
             var wind = IWindObject.CurrentWind(this);
-            
+
             if (wind != null)
                 position += wind.WindForce(this, gameTime);
         }

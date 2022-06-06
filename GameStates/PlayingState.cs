@@ -1,10 +1,7 @@
 ﻿using BaseProject.Engine;
 using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using System;
 
 namespace BaseProject.GameStates
 {
@@ -168,20 +165,20 @@ namespace BaseProject.GameStates
 
             if (bigPlayer.livesPlayer > 0)
             {
-                
+
                 //Losing live
                 if (bigPlayer.isDead && bigInvincibilityFrames <= 0)
                 {
                     Vector2 spawnPos = new Vector2();
-                    if(activeCheckpoint == null)
+                    if (activeCheckpoint == null)
                     {
 
                         LevelManager.GoToLevel(0);
-                        spawnPos = LevelManager.CurrentLevel().StartPosition; 
+                        spawnPos = LevelManager.CurrentLevel().StartPosition;
                     }
                     else if (activeCheckpoint.Level != LevelManager.CurrentLevel())
                     {
-                        
+
                         LevelManager.GoToLevel(activeCheckpoint.Level);
                         spawnPos = activeCheckpoint.Position;
 
@@ -281,7 +278,7 @@ namespace BaseProject.GameStates
             if (inputHelper.IsKeyDown(Keys.Enter))
             {
 
-                cam.Pos = new Vector2(GameEnvironment.Screen.X/2,GameEnvironment.Screen.Y/2);
+                cam.Pos = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
                 GameEnvironment.GameStateManager.SwitchTo("ControlsMenu");
             }
 

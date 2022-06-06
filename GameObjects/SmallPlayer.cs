@@ -1,10 +1,8 @@
-﻿using System;
-using BaseProject;
-using BaseProject.GameObjects;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using BaseProject;
 using BaseProject.GameStates;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using System;
 
 //Dion
 public class SmallPlayer : HeadPlayer

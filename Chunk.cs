@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using BaseProject.GameStates;
+﻿using BaseProject.GameStates;
 using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
 
 namespace BaseProject
 {
@@ -11,7 +11,7 @@ namespace BaseProject
         public Tile[,] TilesInChunk { get; private set; }
         public Tuple<int, int> ChunkPosition { get; private set; }
         public Vector2 WorldPosition { get; private set; }
-        
+
         public const int Height = 5;
         public const int Width = 5;
 
@@ -30,7 +30,7 @@ namespace BaseProject
 
             var x = ChunkPosition.Item1;
             var y = ChunkPosition.Item2;
-            
+
             // Chunks on the left
             if (x > 0 && y > 0)
                 chunks.Add(level.Chunks[x - 1, y - 1]);
@@ -38,13 +38,13 @@ namespace BaseProject
                 chunks.Add(level.Chunks[x - 1, y]);
             if (x > 0 && y < level.Chunks.GetLength(1) - 1)
                 chunks.Add(level.Chunks[x - 1, y + 1]);
-            
+
             // Chunk above and under
             if (y > 0)
                 chunks.Add(level.Chunks[x, y - 1]);
             if (y < level.Chunks.GetLength(1) - 1)
                 chunks.Add(level.Chunks[x, y + 1]);
-            
+
             // Chunks on the right
             if (x < level.Chunks.GetLength(0) - 1 && y > 0)
                 chunks.Add(level.Chunks[x + 1, y - 1]);
@@ -52,7 +52,7 @@ namespace BaseProject
                 chunks.Add(level.Chunks[x + 1, y]);
             if (x < level.Chunks.GetLength(0) - 1 && y < level.Chunks.GetLength(1) - 1)
                 chunks.Add(level.Chunks[x + 1, y + 1]);
-            
+
             return chunks;
         }
 
@@ -62,11 +62,11 @@ namespace BaseProject
 
             player.Origin = player.Center;
 
-            var inHeight = player.Position.Y + player.Height/2f >= WorldPosition.Y - Height/2f * Level.TileHeight &&
-                           player.Position.Y - player.Height/2f <= WorldPosition.Y + Height/2f * Level.TileHeight;
-        
-            var inWidth = player.Position.X - player.Width/2f <= WorldPosition.X + Width/2f * Level.TileWidth &&
-                          player.Position.X + player.Width/2f >= WorldPosition.X - Width/2f * Level.TileWidth;
+            var inHeight = player.Position.Y + player.Height / 2f >= WorldPosition.Y - Height / 2f * Level.TileHeight &&
+                           player.Position.Y - player.Height / 2f <= WorldPosition.Y + Height / 2f * Level.TileHeight;
+
+            var inWidth = player.Position.X - player.Width / 2f <= WorldPosition.X + Width / 2f * Level.TileWidth &&
+                          player.Position.X + player.Width / 2f >= WorldPosition.X - Width / 2f * Level.TileWidth;
 
             player.Origin = playerOrigin;
 

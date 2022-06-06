@@ -1,14 +1,9 @@
 ﻿using BaseProject.Engine;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using BaseProject.Engine;
 
 namespace BaseProject.GameStates
 {
- internal class GameOverMenu : GameObjectList
+    internal class GameOverMenu : GameObjectList
     {
 
         backgroundMenu background;

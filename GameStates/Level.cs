@@ -1,11 +1,10 @@
-﻿using System;
+﻿using BaseProject.GameObjects;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BaseProject.Engine;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using BaseProject.GameObjects;
 
 namespace BaseProject.GameStates
 {
@@ -15,7 +14,7 @@ namespace BaseProject.GameStates
         public Tile[,] Tiles { get; private set; }
         private Color[,] colorData;
         public GameObjectList LevelObjects { get; private set; } = new GameObjectList();
-        
+
         private const float tileScale = 1f;
         public const int TileWidth = 32;
         public const int TileHeight = 32;
@@ -24,7 +23,7 @@ namespace BaseProject.GameStates
 
         private readonly SmallPlayer smallPlayer;
         private readonly BigPlayer bigPlayer;
-        
+
         public bool Loaded { get; private set; }
 
         public Vector2 StartPosition { get; private set; }
@@ -66,17 +65,17 @@ namespace BaseProject.GameStates
             this.smallPlayer = smallPlayer;
             Add(LevelObjects);
         }
-        
+
         private async void GenerateLevel()
         {
             colorData = FetchColorData(levelSprite);
             Chunks = ChunksInLevel();
 
             await GenerateChunks(Chunks);
-            
+
             SetupLevel();
         }
-        
+
         protected abstract void SetupLevel();
 
         // Load the Level
@@ -84,7 +83,7 @@ namespace BaseProject.GameStates
         {
             if (Loaded)
                 return;
-            
+
             GenerateLevel();
             Loaded = true;
         }
@@ -105,13 +104,13 @@ namespace BaseProject.GameStates
             }
         }
 
-        private void GenerateChunk(Tuple<int, int> chunkPos, Tuple<int,int> start, Tuple<int,int> end)
+        private void GenerateChunk(Tuple<int, int> chunkPos, Tuple<int, int> start, Tuple<int, int> end)
         {
             var (startX, startY) = start;
             var (endX, endY) = end;
-            
-            var chunkWorldX = (startX + (endX - (startX + 1))/2f) * TileWidth;
-            var chunkWorldY = (startY + (endY - (startY + 1))/2f) * TileHeight;
+
+            var chunkWorldX = (startX + (endX - (startX + 1)) / 2f) * TileWidth;
+            var chunkWorldY = (startY + (endY - (startY + 1)) / 2f) * TileHeight;
 
             var tiles = new Tile[Chunk.Width, Chunk.Height];
 
@@ -119,18 +118,18 @@ namespace BaseProject.GameStates
             {
                 for (var x = 0; x < endX - startX; x++)
                 {
-                    
+
                     var obj = GeneratedObject(new Vector2(startX + x, startY + y));
-                    
+
                     if (obj == null)
                         continue;
 
                     if (obj.GetType() == typeof(Tile) || obj.GetType().IsSubclassOf(typeof(Tile)))
-                        tiles[x,y] = (Tile)obj;
+                        tiles[x, y] = (Tile)obj;
                     Add(obj);
                 }
             }
-            
+
             Chunks[chunkPos.Item1, chunkPos.Item2] = new Chunk(this, tiles, chunkPos, new Vector2(chunkWorldX, chunkWorldY));
         }
 
@@ -138,27 +137,27 @@ namespace BaseProject.GameStates
         {
             float decimalChunksOnX = (float)levelSprite.Width / Chunk.Width;
             int chunksOnX = decimalChunksOnX - (int)decimalChunksOnX > 0f ? (int)decimalChunksOnX + 1 : (int)decimalChunksOnX;
-            
+
             float decimalChunksOnY = (float)levelSprite.Height / Chunk.Height;
             int chunksOnY = decimalChunksOnY - (int)decimalChunksOnY > 0f ? (int)decimalChunksOnY + 1 : (int)decimalChunksOnY;
 
             var chunkArray = new Chunk[chunksOnX, chunksOnY];
-            
+
             return chunkArray;
-        }        
+        }
 
         // Generate the correct object according to the color code
         private GameObject GeneratedObject(Vector2 gridPos)
         {
             if (gridPos.X >= colorData.GetLength(0) || gridPos.Y >= colorData.GetLength(1))
                 return null;
-            
+
             var color = colorData[(int)gridPos.X, (int)gridPos.Y];
-            var offset = new Vector2(TileWidth, TileHeight)/2;
-            
+            var offset = new Vector2(TileWidth, TileHeight) / 2;
+
             var objPos = gridPos * new Vector2(TileWidth, TileHeight) * tileScale;
             objPos += offset;
-            
+
             GameObject obj = null;
 
             if (color == colorCodes["Start"])
@@ -199,7 +198,7 @@ namespace BaseProject.GameStates
                     return null;
 
                 Tile t;
-                
+
                 if (color == colorCodes["BreakablePlatform"])
                     t = new BreakablePlatform(objPos, tileScale, smallPlayer, bigPlayer);
                 else
@@ -234,7 +233,7 @@ namespace BaseProject.GameStates
                 if (TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1) &&
                     TileOnLocation(x, y + 1) && !TileOnLocation(x + 1, y + 1))
                     return "Tile_Grassbottomrightknob";
-                
+
                 if (TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1) && TileOnLocation(x, y + 1)) // Surrounded
                     return "Tile_dirt";
                 if (TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1)) // No tile under
@@ -245,8 +244,8 @@ namespace BaseProject.GameStates
                     return "Tile_LeftverticalBlock";
                 if (TileOnLocation(x - 1, y) && TileOnLocation(x, y + 1) && TileOnLocation(x, y - 1)) // No tile right
                     return "Tile_RightverticalBlock";
-            
-            
+
+
                 if (TileOnLocation(x + 1, y) && TileOnLocation(x, y + 1)) // No tile left and above
                     return "Tile_GrassLeftCorner";
                 if (TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1)) // No tile left and under
@@ -255,15 +254,15 @@ namespace BaseProject.GameStates
                     return "Tile_GrassRightCorner";
                 if (TileOnLocation(x - 1, y) && TileOnLocation(x, y - 1)) // No tile right and under
                     return "Tile_GrassRightCornerDown";
-                
-                
-                
+
+
+
                 // grass bars
                 if (TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && !TileOnLocation(x, y - 1) && !TileOnLocation(x, y + 1))
                     return "Tile_Grasstopandbottom";
                 if (!TileOnLocation(x - 1, y) && !TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1) && TileOnLocation(x, y + 1))
                     return "Tile_Grassleftandright";
-                
+
                 if (!TileOnLocation(x - 1, y) && TileOnLocation(x + 1, y) && !TileOnLocation(x, y - 1) && !TileOnLocation(x, y + 1)) // Left grass end
                     return "Tile_Grassleftend";
                 if (TileOnLocation(x - 1, y) && !TileOnLocation(x + 1, y) && !TileOnLocation(x, y - 1) && !TileOnLocation(x, y + 1)) // Right grass end
@@ -272,11 +271,11 @@ namespace BaseProject.GameStates
                     return "Tile_Grasstopend";
                 if (!TileOnLocation(x - 1, y) && !TileOnLocation(x + 1, y) && TileOnLocation(x, y - 1) && !TileOnLocation(x, y + 1)) // Bottom grass end
                     return "Tile_Grassbottomend";
-                
-                
+
+
                 if (!TileOnLocation(x - 1, y) && !TileOnLocation(x + 1, y) && !TileOnLocation(x, y - 1) && !TileOnLocation(x, y + 1))
                     return "Tile_Grassgrass";
-                
+
             }
 
             return string.Empty;
@@ -285,7 +284,7 @@ namespace BaseProject.GameStates
         // Returns if there is a tile on the given position
         public bool TileOnLocation(int x, int y)
         {
-            if (y < 0 || y >= levelSprite.Height || x < 0 || x >= levelSprite.Width) 
+            if (y < 0 || y >= levelSprite.Height || x < 0 || x >= levelSprite.Width)
                 return false;
 
             foreach (var tile in environmentalTiles)
@@ -294,37 +293,37 @@ namespace BaseProject.GameStates
 
             return false;
         }
-        
+
         // Convert the image to an 2D color array
         private Color[,] FetchColorData(Texture2D texture)
         {
             var colors = new Color[levelSprite.Width * levelSprite.Height];
             texture.GetData(colors);
             var colors2D = new Color[texture.Width, texture.Height];
-            
+
             for (var x = 0; x < texture.Width; x++)
                 for (var y = 0; y < texture.Height; y++)
                     colors2D[x, y] = colors[x + y * texture.Width];
-            
+
             return colors2D;
         }
 
         public Chunk[] ActiveChunks()
         {
             var chunks = new List<Chunk>();
-            
+
             if (!Loaded)
                 return Array.Empty<Chunk>();
-            
+
             foreach (var chunk in Chunks)
             {
                 if (!chunk.InChunk(bigPlayer) && !chunk.InChunk(smallPlayer))
                     continue;
-                
+
                 chunks.Add(chunk);
                 chunks.AddRange(chunk.SurroundingChunks());
             }
-            
+
             return chunks.ToArray();
         }
     }

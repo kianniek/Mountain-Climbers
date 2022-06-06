@@ -1,7 +1,4 @@
-﻿using System;
-using BaseProject.Engine;
-
-namespace BaseProject.GameStates
+﻿namespace BaseProject.GameStates
 {
     public class Level9 : Level
     {

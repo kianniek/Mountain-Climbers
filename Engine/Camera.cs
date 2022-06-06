@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BaseProject.Engine
 {
@@ -18,7 +15,7 @@ namespace BaseProject.Engine
         {
             _zoom = 1f;
             _rotation = 0.0f;
-            _pos = new Vector2(GameEnvironment.Screen.X/2, GameEnvironment.Screen.Y/2);
+            _pos = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
         }
 
         // Sets and gets zoom
@@ -57,5 +54,5 @@ namespace BaseProject.Engine
             return _transform;
         }
     }
-   
+
 }

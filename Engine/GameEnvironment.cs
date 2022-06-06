@@ -1,8 +1,8 @@
-﻿using System;
-using BaseProject.Engine;
+﻿using BaseProject.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 public class GameEnvironment : Game
 {
@@ -32,7 +32,7 @@ public class GameEnvironment : Game
         assetManager = new AssetManager(Content);
         gameSettingsManager = new GameSettingsManager();
         cam = new Camera();
-        
+
     }
 
     protected override void Initialize()

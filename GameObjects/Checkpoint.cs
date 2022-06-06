@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BaseProject.GameStates;
+﻿using BaseProject.GameStates;
 using Microsoft.Xna.Framework;
 
 namespace BaseProject.GameObjects
@@ -13,7 +10,7 @@ namespace BaseProject.GameObjects
         bool CheckpointAchB = false;
         public Level Level { get; private set; }
 
-       
+
 
         private SmallPlayer smallplayer;
         private BigPlayer bigplayer;
@@ -30,14 +27,14 @@ namespace BaseProject.GameObjects
             position = pos;
             Level = level;
 
-            Origin = new Vector2(Center.X, Height - Level.TileHeight/2) + Vector2.UnitY * yOffset ;
+            Origin = new Vector2(Center.X, Height - Level.TileHeight / 2) + Vector2.UnitY * yOffset;
             scale = 0.75f;
 
             this.smallplayer = smallPlayer;
             this.bigplayer = bigPlayer;
         }
 
-       
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -55,16 +52,16 @@ namespace BaseProject.GameObjects
                 sprite = openSprite;
             }
 
-            
-           
-                
-            
-           
 
-           
+
+
+
+
+
+
 
             //checkpoint respawn big player
-           
+
         }
     }
 }
