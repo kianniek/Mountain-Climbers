@@ -11,8 +11,6 @@ public class Spikes : SpriteGameObject
     {
         velocity = Vector2.Zero;
         position = new Vector2(Game1.Screen.X / 2, 0);
-
-        //Als je de spikes raakt krijg je knock back. 
     }
 
     public override void Update(GameTime gameTime)

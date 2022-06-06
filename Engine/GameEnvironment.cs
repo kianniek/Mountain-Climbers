@@ -149,16 +149,17 @@ public class GameEnvironment : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        //cam.Pos = new Vector2(screen.X / 2, screen.Y / 2);
         GraphicsDevice.Clear(Color.Black);
-        //spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, spriteScale);
-        spriteBatch.Begin(SpriteSortMode.Deferred,
-                        BlendState.AlphaBlend,
-                        null,
-                        null,
-                        null,
-                        null,
-                        cam.Get_transformation(graphics.GraphicsDevice));
+
+        spriteBatch.Begin(
+            SpriteSortMode.Deferred,
+            BlendState.AlphaBlend,
+            null,
+            null,
+            null,
+            null,
+            cam.Get_transformation(graphics.GraphicsDevice));
+
         gameStateManager.Draw(gameTime, spriteBatch);
         spriteBatch.End();
     }

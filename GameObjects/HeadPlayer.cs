@@ -1,6 +1,7 @@
 ﻿using BaseProject.GameObjects;
 using BaseProject.GameStates;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace BaseProject
 {
@@ -23,6 +24,7 @@ namespace BaseProject
         public int musicCounter = 30;
 
         public SpriteGameObject InputIndicator { get; protected set; } = new SpriteGameObject("");
+        public SpriteGameObject InputIndicatorReserve { get; protected set; } = new SpriteGameObject("");
 
         protected Tile[,] WorldTiles { get; private set; }
         protected Level level;
@@ -109,6 +111,74 @@ namespace BaseProject
             }
             return false;
         }
+        public void CollisonWithLevelObjecs()
+        {
+            for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            {
+                var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
+                var tileType = obj.GetType();
+
+                if (tileType == typeof(Lava) && CollidesWith(obj))
+                {
+                    isDead = true;
+                }
+
+                if (tileType == typeof(ButtonWall) && CollidesWith(obj))
+                {
+                    if (this.Position.X + this.Width / 2 > obj.Position.X &&
+                    this.Position.X < obj.Position.X + obj.Width / 2 &&
+                    this.Position.Y + this.Height > obj.Position.Y &&
+                    this.Position.Y < obj.Position.Y + obj.Height)
+                    {
+                        var mx = (this.Position.X - obj.Position.X);
+                        var my = (this.Position.Y - obj.Position.Y);
+                        if (Math.Abs(mx) > Math.Abs(my))
+                        {
+                            if (mx > 0)
+                            {
+                                this.velocity.X = 0;
+                                this.position.X = obj.Position.X + this.Width / 4;
+                            }
+
+                            if (mx < 0)
+                            {
+                                this.position.X = obj.Position.X - this.Width / 2;
+                                this.velocity.X = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (my > 0)
+                            {
+                                this.velocity.Y = 0;
+                                this.position.Y = obj.Position.Y + obj.Height;
+                            }
+
+                            if (my < 0)
+                            {
+                                this.velocity.Y = 0;
+                                this.position.Y = obj.Position.Y - this.Height;
+                                this.stand = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        public bool CollisonWithRope()
+        {
+            for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
+            {
+                var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
+                var tileType = obj.GetType();
+                if (tileType == typeof(Rope) && CollidesWith(obj))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         //Roep deze functie aan als de speler normaal springt en de waterval raakt,
         //maar zodra je de pickup gebruikt, roep deze niet aan.
         public virtual void HitWaterfall()
@@ -116,13 +186,11 @@ namespace BaseProject
             velocity.Y = 520;
         }
 
-
-
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            InputIndicator.Visible = false;
-            InputIndicator.Position = this.Position;
+            InputIndicator.Visible = InputIndicatorReserve.Visible = false;
+            InputIndicator.Position = InputIndicatorReserve.Position = this.Position;
             //Player with Rope Collision test
             for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
             {
@@ -133,11 +201,7 @@ namespace BaseProject
                     CuttebleRope cuttebleRope = (CuttebleRope)LevelManager.CurrentLevel().LevelObjects.Children[x];
                     if (CollidesWith(obj) && !cuttebleRope.isOut)
                     {
-                        InputIndicator.Sprite = new SpriteSheet(ButtonManager.interract_Button);
-                        InputIndicator.Origin = InputIndicator.Center;
-                        InputIndicator.Scale = 0.5f;
-                        InputIndicator.Position = obj.Position - new Vector2(obj.Width / 2, obj.Height);
-                        InputIndicator.Visible = true;
+                        InputIndicatorHandler(ButtonManager.interract_Button, obj, Vector2.Zero, 0);
 
                         if (inputHelper.KeyPressed(ButtonManager.Interact_Bigplayer) || inputHelper.KeyPressed(ButtonManager.Interact_SmallPlayer))
                         {
@@ -222,19 +286,11 @@ namespace BaseProject
 
             if (velocity.Y < 0)
             {
-                InputIndicator.Sprite = new SpriteSheet(ButtonManager.Dpad_Down_Button);
-                InputIndicator.Origin = InputIndicator.Center;
-                InputIndicator.Scale = 0.5f;
-                InputIndicator.Position = Position - new Vector2(Width / 2, Height);
-                InputIndicator.Visible = true;
+                InputIndicatorHandler(ButtonManager.Dpad_Down_Button, this, Vector2.Zero, 0);
             }
             else
             {
-                InputIndicator.Sprite = new SpriteSheet(ButtonManager.Dpad_Up_Button);
-                InputIndicator.Origin = InputIndicator.Center;
-                InputIndicator.Scale = 0.5f;
-                InputIndicator.Position = Position - new Vector2(Width / 2, Height / 2);
-                InputIndicator.Visible = true;
+                InputIndicatorHandler(ButtonManager.Dpad_Up_Button, this, Vector2.Zero, 0);
             }
         }
 
@@ -254,6 +310,31 @@ namespace BaseProject
             level = lvl;
             position = pos;
             velocity = Vector2.Zero;
+        }
+
+        public void InputIndicatorHandler(string assetname, SpriteGameObject obj, Vector2 offset, int index) 
+        {
+            switch (index)
+            {
+                case 0:
+                    InputIndicator.Sprite = new SpriteSheet(assetname);
+                    InputIndicator.Origin = InputIndicator.Center;
+                    InputIndicator.Scale = 0.5f;
+                    InputIndicator.Position = obj.Position - new Vector2(obj.Width / 2 + offset.X, obj.Height + offset.Y);
+                    InputIndicator.Visible = true;
+                    break;
+                case 1:
+                    InputIndicatorReserve.Sprite = new SpriteSheet(assetname);
+                    InputIndicatorReserve.Origin = InputIndicator.Center;
+                    InputIndicatorReserve.Scale = 0.5f;
+                    InputIndicatorReserve.Position = obj.Position - new Vector2(obj.Width / 2 + offset.X, obj.Height + offset.Y);
+                    InputIndicatorReserve.Visible = true;
+                    break;
+                default:
+                    Console.WriteLine("index not in range");
+                    break;
+            }
+            
         }
     }
 }

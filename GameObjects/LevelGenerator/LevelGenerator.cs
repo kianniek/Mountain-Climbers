@@ -4,11 +4,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-/*
- * 
-//class was for early development. now improved in other classes such as Level-Manager, Level and Chunk 
- *
-*/
+/// <summary>
+///
+///class was for early development. now improved in other classes such as Level-Manager, Level and Chunk 
+///
+/// <summary>
 public class LevelGenerator : SpriteGameObject
 {
     public SpriteGameObject[,] tiles;

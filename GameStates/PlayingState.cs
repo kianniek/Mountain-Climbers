@@ -45,6 +45,8 @@ namespace BaseProject.GameStates
 
             this.Add(bigPlayer.InputIndicator);
             this.Add(smallPlayer.InputIndicator);
+            this.Add(bigPlayer.InputIndicatorReserve);
+            this.Add(smallPlayer.InputIndicatorReserve);
             this.Add(climbWall);
 
             this.Add(new LevelManager(bigPlayer, smallPlayer));

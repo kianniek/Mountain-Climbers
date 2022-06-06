@@ -157,49 +157,8 @@ public class BigPlayer : HeadPlayer
                             }
                         }
                     }
-
-                    if (tileType == typeof(Lava))
-                    {
-                        isDead = true;
-                    }
                 }
             }
-        }
-    }
-    public bool CollisonWithRope()
-    {
-        for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
-        {
-            var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
-            var tileType = obj.GetType();
-            if (tileType == typeof(Rope))
-            {
-                if (CollidesWith(obj))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public void CollisonWithLevelObjecs()
-    {
-        for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
-        {
-            var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
-            var tileType = obj.GetType();
-
-           
-            
-            if (tileType == typeof(Lava))
-            {
-                if (CollidesWith(obj))
-                {
-                    isDead = true;
-                }
-            }
-          
         }
     }
 
@@ -264,6 +223,9 @@ public class BigPlayer : HeadPlayer
 
         if (holdingPlayer)
         {
+            InputIndicatorHandler(ButtonManager.LB_Button, this, new Vector2(0, 0), 0);
+            InputIndicatorHandler(ButtonManager.RB_Button, this, new Vector2(-Width, 0), 1);
+
             if (inputHelper.IsKeyDown(ButtonManager.AimL_BigPlayer))
             {
                 throwDirection.DecreaseAngle(directionIncrease);

@@ -17,8 +17,6 @@ public class SmallPlayer : HeadPlayer
     public int livesPlayer;
 
     private DateTime breakStartTime;
-    private DateTime breakTime;
-    private bool breaking = false;
 
     public SmallPlayer(PlayingState playingState) : base("Player")
     {
@@ -36,7 +34,7 @@ public class SmallPlayer : HeadPlayer
 
         if (stand)
         {
-            hitClimbWall = CollisonWithRope();// || CollisonWith(Tags.ClimebleWall);
+            hitClimbWall = CollisonWithRope();
             velocity.X = 0;
             thrown = false;
         }
@@ -134,95 +132,10 @@ public class SmallPlayer : HeadPlayer
                             }
 
                         }
-
                     }
                 }
             }
 
-        }
-    }
-    public bool CollisonWithRope()
-    {
-        for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
-        {
-            var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
-            var tileType = obj.GetType();
-            if (tileType == typeof(Rope))
-            {
-                if (CollidesWith(obj))
-                {
-
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    public void CollisonWithLevelObjecs()
-    {
-        for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
-        {
-            var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
-            var tileType = obj.GetType();
-
-            if (tileType == typeof(Rope))
-            {
-                if (CollidesWith(obj))
-                {
-                    hitRope = true;
-                }
-                else { hitRope = false; }
-            }
-            if (tileType == typeof(Lava))
-            {
-                if (CollidesWith(obj))
-                {
-                    isDead = true;
-                }
-            }
-            if (tileType == typeof(ButtonWall))
-            {
-                if (CollidesWith(obj))
-                {
-                    if (this.Position.X + this.Width / 2 > obj.Position.X &&
-                    this.Position.X < obj.Position.X + obj.Width / 2 &&
-                    this.Position.Y + this.Height > obj.Position.Y &&
-                    this.Position.Y < obj.Position.Y + obj.Height)
-                    {
-                        var mx = (this.Position.X - obj.Position.X);
-                        var my = (this.Position.Y - obj.Position.Y);
-                        if (Math.Abs(mx) > Math.Abs(my))
-                        {
-                            if (mx > 0)
-                            {
-                                this.velocity.X = 0;
-                                this.position.X = obj.Position.X + this.Width / 4;
-                            }
-
-                            if (mx < 0)
-                            {
-                                this.position.X = obj.Position.X - this.Width / 2;
-                                this.velocity.X = 0;
-                            }
-                        }
-                        else
-                        {
-                            if (my > 0)
-                            {
-                                this.velocity.Y = 0;
-                                this.position.Y = obj.Position.Y + obj.Height;
-                            }
-
-                            if (my < 0)
-                            {
-                                this.velocity.Y = 0;
-                                this.position.Y = obj.Position.Y - this.Height;
-                                this.stand = true;
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
     public override void HandleInput(InputHelper inputHelper)
