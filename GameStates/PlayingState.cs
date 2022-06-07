@@ -59,7 +59,7 @@ namespace BaseProject.GameStates
         {
             PlayMusic();
             base.Update(gameTime);
-            KeepPlayersCenterd();
+            CameraController();
             UI_ElementUpdate();
             CheckGameOver();
         }
@@ -240,50 +240,50 @@ namespace BaseProject.GameStates
                 }
             }
         }
-        void KeepPlayersCenterd()
+        /// <summary>
+        /// Controls the camera movement
+        /// Is primaraly used to keep both players on screen
+        /// </summary>
+        void CameraController()
         {
+            cam.Zoom = 2f;
             Vector2 sharedPlayerPos = (smallPlayer.Position + bigPlayer.Position) / 2;
+            sharedPlayerPos.Round();
             Vector2 offsetFromCenter = new Vector2(10, 10);
             Vector2 moveAmount = Vector2.Zero;
-            Vector2 camToScreenPos = new Vector2(Game1.Screen.X / 2 - offsetFromCenter.X - cam._transform.M41, Game1.Screen.Y / 2 - offsetFromCenter.Y - cam._transform.M42);
+            Vector2 camToScreenPos = new Vector2(Game1.Screen.X / 2 - offsetFromCenter.X - cam._transform.M41, Game1.Screen.Y / 2 - offsetFromCenter.Y - cam._transform.M42) / cam.Zoom;
             float distanceBetweenPlayer = Vector2.Distance(camToScreenPos, sharedPlayerPos);
-            float falloff = 0.5f;//distanceBetweenPlayer > 1 ? 1 : 0;
+            float speedStep = 0.5f;
 
             if (camToScreenPos.X > sharedPlayerPos.X)
             {
-                moveAmount += Vector2.Lerp(moveAmount, -Vector2.UnitX, falloff);
+                moveAmount += Vector2.Lerp(moveAmount, -Vector2.UnitX/10 * distanceBetweenPlayer, speedStep);
             }
             else
             if (camToScreenPos.X < sharedPlayerPos.X)
             {
-                moveAmount += Vector2.Lerp(moveAmount, Vector2.UnitX, falloff);
+                moveAmount += Vector2.Lerp(moveAmount, Vector2.UnitX/10 * distanceBetweenPlayer, speedStep);
             }
 
             if (camToScreenPos.Y > sharedPlayerPos.Y)
             {
-                moveAmount += Vector2.Lerp(moveAmount, -Vector2.UnitY, falloff);
+                moveAmount += Vector2.Lerp(moveAmount, -Vector2.UnitY/10 * distanceBetweenPlayer, speedStep);
             }
             else
             if (camToScreenPos.Y < sharedPlayerPos.Y)
             {
-                moveAmount += Vector2.Lerp(moveAmount, Vector2.UnitY, falloff);
+                moveAmount += Vector2.Lerp(moveAmount, Vector2.UnitY/10 * distanceBetweenPlayer, speedStep);
             }
-            //if (cam.Pos.X < GameEnvironment.Screen.X / 2)
-            //{
-            //    moveAmount += Vector2.UnitX * falloff;
-            //    Console.WriteLine("offscreen");
-            //}
-            //if (cam.Pos.Y > GameEnvironment.Screen.Y / 2)
-            //{
-            //    moveAmount -= Vector2.UnitY * falloff;
-            //    Console.WriteLine("offscreen");
-            //}
-
+            moveAmount.Round();
             cam.Move(moveAmount);
         }
+
+        /// <summary>
+        /// This function makes sure the UI elements dont get effected by the camera
+        /// </summary>
         void UI_ElementUpdate()
         {
-            cameraUI_offset = new Vector2(cam._transform.M41, cam._transform.M42);
+            cameraUI_offset = new Vector2(cam._transform.M41, cam._transform.M42) / cam.Zoom;
 
             ////orange health
             for (int i = 0; i < smallPlayer.livesPlayer; i++)
@@ -292,16 +292,16 @@ namespace BaseProject.GameStates
                 smallPlayer.noLives[i].Position = new Vector2(40 * i - cameraUI_offset.X, 0 - cameraUI_offset.Y);
             }
 
-
             //Green health
             for (int i = 0; i < bigPlayer.livesPlayer; i++)
             {
-                bigPlayer.livesBig[i].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y);
-                //bigPlayer.noLives[i + bigPlayer.livesPlayer].Position = new Vector2(GameEnvironment.Screen.X - cameraUI_offset.X - 50 - (40 * i), 0 - cameraUI_offset.Y); 
+                bigPlayer.livesBig[i].Position = new Vector2(GameEnvironment.Screen.X/2 - 80 * i - cameraUI_offset.X, 0 - cameraUI_offset.Y);
+                bigPlayer.noLives[i + bigPlayer.livesPlayer].Position = new Vector2(GameEnvironment.Screen.X/2 - 80 * i - cameraUI_offset.X, 0 - cameraUI_offset.Y); 
             }
 
             //for background
             background.Position = -cameraUI_offset;
+            background.Scale = 1 / cam.Zoom;
         }
 
         public override void Reset()

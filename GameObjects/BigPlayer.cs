@@ -32,7 +32,7 @@ public class BigPlayer : HeadPlayer
 
         if (stand)
         {
-            hitClimbWall = CollisonWithRope();// || CollisonWith(Tags.ClimebleWall);
+            hitClimbWall = hitRope;// || CollisonWith(Tags.ClimebleWall);
         }
         if (holdingPlayer)
         {

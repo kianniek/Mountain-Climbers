@@ -32,7 +32,7 @@ public class SmallPlayer : HeadPlayer
 
         if (stand)
         {
-            hitClimbWall = CollisonWithRope();
+            hitClimbWall = hitRope;
             velocity.X = 0;
             thrown = false;
         }
