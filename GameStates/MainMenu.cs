@@ -14,6 +14,7 @@ namespace BaseProject.GameStates
         public MainMenu(Camera camera)
         {
             camera.Pos = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
+            camera.Zoom = 1f;
             GameEnvironment.AssetManager.PlaySound("intro");
 
             background = new backgroundMenu();

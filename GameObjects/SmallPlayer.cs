@@ -75,7 +75,6 @@ public class SmallPlayer : HeadPlayer
                     if (tile == null || !tile.Visible)
                         continue;
 
-                    var tileType = tile.GetType();
 
                     if (this.Position.X + this.Width / 2 > tile.Position.X &&
                         this.Position.X < tile.Position.X + tile.Width / 2 &&

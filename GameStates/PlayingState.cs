@@ -2,6 +2,7 @@
 using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace BaseProject.GameStates
 {
@@ -54,6 +55,7 @@ namespace BaseProject.GameStates
             this.Add(smallPlayer);
 
             cam.Pos = bigPlayer.Position;
+
         }
         public override void Update(GameTime gameTime)
         {
@@ -253,7 +255,7 @@ namespace BaseProject.GameStates
             Vector2 moveAmount = Vector2.Zero;
             Vector2 camToScreenPos = new Vector2(Game1.Screen.X / 2 - offsetFromCenter.X - cam._transform.M41, Game1.Screen.Y / 2 - offsetFromCenter.Y - cam._transform.M42) / cam.Zoom;
             float distanceBetweenPlayer = Vector2.Distance(camToScreenPos, sharedPlayerPos);
-            float speedStep = 0.5f;
+            float speedStep = 0.3f;
 
             if (camToScreenPos.X > sharedPlayerPos.X)
             {
@@ -276,6 +278,7 @@ namespace BaseProject.GameStates
             }
             moveAmount.Round();
             cam.Move(moveAmount);
+            Console.WriteLine(cam._pos);
         }
 
         /// <summary>

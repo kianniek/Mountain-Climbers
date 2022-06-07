@@ -1,508 +1,175 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="BaseProject.GameObjects.Ground" Collapsed="true">
-    <Position X="16.25" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\LevelGenerator\Ground.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.UnderGround" Collapsed="true">
-    <Position X="16.25" Y="9" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\LevelGenerator\UnderGround.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.Box" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="41" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\Box.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BaseProject.GameObjects.BreakablePlatform" Collapsed="true">
-    <Position X="21.25" Y="6" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAgAAAAARAAAAAQAEAAAQAAAAAAAAAAICAACAAAA=</HashCode>
-      <FileName>GameObjects\BreakablePlatform.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.Button" Collapsed="true">
-    <Position X="42.75" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAQAAgAAAAAAAAAAAAAAAAAAAEAAAAAAAAAEAAAAAAA=</HashCode>
-      <FileName>GameObjects\Button.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.ButtonPrompter" Collapsed="true">
-    <Position X="60" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\ButtonPrompter.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.ButtonWall" Collapsed="true">
-    <Position X="48" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ABwAAAAQEAAAABAAAAAAAAAAAAACAAAAAAAAAAAIAAA=</HashCode>
-      <FileName>GameObjects\ButtonWall.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.Checkpoint" Collapsed="true">
-    <Position X="37.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAQAAAAAAAAAAAAABAIAAAAAAAAAAAABgAAgAABAAAI=</HashCode>
-      <FileName>GameObjects\Checkpoint.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.CuttebleRope" Collapsed="true">
-    <Position X="37.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAACAAAAAAAAAAAAACAAAAACEAAAAAAABgAAAAAAE=</HashCode>
-      <FileName>GameObjects\CuttebleRope.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.Lava" Collapsed="true">
-    <Position X="46.25" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAABgAAAAAAE=</HashCode>
-      <FileName>GameObjects\Lava.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.LoadNextLevelTrigger" Collapsed="true">
-    <Position X="42.75" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAQAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\LoadNextLevelTrigger.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.ParallaxScrolling" Collapsed="true">
-    <Position X="29" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\ParallaxScrolling.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.PreviousLevelTrigger" Collapsed="true">
-    <Position X="42.75" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAQAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\PreviousLevelTrigger.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.Rope" Collapsed="true">
-    <Position X="46.25" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\Rope.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.StrongWind" Collapsed="true">
-    <Position X="37.5" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAMAAAAIAQAAIAAAEAAAAAAAAIAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\StrongWind.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameObjects.ThrowDirection" Collapsed="true">
-    <Position X="41" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAQIEgAAAAAAAAAAAAAAAAAAAAwAAAAABAAAAABAAAA=</HashCode>
-      <FileName>GameObjects\ThrowDirection.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LevelGenerator" Collapsed="true">
-    <Position X="48" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAQUAAIACgAAEDAAAAQAAAAAgAAAACAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\LevelGenerator\LevelGenerator.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BigPlayer" Collapsed="true">
-    <Position X="16.25" Y="6" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAQAAACCAAAIAAAAAAAAAAAAIAAAgAAAAACgIAAAAIA=</HashCode>
-      <FileName>GameObjects\BigPlayer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SmallPlayer" Collapsed="true">
-    <Position X="18.5" Y="6" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAgiEAAAoAAAAAAAAAAAAAAEIAAAEgACAIAAACIA=</HashCode>
-      <FileName>GameObjects\SmallPlayer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.ClimbWall" Collapsed="true">
-    <Position X="41" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\ClimbWall.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.FallingRock" Collapsed="true">
-    <Position X="39.25" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAQAAggAAAAABAgAAAAAAAAAAAAIAAAEAAEgAAAAAAA=</HashCode>
-      <FileName>GameObjects\FallingRock.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.HeadPlayer" Collapsed="true">
-    <Position X="17.5" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IAYCICyAAABhAAAAAKeAIAAAABUMAIQgDgDcCAEEgAA=</HashCode>
-      <FileName>GameObjects\HeadPlayer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.Lives" Collapsed="true">
-    <Position X="39.25" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\Lives.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.TestAnimation" Collapsed="true">
-    <Position X="39.25" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\TestAnimation.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.Waterfall" Collapsed="true">
-    <Position X="44.5" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\Waterfall.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.Controls" Collapsed="true">
-    <Position X="42.75" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>System\Controls.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.Abutton" Collapsed="true">
-    <Position X="37.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Abutton.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.backgroundMenu" Collapsed="true">
-    <Position X="39.25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>backgroundMenu.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.ButtonManager" Collapsed="true">
-    <Position X="55.5" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ABBwBEACBCAgAgAAAECIAADAABAUQBAAggABWEFGAAA=</HashCode>
-      <FileName>ButtonManager.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.Chunk" Collapsed="true">
-    <Position X="31.75" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IACAAAAABAAAgAAAAAAAAEAAAAEAAAAAAAIAAAACAAA=</HashCode>
-      <FileName>Chunk.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.CreditsButton" Collapsed="true">
-    <Position X="46.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>CreditsButton.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.Game1" Collapsed="true">
-    <Position X="42.75" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
-      <FileName>Game1.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.LevelManager" Collapsed="true">
-    <Position X="37.5" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>RAQAAgCEAAAAAgAEAAAAAAAAAABEFAABAAAAAAAAAAA=</HashCode>
-      <FileName>LevelManager.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.MediaPlayer" Collapsed="true">
-    <Position X="57.75" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAABAAA=</HashCode>
-      <FileName>MediaPlayer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.MenuButton" Collapsed="true">
-    <Position X="48" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>MenuButtonLeft.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.Names" Collapsed="true">
-    <Position X="37.5" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Names.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.Program" Collapsed="true">
-    <Position X="82.75" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
-      <FileName>Program.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.SelectSprite" Collapsed="true">
-    <Position X="48" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>SelectSprite.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.Tile" Collapsed="true">
-    <Position X="21.25" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Tile.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.Title" Collapsed="true">
-    <Position X="42.75" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Title.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.ControlsMenu" Collapsed="true">
-    <Position X="44.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAADAAAAAAAAAAAAAAAAAAAAAACAgAAAAAAAAIAA=</HashCode>
-      <FileName>GameStates\ControlsMenu.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.CreditState" Collapsed="true">
-    <Position X="48" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAADAAAAAAAAAAQAAAQAAAAAAAAAIAAAAAAAAIAA=</HashCode>
-      <FileName>GameStates\CreditState.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.GameOverMenu" Collapsed="true">
-    <Position X="44.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQABACAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAIIA=</HashCode>
-      <FileName>GameStates\GameOverMenu.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.Level" Collapsed="true">
-    <Position X="26" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAAAAkAQEAEEAACAAgAAAyAUAIAkAAIAEEAIE0AAAgA=</HashCode>
-      <FileName>GameStates\Level.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.Level1" Collapsed="true">
-    <Position X="30.5" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAAAAAAAAAQAAAAAAAAAAAIAEAAAAAAA=</HashCode>
-      <FileName>GameStates\Level1.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.Level2" Collapsed="true">
-    <Position X="35" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameStates\Level2.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.Level3" Collapsed="true">
-    <Position X="17" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameStates\Level3.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.Level4" Collapsed="true">
-    <Position X="19.25" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameStates\Level4.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.Level5" Collapsed="true">
-    <Position X="21.5" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameStates\Level5.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.Level6" Collapsed="true">
-    <Position X="23.75" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameStates\Level6.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.Level7" Collapsed="true">
-    <Position X="26" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameStates\Level7.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.Level8" Collapsed="true">
-    <Position X="28.25" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameStates\Level8.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.Level9" Collapsed="true">
-    <Position X="32.75" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameStates\Level9.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.LoadingState" Collapsed="true">
-    <Position X="41" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameStates\LoadingState.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.MainMenu" Collapsed="true">
-    <Position X="44.5" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAACAQAAAAAAAgAAAAAAACAAAACBAAAAAAAAAIAA=</HashCode>
-      <FileName>GameStates\MainMenu.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseProject.GameStates.PlayingState" Collapsed="true">
-    <Position X="41" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAQAJgCAAIAADEAAAAQAAQEACAAAAQCgAAAAQAAAIAg=</HashCode>
-      <FileName>GameStates\PlayingState.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="System.Windows.Forms" Collapsed="true">
-    <Position X="53.25" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>System\Windows\Forms.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SpriteGameObject" Collapsed="true">
-    <Position X="36.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>SAAAAAAABAAAAgAAAAIABEQCgDAAAAAQAAAAAEgIAAA=</HashCode>
-      <FileName>Engine\SpriteGameObject.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="System.Object" Collapsed="true">
-    <Position X="53.25" Y="3.25" Width="1.5" />
-    <TypeIdentifier />
-  </Class>
-  <Class Name="GameObjectList" Collapsed="true">
-    <Position X="50.5" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAYAAACAAAAABgQAAAAEBAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Engine\GameObjectList.cs</FileName>
-    </TypeIdentifier>
-  </Class>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="NameAndType">
   <Class Name="GameObject" Collapsed="true">
-    <Position X="62.25" Y="4.5" Width="1.5" />
+    <Position X="35.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQCAACAAACABiBgAAABYAAAACAAAAAMAAQADAAEAgA=</HashCode>
       <FileName>Engine\GameObject.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="AssetManager" Collapsed="true">
-    <Position X="34.5" Y="4.5" Width="1.5" />
+  <Class Name="GameObjectList">
+    <Position X="45.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAgAAEAAAAAAAAAkAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Engine\AssetManager.cs</FileName>
+      <HashCode>AAYAAACAAAAABgQAAAAEBAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\GameObjectList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RotatingSpriteGameObject" Collapsed="true">
+    <Position X="30" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAAAAAAAgAAAgAAAEAAAAAAAAASAEQAAAAAAAI=</HashCode>
+      <FileName>Engine\RotatingSpriteGameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpriteGameObject">
+    <Position X="32.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SAAAAAAABAAAAgAAAAIABEQCgDAAAAAQAAAAAEgIAAA=</HashCode>
+      <FileName>Engine\SpriteGameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelGenerator">
+    <Position X="41.25" Y="7.5" Width="2" />
+    <Members>
+      <Method Name="ToColint" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAQUAAIACgAAEDAAAAQAAAAAgAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\LevelGenerator\LevelGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BigPlayer">
+    <Position X="36.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAAACCAAAIAAAAAAAAAAAAIAAAgAAAAACgIAAAAIA=</HashCode>
+      <FileName>GameObjects\BigPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmallPlayer">
+    <Position X="39" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAgiEAAAoAAAAAAAAAAAAAAEIAAAEgACAIAAACIA=</HashCode>
+      <FileName>GameObjects\SmallPlayer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BaseProject.Engine.ButtonManager" Collapsed="true">
-    <Position X="64.5" Y="4.5" Width="1.5" />
+    <Position X="52.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABBQBEACBEAgAgAAgAAIIADAABAUABAAAgABQEECAAA=</HashCode>
       <FileName>Engine\ButtonManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseProject.Engine.Camera" Collapsed="true">
-    <Position X="66.75" Y="4.5" Width="1.5" />
+  <Class Name="BaseProject.Engine.Camera">
+    <Position X="49.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAIAAAIQQEQAAAAAAAACgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Engine\Camera.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Collision" Collapsed="true">
-    <Position X="69" Y="4.5" Width="1.5" />
+  <Class Name="BaseProject.GameObjects.Ground" Collapsed="true">
+    <Position X="32.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAEAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Engine\Collision.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\LevelGenerator\Ground.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DrawingHelper" Collapsed="true">
-    <Position X="71.25" Y="4.5" Width="1.5" />
+  <Class Name="BaseProject.GameObjects.UnderGround" Collapsed="true">
+    <Position X="32.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAQAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Engine\DrawingHelper.cs</FileName>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\LevelGenerator\UnderGround.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GameSettingsManager" Collapsed="true">
-    <Position X="73.5" Y="4.5" Width="1.5" />
+  <Class Name="BaseProject.GameObjects.ButtonPrompter" Collapsed="true">
+    <Position X="52.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAAAgAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Engine\GameSettingsManager.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\ButtonPrompter.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GameStateManager" Collapsed="true">
-    <Position X="75.75" Y="4.5" Width="1.5" />
+  <Class Name="BaseProject.GameObjects.CuttebleRope">
+    <Position X="25.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAACAQAAABgAAAAQAAAIUAAAAAAAQAAAAAAAAAAA=</HashCode>
-      <FileName>Engine\GameStateManager.cs</FileName>
+      <HashCode>AAQAACAAAAAAAAAAAAACAAAAACEAAAAAAABgAAAAAAE=</HashCode>
+      <FileName>GameObjects\CuttebleRope.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <ShowAsAssociation>
+      <Field Name="level" />
+    </ShowAsAssociation>
   </Class>
-  <Class Name="InputHelper" Collapsed="true">
-    <Position X="78" Y="4.5" Width="1.5" />
+  <Class Name="BaseProject.GameObjects.Lava" Collapsed="true">
+    <Position X="34.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AASIAAAgAAAAAAAAAAIAAUBCAAAQAAAAAAAAQABSgAA=</HashCode>
-      <FileName>Engine\InputHelper.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SpriteSheet" Collapsed="true">
-    <Position X="80.25" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AIAAAEAABAAAAgEAAACAAEAAgBBABAAQAAQAAAAIAEE=</HashCode>
-      <FileName>Engine\SpriteSheet.cs</FileName>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAABgAAAAAAE=</HashCode>
+      <FileName>GameObjects\Lava.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="BaseProject.GameObjects.IWindObject" Collapsed="true">
-    <Position X="37.5" Y="7.75" Width="1.5" />
+  <Class Name="BaseProject.GameObjects.PreviousLevelTrigger" Collapsed="true">
+    <Position X="30" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAA=</HashCode>
-      <FileName>GameObjects\IWindObject.cs</FileName>
+      <HashCode>QAQAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\PreviousLevelTrigger.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Enum Name="BaseProject.WindDirection" Collapsed="true">
-    <Position X="37.5" Y="8.75" Width="1.5" />
+  </Class>
+  <Class Name="BaseProject.GameObjects.Rope">
+    <Position X="23.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACACAAAAAAAA=</HashCode>
-      <FileName>WindDirection.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Rope.cs</FileName>
     </TypeIdentifier>
-  </Enum>
+  </Class>
+  <Class Name="BaseProject.ClimbWall">
+    <Position X="27.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\ClimbWall.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.HeadPlayer" Collapsed="true">
+    <Position X="38" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAYCICyAAABhAAAAAKWAIAAAABUMAIQgDgDcCAEEgAA=</HashCode>
+      <FileName>GameObjects\HeadPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.ButtonManager" Collapsed="true">
+    <Position X="54" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBwBEACBCAgAgAAAECIAADAABAUQBAAggABWEFGAAA=</HashCode>
+      <FileName>ButtonManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameStates.PlayingState">
+    <Position X="46.25" Y="6" Width="2.25" />
+    <Members>
+      <Method Name="InitialzeHealth" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>QAQAJgCAAIAABEAAAAQIAQEACAAAAQCgAAAAQAAAIAg=</HashCode>
+      <FileName>GameStates\PlayingState.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="climbWall" />
+      <Property Name="cam" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="BaseProject.GameStates.Level" Collapsed="true">
+    <Position X="44" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAkAQEAEEAACAAgAAAyAUAIAkAAIAEEAIE0AAAgA=</HashCode>
+      <FileName>GameStates\Level.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEnvironment">
+    <Position X="54" Y="3.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>BJQCBECQAAAAAwIABIAAIAQAAAAAJAwAAAQAAAAAAAQ=</HashCode>
+      <FileName>Engine\GameEnvironment.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Camera" />
+    </ShowAsAssociation>
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

@@ -36,7 +36,7 @@ namespace BaseProject.Engine
         {
             _pos += amount;
         }
-        // Get set position
+        // Get set position of camera
         public Vector2 Pos
         {
             get { return _pos; }

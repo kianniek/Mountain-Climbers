@@ -14,6 +14,7 @@ namespace BaseProject.GameStates
         public GameOverMenu(Camera camera)
         {
             cam = camera;
+            cam.Zoom = 1f;
             camera.Pos = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
 
             background = new backgroundMenu();

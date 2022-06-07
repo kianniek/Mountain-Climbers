@@ -95,17 +95,6 @@ namespace BaseProject
                 HitWaterfall();
             }
         }
-
-        public bool CollisonWithWaterfall()
-        {
-            for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
-            {
-                var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
-                var tileType = obj.GetType();
-
-            }
-            return false;
-        }
         public void CollisonWithLevelObjecs()
         {
             hitRope = false;
@@ -188,6 +177,8 @@ namespace BaseProject
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
+
+            //reset indicators to deafault them on inviseble
             InputIndicator.Visible = InputIndicatorReserve.Visible = false;
             InputIndicator.Position = InputIndicatorReserve.Position = this.Position;
 
@@ -218,7 +209,7 @@ namespace BaseProject
             {
                 int x = cuttebleRope.x;
                 int y = cuttebleRope.y;
-                if (cuttebleRope.level.TileOnLocation(x - 1, y + 1))
+                if (cuttebleRope.level.TileOnLocation(x - 1, y + 1)) //check which way the rope is dropping down
                 {
                     for (int i = 0; i < 11; i++)
                     {
@@ -244,7 +235,7 @@ namespace BaseProject
                     }
                 }
                 else
-                if (!cuttebleRope.level.TileOnLocation(x + 1, y + 1))
+                if (!cuttebleRope.level.TileOnLocation(x + 1, y + 1)) //check which way the rope is dropping down
                 {
                     for (int i = 0; i < 11; i++)
                     {
