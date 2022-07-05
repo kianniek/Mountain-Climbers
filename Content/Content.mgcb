@@ -13,6 +13,30 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../OneDrive/Bureaublad/Sprites/CanonBarrel.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../OneDrive/Bureaublad/Sprites/CanonBarrel.png;CanonBarrel.png
+
+#begin ../../OneDrive/Bureaublad/Sprites/CanonBase.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../OneDrive/Bureaublad/Sprites/CanonBase.png;CanonBase.png
+
 #begin A_Button.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -204,6 +228,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:ButtonPrompts/Switch_Y.png
+
+#begin CanonBall.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:CanonBall.png
 
 #begin clap.wav
 /importer:WavImporter

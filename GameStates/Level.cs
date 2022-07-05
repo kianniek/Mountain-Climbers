@@ -24,6 +24,9 @@ namespace BaseProject.GameStates
 
         private readonly SmallPlayer smallPlayer;
         private readonly BigPlayer bigPlayer;
+
+
+        //private readonly CanonBarrel canonBarrel;
         
         public bool Loaded { get; private set; }
 
@@ -45,7 +48,8 @@ namespace BaseProject.GameStates
             {"End", Color.Lime},
             {"EndLevel", Color.Yellow},
             {"StartLevel", Color.Brown},
-            {"Checkpoint", Color.Orange}
+            {"Checkpoint", Color.Orange},
+            {"CanonBase", Color.Violet}            
         };
 
         // All color codes that represent level tiles
@@ -184,7 +188,10 @@ namespace BaseProject.GameStates
 
             if (color == colorCodes["Checkpoint"])
                 LevelObjects.Add(new Checkpoint(smallPlayer, bigPlayer, objPos, this));
-
+            if (color == colorCodes["CanonBase"])
+            {
+                LevelObjects.Add(new Canon(objPos, bigPlayer, smallPlayer));
+            }
 
 
 

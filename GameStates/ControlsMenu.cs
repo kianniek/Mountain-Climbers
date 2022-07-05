@@ -22,7 +22,7 @@ namespace BaseProject.GameStates
 
             Add(background);
 
-            Console.WriteLine(background.Position);
+            //Console.WriteLine(background.Position);
 
             controls = new Controls();
             controls.Position = new Vector2(GameEnvironment.Screen.X/2, GameEnvironment.Screen.Y/2);

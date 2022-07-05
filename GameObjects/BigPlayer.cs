@@ -173,6 +173,10 @@ public class BigPlayer : HeadPlayer
     {
         for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
+            if (LevelManager.CurrentLevel().LevelObjects.Children[x].GetType() != typeof(SpriteGameObject))
+            {
+                continue;
+            }
             var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
             var tileType = obj.GetType();
             if (tileType == typeof(Rope))
@@ -190,6 +194,10 @@ public class BigPlayer : HeadPlayer
     {
         for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
+            if (LevelManager.CurrentLevel().LevelObjects.Children[x].GetType() != typeof(SpriteGameObject))
+            {
+                continue;
+            }
             var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
             var tileType = obj.GetType();
 

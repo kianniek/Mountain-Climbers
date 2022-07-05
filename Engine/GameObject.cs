@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 public abstract class GameObject : IGameLoopObject
 {
     protected GameObject parent;
-    protected Vector2 position, velocity;
+    public Vector2 position, velocity;
     protected int layer;
     protected string id;
     protected bool visible;

@@ -99,6 +99,10 @@ namespace BaseProject
         {
             for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
             {
+                if (LevelManager.CurrentLevel().LevelObjects.Children[x].GetType() != typeof(SpriteGameObject))
+                {
+                    continue;
+                }
                 var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
                 var tileType = obj.GetType();
                 if (tileType == typeof(Waterfall))
@@ -128,6 +132,11 @@ namespace BaseProject
             //Player with Rope Collision test
             for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
             {
+                if(LevelManager.CurrentLevel().LevelObjects.Children[x].GetType() != typeof(SpriteGameObject))
+                {
+                    continue;
+                }
+
                 var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
                 var tileType = obj.GetType();
                 if (tileType == typeof(CuttebleRope))

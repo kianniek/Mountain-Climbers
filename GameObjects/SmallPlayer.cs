@@ -149,6 +149,10 @@ public class SmallPlayer : HeadPlayer
     {
         for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
+            if (LevelManager.CurrentLevel().LevelObjects.Children[x].GetType() != typeof(SpriteGameObject))
+            {
+                continue;
+            }
             var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
             var tileType = obj.GetType();
             if (tileType == typeof(Rope))
@@ -166,6 +170,10 @@ public class SmallPlayer : HeadPlayer
     {
         for (int x = 0; x < LevelManager.CurrentLevel().LevelObjects.Children.Count; x++)
         {
+            if (LevelManager.CurrentLevel().LevelObjects.Children[x].GetType() != typeof(SpriteGameObject))
+            {
+                continue;
+            }
             var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[x];
             var tileType = obj.GetType();
 
@@ -264,7 +272,7 @@ public class SmallPlayer : HeadPlayer
             }
             TimeSpan timeBetweenNowAndStart = DateTime.Now - breakStartTime;
             var secondsPassed = timeBetweenNowAndStart.Seconds + timeBetweenNowAndStart.Milliseconds / 1000f;
-            Console.WriteLine(secondsPassed);
+            //Console.WriteLine(secondsPassed);
             if (secondsPassed > 3)
             {
                 if (inputHelper.KeyPressed(ButtonManager.DogeL_SmallPlayer))

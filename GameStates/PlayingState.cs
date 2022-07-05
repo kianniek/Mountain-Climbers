@@ -35,6 +35,7 @@ namespace BaseProject.GameStates
             cam = camera;
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
+            //canonBarrel = new CanonBarrel("CanonBarrel");
 
             smallPlayer = new SmallPlayer(this);
             bigPlayer = new BigPlayer(smallPlayer);
@@ -42,6 +43,7 @@ namespace BaseProject.GameStates
             Add(bigPlayer.throwDirection);
 
             climbWall = new GameObjectList();
+
 
             this.Add(bigPlayer.InputIndicator);
             this.Add(smallPlayer.InputIndicator);
@@ -53,6 +55,8 @@ namespace BaseProject.GameStates
 
             this.Add(bigPlayer);
             this.Add(smallPlayer);
+
+
 
             cam.Pos = bigPlayer.Position;
         }
@@ -285,6 +289,10 @@ namespace BaseProject.GameStates
 
             for (int i = 0; i < LevelManager.CurrentLevel().LevelObjects.Children.Count; i++)
             {
+                if (LevelManager.CurrentLevel().LevelObjects.Children[i].GetType() != typeof(SpriteGameObject))
+                {
+                    continue;
+                }
                 var obj = (SpriteGameObject)LevelManager.CurrentLevel().LevelObjects.Children[i];
                 var tileType = obj.GetType();
                 if (tileType == typeof(Button))
