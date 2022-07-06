@@ -7,11 +7,11 @@ using Microsoft.Xna.Framework;
 
 namespace BaseProject.GameObjects
 {
-    public class CanonBase : SpriteGameObject
+    public class CannonBase : SpriteGameObject
     {
         BigPlayer bigPlayer;
         SmallPlayer smallPlayer;
-        public CanonBase(Vector2 position, BigPlayer bigPlayer, SmallPlayer smallPlayer) : base("CanonBase")
+        public CannonBase(Vector2 position, BigPlayer bigPlayer, SmallPlayer smallPlayer) : base("CanonBase")
         {
             //Midden onder
             Origin = Center;

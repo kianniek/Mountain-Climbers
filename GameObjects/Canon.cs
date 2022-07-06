@@ -7,23 +7,23 @@ using Microsoft.Xna.Framework;
 
 namespace BaseProject.GameObjects
 {
-    internal class Canon : GameObjectList
+    internal class Cannon : GameObjectList
     {
-        GameObjectList canonBalls;
-        CanonBase canonBase;
-        CanonBarrel canonBarrel;
+        GameObjectList cannonBalls;
+        CannonBase cannonBase;
+        CannonBarrel cannonBarrel;
         Vector2 barrelOffset = new Vector2(0, 20);
-        public Canon(Vector2 position, BigPlayer bigPlayer, SmallPlayer smallPlayer)
+        public Cannon(Vector2 position, BigPlayer bigPlayer, SmallPlayer smallPlayer)
         {
-            canonBalls = new GameObjectList();
-            canonBase = new CanonBase(position, bigPlayer, smallPlayer);
-            canonBarrel = new CanonBarrel(position + barrelOffset, bigPlayer, smallPlayer, canonBalls);
+            cannonBalls = new GameObjectList();
+            cannonBase = new CannonBase(position, bigPlayer, smallPlayer);
+            cannonBarrel = new CannonBarrel(position + barrelOffset, bigPlayer, smallPlayer, canonBalls);
 
             //offset 23
             
-            Add(canonBalls);
-            Add(canonBarrel);
-            Add(canonBase);
+            Add(cannonBalls);
+            Add(cannonBarrel);
+            Add(cannonBase);
         }
     }
 }

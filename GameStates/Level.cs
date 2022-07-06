@@ -190,7 +190,7 @@ namespace BaseProject.GameStates
                 LevelObjects.Add(new Checkpoint(smallPlayer, bigPlayer, objPos, this));
             if (color == colorCodes["CanonBase"])
             {
-                LevelObjects.Add(new Canon(objPos, bigPlayer, smallPlayer));
+                LevelObjects.Add(new Cannon(objPos, bigPlayer, smallPlayer));
             }
 
 

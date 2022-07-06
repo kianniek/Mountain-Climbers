@@ -91,7 +91,7 @@ public class RotatingSpriteGameObject : SpriteGameObject
     /// </summary>
     public void StopLookingAtTarget()
     {
-        targetObject = null;
+        //targetObject = null;
         this.offsetDegrees = 0;
     }
 

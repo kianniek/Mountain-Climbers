@@ -9,26 +9,26 @@ using System.Linq;
 
 namespace BaseProject.GameObjects
 {
-    public class CanonBarrel : RotatingSpriteGameObject
+    public class CannonBarrel : RotatingSpriteGameObject
     {
         int canonRange = 400;
         Vector2 targetPosition;
         BigPlayer bigPlayer;
         SmallPlayer smallPlayer;
-        Projectile canonBall;
+        Projectile cannonBall;
 
-        GameObjectList canonBalls;
+        GameObjectList cannonBalls;
 
         int rotateOffsetCanon = 20;
         int aimingOffset = 270;
 
-        public CanonBarrel(Vector2 position, BigPlayer bigPlayer, SmallPlayer smallPlayer, GameObjectList canonBalls) : base("CanonBarrel")
+        public CannonBarrel(Vector2 position, BigPlayer bigPlayer, SmallPlayer smallPlayer, GameObjectList cannonBalls) : base("CanonBarrel")
         {
             this.position = position;
             Origin = new Vector2(Width / 2, Height + rotateOffsetCanon);
             this.bigPlayer = bigPlayer;
             this.smallPlayer = smallPlayer;
-            this.canonBalls = canonBalls;
+            this.cannonBalls = cannonBalls;
         }
 
         public override void Update(GameTime gameTime)
@@ -41,8 +41,6 @@ namespace BaseProject.GameObjects
             CheckForInRangePlayers();
 
             base.Update(gameTime);
-
-
         }
 
         public void GetDestroyed()
@@ -53,20 +51,19 @@ namespace BaseProject.GameObjects
 
         public void CheckForInRangePlayers()
         {
-            float smallPlayerDistanceToCanon = Vector2.Distance(position, smallPlayer.position);
-            float bigPlayerDistanceToCanon = Vector2.Distance(position, bigPlayer.position);
+            float smallPlayerDistanceToCannon = Vector2.Distance(position, smallPlayer.position);
+            float bigPlayerDistanceToCannon = Vector2.Distance(position, bigPlayer.position);
 
             //Console.WriteLine(smallPlayerDistanceToCanon);
 
-            if ((smallPlayerDistanceToCanon > canonRange && bigPlayerDistanceToCanon > canonRange) || !visible)
+            if ((smallPlayerDistanceToCannon > canonRange && bigPlayerDistanceToCannon > canonRange) || !visible)
             {
-                Degrees = 0;
                 return;
             }
 
-            if (smallPlayerDistanceToCanon <= canonRange || bigPlayerDistanceToCanon <= canonRange)
+            if (smallPlayerDistanceToCannon <= canonRange || bigPlayerDistanceToCannon <= canonRange)
             {
-                if (smallPlayerDistanceToCanon < bigPlayerDistanceToCanon)
+                if (smallPlayerDistanceToCannon < bigPlayerDistanceToCannon)
                 {
                     FireCanonball(smallPlayer);
                     LookAt(smallPlayer, aimingOffset);
@@ -89,7 +86,7 @@ namespace BaseProject.GameObjects
             Vector2 directionToPlayer = targetPosition - position;
             directionToPlayer.Normalize();
 
-            canonBalls.Add(new Projectile(directionToPlayer, bigPlayer, smallPlayer));
+            cannonBalls.Add(new Projectile(directionToPlayer, bigPlayer, smallPlayer));
         }
     }
 }
