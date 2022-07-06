@@ -122,10 +122,15 @@ namespace BaseProject
             //Origin = playerOrigin;
 
             velocity.Y += gravity;
+            
+
             if (stand)
             {
+                base.Update(gameTime);
                 velocity.X = 0;
             }
+
+           
 
             bVerticalPlatformTouchingPlayer = false;
 
