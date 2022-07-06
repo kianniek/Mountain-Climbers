@@ -32,7 +32,7 @@ namespace BaseProject.GameStates
             background = new SpriteGameObject("DarkForestBackground", -10) { Shade = new Color(200, 200, 200) };
             Add(background);
 
-            verticalPlatform = new VerticalPlatform(200, 2);
+            verticalPlatform = new VerticalPlatform(200, 100);
 
             smallPlayer = new SmallPlayer(this);
             bigPlayer = new BigPlayer(smallPlayer, this);

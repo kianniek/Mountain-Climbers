@@ -12,12 +12,12 @@ namespace BaseProject.GameObjects
     {
 
         public bool movingLeft;
-        float positionDiff = 0;
+        float positionDiff = 1;
         int moveDistance;
-        int moveSpeed = 100;
+        int moveSpeed;
         public VerticalPlatform(int moveDistance, int moveSpeed) : base("platform")
         {
-            position = new Vector2(0, 300);
+            position = new Vector2(100, 300);
             this.moveDistance = moveDistance;
             this.moveSpeed = moveSpeed;
             Origin = Center;   
@@ -28,8 +28,10 @@ namespace BaseProject.GameObjects
             base.Update(gameTime);
 
             velocity = new Vector2(moveSpeed, 0);
+            
+            Console.WriteLine(velocity);
 
-            if (positionDiff >= 0 || positionDiff <= moveDistance)
+            if (positionDiff <= 0 || positionDiff >= moveDistance)
             {
                 movingLeft = !movingLeft;
                 velocity *= -1;
