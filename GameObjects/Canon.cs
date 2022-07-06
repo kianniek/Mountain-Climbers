@@ -17,7 +17,7 @@ namespace BaseProject.GameObjects
         {
             cannonBalls = new GameObjectList();
             cannonBase = new CannonBase(position, bigPlayer, smallPlayer);
-            cannonBarrel = new CannonBarrel(position + barrelOffset, bigPlayer, smallPlayer, canonBalls);
+            cannonBarrel = new CannonBarrel(position + barrelOffset, bigPlayer, smallPlayer, cannonBalls);
 
             //offset 23
             
